@@ -1,0 +1,417 @@
+---
+title: 'LME4 Tutorial: Popularity Data'
+author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
+date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
+output:
+  html_document:
+    keep_md: true
+
+---
+
+
+
+## Introduction
+This tutorial gives a basic introduction to a multilevel regression and shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this tutorial, the software packages [LME4](https://cran.r-project.org/web/packages/lme4/index.html) and [lmerTest](https://cran.r-project.org/web/packages/lmerTest/index.html) for R (Windows) were used. Results should be very similar to results obtained with other software packages, however due to convergence and rounding issues, you might notice minor differences. 
+&nbsp;
+
+## Preparation
+This tutorial expects:
+
+*  Basic knowledge of multilevel analyses (first two chapters of the book are sufficient).
+* Basic knowledge of coding in R.
+
+
+&nbsp;
+
+
+## Step 1: Setting up Packages
+
+If you have not yet installed all below mentioned packages, you can install them by the command `install.packages("NAMEOFPACKAGE")`.
+
+```{r, results='hide', message=FALSE, warning=FALSE, collapse=FALSE}
+library(lme4) # for the analysis
+library(haven) # to load the SPSS .sav file
+library(tidyverse) # needed for data manipulation.
+library(RColorBrewer) # needed for some extra colours in one of the graphs
+library(lmerTest)# to get p-value estimations that are not part of the standard lme4 packages
+```
+
+
+The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates).
+To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the read_sav() command.
+
+Alternatively, you can directly download them from GitHub into your R work space using the following command:
+```{r class.source = 'fold-show'}
+popular2data <- read_sav(file ="https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav?raw=true")
+```
+GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see https://github.com/)
+
+### Data cleaning
+There are some variables in the dataset that we do not use, so we can select the variables we will use and have a look at the first few observations.
+
+```{r}
+popular2data <- select(popular2data, pupil, class, extrav, sex, texp, popular) # we select just the variables we will use
+head(popular2data) # we have a look at the first 6 observations
+```
+
+
+## Step 3: Plotting the Data
+
+Before we start the analysis, we can plot the relationship between extraversion and popularity, without taking into consideration the multilevel structure of the data.
+
+```{r}
+ggplot(data  = popular2data,
+       aes(x = extrav,
+           y = popular))+
+  geom_point(size = 1.2,
+             alpha = .8,
+             position = "jitter")+# to add some random noise for plotting purposes
+  theme_minimal()+
+  labs(title = "Popularity vs. Extraversion")
+```
+
+Now we can add a regression line to this plot.
+
+```{r}
+ggplot(data  = popular2data,
+       aes(x = extrav,
+           y = popular))+
+  geom_point(size     = 1.2,
+             alpha    = .8,
+             position = "jitter")+ #to add some random noise for plotting purposes
+  geom_smooth(method = lm,
+              se     = FALSE, 
+              col    = "black",
+              size   = .5, 
+              alpha  = .8)+ # to add regression line
+  theme_minimal()+
+  labs(title    = "Popularity vs. Extraversion",
+       subtitle = "add regression line")
+```
+
+So far we have ignored the nested multilevel structure of the data. We can show this multilevel structure by colour coding the different classes.
+
+```{r}
+ggplot(data    = popular2data,
+       aes(x   = extrav,
+           y   = popular,
+           col = class))+ #to add the colours for different classes
+  geom_point(size     = 1.2,
+             alpha    = .8,
+             position = "jitter")+ #to add some random noise for plotting purposes
+  theme_minimal()+
+  theme(legend.position = "none")+
+  scale_color_gradientn(colours = rainbow(100))+
+  labs(title    = "Popularity vs. Extraversion",
+       subtitle = "add colours for different classes")
+```
+
+Now we can draw different regression lines for the 100 different classes in the data
+
+
+```{r}
+ggplot(data      = popular2data,
+       aes(x     = extrav,
+           y     = popular,
+           col   = class,
+           group = class))+ #to add the colours for different classes
+  geom_point(size     = 1.2,
+             alpha    = .8,
+             position = "jitter")+ #to add some random noise for plotting purposes
+  theme_minimal()+
+  theme(legend.position = "none")+
+  scale_color_gradientn(colours = rainbow(100))+
+  geom_smooth(method = lm,
+              se     = FALSE,
+              size   = .5, 
+              alpha  = .8)+ # to add regression line
+  labs(title    = "Popularity vs. Extraversion",
+       subtitle = "add colours for different classes and regression lines")
+```
+
+We clearly see that the relationship between extraversion and popularity is not the same in all classes, but on average there is a clear positive relationship. In this tutorial we will show the estimation of these different slopes (and how the explain these differences). Again, for more information please refer the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/).  
+
+We can also colour code the most extreme regression lines.
+
+```{r, message=FALSE, warning=FALSE}
+# To colour code the extremes, we need to write a small function that calculates the regression lines and adds a collumn indicating which clusters have the most extreme.
+f1 <- function(data, x, y, grouping, n.highest = 3, n.lowest = 3){
+  groupinglevel <- data[,grouping]
+  res           <- data.frame(coef = rep(NA, length(unique(groupinglevel))), group = unique(groupinglevel))
+  names(res)    <- c("coef", grouping)
+  for(i in 1:length(unique(groupinglevel))){
+    data2    <- as.data.frame(data[data[,grouping] == i,])
+    res[i,1] <- as.numeric(lm(data2[, y] ~ data2[, x])$coefficients[2])
+  }
+  top    <- res %>% top_n(n.highest, coef)
+  bottom <- res %>% top_n(-n.lowest, coef)
+  res    <- res %>% mutate(high_and_low = ifelse(coef %in% top$coef, "top",  ifelse(coef %in% bottom$coef, "bottom", "none")))
+  data3  <- left_join(data, res)
+  return(data3)
+}
+
+```
+ 
+Now we can use this function on the popularity data.
+```{r, message=FALSE, warning=FALSE}
+f1(data = as.data.frame(popular2data), 
+   x    = "extrav",
+   y    = "popular",
+   grouping = "class",
+   n.highest = 3, 
+   n.lowest = 3) %>%
+  ggplot()+
+  geom_point(aes(x     = extrav,
+                 y     = popular, 
+                 fill  = class, 
+                 group = class),
+             size     =  1, 
+             alpha    = .5, 
+             position = "jitter", 
+             shape    = 21, 
+             col      = "white")+
+  geom_smooth(aes(x     = extrav,
+                  y     = popular,
+                  col   = high_and_low,
+                  group = class,
+                  size  = as.factor(high_and_low),
+                  alpha = as.factor(high_and_low)),
+              method = lm,
+              se     = FALSE)+
+  theme_minimal()+
+  theme(legend.position = "none")+
+  scale_fill_gradientn(colours = rainbow(100))+
+  scale_color_manual(values=c("top"      = "blue",
+                              "bottom"   = "red",
+                              "none"     = "grey40"))+
+  scale_size_manual(values=c("top"       = 1.2,
+                              "bottom"   = 1.2,
+                              "none"     = .5))+
+  scale_alpha_manual(values=c("top"      = 1,
+                             "bottom"    = 1,
+                             "none"      =.3))+
+  labs(title="Linear Relationship Between Popularity and Extraversion for 100 Classes",
+       subtitle="The 6 with the most extreme relationship have been highlighted red and blue")
+```
+
+
+## Step 4: Analysing the Data
+
+
+## Intercept only model
+The first model that we replicate is the intercept only model.
+```{r}
+interceptonlymodel <- lmer(formula = popular ~ 1 + (1|class),
+                           data    = popular2data) #to run the model
+```
+
+If we look at the different inputs for the LMER function we:
+
+1.  have "popular", which indicates the dependent variable we want to predict.
+2.  a "~", that we use to indicate that we now give the other variables of interest.
+(comparable to the '=' of the regression equation).
+3.  a "1" in the formula which indicates the intercept.
+4.  since this is an intercept only model, we do not have any other independent variables here. 
+5.  between brackets we have the random effects/slopes. Again the value 1 is to indicate the intercept and the variables right of the vertical "|" bar are use to indicate grouping variables. In this case the class ID. So the dependent variable 'popular' is predicted by a intercept and a random error term for the intercept. 
+6.  Finally we specify which dataset we want to use after the `data =`  command
+
+For more information on the LMER function see the [Lme4 manual](https://cran.r-project.org/web/packages/lme4/lme4.pdf) 
+
+
+
+
+```{r}
+summary(interceptonlymodel) #to get paramater estimates.
+```
+
+If we look at the summary output we see under the Random Effects that the residual variance on the class level  0.7021 and residual variance on the first level (pupil level) is 1.2218. This means that the intraclass correlation (ICC) is 0.7021/(1.2218+0.7021)=.36.
+
+Under Fixed Effects the estimate of the intercept is reported, which is 5.078.
+
+We can also use the sjstats package to calculate the ICC from the lmer output. You of course will have to load this package first, using `library(sjstats)`
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+library(sjstats)
+```
+
+```{r} 
+icc(interceptonlymodel)
+```
+
+## First Level Predictors
+
+Now we can now first add first (student) level predictors. The first level predictors are sex and extraversion. For now we just add them as fixed effects and not yet as random slopes. Before doing so we can plot the difference in effect for the two genders. We see there likely is an average difference between genders, but no difference in slopes (regression coefficients).
+```{r, message=FALSE, warning=FALSE}
+ggplot(data = popular2data, 
+       aes(x   = extrav,
+           y   = popular, 
+           col = as.factor(sex)))+
+  geom_point(size     = 1, 
+             alpha    = .7, 
+             position = "jitter")+
+  geom_smooth(method   = lm,
+              se       = T, 
+              size     = 1.5, 
+              linetype = 1, 
+              alpha    = .7)+
+  theme_minimal()+
+  labs(title    = "Linear Relationship Between Popularity and Extraversion for the 2 Genders", 
+       subtitle = "The linear relationship between the two is similar for both genders, with a clear intercept difference")+
+  scale_color_manual(name   =" Gender",
+                     labels = c("Boys", "Girls"),
+                     values = c("lightblue", "pink"))
+```
+
+
+```{r}
+model1 <- lmer(formula = popular ~ 1 + sex + extrav + (1|class), 
+               data    = popular2data)
+summary(model1)
+```
+
+As default the lmer function does only give test statistics and estimates, but no p-values. However, because we use the `lmerTest package` we do get P-values. The intercept is now 2.14, the regression coefficient for sex is 1.25, and the regression coefficient  for extraversion 0.44. In the last column of the Fixed effects table of the output we see the P-values, which indicate all regression coefficients are significantly different from 0. The results of this output are not given in the book.
+
+## First and Second Level Predictors
+
+We now also (in addition to the level 1 variables that were both significant) add a predictor variable on the second level (teacher experience).
+
+```{r}
+model2<-lmer(popular~1 + sex + extrav + texp+(1|class), data=popular2data)
+summary(model2)
+```
+
+The results show  that both the level 1 and level 2 variables are significant. However, we have not added random slopes yet for any variables (as is done in table 2.1 in the book).
+
+We can now also calculate the explained variance at level 1 and at level 2 compared to the base model.
+
+
+
+```{r, echo= F}
+level1var_model0 <- summary(interceptonlymodel)$sigma^2
+level2var_model0 <- summary(interceptonlymodel)$varcor[[1]][[1]]
+
+
+level1var_model2 <- summary(model2)$sigma^2
+level2var_model2 <- summary(model2)$varcor[[1]][[1]]
+
+```
+
+
+*  For level 1 this is (`r round(level1var_model0, 4)` - `r round(level1var_model2, 4)`)/`r round(level1var_model0, 4)` = `r round((level1var_model0- level1var_model2)/level1var_model0, 2)` 
+*  For level 2 this is (`r round(level2var_model0, 4)` - `r round(level2var_model2, 4)`)/`r round(level2var_model0, 4)` = `r round((level2var_model0- level2var_model2)/level2var_model0, 2)`
+
+
+## First and Second Level Predictors with Random Slopes (1)
+Now we also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in LMER just add the variables for which we want to add random slopes to the random part of  the input. This means that `(1|class) `becomes `(1+sex+extrav |class)`.
+
+```{r}
+model3<-lmer(formula = popular~1 + sex + extrav + texp+(1+sex+extrav |class),
+             data    = popular2data)
+summary(model3)
+```
+
+We can see that all the fixed regression slopes are still significant. However, no significance test for the Random effects are given, but we do see that the error term (Variance) for the slope of the variable sex is estimated to be very small (0.0024). This likely means that there is no slope variation of the SEX variable between classes and therefore the random slope estimation can be dropped from the next analyses. Since there is no direct significance test for this Variance we can use the `ranova()` function of the `lmerTest` package, which will give us an ANOVA-like table for random effects. It checks whether the model becomes significantly worse if a certain random effect is dropped (formally known as likelihood ratio tests), if this is not the case, the random effect is not significant.
+
+```{r}
+ranova(model3)
+```
+We see that the random effect of sex is indeed not significant (P = 0.6792) and the random effect of extraversion is significant  (P<.0001).
+
+
+## First and Second Level Predictors with Random Slopes (2)
+
+We continue after omitting the random slope of sex.
+
+```{r}
+model4<-lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + extrav |class), 
+             data    = popular2data)
+summary(model4)
+```
+
+We see that:
+
+*  The intercept is 0.736
+*  The fixed effect of sex is 1.252
+*  The effect of teacher experience is 0.091
+*  The mean effect of extraversion is 0.453
+*  The random effect of the slope of extraversion is 0.035
+*  First level residual variance is 0.552
+*  The residual variance on the second level is 1.303
+
+&nbsp;
+
+## First and Second Level Predictors with Random Slopes and Crosslevel Interaction
+
+As a final step, we can add a cross-level interaction between teacher experience and extraversion (since this had a significant random effect, that we might be able to explain). In other words, we want to investigate whether the differences in the relation between extraversion and popularity in the classes can be explained by the teacher experience of the teacher of that class. In this next step to reproduce Model M2 from Table 2.3, we add the cross-level interaction between Extraversion and Teacher experience. This means we have to add TEXP as a predictor for the coefficient of EXTRAV. The cross level interaction term between extraversion and teacher experience can be created by the ':' sign or by multiplying the terms.
+
+If we put all of this in formula form we get: $Popularity_{ij}=\beta_{0j}+\beta_1*gender_{ij}+ \beta_{2j}*extraversion_{ij}+e_{ij}$. 
+
+In which $\beta_{0j}=\gamma_{00}+\gamma_{01}*experience_j+u_{0j}$  and  $\beta_{2j}= \gamma_{20}+\gamma_{21}*experience_j+u_{2j}$
+
+Combined we get:
+
+$$Popularity_{ij}= \gamma_{00}+\gamma_{10}*sex_{ij}+\gamma_{20}*extraversion_{ij}+\gamma_{01}*experience_j+\gamma_{21}*extraversion_{ij}*experience_j+u_{2j}*extraversion_{ij}+u_{0j}+e_{ij}$$
+
+```{r}
+model5<-lmer(formula = popular ~ 1 + sex + extrav + texp+ extrav:texp + (1 + extrav | class), 
+             data    = popular2data)
+summary(model5)
+```
+
+The interaction term is denoted by `extrav:texp` under `Fixed effects` and is estimated at -0.025.
+
+From these results we can now also calculate the explained slope variance of extraversion by using teacher experience as second level variable: (0.03455-0.005409)/0.03455 = .843 (These results are slight different then in the book and than in HLM, that is because different estimation and rounding methods are used). So 84.3%  of the variance of the regression coefficients of the extraversion slopes can be explained by the experience of the teacher.
+
+
+As explained in the book and shown in the results, both the intercept and the slope of the coefficient of extraversion on popularity is influenced by teacher experience. A male student (SEX = 0) with a extraversion score of 0 in a class with a teacher with 0 years of experience has an expected popularity of -1.2096 (these values are of course impossible,  centering is a good strategy to prevent these impossible results). A similar (male) student will improve its popularity with 0.8036 points for every point more extraversion. When teacher experiences increases, the intercept also increases with 0.226 for every year of experience. So the same male student with no extraversion in a class with a teacher with 15 years of experience has an expected popularity score of -1.2096 + (15 x .226) = 2.1804. The teacher experience also lessens the effect of extraversion on popularity. For a teacher with 15 years of experience the regression coefficient of extraversion on popularity is only 0.8036 - (15 x .0247) = 0.4331 (compared to 0.8036 in a class with a teacher with 0 years of experience).
+
+In a plot we can also clearly see that years of teacher experience has influence on both the intercept and the regression coefficient of extraversion on popularity. 
+```{r}
+
+ggplot(data = popular2data,
+       aes(x = extrav, 
+           y = popular, 
+           col = as.factor(texp)))+
+  viridis::scale_color_viridis(discrete = TRUE)+
+  geom_point(size     = .7,
+             alpha    = .8, 
+             position = "jitter")+
+  geom_smooth(method = lm,
+              se     = FALSE,
+              size   = 2,
+              alpha  = .8)+
+  theme_minimal()+
+  labs(title    = "Linear Relationship for Different Years of Teacher Experience as Observed", 
+       subtitle = "The linear relationship between the two is not the same for all classes", 
+       col      = "Years of\nTeacher\nExperience")
+```
+&nbsp;
+
+## Residual Checks
+To end this tutorial we will check whether the residuals of the model are normally distributed (at both levels). In addition to residuals being normally distributed, a multilevel model assume that variance of the residuals is equal across groups (classes) for the different random effects. Statistical tests of normality and equality of variance across groups do exists, but this tutorial is limited to visual inspections.
+
+#### 1  
+First, we can check for homoscedasticity by comparing residuals to the fitted items. In our example we see a nice fat circle and no cone shaped figure.
+
+```{r}
+plot(fitted(model5), resid(model5,type = "pearson"))# this will create the plot
+abline(0,0, col="red")
+```
+
+We can also use a QQ-plot to check for normality of residuals. This plot does indicate residuals are normally distributed.
+
+```{r}
+qqnorm(resid(model5)) 
+qqline(resid(model5), col = "red") # add a perfect fit line
+```
+
+#### 2 
+Now we can also check it for the two random effects (intercept and extrav) for the 100 classes. Again, there is no reason to suspect any violation was broken.
+ 
+```{r}
+qqnorm(ranef(model5)$class[,1] )
+qqline(ranef(model5)$class[,1], col = "red")
+qqnorm(ranef(model5)$class[,2])
+qqline(ranef(model5)$class[,2], col = "red")
+```
+
