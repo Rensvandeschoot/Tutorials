@@ -122,9 +122,7 @@ _$Age^2$: Mean (1050.22), SE (35.97)_
 
 ## plot
 
-
-
-We can also plot the expected relationship.
+Before we continue with analyzing the data we can also plot the expected relationship.
 
 
 ```r
