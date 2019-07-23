@@ -22,7 +22,7 @@ In this tutorial, we start by using the default prior settings of the software. 
 This tutorial expects:
 
 - Any installed version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files)
-- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.4 and Lavaan version 0.6.3 in R version3.6.0.
+- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.4 and Lavaan version 0.6.3 in R version 3.6.0
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
