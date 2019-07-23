@@ -217,9 +217,6 @@ If we look at the different inputs for the LMER function we:
 
 For more information on the LMER function see the [Lme4 manual](https://cran.r-project.org/web/packages/lme4/lme4.pdf) 
 
-
-
-
 ```{r}
 summary(interceptonlymodel) #to get paramater estimates.
 ```
@@ -276,7 +273,7 @@ As default the lmer function does only give test statistics and estimates, but n
 We now also (in addition to the level 1 variables that were both significant) add a predictor variable on the second level (teacher experience).
 
 ```{r}
-model2<-lmer(popular~1 + sex + extrav + texp+(1|class), data=popular2data)
+model2 <- lmer(popular ~ 1 + sex + extrav + texp + (1 | class), data=popular2data)
 summary(model2)
 ```
 
@@ -284,16 +281,12 @@ The results show  that both the level 1 and level 2 variables are significant. H
 
 We can now also calculate the explained variance at level 1 and at level 2 compared to the base model.
 
-
-
-```{r, echo= F}
+```{r, echo = F}
 level1var_model0 <- summary(interceptonlymodel)$sigma^2
 level2var_model0 <- summary(interceptonlymodel)$varcor[[1]][[1]]
 
-
 level1var_model2 <- summary(model2)$sigma^2
 level2var_model2 <- summary(model2)$varcor[[1]][[1]]
-
 ```
 
 
@@ -305,8 +298,8 @@ level2var_model2 <- summary(model2)$varcor[[1]][[1]]
 Now we also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in LMER just add the variables for which we want to add random slopes to the random part of  the input. This means that `(1|class) `becomes `(1+sex+extrav |class)`.
 
 ```{r}
-model3<-lmer(formula = popular~1 + sex + extrav + texp+(1+sex+extrav |class),
-             data    = popular2data)
+model3 <- lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + sex + extrav | class),
+               data    = popular2data)
 summary(model3)
 ```
 
@@ -323,8 +316,8 @@ We see that the random effect of sex is indeed not significant (P = 0.6792) and 
 We continue after omitting the random slope of sex.
 
 ```{r}
-model4<-lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + extrav |class), 
-             data    = popular2data)
+model4 <- lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + extrav |class), 
+               data    = popular2data)
 summary(model4)
 ```
 
@@ -394,7 +387,7 @@ To end this tutorial we will check whether the residuals of the model are normal
 First, we can check for homoscedasticity by comparing residuals to the fitted items. In our example we see a nice fat circle and no cone shaped figure.
 
 ```{r}
-plot(fitted(model5), resid(model5,type = "pearson"))# this will create the plot
+plot(fitted(model5), resid(model5, type = "pearson"))# this will create the plot
 abline(0,0, col="red")
 ```
 

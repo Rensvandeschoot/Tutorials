@@ -249,9 +249,6 @@ If we look at the different inputs for the LMER function we:
 For more information on the LMER function see the [Lme4 manual](https://cran.r-project.org/web/packages/lme4/lme4.pdf) 
 
 
-
-
-
 ```r
 summary(interceptonlymodel) #to get paramater estimates.
 ```
@@ -379,7 +376,7 @@ We now also (in addition to the level 1 variables that were both significant) ad
 
 
 ```r
-model2<-lmer(popular~1 + sex + extrav + texp+(1|class), data=popular2data)
+model2 <- lmer(popular ~ 1 + sex + extrav + texp + (1 | class), data=popular2data)
 summary(model2)
 ```
 
@@ -424,8 +421,6 @@ We can now also calculate the explained variance at level 1 and at level 2 compa
 
 
 
-
-
 *  For level 1 this is (1.2218 - 0.592)/1.2218 = 0.52 
 *  For level 2 this is (0.7021 - 0.2954)/0.7021 = 0.58
 
@@ -435,8 +430,8 @@ Now we also want to include random slopes. In the third column of Table 2.1, bot
 
 
 ```r
-model3<-lmer(formula = popular~1 + sex + extrav + texp+(1+sex+extrav |class),
-             data    = popular2data)
+model3 <- lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + sex + extrav | class),
+               data    = popular2data)
 ```
 
 ```
@@ -519,8 +514,8 @@ We continue after omitting the random slope of sex.
 
 
 ```r
-model4<-lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + extrav |class), 
-             data    = popular2data)
+model4 <- lmer(formula = popular ~ 1 + sex + extrav + texp + (1 + extrav |class), 
+               data    = popular2data)
 summary(model4)
 ```
 
@@ -667,7 +662,7 @@ First, we can check for homoscedasticity by comparing residuals to the fitted it
 
 
 ```r
-plot(fitted(model5), resid(model5,type = "pearson"))# this will create the plot
+plot(fitted(model5), resid(model5, type = "pearson"))# this will create the plot
 abline(0,0, col="red")
 ```
 

@@ -21,16 +21,16 @@ This tutorial expects:
 *  Basic knowledge of correlation and regression
 *  Basic knowledge of coding. If you don't have any experience in R, you might want to start with our [R-turorial](https://www.rensvandeschoot.com/tutorials/r-how-to-get-started/).
 
-  <p>&nbsp;</p>
+
 
 
 ## Example Data
 
-The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
-For the current exercise we are interested in the question whether age (M = 30.7, SD = 4.48) of the Ph.D. recipients is related to a delay in their project.
+For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.
 
-The relation between completion time and age is expected to be non-linear. This might be due to that at a certain point in your life (i.e., midthirties), family life takes up more of your time than when you are in your twenties or when you are older.
+The relation between completion time and age is expected to be non-linear. This might be due to that at a certain point in your life (i.e., mid thirties), family life takes up more of your time than when you are in your twenties or when you are older.
 
 So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and $age$ (*E22_Age*) and $age^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>.
 
@@ -38,11 +38,11 @@ So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and
 
 ##### _**Question:** Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?_
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+<pre><code>[expand title=\"Answer\" trigclass=\\"noarrow my_button\\" targclass="my_content" tag= &quot; button &quot;]</code></pre>
 
 $H_0:$ _$Age^2$ is not related to a delay in the PhD projects._
 
-$H_1:$ _$Age$^2$ is related to a delay in the PhD projects._ 
+$H_1:$ _$Age^2$ is related to a delay in the PhD projects._ 
 
 [/expand]
 
@@ -56,15 +56,25 @@ Install the following packages in R:
 ```{r, results='hide', message=FALSE, warning=FALSE}
 library(lavaan)
 library(psych) #to get some extended summary statistics
+library(tidyverse) # needed for data manipulation and plotting
 ```
 
 
 You can find the data in the file <span style="color:red"> ` phd-delays.csv` </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into R using the following syntax:
 ```{r, results='hide', message=FALSE, warning=FALSE}
 #read in data
-data <- read.csv2(file="phd-delays.csv")
-colnames(data)<- c("diff", "child", "sex","age","age2")
+dataPHD <- read.csv2(file="phd-delays.csv")
+colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 ```
+
+
+Alternatively, you can directly download them from GitHub into your R work space using the following command:
+```{r, eval=FALSE}
+dataPHD <- read.csv2(file="https://raw.githubusercontent.com/LaurentSmeets/Tutorials/master/Blavaan/phd-delays.csv")
+colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
+```
+
+GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see https://github.com/)
 
 Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the  `describe()` function.
 
@@ -72,23 +82,53 @@ Once you loaded in your data, it is advisable to check whether your data import 
   
 ##### _**Question:** Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data._
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title= \"Answer\" trigclass= \"noarrow my_button\" targclass=\"my_content\" tag=\"div\""]
+
 
 ```{r}
-describe(data)
+describe(dataPHD)
 ```
 
 _The descriptive statistics make sense:_
 
 _diff: Mean (9.97), SE (0.791)_
 
-_$age$: Mean (31.68), SE (0.38)_
+_$Age$: Mean (31.68), SE (0.38)_
 
-_$Age$^2$: Mean (1050.22), SE (35.97)_
+_$Age^2$: Mean (1050.22), SE (35.97)_
 
 [/expand]
 
   <p>&nbsp;</p>
+
+## plot
+
+
+
+We can also plot the expected relationship.
+
+```{r}
+dataPHD %>%
+  ggplot(aes(x = age,
+             y = diff)) +
+  geom_point(position = "jitter",
+             alpha    = .6)+ #to add some random noise for plotting purposes
+  theme_minimal()+
+  geom_smooth(method = "lm",  # to add  the linear relationship
+              aes(color = "linear"),
+              se = FALSE) +
+  geom_smooth(method = "lm",
+              formula = y ~ x + I(x^2),# to add  the quadratic relationship
+              aes(color = "quadratic"),
+              se = FALSE) +
+  labs(title    = "Delay vs. age",
+       subtitle = "There seems to be some quadratic relationship",
+       x        = "Age",
+       y        = "Delay",
+       color    = "Type of relationship" ) +
+  theme(legend.position = "bottom")
+```
+
 
 
 ## Regression Analysis
@@ -101,7 +141,7 @@ the model and finally acquire the summary. The model is specified as follows:
 2.  A "~", that we use to indicate that we now give the other variables of interest.
     (comparable to the '=' of the regression equation).
 3.  The different indepedent variables separated by the summation symbol '+'.
-4.  Finally, we insert that the dependent variable has a variance and that we
+4.  Finally, we specify that the dependent variable has a variance and that we
     want an intercept.
 5. To fit the model we use the `lavaan()` function, which needs a `model=` and a `data=` input.
 
@@ -121,7 +161,6 @@ model.regression <- '#the regression model
 
                     #we want to have an intercept
                     diff ~ 1'
-
 ```
 
 Now, perform a multiple linear regression and answer the following question:
@@ -130,12 +169,12 @@ Now, perform a multiple linear regression and answer the following question:
 
 ##### _**Question:** Using a significance criterion of 0.05, is there a significant effect of $age$ and $age^2$?_
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 
 ```{r}
-fit <- lavaan(model=model.regression, data=data)
-summary(fit, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
+fit <- lavaan(model = model.regression, data = dataPHD)
+summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
   <p>&nbsp;</p>
@@ -155,7 +194,7 @@ Surveys in academia have shown that a large number of researchers interpret the 
   
 ##### _**Question:** What can you conclude about the hypothesis being tested using the correct interpretation of the p-value?_
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 _Assuming that the null hypothesis is true in the population, the probability of obtaining a test statistic that is as extreme or more extreme as the one we observe is &lt;0.1%. Because the effect of $age^2$ is below our pre-determined alpha level, we reject the null hypothesis._
 
@@ -170,7 +209,7 @@ Recently, a group of 72 notable statisticians proposed to shift the significance
 
 ##### _**Question:** How does your conclusion change if you follow this advice?_
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 _Because the p-values for both regression coefficients were really small &lt;.001, the conclusion doesn&#39;t change in this case._
 
@@ -190,7 +229,7 @@ which has already been done in the previous step.
 
 ##### _**Question:** What can you conclude about the hypothesis being tested using the correct interpretation of the confidence interval?_
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 
 _$Age$: 95% CI [1.514, 3.801]_
@@ -212,7 +251,7 @@ Additionally, to make statements about the actual relevance of your results, foc
 
 ##### _**Question:** What can you say about the relevance of your results? Focus on the explained variance and the standardized regression coefficients._
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 _R$^2$= 0.063 in the regression model. This means that 6.3% of the variance in the PhD delays, can be explained by $age$ and $age^2$._ 
 
@@ -238,11 +277,9 @@ Only a combination of different measures assessing different aspects of your res
   <p>&nbsp;</p>
 
 
-
-
 ##### _**Question:** Drawing on all the measures we discussed above, formulate an answer to your research question._
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 _The variables $age$ and $age^2$ are significantly related to PhD delays. However, the total explained variance by those two predictors is only 6.3%. Therefore, a large part of the variance is still unexplained._
 
