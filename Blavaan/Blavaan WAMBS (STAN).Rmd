@@ -1,5 +1,5 @@
 ---
-title: "WAMBS Blavaan Tutorial (using STAN)"
+title: "WAMBS Blavaan Tutorial (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
 date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
 output:
@@ -21,7 +21,7 @@ In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-
 
 This tutorial expects:
 
-- Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
+- Installation of [Stan](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
 - Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version `r packageVersion("blavaan")` and Lavaan version `r packageVersion("lavaan")` in R version `r paste0(R.Version()[c("major","minor")], collapse = ".")`
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
@@ -63,7 +63,7 @@ This tutorial expects:
 ## **Example Data**
 
 
-The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).  The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv).Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).  The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 30.7, SD = 4.48, min-max = 26-69) of the Ph.D. recipients is related to a delay in their project.
 
@@ -99,6 +99,7 @@ library(rstan)
 library(blavaan)
 library(psych) #to get some extended summary statistics
 library(tidyverse) # needed for data manipulation and plotting
+library(coda) 
 ```
 
 You can find the data in the file <span style="color:red"> ` phd-delays.csv` </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into R using the following syntax:
@@ -166,7 +167,7 @@ We first need to determine which distribution to use for the priors. Let&#39;s u
 
 Next, we need to specify actual values for the hyperparameters of the prior distributions. Let&#39;s say we found a previous study and based on this study the following hyperparameters can be specified:
 
-- intercept$\sim \mathcal{N}(-35, 20)$
+- intercept $\sim \mathcal{N}(-35, 20)$
 - $\beta_1 \sim \mathcal{N}(.8, 5)$
 - $\beta_2 \sim \mathcal{N}(0, 10)$
 - $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.
@@ -174,10 +175,10 @@ Next, we need to specify actual values for the hyperparameters of the prior dist
 It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the 'XX' with the values of the hyperparematers.
 
 ```{r, eval=FALSE}
-par(mfrow=c(2,2))
-plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
-plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "effect Age")
-plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "effect Age^2")
+par(mfrow = c(2,2))
+plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
+plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = "effect Age")
+plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = "effect Age^2")
 ```
 
 
@@ -185,27 +186,27 @@ plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "effect Age^2")
 
 
 ```{r}
-par(mfrow=c(2,2))
-plot(density(rnorm(n=100000,mean=-35, sd=sqrt(20))), main= "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
-plot(density(rnorm(n=100000,mean=.8, sd=sqrt(5))), main= "effect Age")
-plot(density(rnorm(n=100000,mean=0, sd=sqrt(10))), main= "effect Age^2")
+par(mfrow = c(2,2))
+plot(density(rnorm(n = 100000, mean = -35, sd = sqrt(20))), main = "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
+plot(density(rnorm(n = 100000, mean = .8, sd = sqrt(5))),   main = "effect Age")
+plot(density(rnorm(n = 100000, mean = 0,  sd = sqrt(10))),  main = "effect Age^2")
 ```
 [/expand]
 
 We can also plot what the our expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means of the priors and do not yet qualify the different levels of uncertainty. Replace the 'XX' in the following code with the prior means.
 
 ```{r, eval=FALSE}
-years<- 20:80
-delay<- XX+XX*years+XX*years^2
-plot(years, delay, type= "l")
+years <- 20:80
+delay <- XX + XX*years + XX*years^2
+plot(years, delay, type = "l")
 ```
 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r}
-years<- 20:80
+```{r, eval=FALSE}
+years <- 20:80
 delay<--35+.8*years+0*years^2
 plot(years, delay, type= "l")
 ```
@@ -215,15 +216,15 @@ plot(years, delay, type= "l")
 We can also plot what the our expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
 
 ```{r}
-years<- 20:80
-delay<--35+.8*years+0*years^2
-plot(years, delay, type= "l")
+years <- 20:80
+delay <- -35 + .8*years + 0*years^2
+plot(years, delay, type =  "l")
 ```
 
 
   <p>&nbsp;</p>
 
-##jnbhsa **Step 2: Run the model and check for convergence**
+##**Step 2: Run the model and check for convergence**
 
 Specify the regression model you want to analyze and run the regression with the `blavaan()` function. The priors for the intercept, the regression coefficients and the variance are specified in the regression model below.
 
@@ -257,12 +258,17 @@ model.regression <- '#the regression model
 
 ### 2. Does the trace-plot exhibit convergence?
 
-First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples. In addition Blavaan needs an adaptation period, which is by default a 1000 samples. We do not change this default.
+First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples. In addition, Blavaan needs an adaptation period, which is by default a 1000 samples. We do not change this default.
 
-```{r, results='hide', message=FALSE, warning=FALSE}
-fit.bayesfewsample <- blavaan(model = model.regression, data = dataPHD,
-                              n.chains = 3, burnin = 250, sample = 500, 
-                              target = "stan",  test = "none", seed = 123)
+
+```{r,  message=F, warning=F}
+fit.bayesfewsample <- blavaan(model = model.regression,
+                              data = dataPHD,  test = "none",  
+                              target = "stan", burnin = 250,
+                              sample = 500, seed = 12345, 
+                              bcontrol = list(cores = 4))
+
+posteriors_fewsamples <- blavInspect(fit.bayesfewsample, what="mcmc")
 
 # the test="none" input stops the calculations of some posterior checks, we do not need at this moment and speeds up the process. 
 # the seed command is simply to guarantee the same exact result when running the sampler multiple times. You do not have to set this. 
@@ -285,7 +291,7 @@ We can check if the chains convergenced by having a look at the convergence diag
 
 To obtain the Gelman and Rubin diagnostic use:
 ```{r}
-mcmc.list <- blavInspect(fit.bayesfewsample, what = "mcmc")
+mcmc.list <- posteriors_fewsamples
 gelman.diag(mcmc.list)
 gelman.plot(mcmc.list)
 ```
@@ -299,18 +305,20 @@ These statistics confirm that the chains have not converged. Therefore, we run t
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 fit.bayes <- blavaan(model.regression, data = dataPHD,
-                              n.chains = 3, burnin = 500, sample = 2500, 
-                              target = "stan",  test = "none", seed = 123)
+                              n.chains = 3, burnin = 2000, sample = 5000, 
+                              target = "stan",  test = "none", seed = 123, 
+                               bcontrol = list(cores = 4))
+posteriors_fit.bayes <- blavInspect(fit.bayes, what="mcmc")
 ```
 
 Obtain the trace plots again.
 ```{r}
-plot(fit.bayes, pars = 1:4, plot.type = "stan_trace", trace.iters = 75000)
+plot(fit.bayes, pars = 1:4, plot.type = "stan_trace")
 ```
 
 Obtain the Gelman and Rubin diagnostic again.
 ```{r}
-mcmc.list <- blavInspect(fit.bayes, what = "mcmc")
+mcmc.list <- posteriors_fit.bayes
 gelman.diag(mcmc.list)
 gelman.plot(mcmc.list)
 ```
@@ -320,7 +328,7 @@ Obtain Geweke diagnostic again.
 geweke.plot(mcmc.list)
 ```
 
-Now we see that the Gelman and Rubin diagnostic (PRSF) is close to 1 for all parameters and the the Geweke diagnostic is not >1.96.
+Now we see that the Gelman and Rubin diagnostic (PRSF) is close to 1 for all parameters and the the Geweke diagnostic is not > 1.96.
 
 
   <p>&nbsp;</p>
@@ -331,11 +339,12 @@ As is recommended in the WAMBS checklist, we double the amount of iterations to 
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 fit.bayesdouble <- blavaan(model.regression, data = dataPHD,
-                              n.chains = 3, burnin = 50000, sample = 100000, 
-                              target = "jags",  test = "none", seed = c(123,456,789))
+                           n.chains = 3, burnin = 4000, sample = 10000, 
+                           target = "stan",  test = "none", seed = 123, 
+                           bcontrol = list(cores = 4))
 ```
 
-You should again have a look at the above-mentioned convergence statistics, but we can also compute the relative bias to inspect if doubling the number of iterations influences the posterior parameter estimates ($bias= 100*\frac{(model \; with \; double \; iteration \; - \; initial \; converged \; model )}{model \; with \; double \; iteration \;}$). In order to preserve clarity we  just calculate the bias of the two regression coefficients.
+You should again have a look at the above-mentioned convergence statistics, but we can also compute the relative bias to inspect if doubling the number of iterations influences the posterior parameter estimates ($bias= 100*\frac{(model \; with \; double \; iteration \; - \; initial \; converged \; model )}{initial \; converged \; model}$). In order to preserve clarity we  just calculate the bias of the two regression coefficients.
 
 You should combine the relative bias in combination with substantive knowledge about the metric of the parameter of interest to determine when levels of relative deviation are negligible or problematic. For example, with a regression coefficient of 0.001, a 5% relative deviation level might not be substantively relevant. However, with an intercept parameter of 50, a 10% relative deviation level might be quite meaningful. The specific level of relative deviation should be interpreted in the substantive context of the model. Some examples of interpretations are:
 
@@ -351,7 +360,7 @@ _**Question:** calculate the relative bias. Are you satisfied with number of ite
 
 To get the relative bias simply save the means of the regression coefficients for the two different analyses and compute the bias. 
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval= TRUE}
 estimates            <- colMeans(as.matrix(mcmc.list)[,c("beta[1,2,1]","beta[1,3,1]")])
 mcmc.list.doubleiter <- blavInspect(fit.bayesdouble, what = "mcmc")
 estimatesdoubleiter  <- colMeans(as.matrix(mcmc.list.doubleiter)[,c("beta[1,2,1]","beta[1,3,1]")])
@@ -367,25 +376,25 @@ _The relative bias is small enough (<5%) not worry about it._
 
 ### 4.   Does the posterior distribution histogram have enough information?
 
-By having a look at the posterior distribution histogram `plot(fit.bayes, pars=1:4, plot.type="histogram")`, we can check if it has enough information. 
+By having a look at the posterior distribution histogram `plot(fit.bayes, pars=1:4, plot.type="stan_hist")`, we can check if it has enough information. 
 
 _**Question:** What can you conclude about distribution histograms?_
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r}
+```{r, eval= TRUE}
 par(mfrow=c(2,2))
-plot(fit.bayes, pars = 1:4, plot.type = "histogram")
+plot(fit.bayes, pars = 1:4, plot.type = "stan_hist")
 ```
 
 _The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you arenot satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
 
 
-If we compare this with histograms based on the first analysis (with very few iterations, this difference becomes clear:
+If we compare this with histograms based on the first analysis (with very few iterations), this difference becomes clear:
 
-```{r}
-plot(fit.bayesfewsample, pars = 1:4, plot.type = "histogram")
+```{r, eval= TRUE}
+plot(fit.bayesfewsample, pars = 1:4, plot.type = "stan_hist")
 ```
 
 [/expand]
@@ -394,13 +403,13 @@ plot(fit.bayesfewsample, pars = 1:4, plot.type = "histogram")
   <p>&nbsp;</p>
   
 
-###5.   Do the chains exhibit a strong degree of autocorrelation?
+### 5.   Do the chains exhibit a strong degree of autocorrelation?
 
 To obtain information about autocorrelation the following syntax can be used:
 
-```{r}
+```{r, eval= TRUE}
 par(mfrow = c(2,2))
-plot(fit.bayes, pars = 1:4, plot.type = "autocorr", col = 'blue')
+plot(fit.bayes, pars = 1:4, plot.type = "stan_ac", col = 'blue')
 ```
 
 _**Question:** What can you conclude about these autocorrelation plots?_
@@ -414,17 +423,14 @@ _These results show that autocorrelation is quite stong after a few lags. This m
 [/expand]
 
 
-###6.   Do the posterior distributions make substantive sense?
 
-We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to the our prior believes (priors). Using the `as.matrix()` command we bind the three MCMC chains we have of the different parameters into one chain. Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
+### 6.   Do the posterior distributions make substantive sense?
+We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to the our prior believes (priors). Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
 
-```{r}
-MCMCbinded <- as.matrix(mcmc.list)
+
+```{r, eval= TRUE}
 par(mfrow = c(2,2))
-plot(density(MCMCbinded[,'beta[1,2,1]']) , main = "Regression coefficient age")
-plot(density(MCMCbinded[,'beta[1,3,1]']),  main = "Regression coefficient age^2")
-plot(density(MCMCbinded[,'alpha[1,1,1]']), main = "Intercept")
-plot(density(MCMCbinded[,'psi[1,1,1]']),   main = "Variance")
+plot(fit.bayes, pars = 1:4, plot.type = "stan_dens",  col = 'blue')
 ```
 
 
@@ -441,7 +447,7 @@ _Yes, we see a clear negative intercept, which makes sense since a value of age 
 ## **step 3: Understanding the exact influence of the priors**
 
 First we  check the results of the analysis with the priors we used so far.
-```{r}
+```{r, eval= TRUE}
 summary(fit.bayes)
 ```
 
@@ -450,11 +456,11 @@ summary(fit.bayes)
 
 To understand how the prior on the residual variance impacts the posterior results, we compare the previous model with a model where different hyperparameters for the (Inverse) Gamma distribution are specified. To see what the priors in Blavaan are we can use the `dpriors()` command.
 
-```{r}
-dpriors(target = "jags")
+```{r, eval= TRUE}
+dpriors(target = "stan")
 ```
 
-We see that the observed variable precision parameter `itheta` has a default prior of dgamma(1,.5). By default prior distributions are placed on precisions instead of variances in Blavaan, so that the letter i in itheta stands for “inverse.” We change the hyperparameters in the regression model that was specified in step 2 using the `prior()` command. After rerunning the analysis we can then calculate a bias to see impact. So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias. 
+We see that the observed variable precision parameter `itheta` has a default prior of gamma(1,.5). By default prior distributions are placed on precisions instead of variances in Blavaan, so that the letter i in itheta stands for _“inverse.”_ We change the hyperparameters in the regression model that was specified in step 2 using the `prior()` command. After rerunning the analysis we can then calculate a bias to see impact. So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias. 
 
 
 
@@ -472,26 +478,27 @@ _**Question:** Are the results robust for different specifications of the prior 
 
 Again, we specify the gamma distribution instead of the inverse gamma distribution, because the prior is placed on the precion instead of the variance.
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+```{r, results='hide', message=FALSE, warning=FALSE, eval= TRUE}
 model.regression.difIG <- '#the regression model
-                    diff ~ prior("dnorm(0.8, 0.2)")*age + prior("dnorm(0, 0.1)")*age2
+                    diff ~ prior("normal(0.8, 2.24)")*age + prior("normal(0.8, 2.24)")*age2
 
                     #show that dependent variable has variance
-                    diff ~~ prior("dgamma(.01, .01)")*diff # if you dont specify the prior it will use the default prior. 
-
+                    diff ~~ prior("gamma(.01, .01)")*diff 
+                    
                     #we want to have an intercept
-                    diff ~ prior("dnorm(-35, 0.05)")*1'
+                    diff ~ prior("normal(-35, 4.47)")*1'
 
 fit.bayes.difIG <- blavaan(model = model.regression.difIG, data = dataPHD,
-                           n.chains = 3, burnin = 25000, sample = 50000, 
-                           target = "jags",  test = "none", seed = c(123,456,789))
+                           n.chains = 3, burnin = 2000, sample = 5000, 
+                           target = "stan",  test = "none", seed = 123, 
+                           bcontrol = list(cores = 4))
 ```
 
-```{r}
+```{r, eval= TRUE}
 summary(fit.bayes.difIG)
 ```
 
-```{r, echo = F}
+```{r, echo = F, eval= TRUE}
 summ1 <- summary(fit.bayes)
 summ2 <- summary(fit.bayes.difIG)
 as.numeric(summ1[,2])
@@ -533,7 +540,7 @@ _**Question**: What is your conclusion about the influence of the priors on the 
 
 
 
-```{r, results='hide', message=FALSE, warning=FALSE, eval=T}
+```{r, results='hide', message=FALSE, warning=FALSE,  eval= TRUE}
 model.regression.defaultprior <- '#the regression model
                     diff ~ age + age2
 
@@ -544,16 +551,17 @@ model.regression.defaultprior <- '#the regression model
                     diff ~ 1'
 
 fit.bayes.defaultpriors <- blavaan(model = model.regression.defaultprior, data = dataPHD,
-                                   n.chains = 3, burnin = 25000, sample = 50000, 
-                                   target = "jags",  test = "none", seed = c(123,456,789))
+                           n.chains = 3, burnin = 1000, sample = 4000, 
+                           target = "stan",  test = "none", seed = 123, 
+                           bcontrol = list(cores = 4))
 ```
 
 
-```{r, eval=T}
+```{r,  eval= TRUE}
 summary(fit.bayes.defaultpriors)
 ```
 
-```{r, echo = F}
+```{r, echo = F, eval= TRUE}
 summ3 <- summary(fit.bayes.defaultpriors)
 ```
 
@@ -600,7 +608,7 @@ For more information on this topic, please also refer to this [paper](http://psy
 
 For a summary on how to interpret and report models, please refer to https://www.rensvandeschoot.com/bayesian-analyses-where-to-start-and-what-to-report/
 
-```{r,  message=FALSE, warning=FALSE, eval=T}
+```{r,  message=FALSE, warning=FALSE, eval= TRUE}
 summary(fit.bayes)
 ```
 
@@ -618,9 +626,9 @@ Remember how we plotted the relation between delay and years based on the prior 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-```{r, eval=T}
-years<- 20:80
-delay<--35+2.13*years-0.02*years^2
+```{r, eval= TRUE}
+years <- 20:80
+delay <- -35 + 2.13*years - 0.02*years^2
 plot(years, delay, type= "l")
 ```
 
