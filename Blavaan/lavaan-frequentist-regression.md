@@ -10,7 +10,7 @@ output:
 
 
 ## Introduction
-This tutorial provides the reader with a basic tutorial how to perform a regression analysis in [lavaan](http://lavaan.ugent.be/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/). The data set can be found in the subfolders tilted 'Assignment Files.'
+This tutorial provides the reader with a basic tutorial how to perform a regression analysis in [lavaan](http://lavaan.ugent.be/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/).
 
 
   <p>&nbsp;</p>
@@ -336,7 +336,7 @@ _$Age$: 95% CI [1.514, 3.801]_
 
 _$Age^2$: 95% CI [-0.038, -0.014]_
 
-_ A 95% CI means, that if infinitely samples were taken from the population, then 95% of the samples contain the true population value. But we do not know whether our current sample is part of this collection, so we only have an aggregated assurance that in the long run if our analysis would be repeated our sample CI contains the true population parameter._
+_A 95% CI means, that if infinitely samples were taken from the population, then 95% of the samples contain the true population value. But we do not know whether our current sample is part of this collection, so we only have an aggregated assurance that in the long run if our analysis would be repeated our sample CI contains the true population parameter._
 
 
 [/expand]
