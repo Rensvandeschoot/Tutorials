@@ -18,8 +18,6 @@ This tutorial provides the reader with a basic tutorial how to perform a regress
 ## Preparation
 This tutorial expects:
 
-This tutorial expects:
-
 - Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.3 in R version 3.6.0
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
