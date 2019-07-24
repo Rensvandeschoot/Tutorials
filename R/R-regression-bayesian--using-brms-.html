@@ -13,7 +13,7 @@
 <meta name="author" content="By Laurent Smeets and Rens van de Schoot" />
 
 
-<title>Regression in lavaan (Frequentist)</title>
+<title>R regression Bayesian (using brms)</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -363,27 +363,24 @@ summary {
 
 
 
-<h1 class="title toc-ignore">Regression in lavaan (Frequentist)</h1>
+<h1 class="title toc-ignore">R regression Bayesian (using brms)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 24 July 2019</h4>
+<h4 class="date">Last modified: 25 July 2019</h4>
 
 </div>
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>This tutorial provides the reader with a basic tutorial how to perform a regression analysis in <a href="http://lavaan.ugent.be/">lavaan</a>. Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">frequentist statistics</a>.</p>
-<p>
- 
-</p>
-</div>
+<p>This tutorial provides the reader with a basic tutorial how to perform a <strong>Bayesian regression</strong> in <a href="https://faculty.missouri.edu/~merklee/blavaan/">Blavaan</a>, using Stan instead of as the MCMC sampler. Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">Bayesian</a> statistics.</p>
+<p>In this tutorial, we start by using the default prior settings of the software. In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the <a href="https://www.rensvandeschoot.com/wambs-checklist/">WAMBS-checklist</a>, also available in other software.</p>
 <div id="preparation" class="section level2">
-<h2>Preparation</h2>
+<h2><strong>Preparation</strong></h2>
 <p>This tutorial expects:</p>
 <ul>
-<li>Installation of R package <code>lavaan</code>. This tutorial was made using Lavaan version 0.6.3 in R version 3.6.0</li>
+<li>Installation of <a href="https://mc-stan.org/users/interfaces/rstan">STAN</a> and <a href="https://cran.r-project.org/bin/windows/Rtools">Rtools</a>. For more information please see <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started" class="uri">https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started</a></li>
+<li>Installation of R packages <code>rstan</code>, and <code>brms</code>. This tutorial was made using Blavaan version 2.8.0 and Lavaan version 0.6.3 in R version 3.6.0</li>
 <li>Basic knowledge of hypothesis testing</li>
 <li>Basic knowledge of correlation and regression</li>
+<li>Basic knowledge of <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">Bayesian</a> inference</li>
 <li>Basic knowledge of coding in R</li>
 </ul>
 </div>
@@ -398,9 +395,11 @@ summary {
 </p>
 <div id="question-write-down-the-null-and-alternative-hypotheses-that-represent-this-question.-which-hypothesis-do-you-deem-more-likely" class="section level5">
 <h5><em><strong>Question:</strong> Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?</em></h5>
-<pre><code>[expand title=\&quot;Answer\&quot; trigclass=\\&quot;noarrow my_button\\&quot; targclass=&quot;my_content&quot; tag= &quot; button &quot;]</code></pre>
-<p><span class="math inline">\(H_0:\)</span> <em><span class="math inline">\(Age^2\)</span> is not related to a delay in the PhD projects.</em></p>
-<p><span class="math inline">\(H_1:\)</span> <em><span class="math inline">\(Age^2\)</span> is related to a delay in the PhD projects.</em></p>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<p><span class="math inline">\(H_0:\)</span> <em><span class="math inline">\(age\)</span> is not related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_1:\)</span> <em><span class="math inline">\(age\)</span> is related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_0:\)</span> <em><span class="math inline">\(age^2\)</span> is not related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_1:\)</span> <em><span class="math inline">\(age^2\)</span>is related to a delay in the PhD projects.</em></p>
 <p>[/expand]</p>
 <p>
  
@@ -409,8 +408,9 @@ summary {
 </div>
 <div id="preparation---importing-and-exploring-data" class="section level2">
 <h2>Preparation - Importing and Exploring Data</h2>
-<p>Install the following packages in R:</p>
-<pre class="r"><code>library(lavaan)
+<pre class="r"><code># if you dont have these packages installed yet, please use the install.packages(&quot;package_name&quot;) command.
+library(rstan) 
+library(brms)
 library(psych) #to get some extended summary statistics
 library(tidyverse) # needed for data manipulation and plotting</code></pre>
 <p>You can find the data in the file <span style="color:red"> <code>phd-delays.csv</code> </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into R using the following syntax:</p>
@@ -422,12 +422,9 @@ colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&
 colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&quot;age&quot;,&quot;age2&quot;)</code></pre>
 <p>GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see <a href="https://github.com/" class="uri">https://github.com/</a>)</p>
 <p>Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the <code>describe()</code> function.</p>
-<p>
- 
-</p>
 <div id="question-have-all-your-data-been-loaded-in-correctly-that-is-do-all-data-points-substantively-make-sense-if-you-are-unsure-go-back-to-the-.csv-file-to-inspect-the-raw-data." class="section level5">
 <h5><em><strong>Question:</strong> Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data.</em></h5>
-<p>[expand title= &quot;Answer&quot; trigclass= &quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;div&quot;&quot;]</p>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <pre class="r"><code>describe(dataPHD)</code></pre>
 <pre><code>##       vars   n    mean     sd median trimmed    mad min  max range  skew
 ## diff     1 333    9.97  14.43      5    6.91   7.41 -31   91   122  2.21
@@ -473,215 +470,517 @@ colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&
        y        = &quot;Delay&quot;,
        color    = &quot;Type of relationship&quot; ) +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
-<div id="regression-analysis" class="section level2">
-<h2>Regression Analysis</h2>
-<p>Now, let’s run a multiple regression model predicting the difference between Ph.D. students’ planned and actual project time by their age (note that we ignore assumption checking, if you want a quick introduction to the assumptions underlying a regression, please have look at <a href="https://statistics.laerd.com/spss-tutorials/linear-regression-using-spss-statistics.php" class="uri">https://statistics.laerd.com/spss-tutorials/linear-regression-using-spss-statistics.php</a>).</p>
-<p>To run a multiple regression with lavaan, you first specify the model, then fit the model and finally acquire the summary. The model is specified as follows:</p>
+<div id="regression---default-priors" class="section level2">
+<h2>Regression - Default Priors</h2>
+<p>In this exercise you will investigate the impact of Ph.D. students&#39; <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span> on the delay in their project time, which serves as the outcome variable using a regression analysis (note that we ignore assumption checking!).</p>
+<p>As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g. <a href="http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract">Van de Schoot et al. 2017</a>). In this tutorial, we will first rely on the default prior settings, thereby behaving a ‘naive’ Bayesians (which might <a href="https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/">not</a> always be a good idea).</p>
+<p>To run a multiple regression with brms, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model using <code>lm()</code>). The model is specified as follows:</p>
 <ol style="list-style-type: decimal">
-<li>A depedent variable we want to predict.</li>
+<li>A dependent variable we want to predict.</li>
 <li>A “~”, that we use to indicate that we now give the other variables of interest. (comparable to the ‘=’ of the regression equation).</li>
-<li>The different indepedent variables separated by the summation symbol ‘+’.</li>
-<li>Finally, we specify that the dependent variable has a variance and that we want an intercept.</li>
-<li>To fit the model we use the <code>lavaan()</code> function, which needs a <code>model=</code> and a <code>data=</code> input.</li>
+<li>The different independent variables separated by the summation symbol ‘+’.</li>
+<li>Finally, we insert that the dependent variable has a variance and that we want an intercept.<br />
+</li>
+<li>We do set a seed to make the results exactly reproducible.</li>
 </ol>
-<p>For more information on the basics of lavaan, see their <a href="http://lavaan.ugent.be/tutorial/index.html">website</a></p>
+<p>There are many other options we can select, such as the number of chains how many iterations we want and how long of a warm-up phase we want, but we will just use the defaults for now.</p>
+<p>For more information on the basics of brms, see the <a href="https://cran.r-project.org/web/packages/brms/index.html">website and vignettes</a></p>
 <p>
  
 </p>
 <p>The following code is how to specify the regression model:</p>
-<pre class="r"><code>model.regression &lt;- &#39;#the regression model
-                    diff ~ age + age2
+<pre class="r"><code># 1) specify the model
+model &lt;- brm(formula = diff ~ age + age2, 
+             data    = dataPHD,
+             seed    = 123)</code></pre>
+<p>Now we will have a look at the summary by using <code>summary(model)</code> or <code>posterior_summary(model)</code> for more precise estimates of the coefficients</p>
+<p>[expand title=“Show Output” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>summary(model)</code></pre>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: diff ~ age + age2 
+##    Data: dataPHD (Number of observations: 333) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept   -47.32     12.63   -71.69   -23.41       2123 1.00
+## age           2.67      0.60     1.53     3.83       2101 1.00
+## age2         -0.03      0.01    -0.04    -0.01       2124 1.00
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma    14.04      0.55    13.01    15.15       2936 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre class="r"><code>posterior_summary(model)</code></pre>
+<pre><code>##                  Estimate    Est.Error          Q2.5         Q97.5
+## b_Intercept -4.731730e+01 12.633748393 -7.168598e+01 -2.340958e+01
+## b_age        2.666543e+00  0.598253834  1.527225e+00  3.828354e+00
+## b_age2      -2.590971e-02  0.006241665 -3.825559e-02 -1.407914e-02
+## sigma        1.403947e+01  0.550379485  1.301356e+01  1.515460e+01
+## lp__        -1.356590e+03  1.416436968 -1.360019e+03 -1.354807e+03</code></pre>
+<p>[/expand]</p>
+<p>
+ 
+</p>
+<p>The results that stem from a Bayesian analysis are genuinely different from those that are provided by a frequentist model.</p>
+<p>[expand title=Read more on the Bayesian analysis]</p>
+<p>The key difference between Bayesian statistical inference and frequentist statistical methods concerns the nature of the unknown parameters that you are trying to estimate. In the frequentist framework, a parameter of interest is assumed to be unknown, but fixed. That is, it is assumed that in the population there is only one true population parameter, for example, one true mean or one true regression coefficient. In the Bayesian view of subjective probability, all unknown parameters are treated as uncertain and therefore are be described by a probability distribution. Every parameter is unknown, and everything unknown receives a distribution.</p>
+<p>This is why in frequentist inference, you are primarily provided with a point estimate of the unknown but fixed population parameter. This is the parameter value that, given the data, is most likely in the population. An accompanying confidence interval tries to give you further insight in the uncertainty that is attached to this estimate. It is important to realize that a confidence interval simply constitutes a simulation quantity. Over an infinite number of samples taken from the population, the procedure to construct a (95%) confidence interval will let it contain the true population value 95% of the time. This does not provide you with any information how probable it is that the population parameter lies within the confidence interval boundaries that you observe in your very specific and sole sample that you are analyzing.</p>
+<p>In Bayesian analyses, the key to your inference is the parameter of interest&#39;s posterior distribution. It fulfills every property of a probability distribution and quantifies how probable it is for the population parameter to lie in certain regions. On the one hand, you can characterize the posterior by its mode. This is the parameter value that, given the data and its prior probability, is most probable in the population. Alternatively, you can use the posterior&#39;s mean or median. Using the same distribution, you can construct a 95% credibility interval, the counterpart to the confidence interval in frequentist statistics. Other than the confidence interval, the Bayesian counterpart directly quantifies the probability that the population value lies within certain limits. There is a 95% probability that the parameter value of interest lies within the boundaries of the 95% credibility interval. Unlike the confidence interval, this is not merely a simulation quantity, but a concise and intuitive probability statement. For more on how to interpret Bayesian analysis, check <a href="http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract">Van de Schoot et al. 2014</a>.</p>
+<p>[/expand]</p>
+<p>
+ 
+</p>
+<div id="question-interpret-the-estimated-effect-its-interval-and-the-posterior-distribution." class="section level5">
+<h5><em><strong>Question:</strong> Interpret the estimated effect, its interval and the posterior distribution.</em></h5>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.67, 95% Credibility Interval [1.53, 3.83]. Also, <span class="math inline">\(age^2\)</span>( seems to be a relevant predictor of PhD delays, with a posterior mean of -0.0259, and a 95% credibility Interval of [-0.038, -0.014]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
+<p>[/expand]</p>
+<p>
+ 
+</p>
+</div>
+<div id="question-every-bayesian-model-uses-a-prior-distribution.-describe-the-shape-of-the-prior-distributions-of-the-regression-coefficients." class="section level5">
+<h5><em><strong>Question:</strong> Every Bayesian model uses a prior distribution. Describe the shape of the prior distributions of the regression coefficients.</em></h5>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<p>To check which default priors are being used by brms, you can use the <code>prior_summary()</code> function or check the brms <a href="https://cran.r-project.org/web/packages/brms/brms.pdf">documentation</a>, which states that, <em>“The default prior for population-level effects (including monotonic and category specific effects) is an improper flat prior over the reals”</em> This means, that there an uninformative prior was chosen.</p>
+<pre class="r"><code>prior_summary(model)</code></pre>
+<pre><code>##                 prior     class coef group resp dpar nlpar bound
+## 1                             b                                 
+## 2                             b  age                            
+## 3                             b age2                            
+## 4 student_t(3, 5, 10) Intercept                                 
+## 5 student_t(3, 0, 10)     sigma</code></pre>
+<p>We also see that a student-t distribution was chosen for the intercept.</p>
+<p>/expand]</p>
+<p>
+ 
+</p>
+</div>
+</div>
+<div id="regression---user-specified-priors" class="section level2">
+<h2><strong>Regression - User-specified Priors</strong></h2>
+<p>In brms, you can also manually specify your prior distributions. Be aware that usually, this has to be done BEFORE peeking at the data, otherwise you are double-dipping (!). In theory, you can specify your prior knowledge using any kind of distribution you like. However, if your prior distribution does not follow the same parametric form as your likelihood, calculating the model can be computationally intense. <em>Conjugate</em> priors avoid this issue, as they take on a functional form that is suitable for the model that you are constructing. For your normal linear regression model, conjugacy is reached if the priors for your regression parameters are specified using normal distributions (the residual variance receives an inverse gamma distribution, which is neglected here). In brms, you are quite flexible in the specification of informative priors.</p>
+<p>Let&#39;s re-specify the regression model of the exercise above, using conjugate priors. We leave the priors for the intercept and the residual variance untouched for the moment. Regarding your regression parameters, you need to specify the hyperparameters of their normal distribution, which are the mean and the variance. The mean indicates which parameter value you deem most likely. The variance expresses how certain you are about that. We try 4 different prior specifications, for both the <span class="math inline">\(\beta_{age}\)</span> regression coefficient, and the <span class="math inline">\(\beta_{age^2}\)</span> coefficient.</p>
+<p>First, we use the following prior specifications:</p>
+<p><em><span class="math inline">\(Age\)</span> ~ <span class="math inline">\(\mathcal{N}(3, 0.4)\)</span></em></p>
+<p><em><span class="math inline">\(Age^2\)</span> ~ <span class="math inline">\(\mathcal{N}(0, 0.1)\)</span></em></p>
+<p>In brms, the priors are set using the <code>set_prior()</code> function. Be careful, Stan uses standard deviations instead of variance in the normal distribution. The standard deviations is the square root of the variance, so a variance of 0.1 corresponds to a standard deviation of 0.316 and a variance of 0.4 corresponds to a standard deviation of 0.632.</p>
+<p>The priors are presented in code as follows:</p>
+<pre class="r"><code>priors2 &lt;- c(set_prior(&quot;normal(3, 0.632)&quot;, class = &quot;b&quot;, coef = &quot;age&quot;),
+             set_prior(&quot;normal(0, 0.316)&quot;, class = &quot;b&quot;, coef = &quot;age2&quot;))</code></pre>
+<p>Now we can run the model again, but with the <code>prior=</code> included. Now fit the model again and request for summary statistics.</p>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>model2 &lt;- brm(formula = diff ~  age + age2, 
+              data    = dataPHD,
+              prior   = priors2,
+              seed    = 123)</code></pre>
+<pre class="r"><code>summary(model2)</code></pre>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: diff ~ age + age2 
+##    Data: dataPHD (Number of observations: 333) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept   -50.29      9.44   -68.40   -30.80       1819 1.00
+## age           2.81      0.45     1.89     3.70       1732 1.00
+## age2         -0.03      0.00    -0.04    -0.02       1713 1.00
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma    14.02      0.54    13.03    15.10       2470 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre class="r"><code>posterior_summary(model2)</code></pre>
+<pre><code>##                  Estimate   Est.Error          Q2.5         Q97.5
+## b_Intercept -5.029331e+01 9.440502106 -6.840304e+01 -3.079783e+01
+## b_age        2.809959e+00 0.447072587  1.894513e+00  3.702127e+00
+## b_age2      -2.740488e-02 0.004737516 -3.701317e-02 -1.784044e-02
+## sigma        1.402096e+01 0.543837369  1.303052e+01  1.509738e+01
+## lp__        -1.356949e+03 1.446502696 -1.360734e+03 -1.355162e+03</code></pre>
+<p>[/expand]</p>
+<div id="question-fill-in-the-results-in-the-table-below" class="section level4">
+<h4><em><strong>Question</strong> Fill in the results in the table below:</em></h4>
+<table style="width:100%;">
+<colgroup>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(Age\)</span></th>
+<th>Default prior</th>
+<th><span class="math inline">\(\mathcal{N}(3, .4)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(3, 1000)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, .4)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Posterior mean</td>
+<td>2.667</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Posterior sd</td>
+<td>0.598</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table style="width:100%;">
+<colgroup>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(Age^2\)</span></th>
+<th>Default prior</th>
+<th><span class="math inline">\(\mathcal{N}(0, .1)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(0, 1000)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, .1)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Posterior mean</td>
+<td>-0.026</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Posterior sd</td>
+<td>0.006</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(Age\)</span></th>
+<th>Default prior</th>
+<th><span class="math inline">\(\mathcal{N}(3, .4)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(3, 1000)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, .4)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Posterior mean</td>
+<td>2.667</td>
+<td>2.81</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Posterior sd</td>
+<td>0.598</td>
+<td>0.447</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table style="width:100%;">
+<colgroup>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(Age^2\)</span></th>
+<th>Default prior</th>
+<th><span class="math inline">\(\mathcal{N}(0, .1)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(0, 1000)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, .1)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Posterior mean</td>
+<td>-0.026</td>
+<td>-0.027</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Posterior sd</td>
+<td>0.006</td>
+<td>0.005</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>[/expand]</p>
+<p>Next, try to adapt the code, using the prior specifications of the other columns and then complete the table.</p>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>priors3 &lt;- c(set_prior(&quot;normal(3, 31.6)&quot;, class = &quot;b&quot;, coef = &quot;age&quot;),
+             set_prior(&quot;normal(0, 31.6)&quot;, class = &quot;b&quot;, coef = &quot;age2&quot;))
 
-                    #show that dependent variable has variance
-                    diff ~~ diff
+model3 &lt;- brm(formula = diff ~  age + age2, 
+              data    = dataPHD,
+              prior   = priors3,
+              seed    = 123)
 
-                    #we want to have an intercept
-                    diff ~ 1&#39;</code></pre>
-<p>Now, perform a multiple linear regression and answer the following question:</p>
-<p>
- 
-</p>
-<div id="question-using-a-significance-criterion-of-0.05-is-there-a-significant-effect-of-age-and-age2" class="section level5">
-<h5><em><strong>Question:</strong> Using a significance criterion of 0.05, is there a significant effect of <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span>?</em></h5>
-<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
-<pre class="r"><code>fit &lt;- lavaan(model = model.regression, data = dataPHD)
-summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## lavaan 0.6-3 ended normally after 24 iterations
-## 
-##   Optimization method                           NLMINB
-##   Number of free parameters                          4
-## 
-##   Number of observations                           333
-## 
-##   Estimator                                         ML
-##   Model Fit Test Statistic                       0.000
-##   Degrees of freedom                                 0
-##   Minimum Function Value               0.0000000000000
-## 
-## Model test baseline model:
-## 
-##   Minimum Function Test Statistic               21.521
-##   Degrees of freedom                                 2
-##   P-value                                        0.000
-## 
-## User model versus baseline model:
-## 
-##   Comparative Fit Index (CFI)                    1.000
-##   Tucker-Lewis Index (TLI)                       1.000
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)              -1350.154
-##   Loglikelihood unrestricted model (H1)      -1350.154
-## 
-##   Number of free parameters                          4
-##   Akaike (AIC)                                2708.308
-##   Bayesian (BIC)                              2723.541
-##   Sample-size adjusted Bayesian (BIC)         2710.852
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.000
-##   90 Percent Confidence Interval          0.000  0.000
-##   P-value RMSEA &lt;= 0.05                             NA
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.000
-## 
-## Parameter Estimates:
-## 
-##   Information                                 Expected
-##   Information saturated (h1) model          Structured
-##   Standard Errors                             Standard
-## 
-## Regressions:
-##                    Estimate    Std.Err  z-value  P(&gt;|z|) ci.lower  
-##   diff ~                                                           
-##     age                 2.657    0.583    4.554    0.000      1.514
-##     age2               -0.026    0.006   -4.236    0.000     -0.038
-##  ci.upper  
-##            
-##       3.801
-##      -0.014
-## 
-## Intercepts:
-##                    Estimate    Std.Err  z-value  P(&gt;|z|) ci.lower  
-##    .diff              -47.088   12.285   -3.833    0.000    -71.166
-##  ci.upper  
-##     -23.010
-## 
-## Variances:
-##                    Estimate    Std.Err  z-value  P(&gt;|z|) ci.lower  
-##    .diff              194.641   15.084   12.903    0.000    165.076
-##  ci.upper  
-##     224.206
-## 
-## R-Square:
-##                    Estimate  
-##     diff                0.063</code></pre>
-<p>
- 
-</p>
-<p><em>There is a significant effect of <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span>, with b=2.657, p &lt;.001 for <span class="math inline">\(age\)</span>, and b=-0.026, p&lt;.001 for <span class="math inline">\(age^2\)</span>.</em></p>
+
+priors4 &lt;- c(set_prior(&quot;normal(20,0.632)&quot;, class = &quot;b&quot;, coef = &quot;age&quot;),
+             set_prior(&quot;normal(20,0.316)&quot;, class = &quot;b&quot;, coef = &quot;age2&quot;))
+
+model4 &lt;- brm(formula = diff ~  age + age2, 
+              data    = dataPHD,
+              prior   = priors4,
+              seed    = 123)
+
+
+priors5 &lt;- c(set_prior(&quot;normal(20,31.6)&quot;, class = &quot;b&quot;, coef = &quot;age&quot;),
+             set_prior(&quot;normal(20,31.6)&quot;, class = &quot;b&quot;, coef = &quot;age2&quot;))
+
+model5 &lt;- brm(formula = diff ~  age + age2, 
+              data    = dataPHD,
+              prior   = priors5,
+              seed    = 123)</code></pre>
+<pre class="r"><code>posterior_summary(model3)</code></pre>
+<pre><code>##                  Estimate    Est.Error          Q2.5         Q97.5
+## b_Intercept -4.704762e+01 12.177665442 -7.106093e+01 -2.374580e+01
+## b_age        2.652842e+00  0.577960162  1.536977e+00  3.791272e+00
+## b_age2      -2.575308e-02  0.006027115 -3.766677e-02 -1.394329e-02
+## sigma        1.402604e+01  0.542576924  1.301490e+01  1.510763e+01
+## lp__        -1.365325e+03  1.418592987 -1.368940e+03 -1.363575e+03</code></pre>
+<pre class="r"><code>posterior_summary(model4)</code></pre>
+<pre><code>##                  Estimate    Est.Error          Q2.5         Q97.5
+## b_Intercept  -263.2102171 13.148578145  -289.3431545  -237.9148235
+## b_age          12.9643439  0.617928252    11.7820079    14.1744210
+## b_age2         -0.1309657  0.006512626    -0.1436218    -0.1184722
+## sigma          19.5126048  0.946549505    17.7332304    21.4353483
+## lp__        -3558.4687377  1.460993344 -3562.0761978 -3556.6694997</code></pre>
+<pre class="r"><code>posterior_summary(model5)</code></pre>
+<pre><code>##                  Estimate    Est.Error          Q2.5         Q97.5
+## b_Intercept -4.709795e+01 12.600564696 -7.206517e+01 -2.288395e+01
+## b_age        2.655475e+00  0.596027523  1.494316e+00  3.845159e+00
+## b_age2      -2.579004e-02  0.006191026 -3.822255e-02 -1.384521e-02
+## sigma        1.403870e+01  0.538621642  1.303185e+01  1.513337e+01
+## lp__        -1.365711e+03  1.410203900 -1.369248e+03 -1.363932e+03</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(Age\)</span></th>
+<th>Default prior</th>
+<th><span class="math inline">\(\mathcal{N}(3, .4)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(3, 1000)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, .4)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Posterior mean</td>
+<td>2.667</td>
+<td>2.81</td>
+<td>2.653</td>
+<td>12.964</td>
+<td>2.655</td>
+</tr>
+<tr class="even">
+<td>Posterior sd</td>
+<td>0.598</td>
+<td>0.447</td>
+<td>0.578</td>
+<td>0.618</td>
+<td>0.596</td>
+</tr>
+</tbody>
+</table>
+<table style="width:100%;">
+<colgroup>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+<col width="16%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(Age^2\)</span></th>
+<th>Default prior</th>
+<th><span class="math inline">\(\mathcal{N}(0, .1)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(0, 1000)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, .1)\)</span></th>
+<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Posterior mean</td>
+<td>-0.026</td>
+<td>-0.027</td>
+<td>-0.026</td>
+<td>-0.131</td>
+<td>-0.026</td>
+</tr>
+<tr class="even">
+<td>Posterior sd</td>
+<td>0.006</td>
+<td>0.005</td>
+<td>0.006</td>
+<td>0.007</td>
+<td>0.006</td>
+</tr>
+</tbody>
+</table>
 <p>[/expand]</p>
-<p>
- 
-</p>
-<p>Surveys in academia have shown that a large number of researchers interpret the p-value wrong and misinterpretations are way more widespread than thought. Have a look at the article by <a href="https://link.springer.com/article/10.1007/s10654-016-0149-3">Greenland et al. (2016)</a> that provides a guide to clear and concise interpretations of p.</p>
-<p>
- 
-</p>
 </div>
-<div id="question-what-can-you-conclude-about-the-hypothesis-being-tested-using-the-correct-interpretation-of-the-p-value" class="section level5">
-<h5><em><strong>Question:</strong> What can you conclude about the hypothesis being tested using the correct interpretation of the p-value?</em></h5>
-<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
-<p><em>Assuming that the null hypothesis is true in the population, the probability of obtaining a test statistic that is as extreme or more extreme as the one we observe is &lt;0.1%. Because the effect of <span class="math inline">\(age^2\)</span> is below our pre-determined alpha level, we reject the null hypothesis.</em></p>
+<div id="question-compare-the-results-over-the-different-prior-specifications.-are-the-results-comparable-with-the-default-model" class="section level4">
+<h4><em><strong>Question</strong>: Compare the results over the different prior specifications. Are the results comparable with the default model?</em></h4>
+</div>
+<div id="question-do-we-end-up-with-similar-conclusions-using-different-prior-specifications" class="section level4">
+<h4><em><strong>Question</strong>: Do we end up with similar conclusions, using different prior specifications?</em></h4>
+<p>To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. (<span class="math inline">\(bias= 100*\frac{(model informative priors-model uninformed priors)}{model uninformative priors}\)</span>). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the <span class="math inline">\(\mathcal{N}(20, .4)\)</span> and <span class="math inline">\(\mathcal{N}(20, .1)\)</span> priors. Copy Paste the following code to R:</p>
+<pre class="r"><code>#1) get the estimates
+estimatesuninformative &lt;- posterior_summary(model)[c(&quot;b_age&quot;, &quot;b_age2&quot;) , &quot;Estimate&quot;]
+estimatesinformative   &lt;- posterior_summary(model4)[c(&quot;b_age&quot;, &quot;b_age2&quot;) , &quot;Estimate&quot;]
+
+#2) calculate the bias
+round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)</code></pre>
+<p>The <code>b_age</code> and <code>b_age2</code> indices stand for the <span class="math inline">\(\beta_{age}\)</span> and <span class="math inline">\(\beta_{age^2}\)</span> respectively.</p>
+<p>We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age <span class="math inline">\(\beta_{age}\)</span></p>
+<p>First we extract the MCMC chains of the 5 different models for only this one parameter (<span class="math inline">\(\beta_{age}\)</span>=beta[1,2,1]). Copy-past the following code to R:</p>
+<p>[expand title=“Show Syntax” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>posterior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; = as_tibble(as.mcmc(model,  pars = &quot;b_age&quot;, exact_match = TRUE ,combine_chains = TRUE)),
+                                &quot;informative prior 1&quot; = as_tibble(as.mcmc(model2, pars = &quot;b_age&quot;, exact_match = TRUE ,combine_chains = TRUE)),
+                                &quot;informative prior 2&quot; = as_tibble(as.mcmc(model3, pars = &quot;b_age&quot;, exact_match = TRUE ,combine_chains = TRUE)),
+                                &quot;informative prior 3&quot; = as_tibble(as.mcmc(model4, pars = &quot;b_age&quot;, exact_match = TRUE ,combine_chains = TRUE)),
+                                &quot;informative prior 4&quot; = as_tibble(as.mcmc(model5, pars = &quot;b_age&quot;, exact_match = TRUE ,combine_chains = TRUE)),
+                                .id = &quot;id1&quot;)</code></pre>
+<pre><code>## Warning: Calling `as_tibble()` on a vector is discouraged, because the behavior is likely to change in the future. Use `tibble::enframe(name = NULL)` instead.
+## This warning is displayed once per session.</code></pre>
+<pre class="r"><code>prior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; = enframe(rnorm(10000, mean=0, sd=sqrt(1/1e-2))),
+                            &quot;informative prior 1&quot; = enframe(rnorm(10000, mean=3, sd=sqrt(0.4))),
+                            &quot;informative prior 2&quot; = enframe(rnorm(10000, mean=3, sd=sqrt(1000))),
+                            &quot;informative prior 3&quot; = enframe(rnorm(10000, mean=20, sd=sqrt(0.4))),
+                            &quot;informative prior 4&quot; = enframe(rnorm(10000, mean=20, sd=sqrt(1000))),
+                            .id = &quot;id1&quot;) %&gt;%
+  rename(b_age = value)# here we sample a large number of values from the prior distributions to be able to plot them.
+
+priors.posterior &lt;- bind_rows(&quot;posterior&quot; = posterior1.2.3.4.5, &quot;prior&quot; = prior1.2.3.4.5, .id = &quot;id2&quot;)</code></pre>
+<p>instead of sampling the priors like this, you could also get the actual prior values sampled by Stan by adding the <code>sample_prior = TRUE</code> command to the <code>brm()</code> function, this would save the priors as used by stan. With enough samples this would yield the same results</p>
 <p>[/expand]</p>
-<p>
- 
-</p>
-<p>Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 (<a href="https://osf.io/preprints/psyarxiv/mky9j">Benjamin et al. 2017</a>, but see also a critique by<a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Trafimow, ., Van de Schoot, et al., 2018</a>). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.</p>
-<p>
- 
-</p>
-</div>
-<div id="question-how-does-your-conclusion-change-if-you-follow-this-advice" class="section level5">
-<h5><em><strong>Question:</strong> How does your conclusion change if you follow this advice?</em></h5>
-<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
-<p><em>Because the p-values for both regression coefficients were really small &lt;.001, the conclusion doesn&#39;t change in this case.</em></p>
+<p>Then, we can plot the different posteriors and priors by using the following code:</p>
+<p>[expand title=“Show Syntax” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>ggplot(data    = priors.posterior, 
+       mapping = aes(x        = b_age, 
+                     fill     = id1, 
+                     colour   = id2, 
+                     linetype = id2,
+                     alpha    = id2))+
+  geom_density(size=1)+
+  scale_x_continuous(limits=c(0, 23))+
+  scale_colour_manual(name   = &#39;Posterior/Prior&#39;, 
+                      values = c(&quot;black&quot;,&quot;red&quot;), 
+                      labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
+  scale_linetype_manual(name   = &#39;Posterior/Prior&#39;,
+                        values = c(&quot;solid&quot;,&quot;dotted&quot;),
+                        labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
+  scale_alpha_discrete(name   =&#39;Posterior/Prior&#39;,
+                       range  = c(.7,.3),
+                       labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
+  scale_fill_manual(name   = &quot;Densities&quot;,
+                    values = c(&quot;Yellow&quot;,&quot;darkred&quot;,&quot;blue&quot;, &quot;green&quot;, &quot;pink&quot;))+
+  labs(title    = expression(&quot;Influence of (Informative) Priors on&quot; ~ beta[Age]), 
+       subtitle = &quot;5 different densities of priors and posteriors&quot;)</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --> [/expand]</p>
+<p>Now, with the information from the table, the bias estimates and the plot you can answer the two questions about the influence of the priors on the results.</p>
+<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>#1) get the estimates
+estimatesuninformative &lt;- posterior_summary(model)[c(&quot;b_age&quot;, &quot;b_age2&quot;) , &quot;Estimate&quot;]
+estimatesinformative   &lt;- posterior_summary(model4)[c(&quot;b_age&quot;, &quot;b_age2&quot;) , &quot;Estimate&quot;]
+
+#2) calculate the bias
+round(100*((estimatesinformative - estimatesuninformative)/estimatesuninformative), 2)</code></pre>
+<pre><code>##  b_age b_age2 
+## 386.19 405.47</code></pre>
+<p><em>We see that the influence of this highly informative prior is around 386% and 405% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions.</em></p>
+<p><em>The results change with different prior specifications, but are still comparable. Only using <span class="math inline">\(\mathcal{N}(20, .4)\)</span> for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code.</em></p>
+<pre class="r"><code>indices &lt;- sample.int(333, 60)
+smalldata &lt;- dataPHD[indices,]</code></pre>
+<p><em>We made a new dataset with randomly chosen 60 of the 333 observations from the original dataset. You can repeat the analyses with the same code and only changing the name of the dataset to see the influence of priors on a smaller dataset. Run the model model.informative.priors2 with this new dataset</em></p>
+<pre class="r"><code>fit.bayes.infprior2_small &lt;- blavaan(model.informative.priors2, data = smalldata, test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 123)
+summary(fit.bayes.infprior2_small, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
 <p>[/expand]</p>
-<p>
- 
-</p>
-<p>Of course, we should never base our decisions on single criterions only. Luckily, there are several additional measures that we can take into account. A very popular measure is the confidence interval. In the <code>summary()</code> function, these intervals can be demanded, which has already been done in the previous step.</p>
-<p>
- 
-</p>
-</div>
-<div id="question-what-can-you-conclude-about-the-hypothesis-being-tested-using-the-correct-interpretation-of-the-confidence-interval" class="section level5">
-<h5><em><strong>Question:</strong> What can you conclude about the hypothesis being tested using the correct interpretation of the confidence interval?</em></h5>
-<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
-<p><em><span class="math inline">\(Age\)</span>: 95% CI [1.514, 3.801]</em></p>
-<p><em><span class="math inline">\(Age^2\)</span>: 95% CI [-0.038, -0.014]</em></p>
-<p><em>In both cases the 95% CI&#39;s don&#39;t contain 0, which means, the null hypotheses should be rejected. A 95% CI means, that, if infinitely samples were taken from the population, then 95% of the samples contain the true population value. But we do not know whether our current sample is part of this collection, so we only have an aggregated assurance that in the long run if our analysis would be repeated our sample CI contains the true population parameter.</em></p>
-<p>[/expand]</p>
-<p>
- 
-</p>
-<p>Additionally, to make statements about the actual relevance of your results, focusing on effect size measures is inevitable.</p>
-<p>
- 
-</p>
-</div>
-<div id="question-what-can-you-say-about-the-relevance-of-your-results-focus-on-the-explained-variance-and-the-standardized-regression-coefficients." class="section level5">
-<h5><em><strong>Question:</strong> What can you say about the relevance of your results? Focus on the explained variance and the standardized regression coefficients.</em></h5>
-<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
-<p><em>R<span class="math inline">\(^2\)</span>= 0.063 in the regression model. This means that 6.3% of the variance in the PhD delays, can be explained by <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span>.</em></p>
-<p>We can also run the analysis again, but now with standardized coefficients.Lavaan has the inbuilt-function <code>standardizedsolution()</code> to obtain standardized coefficients.</p>
-<pre class="r"><code>standardizedsolution(fit)</code></pre>
-<pre><code>##    lhs op  rhs est.std    se      z pvalue ci.lower ci.upper
-## 1 diff  ~  age   1.262 0.265  4.763      0    0.743    1.782
-## 2 diff  ~ age2  -1.174 0.267 -4.402      0   -1.697   -0.651
-## 3 diff ~~ diff   0.937 0.025 37.057      0    0.888    0.987
-## 4 diff ~1       -3.268 0.819 -3.992      0   -4.872   -1.664
-## 5  age ~~  age   1.000 0.000     NA     NA    1.000    1.000
-## 6  age ~~ age2   0.982 0.000     NA     NA    0.982    0.982
-## 7 age2 ~~ age2   1.000 0.000     NA     NA    1.000    1.000
-## 8  age ~1        4.627 0.000     NA     NA    4.627    4.627
-## 9 age2 ~1        1.602 0.000     NA     NA    1.602    1.602</code></pre>
-<p><em>The standardized coefficients, <span class="math inline">\(age\)</span> (1.262) and <span class="math inline">\(age^2\)</span> (-1.174), show that the effects of both regression coefficients are comparable, but the effect of <span class="math inline">\(age\)</span> is somewhat higher.</em></p>
-<p>[/expand]</p>
-<p>
- 
-</p>
-<p>Only a combination of different measures assessing different aspects of your results can provide a comprehensive answer to your research question.</p>
-<p>
- 
-</p>
-</div>
-<div id="question-drawing-on-all-the-measures-we-discussed-above-formulate-an-answer-to-your-research-question." class="section level5">
-<h5><em><strong>Question:</strong> Drawing on all the measures we discussed above, formulate an answer to your research question.</em></h5>
-<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
-<p><em>The variables <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span> are significantly related to PhD delays. However, the total explained variance by those two predictors is only 6.3%. Therefore, a large part of the variance is still unexplained.</em></p>
-[/expand]
-<p>
- 
-</p>
-<p>
- 
-</p>
+<p>If you really want to use Bayes for your own data, we recommend to follow the <a href="https://www.rensvandeschoot.com/wambs-checklist/">WAMBS-checklist</a>, which you are guided through by this exercise.</p>
 <hr />
 </div>
 <div id="references" class="section level3">
 <h3><strong>References</strong></h3>
 <p><em>Benjamin, D. J., Berger, J., Johannesson, M., Nosek, B. A., Wagenmakers, E.,… Johnson, V. (2017, July 22).</em> <a href="https://psyarxiv.com/mky9j">Redefine statistical significance</a><em>. Retrieved from psyarxiv.com/mky9j</em></p>
-<p><em>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. Altman, D. G. (2016).</em> <a href="https://link.springer.com/article/10.1007/s10654-016-0149-3">Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations</a><em>.</em> <em>European Journal of Epidemiology 31 (4</em>). <a href="https://doi.org/10.1007/s10654-016-0149-3"><em>https://doi.org/10.1007/s10654-016-0149-3</em></a> _ _</p>
-<p>_ Rosseel, Y. (2012)._ <a href="https://www.jstatsoft.org/article/view/v048i02">lavaan: An R Package for Structural Equation Modeling</a>. <em>Journal of Statistical Software, 48(2), 1-36. </em></p>
+<p><em>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. Altman, D. G. (2016).</em> <a href="https://link.springer.com/article/10.1007/s10654-016-0149-3">Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations</a><em>.</em> <em>European Journal of Epidemiology 31 (4</em>). <a href="https://doi.org/10.1007/s10654-016-0149-3"><em>https://doi.org/10.1007/s10654-016-0149-3</em></a></p>
+<p><em>Hoffman, M. D., &amp; Gelman, A. (2014)</em>. The No-U-turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo. Journal of Machine Learning Research, 15(1), 1593-1623.</p>
+<p><em>Rosseel, Y. (2012).</em> <a href="https://www.jstatsoft.org/article/view/v048i02">lavaan: An R Package for Structural Equation Modeling</a>. <em>Journal of Statistical Software, 48(2), 1-36. </em></p>
 <p><em>van de Schoot R, Yerkes MA, Mouw JM, Sonneveld H (2013)</em> <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839">What Took Them So Long? Explaining PhD Delays among Doctoral Candidates</a><em>.</em> <em>PLoS ONE 8(7): e68839.</em> <a href="https://doi.org/10.1371/journal.pone.0068839">https://doi.org/10.1371/journal.pone.0068839</a></p>
-<p>Trafimow D, Amrhein V, Areshenkoff CN, Barrera-Causil C, Beh EJ, Bilgi? Y, Bono R, Bradley MT, Briggs WM, Cepeda-Freyre HA, Chaigneau SE, Ciocca DR, Carlos Correa J, Cousineau D, de Boer MR, Dhar SS, Dolgov I, G?mez-Benito J, Grendar M, Grice J, Guerrero-Gimenez ME, Guti?rrez A, Huedo-Medina TB, Jaffe K, Janyan A, Karimnezhad A, Korner-Nievergelt F, Kosugi K, Lachmair M, Ledesma R, Limongi R, Liuzza MT, Lombardo R, Marks M, Meinlschmidt G, Nalborczyk L, Nguyen HT, Ospina R, Perezgonzalez JD, Pfister R, Rahona JJ, Rodr?guez-Medina DA, Rom?o X, Ruiz-Fern?ndez S, Suarez I, Tegethoff M, Tejo M, ** van de Schoot R** , Vankov I, Velasco-Forero S, Wang T, Yamada Y, Zoppino FC, Marmolejo-Ramos F. (2017) <a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Manipulating the alpha level cannot cure significance testing - comments on “Redefine statistical significance”</a>_ _PeerJ reprints 5:e3411v1 <a href="https://doi.org/10.7287/peerj.preprints.3411v1">https://doi.org/10.7287/peerj.preprints.3411v1</a></p>
+<p><em>Trafimow D, Amrhein V, Areshenkoff CN, Barrera-Causil C, Beh EJ, Bilgi? Y, Bono R, Bradley MT, Briggs WM, Cepeda-Freyre HA, Chaigneau SE, Ciocca DR, Carlos Correa J, Cousineau D, de Boer MR, Dhar SS, Dolgov I, G?mez-Benito J, Grendar M, Grice J, Guerrero-Gimenez ME, Guti?rrez A, Huedo-Medina TB, Jaffe K, Janyan A, Karimnezhad A, Korner-Nievergelt F, Kosugi K, Lachmair M, Ledesma R, Limongi R, Liuzza MT, Lombardo R, Marks M, Meinlschmidt G, Nalborczyk L, Nguyen HT, Ospina R, Perezgonzalez JD, Pfister R, Rahona JJ, Rodr?guez-Medina DA, Rom?o X, Ruiz-Fern?ndez S, Suarez I, Tegethoff M, Tejo M, ** van de Schoot R** , Vankov I, Velasco-Forero S, Wang T, Yamada Y, Zoppino FC, Marmolejo-Ramos F. (2017)</em> <a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Manipulating the alpha level cannot cure significance testing - comments on “Redefine statistical significance”</a> PeerJ reprints 5:e3411v1 <a href="https://doi.org/10.7287/peerj.preprints.3411v1">https://doi.org/10.7287/peerj.preprints.3411v1</a></p>
 </div>
 </div>
 
