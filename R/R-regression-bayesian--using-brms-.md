@@ -11,7 +11,7 @@ This tutorial provides the reader with a basic tutorial how to perform a **Bayes
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
 
-## **Preparation**
+## Preparation
 
 This tutorial expects:
 
@@ -539,14 +539,7 @@ posterior1.2.3.4.5 <- bind_rows("uninformative prior" = as_tibble(as.mcmc(model,
                                 "informative prior 3" = as_tibble(as.mcmc(model4, pars = "b_age", exact_match = TRUE ,combine_chains = TRUE)),
                                 "informative prior 4" = as_tibble(as.mcmc(model5, pars = "b_age", exact_match = TRUE ,combine_chains = TRUE)),
                                 .id = "id1")
-```
 
-```
-## Warning: Calling `as_tibble()` on a vector is discouraged, because the behavior is likely to change in the future. Use `tibble::enframe(name = NULL)` instead.
-## This warning is displayed once per session.
-```
-
-```r
 prior1.2.3.4.5 <- bind_rows("uninformative prior" = enframe(rnorm(10000, mean=0, sd=sqrt(1/1e-2))),
                             "informative prior 1" = enframe(rnorm(10000, mean=3, sd=sqrt(0.4))),
                             "informative prior 2" = enframe(rnorm(10000, mean=3, sd=sqrt(1000))),

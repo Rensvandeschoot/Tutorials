@@ -423,7 +423,6 @@ summ5 <- summary(fit.bayes.infprior4)
 
 #### _**Question**: Compare the results over the different prior specifications. Are the results comparable with the default model?_
 
-
 #### _**Question**: Do we end up with similar conclusions, using different prior specifications?_
 
 To answer these questions, proceed as follows:

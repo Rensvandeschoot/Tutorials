@@ -7,16 +7,16 @@ output:
     keep_md: true
 ---
 
-This tutorial provides the reader with a basic tutorial how to perform a **Bayesian regression** in [Blavaan](https://faculty.missouri.edu/~merklee/blavaan/),  using Stan instead of  as the MCMC sampler. Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistics. 
+This tutorial provides the reader with a basic tutorial how to perform a **Bayesian regression** in [brms](https://cran.r-project.org/web/packages/brms/index.html),  using Stan instead of  as the MCMC sampler. Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistics. 
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
 
-## **Preparation**
+## Preparation
 
 This tutorial expects:
 
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, and `brms`. This tutorial was made using Blavaan version `r packageVersion("brms")` and Lavaan version `r packageVersion("lavaan")` in R version `r paste0(R.Version()[c("major","minor")], collapse = ".")`
+- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version `r packageVersion("brms")` in R version `r paste0(R.Version()[c("major","minor")], collapse = ".")`
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -480,8 +480,10 @@ _We made a new dataset with randomly chosen 60 of the 333 observations from the 
 
 
 ```{r,eval=FALSE}
-fit.bayes.infprior2_small <- blavaan(model.informative.priors2, data = smalldata, test = "none",  target = "stan", burnin = 1000, sample = 5000, seed = 123)
-summary(fit.bayes.infprior2_small, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
+model_small_data <-  brm(formula = diff ~  age + age2, 
+                                  data    = smalldata,
+                                  seed    = 123)
+summary(model_small_data, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 [/expand]
@@ -496,8 +498,6 @@ _Benjamin, D. J., Berger, J., Johannesson, M., Nosek, B. A., Wagenmakers, E.,...
 _Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. Altman, D. G. (2016)._ [Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations](https://link.springer.com/article/10.1007/s10654-016-0149-3)_._ _European Journal of Epidemiology 31 (4_). [_https://doi.org/10.1007/s10654-016-0149-3_](https://doi.org/10.1007/s10654-016-0149-3) 
 
 _Hoffman, M. D., & Gelman, A. (2014)_. The No-U-turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo. Journal of Machine Learning Research, 15(1), 1593-1623.
-
-_Rosseel, Y. (2012)._ [lavaan: An R Package for Structural Equation Modeling](https://www.jstatsoft.org/article/view/v048i02). _Journal of Statistical Software, 48(2), 1-36. _
 
 _van de Schoot R, Yerkes MA, Mouw JM, Sonneveld H (2013)_ [What Took Them So Long? Explaining PhD Delays among Doctoral Candidates](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)_._ _PLoS ONE 8(7): e68839._ [https://doi.org/10.1371/journal.pone.0068839](https://doi.org/10.1371/journal.pone.0068839)
 
