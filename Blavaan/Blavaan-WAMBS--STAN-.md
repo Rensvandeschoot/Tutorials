@@ -1,7 +1,7 @@
 ---
-title: "WAMBS Blavaan Tutorial (using STAN)"
+title: "WAMBS Blavaan Tutorial (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 24 July 2019'
+date: 'Last modified: 25 July 2019'
 output:
   html_document:
     keep_md: true
@@ -19,7 +19,7 @@ In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-
 
 This tutorial expects:
 
-- Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
+- Installation of [Stan](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
 - Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.4 and Lavaan version 0.6.3 in R version 3.6.0
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
@@ -61,7 +61,7 @@ This tutorial expects:
 ## **Example Data**
 
 
-The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).  The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv).Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).  The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 30.7, SD = 4.48, min-max = 26-69) of the Ph.D. recipients is related to a delay in their project.
 
@@ -184,7 +184,7 @@ We first need to determine which distribution to use for the priors. Let&#39;s u
 
 Next, we need to specify actual values for the hyperparameters of the prior distributions. Let&#39;s say we found a previous study and based on this study the following hyperparameters can be specified:
 
-- intercept$\sim \mathcal{N}(-35, 20)$
+- intercept $\sim \mathcal{N}(-35, 20)$
 - $\beta_1 \sim \mathcal{N}(.8, 5)$
 - $\beta_2 \sim \mathcal{N}(0, 10)$
 - $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.
@@ -250,7 +250,7 @@ plot(years, delay, type =  "l")
 
   <p>&nbsp;</p>
 
-##jnbhsa **Step 2: Run the model and check for convergence**
+##**Step 2: Run the model and check for convergence**
 
 Specify the regression model you want to analyze and run the regression with the `blavaan()` function. The priors for the intercept, the regression coefficients and the variance are specified in the regression model below.
 
@@ -285,9 +285,8 @@ model.regression <- '#the regression model
 
 ### 2. Does the trace-plot exhibit convergence?
 
-First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples. In addition Blavaan needs an adaptation period, which is by default a 1000 samples. We do not change this default.
+First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples. In addition, Blavaan needs an adaptation period, which is by default a 1000 samples. We do not change this default.
 
-results='hide',
 
 
 ```r
@@ -312,31 +311,6 @@ fit.bayesfewsample <- blavaan(model = model.regression,
 ## If it does, you need to include a target += statement with the log absolute determinant of the Jacobian of the transform.
 ## Left-hand-side of sampling statement:
 ##     eta ~ sem_lv_lpdf(...)
-```
-
-```
-## Warning: There were 383 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 10. See
-## http://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
-```
-
-```
-## Warning: There were 3 chains where the estimated Bayesian Fraction of Missing Information was low. See
-## http://mc-stan.org/misc/warnings.html#bfmi-low
-```
-
-```
-## Warning: Examine the pairs() plot to diagnose sampling problems
-```
-
-```
-## Warning in blavaan(model = model.regression, data = dataPHD, test =
-## "none", : blavaan WARNING: at least one parameter has a psrf > 1.2.
-```
-
-```
-## Warning in blavaan(model = model.regression, data = dataPHD, test =
-## "none", : blavaan WARNING: Small effective sample sizes (< 100) for some
-## parameters.
 ```
 
 ```r
@@ -404,8 +378,8 @@ These statistics confirm that the chains have not converged. Therefore, we run t
 
 ```r
 fit.bayes <- blavaan(model.regression, data = dataPHD,
-                              n.chains = 3, burnin = 500, sample = 2500, 
-                              target = "stan",  test = "none", seed = 12345, 
+                              n.chains = 3, burnin = 2000, sample = 5000, 
+                              target = "stan",  test = "none", seed = 123, 
                                bcontrol = list(cores = 4))
 posteriors_fit.bayes <- blavInspect(fit.bayes, what="mcmc")
 ```
@@ -413,7 +387,7 @@ posteriors_fit.bayes <- blavInspect(fit.bayes, what="mcmc")
 Obtain the trace plots again.
 
 ```r
-plot(fit.bayes, pars = 1:4, plot.type = "stan_trace", trace.iters = 3000)
+plot(fit.bayes, pars = 1:4, plot.type = "stan_trace")
 ```
 
 ![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
@@ -429,14 +403,14 @@ gelman.diag(mcmc.list)
 ## Potential scale reduction factors:
 ## 
 ##              Point est. Upper C.I.
-## beta[1,2,1]        1.06       1.14
-## beta[1,3,1]        1.03       1.07
-## psi[1,1,1]         1.00       1.01
-## alpha[1,1,1]       1.07       1.17
+## beta[1,2,1]           1          1
+## beta[1,3,1]           1          1
+## psi[1,1,1]            1          1
+## alpha[1,1,1]          1          1
 ## 
 ## Multivariate psrf
 ## 
-## 1.03
+## 1
 ```
 
 ```r
@@ -465,12 +439,12 @@ As is recommended in the WAMBS checklist, we double the amount of iterations to 
 
 ```r
 fit.bayesdouble <- blavaan(model.regression, data = dataPHD,
-                           n.chains = 3, burnin = 1000, sample = 5000, 
-                           target = "stan",  test = "none", seed = 12345, 
+                           n.chains = 3, burnin = 4000, sample = 10000, 
+                           target = "stan",  test = "none", seed = 123, 
                            bcontrol = list(cores = 4))
 ```
 
-You should again have a look at the above-mentioned convergence statistics, but we can also compute the relative bias to inspect if doubling the number of iterations influences the posterior parameter estimates ($bias= 100*\frac{(model \; with \; double \; iteration \; - \; initial \; converged \; model )}{model \; with \; double \; iteration \;}$). In order to preserve clarity we  just calculate the bias of the two regression coefficients.
+You should again have a look at the above-mentioned convergence statistics, but we can also compute the relative bias to inspect if doubling the number of iterations influences the posterior parameter estimates ($bias= 100*\frac{(model \; with \; double \; iteration \; - \; initial \; converged \; model )}{initial \; converged \; model}$). In order to preserve clarity we  just calculate the bias of the two regression coefficients.
 
 You should combine the relative bias in combination with substantive knowledge about the metric of the parameter of interest to determine when levels of relative deviation are negligible or problematic. For example, with a regression coefficient of 0.001, a 5% relative deviation level might not be substantively relevant. However, with an intercept parameter of 50, a 10% relative deviation level might be quite meaningful. The specific level of relative deviation should be interpreted in the substantive context of the model. Some examples of interpretations are:
 
@@ -496,7 +470,7 @@ round(100*((estimatesdoubleiter - estimates)/estimates), 2)
 
 ```
 ## beta[1,2,1] beta[1,3,1] 
-##        8.43        8.70
+##       -0.41       -0.45
 ```
 
 _The relative bias is small enough (<5%) not worry about it._ 
@@ -517,9 +491,15 @@ _**Question:** What can you conclude about distribution histograms?_
 
 
 ```r
-par(mfrow=c(2,2))
+par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "stan_hist")
 ```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 _The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you arenot satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
 
@@ -552,6 +532,8 @@ To obtain information about autocorrelation the following syntax can be used:
 par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "stan_ac", col = 'blue')
 ```
+
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 _**Question:** What can you conclude about these autocorrelation plots?_
 
@@ -597,8 +579,7 @@ summary(fit.bayes)
 ```
 
 ```
-## ** WARNING ** blavaan (0.3-4) did NOT converge after 500 adapt+burnin iterations
-## ** WARNING ** Proceed with caution
+## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -613,8 +594,8 @@ summary(fit.bayes)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 1.971    0.438      0.713      2.531    1.683
-##     age2               -0.019    0.005     -0.026     -0.006    1.537
+##     age                 2.149    0.209      1.752      2.564    1.001
+##     age2               -0.021    0.003     -0.026     -0.015    1.001
 ##     Prior        
 ##                  
 ##  normal(0.8,2.24)
@@ -622,13 +603,13 @@ summary(fit.bayes)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -32.545    9.183    -43.709     -6.468    1.715
+##    .diff              -36.359    4.197    -44.666    -28.301    1.001
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.042   15.439    168.824    229.158    1.006
+##    .diff              196.635   15.345    169.003    228.876    1.000
 ##     Prior        
 ##      gamma(.5,.5)
 ```
@@ -684,8 +665,8 @@ model.regression.difIG <- '#the regression model
                     diff ~ prior("normal(-35, 4.47)")*1'
 
 fit.bayes.difIG <- blavaan(model = model.regression.difIG, data = dataPHD,
-                           n.chains = 3, burnin = 500, sample = 2500, 
-                           target = "stan",  test = "none", seed = 12345, 
+                           n.chains = 3, burnin = 2000, sample = 5000, 
+                           target = "stan",  test = "none", seed = 123, 
                            bcontrol = list(cores = 4))
 ```
 
@@ -695,7 +676,7 @@ summary(fit.bayes.difIG)
 ```
 
 ```
-## blavaan (0.3-4) results of 2500 samples after 500 adapt/burnin iterations
+## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -710,7 +691,7 @@ summary(fit.bayes.difIG)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.148    0.208      1.747      2.562    1.001
+##     age                 2.141    0.210      1.723      2.545    1.000
 ##     age2               -0.021    0.003     -0.026     -0.015    1.001
 ##     Prior        
 ##                  
@@ -719,21 +700,20 @@ summary(fit.bayes.difIG)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.314    4.182    -44.615    -28.205    1.001
+##    .diff              -36.150    4.202    -44.183    -27.743    1.000
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.145   15.407    169.268    229.402    1.000
+##    .diff              197.489   15.454    169.208    229.964    1.000
 ##     Prior        
 ##    gamma(.01,.01)
 ```
 
 
 ```
-## ** WARNING ** blavaan (0.3-4) did NOT converge after 500 adapt+burnin iterations
-## ** WARNING ** Proceed with caution
+## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -748,8 +728,8 @@ summary(fit.bayes.difIG)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 1.971    0.438      0.713      2.531    1.683
-##     age2               -0.019    0.005     -0.026     -0.006    1.537
+##     age                 2.149    0.209      1.752      2.564    1.001
+##     age2               -0.021    0.003     -0.026     -0.015    1.001
 ##     Prior        
 ##                  
 ##  normal(0.8,2.24)
@@ -757,19 +737,19 @@ summary(fit.bayes.difIG)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -32.545    9.183    -43.709     -6.468    1.715
+##    .diff              -36.359    4.197    -44.666    -28.301    1.001
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.042   15.439    168.824    229.158    1.006
+##    .diff              196.635   15.345    169.003    228.876    1.000
 ##     Prior        
 ##      gamma(.5,.5)
 ```
 
 ```
-## blavaan (0.3-4) results of 2500 samples after 500 adapt/burnin iterations
+## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -784,7 +764,7 @@ summary(fit.bayes.difIG)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.148    0.208      1.747      2.562    1.001
+##     age                 2.141    0.210      1.723      2.545    1.000
 ##     age2               -0.021    0.003     -0.026     -0.015    1.001
 ##     Prior        
 ##                  
@@ -793,29 +773,29 @@ summary(fit.bayes.difIG)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.314    4.182    -44.615    -28.205    1.001
+##    .diff              -36.150    4.202    -44.183    -27.743    1.000
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.145   15.407    169.268    229.402    1.000
+##    .diff              197.489   15.454    169.208    229.964    1.000
 ##     Prior        
 ##    gamma(.01,.01)
 ```
 
 ```
-## [1]      1.971     -0.019    197.042    -32.545     46.868   4403.980
+## [1]      2.149     -0.021    196.635    -36.359     46.868   4403.980
 ## [7] 429560.007     31.676   1050.216
 ```
 
 
 | Parameters        | Estimate with $\in \sim IG(.01, .01)$ | Estimate with $\in \sim IG(.5, .5)$ | Bias                                             |
 | ---               | ---                                   | ---                                 | ---                                              |
-| Intercept         | -36.314            |-32.545           |$100\cdot \frac{-36.314--32.545 }{-32.545} = 11.58\%$ |
-| Age               | 2.148            |1.971           |$100\cdot \frac{2.148-1.971 }{1.971} = 8.98\%$      |
-| Age2              | -0.021            |-0.019           |$100\cdot \frac{-0.021--0.019 }{-0.019} = 10.53\%$                                                 |
-| Residual variance | 197.145            |197.042           |$100\cdot \frac{197.145--0.019 }{197.042} = 0.05\%$
+| Intercept         | -36.15            |-36.359           |$100\cdot \frac{-36.15--36.359 }{-36.359} = -0.57\%$ |
+| Age               | 2.141            |2.149           |$100\cdot \frac{2.141-2.149 }{2.149} = -0.37\%$      |
+| Age2              | -0.021            |-0.021           |$100\cdot \frac{-0.021--0.021 }{-0.021} = 0\%$                                                 |
+| Residual variance | 197.489            |196.635           |$100\cdot \frac{197.489--0.021 }{196.635} = 0.43\%$
 
 
 _Yes, the results are robust, because there is only a really small amount of relative bias for the residual variance._
@@ -857,8 +837,8 @@ model.regression.defaultprior <- '#the regression model
                     diff ~ 1'
 
 fit.bayes.defaultpriors <- blavaan(model = model.regression.defaultprior, data = dataPHD,
-                           n.chains = 3, burnin = 500, sample = 2500, 
-                           target = "stan",  test = "none", seed = 12345, 
+                           n.chains = 3, burnin = 1000, sample = 4000, 
+                           target = "stan",  test = "none", seed = 123, 
                            bcontrol = list(cores = 4))
 ```
 
@@ -869,8 +849,7 @@ summary(fit.bayes.defaultpriors)
 ```
 
 ```
-## ** WARNING ** blavaan (0.3-4) did NOT converge after 500 adapt+burnin iterations
-## ** WARNING ** Proceed with caution
+## blavaan (0.3-4) results of 4000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -885,8 +864,8 @@ summary(fit.bayes.defaultpriors)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 1.634    1.112     -0.025       3.35    2.575
-##     age2               -0.016    0.011     -0.033      0.002    2.453
+##     age                 2.370    0.539      1.302      3.404    1.000
+##     age2               -0.023    0.006     -0.034     -0.012    1.001
 ##     Prior         
 ##                   
 ##       normal(0,10)
@@ -894,21 +873,20 @@ summary(fit.bayes.defaultpriors)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -25.389   23.514    -61.372      9.128    2.599
+##    .diff              -40.985   11.362    -62.639    -18.586    1.000
 ##     Prior         
 ##  normal(0,1000^.5)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              199.580   16.637     169.99    234.793    1.050
+##    .diff              196.838   15.745    168.827    230.466    1.001
 ##     Prior         
 ##        gamma(1,.5)
 ```
 
 
 ```
-## ** WARNING ** blavaan (0.3-4) did NOT converge after 500 adapt+burnin iterations
-## ** WARNING ** Proceed with caution
+## blavaan (0.3-4) results of 4000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -923,8 +901,8 @@ summary(fit.bayes.defaultpriors)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 1.634    1.112     -0.025       3.35    2.575
-##     age2               -0.016    0.011     -0.033      0.002    2.453
+##     age                 2.370    0.539      1.302      3.404    1.000
+##     age2               -0.023    0.006     -0.034     -0.012    1.001
 ##     Prior         
 ##                   
 ##       normal(0,10)
@@ -932,13 +910,13 @@ summary(fit.bayes.defaultpriors)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -25.389   23.514    -61.372      9.128    2.599
+##    .diff              -40.985   11.362    -62.639    -18.586    1.000
 ##     Prior         
 ##  normal(0,1000^.5)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              199.580   16.637     169.99    234.793    1.050
+##    .diff              196.838   15.745    168.827    230.466    1.001
 ##     Prior         
 ##        gamma(1,.5)
 ```
@@ -946,10 +924,10 @@ summary(fit.bayes.defaultpriors)
 
 | Parameters | Estimates with default priors | Estimate with informative priors | Bias|
 | ---        | ---                           | ---                              | ---                                             |
-| Intercept         | -25.389            |-32.545           |$100\cdot \frac{-25.389--32.545 }{-32.545} = -21.99\%$ |
-| Age               | 1.634            |1.971           |$100\cdot \frac{1.634-1.971 }{1.971} = -17.1\%$      |
-| Age2              | -0.016            |-0.019           |$100\cdot \frac{-0.016--0.019 }{-0.019} = -15.79\%$                                                 |
-| Residual variance | 199.58            |197.042           |$100\cdot \frac{199.58--0.019 }{197.042} = 1.29\%$
+| Intercept         | -40.985            |-36.359           |$100\cdot \frac{-40.985--36.359 }{-36.359} = 12.72\%$ |
+| Age               | 2.37            |2.149           |$100\cdot \frac{2.37-2.149 }{2.149} = 10.28\%$      |
+| Age2              | -0.023            |-0.021           |$100\cdot \frac{-0.023--0.021 }{-0.021} = 9.52\%$                                                 |
+| Residual variance | 196.838            |196.635           |$100\cdot \frac{196.838--0.021 }{196.635} = 0.1\%$
 
 
 _The informative priors have quite some influence (up to 7%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
@@ -992,8 +970,7 @@ summary(fit.bayes)
 ```
 
 ```
-## ** WARNING ** blavaan (0.3-4) did NOT converge after 500 adapt+burnin iterations
-## ** WARNING ** Proceed with caution
+## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -1008,8 +985,8 @@ summary(fit.bayes)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 1.971    0.438      0.713      2.531    1.683
-##     age2               -0.019    0.005     -0.026     -0.006    1.537
+##     age                 2.149    0.209      1.752      2.564    1.001
+##     age2               -0.021    0.003     -0.026     -0.015    1.001
 ##     Prior        
 ##                  
 ##  normal(0.8,2.24)
@@ -1017,22 +994,22 @@ summary(fit.bayes)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -32.545    9.183    -43.709     -6.468    1.715
+##    .diff              -36.359    4.197    -44.666    -28.301    1.001
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.042   15.439    168.824    229.158    1.006
+##    .diff              196.635   15.345    169.003    228.876    1.000
 ##     Prior        
 ##      gamma(.5,.5)
 ```
 
 In the current model we see that:
 
-*  The estimate for the intercept is  -32.545 [-43.709 ;  -6.468 ]
-*  The estimate for the effect of $age$  is  1.971 [0.713 ; 2.531 ]
-*  The estimate for the effect of $age^2$  is -0.019 [-0.026 ; -0.006 ]
+*  The estimate for the intercept is  -36.359 [-44.666 ;  -28.301 ]
+*  The estimate for the effect of $age$  is  2.149 [1.752 ; 2.564 ]
+*  The estimate for the effect of $age^2$  is -0.021 [-0.026 ; -0.015 ]
 
 
 We can see that none of 95% Posterior HPD Intervals for these effects include zero, which means we are can be quite certain that all of the effects are different from 0.

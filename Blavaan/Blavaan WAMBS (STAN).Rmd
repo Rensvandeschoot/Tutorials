@@ -384,7 +384,7 @@ _**Question:** What can you conclude about distribution histograms?_
 
 
 ```{r, eval= TRUE}
-par(mfrow=c(2,2))
+par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "stan_hist")
 ```
 
@@ -498,10 +498,9 @@ fit.bayes.difIG <- blavaan(model = model.regression.difIG, data = dataPHD,
 summary(fit.bayes.difIG)
 ```
 
-```{r, echo = F, eval= TRUE}
+```{r, echo = F}
 summ1 <- summary(fit.bayes)
 summ2 <- summary(fit.bayes.difIG)
-as.numeric(summ1[,2])
 ```
 
 
@@ -561,7 +560,7 @@ fit.bayes.defaultpriors <- blavaan(model = model.regression.defaultprior, data =
 summary(fit.bayes.defaultpriors)
 ```
 
-```{r, echo = F, eval= TRUE}
+```{r, echo = F}
 summ3 <- summary(fit.bayes.defaultpriors)
 ```
 

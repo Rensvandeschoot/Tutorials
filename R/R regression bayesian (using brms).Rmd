@@ -396,7 +396,7 @@ First we extract the MCMC chains of the 5 different models for only this one par
 [expand title="Show Syntax" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=FALSE}
 posterior1.2.3.4.5 <- bind_rows("uninformative prior" = as_tibble(as.mcmc(model,  pars = "b_age", exact_match = TRUE ,combine_chains = TRUE)),
                                 "informative prior 1" = as_tibble(as.mcmc(model2, pars = "b_age", exact_match = TRUE ,combine_chains = TRUE)),
                                 "informative prior 2" = as_tibble(as.mcmc(model3, pars = "b_age", exact_match = TRUE ,combine_chains = TRUE)),
