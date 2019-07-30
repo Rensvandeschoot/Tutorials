@@ -1,7 +1,7 @@
 ---
 title: "WAMBS Blavaan Tutorial (using JAGS)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 24 July 2019'
+date: 'Last modified: 31 July 2019'
 output:
   html_document:
     keep_md: true
@@ -59,7 +59,7 @@ This tutorial expects:
 ## **Example Data**
 
 
-The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).  The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv).Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 30.7, SD = 4.48, min-max = 26-69) of the Ph.D. recipients is related to a delay in their project.
 
@@ -190,10 +190,10 @@ It is a good idea to plot these distribution to see how they look. To do so, one
 
 
 ```r
-par(mfrow=c(2,2))
-plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
-plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "effect Age")
-plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "effect Age^2")
+par(mfrow = c(2,2))
+plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
+plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = "effect Age")
+plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = "effect Age^2")
 ```
 
 
@@ -202,10 +202,10 @@ plot(density(rnorm(n=100000,mean=XX, sd=sqrt(XX))), main= "effect Age^2")
 
 
 ```r
-par(mfrow=c(2,2))
-plot(density(rnorm(n=100000,mean=-35, sd=sqrt(20))), main= "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
-plot(density(rnorm(n=100000,mean=.8, sd=sqrt(5))), main= "effect Age")
-plot(density(rnorm(n=100000,mean=0, sd=sqrt(10))), main= "effect Age^2")
+par(mfrow = c(2,2))
+plot(density(rnorm(n = 100000, mean = -35, sd = sqrt(20))), main = "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
+plot(density(rnorm(n = 100000, mean = .8, sd = sqrt(5))),   main = "effect Age")
+plot(density(rnorm(n = 100000, mean = 0,  sd = sqrt(10))),  main = "effect Age^2")
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
@@ -215,9 +215,9 @@ We can also plot what the our expected delay would be (like we did in the Blavaa
 
 
 ```r
-years<- 20:80
-delay<- XX+XX*years+XX*years^2
-plot(years, delay, type= "l")
+years <- 20:80
+delay <- XX + XX*years + XX*years^2
+plot(years, delay, type = "l")
 ```
 
 
@@ -226,9 +226,9 @@ plot(years, delay, type= "l")
 
 
 ```r
-years<- 20:80
-delay<--35+.8*years+0*years^2
-plot(years, delay, type= "l")
+years <- 20:80
+delay <- -35 + .8*years + 0*years^2
+plot(years, delay, type =  "l")
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
@@ -239,8 +239,8 @@ We can also plot what the our expected delay would be (like we did in the Blavaa
 
 
 ```r
-years<- 20:80
-delay<--35+.8*years+0*years^2
+years <- 20:80
+delay <- -35+.8*years+0*years^2
 plot(years, delay, type= "l")
 ```
 
@@ -485,7 +485,7 @@ plot(fit.bayes, pars = 1:4, plot.type = "histogram")
 _The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you arenot satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
 
 
-If we compare this with histograms based on the first analysis (with very few iterations, this difference becomes clear:
+If we compare this with histograms based on the first analysis (with very few iterations), this difference becomes clear:
 
 
 ```r
@@ -504,7 +504,7 @@ plot(fit.bayesfewsample, pars = 1:4, plot.type = "histogram")
   <p>&nbsp;</p>
   
 
-###5.   Do the chains exhibit a strong degree of autocorrelation?
+### 5.   Do the chains exhibit a strong degree of autocorrelation?
 
 To obtain information about autocorrelation the following syntax can be used:
 
@@ -531,7 +531,7 @@ _These results show that autocorrelation is quite stong after a few lags. This m
 [/expand]
 
 
-###6.   Do the posterior distributions make substantive sense?
+### 6.   Do the posterior distributions make substantive sense?
 
 We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to the our prior believes (priors). Using the `as.matrix()` command we bind the three MCMC chains we have of the different parameters into one chain. Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
 
@@ -1005,9 +1005,9 @@ Remember how we plotted the relation between delay and years based on the prior 
 
 
 ```r
-years<- 20:80
-delay<--35+2.13*years-0.02*years^2
-plot(years, delay, type= "l")
+years <- 20:80
+delay <- -35 + 2.13*years -0.02*years^2
+plot(years, delay, type = "l")
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-35-1.png)<!-- -->

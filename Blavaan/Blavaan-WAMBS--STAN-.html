@@ -365,7 +365,7 @@ summary {
 
 <h1 class="title toc-ignore">WAMBS Blavaan Tutorial (using Stan)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 25 July 2019</h4>
+<h4 class="date">Last modified: 30 July 2019</h4>
 
 </div>
 
@@ -512,7 +512,7 @@ colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&
 <li><span class="math inline">\(\beta_2 \sim \mathcal{N}(0, 10)\)</span></li>
 <li><span class="math inline">\(\in \sim IG(.5, .5)\)</span> This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.</li>
 </ul>
-<p>It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the ‘XX’ with the values of the hyperparematers.</p>
+<p>It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the ‘XX’ with the values of the hyperparameters</p>
 <pre class="r"><code>par(mfrow = c(2,2))
 plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = &quot;prior intercept&quot;) # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
 plot(density(rnorm(n = 100000, mean = XX, sd = sqrt(XX))), main = &quot;effect Age&quot;)
@@ -529,7 +529,7 @@ delay &lt;- XX + XX*years + XX*years^2
 plot(years, delay, type = &quot;l&quot;)</code></pre>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <pre class="r"><code>years &lt;- 20:80
-delay&lt;--35+.8*years+0*years^2
+delay &lt;- -35 + .8*years + 0*years^2
 plot(years, delay, type= &quot;l&quot;)</code></pre>
 <p>[/expand]</p>
 <p>We can also plot what the our expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: <span class="math inline">\(delay=-35+ .8*age + 0*age^2\)</span>. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.</p>
@@ -927,8 +927,6 @@ fit.bayes.difIG &lt;- blavaan(model = model.regression.difIG, data = dataPHD,
 ##    .diff              197.489   15.454    169.208    229.964    1.000
 ##     Prior        
 ##    gamma(.01,.01)</code></pre>
-<pre><code>## [1]      2.149     -0.021    196.635    -36.359     46.868   4403.980
-## [7] 429560.007     31.676   1050.216</code></pre>
 <table>
 <colgroup>
 <col width="25%"></col>

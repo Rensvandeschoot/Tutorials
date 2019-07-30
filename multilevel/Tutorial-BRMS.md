@@ -1,7 +1,7 @@
 ---
 title: 'Building a Multilevel Model in BRMS Tutorial: Popularity Data'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
+date: 'Last modified: 26 July 2019'
 output:
   html_document:
     keep_md: true
@@ -9,7 +9,7 @@ output:
 
 
 ## Introduction
-This document shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this manual the software package [BRMS, version `r packageVersion("brms")` ](https://cran.r-project.org/web/packages/brms/index.html) for R (Windows) was used. Results should be very similar to results obtained with other software packages, however due to convergence and rounding issues, you might notice minor differences. **This is part 1 of a 3 part [series](https://www.rensvandeschoot.com/tutorials/brms/) on how to do multilevel models in BRMS. In [part 2](https://www.rensvandeschoot.com/tutorials/brms-priors/) we will look at the influence of different priors and in [part 3](https://www.rensvandeschoot.com/brms-wambs/) we will go through the WAMBS checklist** 
+This document shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this manual the software package [BRMS, version 2.8.0 ](https://cran.r-project.org/web/packages/brms/index.html) for R (Windows) was used. Results should be very similar to results obtained with other software packages, however due to convergence and rounding issues, you might notice minor differences. **This is part 1 of a 3 part [series](https://www.rensvandeschoot.com/tutorials/brms/) on how to do multilevel models in BRMS. In [part 2](https://www.rensvandeschoot.com/tutorials/brms-priors/) we will look at the influence of different priors and in [part 3](https://www.rensvandeschoot.com/brms-wambs/) we will go through the WAMBS checklist** 
 
 
 ## Preparation
@@ -19,7 +19,7 @@ This tutorial expects:
 -  Basic knowledge of coding in R, specifically the [LME4 package](https://www.rensvandeschoot.com/tutorials/lme4/).
 -  Basic knowledge of Bayesian Statistics.
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version `r packageVersion("brms")` in R version `r paste0(R.Version()[c("major","minor")], collapse = ".")`
+- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.8.0 in R version 3.6.0
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
 
 
@@ -51,7 +51,8 @@ The main package that is used for this analysis is [brms](https://cran.r-project
 
 After you have install the aforementioned software you need to load some other R packages. If you have not yet installed all below mentioned packages, you can install them by the command install.packages("NAMEOFPACKAGE")
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 library(brms) # for the analysis
 library(haven) # to load the SPSS .sav file
 library(tidyverse) # needed for data manipulation.
@@ -70,15 +71,29 @@ The popularity dataset contains characteristics of pupils in different classes. 
 
 Alternatively, you can directly download them from GitHub into your R work space using the following command:
 
-```{r}
+
+```r
 popular2data <- read_sav(file ="https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav?raw=true")
 ```
 
 There are some variables in the dataset that we do not use, so we can select the variables we will use and have a look at the first few observations.
 
-```{r}
+
+```r
 popular2data <- select(popular2data, pupil, class, extrav, sex, texp, popular) # we select just the variables we will use
 head(popular2data) # we have a look at the first 6 observations
+```
+
+```
+## # A tibble: 6 x 6
+##   pupil class extrav       sex  texp popular
+##   <dbl> <dbl>  <dbl> <dbl+lbl> <dbl>   <dbl>
+## 1     1     1      5  1 [girl]    24     6.3
+## 2     2     1      7  0 [boy]     24     4.9
+## 3     3     1      4  1 [girl]    24     5.3
+## 4     4     1      3  1 [girl]    24     4.7
+## 5     5     1      5  1 [girl]    24     6  
+## 6     6     1      4  0 [boy]     24     4.7
 ```
 
 &nbsp;
@@ -87,7 +102,8 @@ head(popular2data) # we have a look at the first 6 observations
 
 Before we start the analysis, we can plot the relationship between extraversion and popularity, without taking into consideration the multilevel structure of the data.
 
-```{r}
+
+```r
 ggplot(data  = popular2data,
        aes(x = extrav,
            y = popular))+
@@ -98,9 +114,12 @@ ggplot(data  = popular2data,
   labs(title = "Popularity vs. Extraversion")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
 Now we can add a regression line to this plot.
 
-```{r}
+
+```r
 ggplot(data  = popular2data,
        aes(x = extrav,
            y = popular))+
@@ -117,9 +136,12 @@ ggplot(data  = popular2data,
        subtitle = "add regression line")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
 So far we have ignored the nested multilevel structure of the data. We can show this multilevel structure by colour coding the different classes.
 
-```{r}
+
+```r
 ggplot(data    = popular2data,
        aes(x   = extrav,
            y   = popular,
@@ -134,10 +156,13 @@ ggplot(data    = popular2data,
        subtitle = "add colours for different classes")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
 Now we can draw different regression lines for the 100 different classes in the data
 
 
-```{r}
+
+```r
 ggplot(data      = popular2data,
        aes(x     = extrav,
            y     = popular,
@@ -157,11 +182,14 @@ ggplot(data      = popular2data,
        subtitle = "add colours for different classes and regression lines")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
 We clearly see that the relationship between extraversion and popularity is not the same in all classes, but on average there is a clear positive relationship. In this tutorial we will show the estimation of these different slopes (and how the explain these differences). Again, for more information please refer the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/).  
 
 We can also colour code the most extreme regression lines.
 
-```{r, message=FALSE, warning=FALSE}
+
+```r
 # To colour code the extremes, we need to write a small function that calculates the regression lines and adds a collumn indicating which clusters have the most extreme.
 f1 <- function(data, x, y, grouping, n.highest = 3, n.lowest = 3){
   groupinglevel <- data[,grouping]
@@ -177,11 +205,11 @@ f1 <- function(data, x, y, grouping, n.highest = 3, n.lowest = 3){
   data3  <- left_join(data, res)
   return(data3)
 }
-
 ```
  
 Now we can use this function on the popularity data.
-```{r, message=FALSE, warning=FALSE}
+
+```r
 f1(data = as.data.frame(popular2data), 
    x    = "extrav",
    y    = "popular",
@@ -222,6 +250,8 @@ f1(data = as.data.frame(popular2data),
        subtitle="The 6 with the most extreme relationship have been highlighted red and blue")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 ## Step 4: Analysing the Data
 
 
@@ -248,15 +278,54 @@ If we look at the different inputs for the brm function we:
 For more information on the BRMS function which is based on the LMER function of the LME4 package see: https://cran.r-project.org/web/packages/lme4/lme4.pdf
 
 
-```{r}
+
+```r
 interceptonlymodeltest<-brm(popular ~ 1 + (1 | class),  data = popular2data, warmup = 100, iter = 200, chains = 2, inits= "random", cores = 2)  #the cores function tells STAN to make use of 2 CPU cores simultaneously instead of just 1.
+```
+
+```
+## Compiling the C++ model
+```
+
+```
+## Start sampling
+```
+
+```r
 summary(interceptonlymodeltest)
+```
+
+```
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: popular ~ 1 + (1 | class) 
+##    Data: popular2data (Number of observations: 2000) 
+## Samples: 2 chains, each with iter = 200; warmup = 100; thin = 1;
+##          total post-warmup samples = 200
+## 
+## Group-Level Effects: 
+## ~class (Number of levels: 100) 
+##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sd(Intercept)     0.86      0.06     0.75     1.00         35 1.05
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept     5.07      0.09     4.93     5.26         16 1.08
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma     1.11      0.02     1.07     1.15        125 1.01
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 For this model we have specified very few iterations and a short burn-in period, which yields the warning *"The model has not converged (some Rhats are > 1.1). Do not analyse the results!  We recommend running more iterations and/or setting stronger priors."* So we do so. From now on, to keep this tutorial of a reasonable length, the process of the BRMS MCMC sampler is no longer shown.
 
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 interceptonlymodel <- brm(popular ~ 1 + (1|class),  
                           data = popular2data, 
                           warmup = 1000, iter = 3000, 
@@ -264,8 +333,35 @@ interceptonlymodel <- brm(popular ~ 1 + (1|class),
                           seed = 123) #to run the model
 ```
 
-```{r}
+
+```r
 summary(interceptonlymodel)
+```
+
+```
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: popular ~ 1 + (1 | class) 
+##    Data: popular2data (Number of observations: 2000) 
+## Samples: 2 chains, each with iter = 3000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~class (Number of levels: 100) 
+##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sd(Intercept)     0.85      0.07     0.73     0.99        740 1.00
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept     5.08      0.09     4.91     5.25        516 1.00
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma     1.11      0.02     1.07     1.14       6613 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 
@@ -273,9 +369,21 @@ Now we do not get any warnings and can check the results. We see that the interc
 
 Alternatively we can also use of the following code to calculate the ICC. This function will also indicate if 0 is included in the 95% CCI of the ICC. In our example that is not case which means a multilevel model is warranted. 
 
-```{r}
+
+```r
 hyp <- "sd_class__Intercept^2 / (sd_class__Intercept^2 + sigma^2) = 0"
 hypothesis(interceptonlymodel, hyp, class = NULL)
+```
+
+```
+## Hypothesis Tests for class :
+##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+## 1 (sd_class__Interc... = 0     0.37      0.04      0.3     0.45         NA
+##   Post.Prob Star
+## 1        NA    *
+## ---
+## '*': The expected value under the hypothesis lies outside the 95%-CI.
+## Posterior probabilities of point hypotheses assume equal prior probabilities.
 ```
 
 &nbsp;
@@ -284,7 +392,8 @@ hypothesis(interceptonlymodel, hyp, class = NULL)
 ## First Level Predictors
 Now we can add first (student) level predictors. The first level predictors are sex and extraversion. For now, we just add them as fixed effects and not yet as random slopes. Furthermore, we do not yet specify any priors for the regression coefficients, which means that BRMS will pick priors that are non or very weakly informative, so that their influence on the results will be negligible.
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 model1 <- brm(popular ~ 1 + sex + extrav + (1|class),  
               data = popular2data, 
               warmup = 1000, iter = 3000, 
@@ -292,14 +401,51 @@ model1 <- brm(popular ~ 1 + sex + extrav + (1|class),
               seed = 123) #to run the model
 ```
 
-```{r}
+
+```r
 summary(model1)
+```
+
+```
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: popular ~ 1 + sex + extrav + (1 | class) 
+##    Data: popular2data (Number of observations: 2000) 
+## Samples: 2 chains, each with iter = 3000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~class (Number of levels: 100) 
+##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sd(Intercept)     0.80      0.06     0.69     0.93        389 1.01
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept     2.14      0.12     1.90     2.37        585 1.00
+## sex           1.25      0.04     1.18     1.33       4125 1.00
+## extrav        0.44      0.02     0.41     0.47       3382 1.00
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma     0.77      0.01     0.75     0.79       4470 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 Again, we get no warnings and we can interpret the results. However because we now have multiple parameters of interest we can visualize the convergence in so-called caterpillar plots. We see that after a few iteration (far before the end of the warm up period of 3000), the 2 chains converge into a nice fat caterpillar. 
 
-```{r}
+
+```r
 model1tranformed <- ggs(model1) # the ggs function transforms the brms output into a longformat tibble, that we can use to make different types of plots.
+```
+
+```
+## Warning in custom.sort(D$Parameter): NAs introduced by coercion
+```
+
+```r
 ggplot(filter(model1tranformed, Parameter %in% c("b_Intercept", "b_extrav", "b_sex")),
        aes(x   = Iteration,
            y   = value, 
@@ -313,10 +459,13 @@ ggplot(filter(model1tranformed, Parameter %in% c("b_Intercept", "b_extrav", "b_s
        col   = "Chains")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+
 The intercept is now 2.14 (which represent the mean of the posterior distribution), the regression coefficient for sex is 1.25, and the regression coefficient for extraversion 0.44. In a Bayesian analysis we do not have p-values as we do have a frequentist analysis and corresponding hypothesis tests. To test whether all regression coefficients are different from zero, we can look at the Credible Intervals that are listed in the summary output or we can visually represent them in density plots. If we do so, we clearly see that zero is not included in any of the density plots, meaning that we can be reasonably certain the regression coefficients are different from zero.
 
 
-```{r}
+
+```r
 ggplot(filter(model1tranformed,
               Parameter == "b_Intercept", 
               Iteration > 1000),
@@ -333,8 +482,11 @@ ggplot(filter(model1tranformed,
              linetype = 2) +
   theme_light() +
   labs(title = "Posterior Density of Intercept")
+```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
+```r
 ggplot(filter(model1tranformed, Parameter == "b_extrav", Iteration > 1000), aes(x = value))+
   geom_density(fill = "orange", alpha = .5)+
   geom_vline(xintercept = 0, col = "red", size = 1)+
@@ -342,8 +494,11 @@ ggplot(filter(model1tranformed, Parameter == "b_extrav", Iteration > 1000), aes(
   geom_vline(xintercept = summary(model1)$fixed[3,3:4], col = "blue", linetype = 2)+
   theme_light()+
   labs(title = "Posterior Density of Regression Coefficient for Extraversion")
+```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-17-2.png)<!-- -->
 
+```r
 ggplot(filter(model1tranformed, Parameter == "b_sex", Iteration > 1000), aes(x = value))+
   geom_density(fill = "red", alpha = .5)+
   geom_vline(xintercept = 0, col = "red", size = 1)+
@@ -353,6 +508,8 @@ ggplot(filter(model1tranformed, Parameter == "b_sex", Iteration > 1000), aes(x =
   labs(title = "Posterior Density of Regression Coefficient for Sex")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-17-3.png)<!-- -->
+
 &nbsp;
 
 
@@ -360,7 +517,8 @@ ggplot(filter(model1tranformed, Parameter == "b_sex", Iteration > 1000), aes(x =
 
 We now also (in addition to the level 1 variables that were both significant) add a predictor variable on the second level (teacher experience).
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 model2 <- brm(popular ~ 1 + sex + extrav + texp + (1|class),  
               data = popular2data, 
               warmup = 1000, iter = 3000, 
@@ -369,8 +527,38 @@ model2 <- brm(popular ~ 1 + sex + extrav + texp + (1|class),
 ```
 
 
-```{r}
+
+```r
 summary(model2)
+```
+
+```
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: popular ~ 1 + sex + extrav + texp + (1 | class) 
+##    Data: popular2data (Number of observations: 2000) 
+## Samples: 2 chains, each with iter = 3000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~class (Number of levels: 100) 
+##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sd(Intercept)     0.55      0.04     0.47     0.64        822 1.00
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept     0.80      0.17     0.47     1.13        891 1.00
+## sex           1.25      0.04     1.18     1.33       6064 1.00
+## extrav        0.45      0.02     0.42     0.49       5283 1.00
+## texp          0.09      0.01     0.07     0.11        609 1.01
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma     0.77      0.01     0.75     0.80       5604 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 We can see that both the level 1 and level 2 variables are different from zero (0 is not included in any of the CCIs) However, we have not added random slopes yet for any variables (as is done in table 2.1 in the book).
@@ -385,7 +573,8 @@ We can now also calculate the explained variance at level 1 and at level 2.
 ## First and Second Level Predictors with Random Slopes (1)
 We also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in BRMS just add the variables for which we want to add random slopes to the random part of  the input. This means that "(1|class)" becomes "(1+sex+extrav |class)"
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 model3 <- brm(popular ~ 1 + sex + extrav + (1 + sex + extrav | class),  
               data = popular2data, 
               warmup = 1000, iter = 3000, 
@@ -393,8 +582,42 @@ model3 <- brm(popular ~ 1 + sex + extrav + (1 + sex + extrav | class),
               seed = 123) #to run the model
 ```
 
-```{r}
+
+```r
 summary(model3)
+```
+
+```
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: popular ~ 1 + sex + extrav + (1 + sex + extrav | class) 
+##    Data: popular2data (Number of observations: 2000) 
+## Samples: 2 chains, each with iter = 3000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~class (Number of levels: 100) 
+##                       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sd(Intercept)             1.60      0.15     1.32     1.91        911 1.00
+## sd(sex)                   0.08      0.05     0.00     0.19        853 1.00
+## sd(extrav)                0.17      0.02     0.13     0.22        861 1.00
+## cor(Intercept,sex)       -0.19      0.41    -0.87     0.66       4096 1.00
+## cor(Intercept,extrav)    -0.93      0.03    -0.97    -0.87       1109 1.00
+## cor(sex,extrav)           0.04      0.43    -0.75     0.84        459 1.00
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept     2.08      0.18     1.72     2.42        704 1.00
+## sex           1.25      0.04     1.17     1.32       6138 1.00
+## extrav        0.44      0.02     0.40     0.49       1088 1.00
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma     0.74      0.01     0.72     0.77       4121 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 We can see that all the fixed regression slopes are still different from 0. However, no significance test for the Random Effects are given, but we do see that the error term (Variance) for the slope of the variable sex is estimated to be very small $0.06^2=0.0036$. This probably  means that there is no slope variation of the sex variable between classes and therefore the random slope estimation can be dropped from the next analyses. Since a negative variance is not possible the posterior distribution of the random term is truncated at 0, in the summary output we do see though that 0 falls in the 95% CCI, and therefore we have no strong evidence it is different than 0.
@@ -406,7 +629,8 @@ We can see that all the fixed regression slopes are still different from 0. Howe
 
 We continue after omitting the random slope of sex.
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 model4 <- brm(popular ~ 1 + sex + extrav + texp + (1 + extrav | class),  
               data = popular2data, 
               warmup = 1000, iter = 3000, 
@@ -415,17 +639,49 @@ model4 <- brm(popular ~ 1 + sex + extrav + texp + (1 + extrav | class),
 ```
 
 
-```{r}
+
+```r
 summary(model4)
+```
+
+```
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: popular ~ 1 + sex + extrav + texp + (1 + extrav | class) 
+##    Data: popular2data (Number of observations: 2000) 
+## Samples: 2 chains, each with iter = 3000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~class (Number of levels: 100) 
+##                       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sd(Intercept)             1.13      0.14     0.86     1.41       1493 1.00
+## sd(extrav)                0.18      0.02     0.14     0.23       1089 1.00
+## cor(Intercept,extrav)    -0.87      0.04    -0.93    -0.78       1450 1.00
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## Intercept     0.73      0.24     0.28     1.21       1194 1.00
+## sex           1.25      0.04     1.18     1.32       8009 1.00
+## extrav        0.45      0.02     0.40     0.50       2811 1.00
+## texp          0.09      0.01     0.07     0.12        767 1.01
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+## sigma     0.74      0.01     0.72     0.77       6808 1.00
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+## is a crude measure of effective sample size, and Rhat is the potential 
+## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 
 We see that:
 
-*  The estimate for the intercept is $0.72 [0.28; 1.18]$
-*  The estimate for the fixed effect of sex is $1.25 [1.18; 1.32]$
-*  The estimate for the effect of teacher experience is $0.09 [0.07; 0.12]$
-*  The estimate for the mean effect of extraversion is $0.45 [0.40; 0.50]$
+*  The estimate for the intercept is 0.72 [0.28; 1.18]
+*  The estimate for the fixed effect of sex is 1.25 [1.18; 1.32]
+*  The estimate for the effect of teacher experience is 0.09 [0.07; 0.12]
+*  The estimate for the mean effect of extraversion is 0.45 [0.40; 0.50]
 *  The estimate for the random effect of the slope of extraversion is $.18^2=.032 [0.14^2;0.23^2]$ (some of these estimates might slightly different for you or than in the book, due to squaring after rounding)
 *  The estimate for the First level residual variance is $0.74^2=.55 [0.72^2;0.77^2]$
 *  The estimate for the residual variance on the second level is $1.13^2=1.28 [0.87^2;1.42^2]$
@@ -446,7 +702,8 @@ Combined we get:
 
 $$Popularity_{ij}= \gamma_{00}+\gamma_{10}*sex_{ij}+\gamma_{20}*extraversion_{ij}+\gamma_{01}*experience_j+\gamma_{21}*extraversion_{ij}*experience_j+u_{2j}*extraversion_{ij}+u_{0j}+e_{ij}$$
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 model5 <- brm(popular ~ 1 + sex + extrav + texp + extrav:texp + (1 + extrav|class), 
               data  = popular2data, warmup = 1000,
               iter  = 3000, chains = 2, 
@@ -456,9 +713,50 @@ model5 <- brm(popular ~ 1 + sex + extrav + texp + extrav:texp + (1 + extrav|clas
 
 Because we are looking at some small estimates, we need more than 3 decimal points. These decimals are acquired with the following command:
 
-```{r}
+
+```r
 summary(model5)$fixed
+```
+
+```
+## Warning: There were 234 divergent transitions after warmup. Increasing adapt_delta above 0.97 may help.
+## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+```
+
+```
+##                Estimate   Est.Error    l-95% CI    u-95% CI Eff.Sample
+## Intercept   -1.21316507 0.259965469 -1.72527083 -0.70658588   1885.434
+## sex          1.23926184 0.036729302  1.16671462  1.30829842   4159.152
+## extrav       0.80392992 0.038941005  0.72891187  0.88114305   2265.667
+## texp         0.22634748 0.015922294  0.19538130  0.25739669   1757.210
+## extrav:texp -0.02470317 0.002453314 -0.02951744 -0.01988758   2234.876
+##                  Rhat
+## Intercept   0.9995886
+## sex         0.9996308
+## extrav      0.9995619
+## texp        0.9997630
+## extrav:texp 0.9995858
+```
+
+```r
 summary(model5)$random
+```
+
+```
+## Warning: There were 234 divergent transitions after warmup. Increasing adapt_delta above 0.97 may help.
+## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+```
+
+```
+## $class
+##                          Estimate Est.Error     l-95% CI  u-95% CI
+## sd(Intercept)          0.62215539 0.1034839  0.449022873 0.8544939
+## sd(extrav)             0.04621475 0.0310829  0.001630236 0.1055989
+## cor(Intercept,extrav) -0.38531230 0.4306381 -0.910388316 0.7986089
+##                       Eff.Sample     Rhat
+## sd(Intercept)           333.0255 1.004880
+## sd(extrav)              116.9502 1.017597
+## cor(Intercept,extrav)   523.4056 1.002699
 ```
 
 
@@ -471,7 +769,8 @@ As explained in the book and shown in the results, both the intercept and the sl
 In a plot we can also clearly see that years of teacher experience has influence on both the intercept and the regression coefficient of extraversion on popularity. 
 
 
-```{r}
+
+```r
 ggplot(data = popular2data, 
        aes(x   = extrav,
            y   = popular,
@@ -490,10 +789,13 @@ ggplot(data = popular2data,
        col      = "Years of\nTeacher\nExperience")
 ```
 
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+
 If you want to plot this in a Bayesian way, you could run a simple model and show the different posteriors of the regression slope of extraversion in the 100 different classes.
 
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 simplemodel1 <- brm(popular ~ 1 + extrav + (1 + extrav | class), 
                   data = popular2data,
                   warmup = 1000, iter = 5000, chains = 2,  
@@ -515,7 +817,8 @@ gather(key = "key", value = "value", -teacherexperience, -class)%>%
 ```
 
 
-```{r, fig.width=7, fig.height=15}
+
+```r
 ggplot()+
   ggridges::geom_density_ridges(data  = posteriorsimpelmodellong, 
                                 aes(x      = value,
@@ -549,10 +852,22 @@ ggplot()+
   theme_tufte()
 ```
 
+```
+## Picking joint bandwidth of 0.0125
+```
+
+```
+## Warning: Removed 2404 rows containing non-finite values
+## (stat_density_ridges).
+```
+
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
+
 A plot like this would not be possible in a frequentist analysis. From the width of the different posterior distributions we can see that for the classes with a teacher with less experience we are less sure about the deviation. This means that we are less sure about estimate of the deviation from the mean for teachers with relatively little experience and are more sure about the random coefficient for classes with a more experienced teacher. We can investigate whether such relation (linear and/or quadratic) actually exists by plottig the distance between the 0.025 and 0.975 CCI for different levels of teaching experience. If we do so, we see that there indeed is a quadratic (and linear) effect and we also see (again) that classes with a teacher with more experience have a postitive estimate of the second level error term.  
 
 
-```{r, fig.width=12, fig.height=7}
+
+```r
 distance95 <- posteriorsimpelmodellong %>%
   group_by(class) %>%
   summarise(lower95      = quantile(value, probs = .025),
@@ -572,6 +887,31 @@ distance95 <- mutate(distance95, Quadratic = teacherexperience^2)
 model <- lm(mean ~ teacherexperience + Quadratic, data = distance95)
 
 summary(model)
+```
+
+```
+## 
+## Call:
+## lm(formula = mean ~ teacherexperience + Quadratic, data = distance95)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.038912 -0.006452 -0.000093  0.005897  0.040058 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)        4.491e-01  1.351e-02  33.234  < 2e-16 ***
+## teacherexperience -1.197e-02  2.285e-03  -5.239 3.42e-05 ***
+## Quadratic          3.368e-04  8.251e-05   4.081 0.000535 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.01728 on 21 degrees of freedom
+## Multiple R-squared:  0.6983,	Adjusted R-squared:  0.6696 
+## F-statistic:  24.3 on 2 and 21 DF,  p-value: 3.434e-06
+```
+
+```r
 dat <- data.frame(teacherexperience = c(2:25),
                   Quadratic         = c(2:25)^2)
 
@@ -613,6 +953,8 @@ ggplot()+
   scale_x_continuous(breaks = 2:25)+
   theme_tufte()
 ```
+
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
 
 
 ---

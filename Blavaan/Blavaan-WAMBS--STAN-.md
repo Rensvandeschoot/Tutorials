@@ -1,7 +1,7 @@
 ---
 title: "WAMBS Blavaan Tutorial (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 25 July 2019'
+date: 'Last modified: 30 July 2019'
 output:
   html_document:
     keep_md: true
@@ -189,7 +189,7 @@ Next, we need to specify actual values for the hyperparameters of the prior dist
 - $\beta_2 \sim \mathcal{N}(0, 10)$
 - $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.
 
-It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the 'XX' with the values of the hyperparematers.
+It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the 'XX' with the values of the hyperparameters
 
 
 ```r
@@ -230,7 +230,7 @@ plot(years, delay, type = "l")
 
 ```r
 years <- 20:80
-delay<--35+.8*years+0*years^2
+delay <- -35 + .8*years + 0*years^2
 plot(years, delay, type= "l")
 ```
 [/expand]
@@ -782,11 +782,6 @@ summary(fit.bayes.difIG)
 ##    .diff              197.489   15.454    169.208    229.964    1.000
 ##     Prior        
 ##    gamma(.01,.01)
-```
-
-```
-## [1]      2.149     -0.021    196.635    -36.359     46.868   4403.980
-## [7] 429560.007     31.676   1050.216
 ```
 
 
