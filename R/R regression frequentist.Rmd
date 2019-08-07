@@ -125,7 +125,7 @@ dataPHD %>%
 ## Regression Analysis
 Now, let's run a multiple regression model predicting the difference between Ph.D. students' planned and actual project time by their age (note that we ignore assumption checking, if you want a quick introduction to the assumptions underlying a regression, please have look at https://statistics.laerd.com/spss-tutorials/linear-regression-using-spss-statistics.php).
 
-To run a multiple regression with lavaan, you first specify the model, then fit
+To run a multiple regression with R, you first specify the model, then fit
 the model and finally acquire the summary. The model is specified as follows:
 
 To run a multiple regression in R you can use the built in `lm()` function to run the regression and the  `summary()` function to have a look at the results. The `lm()` function takes as input:
@@ -160,11 +160,6 @@ summary(regression)
 
 _There is a significant effect of $age$ and $age^2$, with b=2.657, p &lt;.001 for $age$, and b=-0.026, p&lt;.001 for $age^2$._
 
-
-[/expand]
-
-
-_There is a significant effect of $age$ and $age^2$, with b=2.657, p &lt;.001 for $age$, and b=-0.026, p&lt;.001 for $age^2$._
 
 
 [/expand]
@@ -286,7 +281,6 @@ _Benjamin, D. J., Berger, J., Johannesson, M., Nosek, B. A., Wagenmakers, E.,...
 
 _Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. Altman, D. G. (2016)._ [Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations](https://link.springer.com/article/10.1007/s10654-016-0149-3)_._ _European Journal of Epidemiology 31 (4_). [_https://doi.org/10.1007/s10654-016-0149-3_](https://doi.org/10.1007/s10654-016-0149-3) _   _
 
-_ Rosseel, Y. (2012)._ [lavaan: An R Package for Structural Equation Modeling](https://www.jstatsoft.org/article/view/v048i02). _Journal of Statistical Software, 48(2), 1-36. _
 
 _van de Schoot R, Yerkes MA, Mouw JM, Sonneveld H (2013)_ [What Took Them So Long? Explaining PhD Delays among Doctoral Candidates](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)_._ _PLoS ONE 8(7): e68839._ [https://doi.org/10.1371/journal.pone.0068839](https://doi.org/10.1371/journal.pone.0068839)
 
