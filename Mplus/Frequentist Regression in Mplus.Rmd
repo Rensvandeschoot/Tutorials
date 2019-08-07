@@ -1,0 +1,12 @@
+---
+title: "Regression in Mplus (Frequentist)"
+author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
+date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
+output:
+  html_document:
+    keep_md: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
