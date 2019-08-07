@@ -1,0 +1,257 @@
+Mplus VERSION 8.3
+MUTHEN & MUTHEN
+08/07/2019  10:56 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Frequentist analysis
+
+  DATA: FILE IS phd-delays_nonames.csv;
+
+  VARIABLE: NAMES ARE diff child sex Age Age2; ! All the variables in the dataset
+
+  USEVARIABLES ARE diff Age Age2; ! The variables we use in this analysis
+
+  MODEL:
+  diff ON Age (Beta_Age);   ! Regression coefficient 1.
+  diff ON Age2(Beta_Age2);  ! Regression coefficient 2
+
+  OUTPUT: sampstat CINTERVAL   stdyx;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Frequentist analysis
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         333
+
+Number of dependent variables                                    1
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   DIFF
+
+Observed independent variables
+   AGE         AGE2
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+
+Input data file(s)
+  phd-delays_nonames.csv
+
+Input data format  FREE
+
+
+SAMPLE STATISTICS
+
+
+     SAMPLE STATISTICS
+
+
+           Means
+              DIFF          AGE           AGE2
+              ________      ________      ________
+                9.967        31.676      1050.216
+
+
+           Covariances
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF         207.636
+ AGE           10.839        46.868
+ AGE2         612.268      4403.980    429560.007
+
+
+           Correlations
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF           1.000
+ AGE            0.110         1.000
+ AGE2           0.065         0.982         1.000
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     DIFF                  9.967       2.217     -31.000    0.30%       0.000      3.000      5.000
+             333.000     207.636       5.977      91.000    0.30%       7.000     16.000
+     AGE                  31.676       4.472      26.000    1.80%      28.000     29.000     30.000
+             333.000      46.868      25.162      80.000    0.90%      31.000     33.000
+     AGE2               1050.216       6.056     676.000    1.80%     784.000    841.000    900.000
+             333.000  429560.007      42.483    6400.000    0.90%     961.000   1089.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        4
+
+Loglikelihood
+
+          H0 Value                       -1350.154
+          H1 Value                       -1350.154
+
+Information Criteria
+
+          Akaike (AIC)                    2708.308
+          Bayesian (BIC)                  2723.541
+          Sample-Size Adjusted BIC        2710.852
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                             21.521
+          Degrees of Freedom                     2
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ DIFF     ON
+    AGE                2.657      0.583      4.554      0.000
+    AGE2              -0.026      0.006     -4.236      0.000
+
+ Intercepts
+    DIFF             -47.088     12.285     -3.833      0.000
+
+ Residual Variances
+    DIFF             194.641     15.084     12.903      0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ DIFF     ON
+    AGE                1.262      0.269      4.685      0.000
+    AGE2              -1.174      0.271     -4.340      0.000
+
+ Intercepts
+    DIFF              -3.268      0.819     -3.992      0.000
+
+ Residual Variances
+    DIFF               0.937      0.026     36.472      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    DIFF               0.063      0.026      2.435      0.015
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.822E-06
+       (ratio of smallest to largest eigenvalue)
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ DIFF     ON
+    AGE              1.154       1.514       1.697       2.657       3.617       3.801       4.160
+    AGE2            -0.042      -0.038      -0.036      -0.026      -0.016      -0.014      -0.010
+
+ Intercepts
+    DIFF           -78.732     -71.167     -67.297     -47.088     -26.880     -23.010     -15.445
+
+ Residual Variances
+    DIFF           155.787     165.076     169.827     194.641     219.455     224.207     233.496
+
+
+CONFIDENCE INTERVALS OF STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ DIFF     ON
+    AGE              0.568       0.734       0.819       1.262       1.706       1.791       1.956
+    AGE2            -1.871      -1.705      -1.619      -1.174      -0.729      -0.644      -0.477
+
+ Intercepts
+    DIFF            -5.376      -4.872      -4.614      -3.268      -1.921      -1.663      -1.159
+
+ Residual Variances
+    DIFF             0.871       0.887       0.895       0.937       0.980       0.988       1.004
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    \\client\c$\users\laure\stack\github\tutorials\mplus\input file freq.dgm
+
+     Beginning Time:  22:56:17
+        Ending Time:  22:56:29
+       Elapsed Time:  00:00:12
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2019 Muthen & Muthen

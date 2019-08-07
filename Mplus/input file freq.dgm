@@ -1,0 +1,50 @@
+VERSION 1.1.0
+INPUT
+TITLE:
+ Frequentist analysis
+
+DATA:
+ FILE IS phd-delays_nonames.csv;
+VARIABLE:
+ NAMES ARE diff child sex Age Age2;
+USEVARIABLES ARE diff Age Age2;
+OUTPUT:
+ sampstat CINTERVAL   stdyx;
+MODEL:
+diff ON Age (Beta_Age);
+diff ON Age2(Beta_Age2);
+INPUT_END
+3
+3
+0
+3
+ML
+1
+GENERAL
+0
+1
+0
+2
+diff age age2
+2
+1 0 0
+0
+0
+1 1 age diff      2.657      0.583      1.514      3.801
+91 1 age diff beta_age
+1 1 age2 diff     -0.026      0.006     -0.038     -0.014
+91 1 age2 diff beta_age2
+4 1 diff    194.641     15.084    165.076    224.207
+2 1 age age2    999.000    999.000    999.000    999.000
+11 1 age diff      1.262      0.269      0.734      1.791
+91 1 age diff beta_age
+11 1 age2 diff     -1.174      0.271     -1.705     -0.644
+91 1 age2 diff beta_age2
+14 1 diff      0.937      0.026      0.887      0.988
+12 1 age age2    999.000    999.000    999.000    999.000
+31 1 age diff      2.657      0.583      1.514      3.801
+91 1 age diff beta_age
+31 1 age2 diff     -0.026      0.006     -0.038     -0.014
+91 1 age2 diff beta_age2
+34 1 diff    194.641     15.084    165.076    224.207
+32 1 age age2    999.000    999.000    999.000    999.000

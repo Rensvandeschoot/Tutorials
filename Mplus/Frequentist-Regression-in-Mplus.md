@@ -1,14 +1,12 @@
 ---
 title: "Regression in Mplus (Frequentist)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
+date: 'Last modified: 07 August 2019'
 output:
   html_document:
     keep_md: true
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 ## Introduction
 This tutorial provides the reader with a basic tutorial how to perform a regression analysis in [Mplus](https://www.statmodel.com/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/). 
@@ -60,7 +58,8 @@ $H_1:$ _$age^2$is related to a delay in the PhD projects._
 
 You can find the data in the file <span style="color:red"> ` phd-delays_nonames.csv` </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into Mplus using the following syntax:
 
-```{r, eval=FALSE}
+
+```r
 TITLE: Mplus analysis summary
 DATA: FILE IS phd-delays_nonames.csv;
 VARIABLE: NAMES ARE diff child sex Age Age2;
@@ -76,7 +75,8 @@ Once you loaded in your data, it is advisable to check whether your data import 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-```{r, eval=FALSE}
+
+```r
 MODEL RESULTS
 
                                                     Two-Tailed
@@ -86,7 +86,6 @@ MODEL RESULTS
     DIFF               9.967      0.790     12.622      0.000
     AGE               31.676      0.375     84.433      0.000
     AGE2            1050.217     35.916     29.241      0.000
-
 ```
 
 
@@ -105,7 +104,8 @@ _$Age^2$: Mean (1050.22), SE (35.92)_
 
 Before we continue with analyzing the data we can also plot the expected relationship. We can do this by adding the following code to the input syntax of Mplus and then in the top menu go to `Plot` >   `View plot` > `Scatterplots (sample value)` > `View` > `Set X to AGE` > `OK`
 
-```{r, eval=F}
+
+```r
 PLOT: 
 TYPE IS PLOT1; 
 ```
@@ -138,7 +138,8 @@ Now, preform a multiple linear regression and answer the following questions:
 
 [expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
  
-```{r, eval=FALSE}
+
+```r
 TITLE: Frequentist analysis
 
 DATA: FILE IS phd-delays_nonames.csv;
@@ -156,7 +157,8 @@ OUTPUT: sampstat;
 
 
 
-```{r, eval=FALSE}
+
+```r
 MODEL RESULTS
 
                                                     Two-Tailed
@@ -225,13 +227,15 @@ _Because the p-values for both regression coefficients were really small &lt;.00
 Of course, we should never base our decisions on single criterions only. Luckily, there are several additional measures that we can take into account. A very popular measure is the confidence interval. To get the confidence intervals for the model parameters, you can add `CINTERVAL` to the `OUTPUT` statement in the input file, like
 
 
-```{r, eval=F}
+
+```r
 OUTPUT: sampstat CINTERVAL;
 ```
 
 This will give this output:
 
-```{r, eval=F}
+
+```r
 CONFIDENCE INTERVALS OF MODEL RESULTS
 
                   Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
@@ -267,7 +271,8 @@ Additionally, to make statements about the actual relevance of your results, foc
 To get the standardized results and an estimate of the explained variance (R$^2$), you can add `CINTERVAL` to the `OUTPUT` statement in the input file, like
 
 
-```{r, eval=F}
+
+```r
 OUTPUT: sampstat CINTERVAL STDYX;
 ```
 
@@ -275,7 +280,8 @@ OUTPUT: sampstat CINTERVAL STDYX;
 [expand title=Answer]
 
 
-```{r, eval=F}
+
+```r
 R-SQUARE
 
     Observed                                        Two-Tailed
@@ -287,7 +293,8 @@ R-SQUARE
 
 _R$^2$= 0.063 in the regression model. This means that 6.3% of the variance in the PhD delays, can be explained by $age$ and $age^2$._ 
 
-```{r, eval=F}
+
+```r
 STDYX Standardization
 
                                                     Two-Tailed

@@ -1,0 +1,13 @@
+TITLE: Frequentist analysis
+
+DATA: FILE IS phd-delays_nonames.csv;
+
+VARIABLE: NAMES ARE diff child sex Age Age2; ! All the variables in the dataset
+
+USEVARIABLES ARE diff Age Age2; ! The variables we use in this analysis
+
+MODEL: 
+diff ON Age (Beta_Age);   ! Regression coefficient 1. 
+diff ON Age2(Beta_Age2);  ! Regression coefficient 2 
+
+OUTPUT: sampstat CINTERVAL   stdyx;

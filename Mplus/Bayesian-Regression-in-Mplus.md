@@ -129,6 +129,7 @@ CHAINS = 3; ! set the number of chains we want to use
 
 MODEL: 
 [diff] (intercept);       ! specify that we want an intercept
+! this model would also work without this line, but this way it is possible to easily set a prior
 diff ON Age (Beta_Age);   ! Regression coefficient 1. 
 diff ON Age2(Beta_Age2);  ! Regression coefficient 2 
 ! You need to name these regression coefficients to later set priors
