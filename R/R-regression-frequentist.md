@@ -245,7 +245,7 @@ _Because the p-values for both regression coefficients were really small &lt;.00
 
 
 
-Of course, we should never base our decisions on single criterions only. Luckily, there are several additional measures that we can take into account. A very popular measure is the confidence interval. To get the confidence intervals for the model parameter use the `confint()` function.
+Of course, we should never base our decisions on single criterions only. Luckily, there are several additional measures that we can take into account. A very popular measure is the confidence interval. To get the confidence intervals for the model parameters use the `confint()` function.
 
 
   <p>&nbsp;</p>
