@@ -199,7 +199,7 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.67, 95% Credibility Interval [1.53,  3.83]. Also, $age^2$( seems to be a relevant predictor of PhD delays, with a posterior mean of  -0.0259, and a 95% credibility Interval of [-0.038, -0.014]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.67, 95% Credibility Interval [1.53,  3.83]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of  -0.0259, and a 95% credibility Interval of [-0.038, -0.014]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
@@ -373,8 +373,7 @@ summ5 <- posterior_summary(model5)
 
 #### _**Question**: Do we end up with similar conclusions, using different prior specifications?_
 
-To answer these questions, proceed as follows:
-We can calculate the relative bias to express this difference. ($bias= 100*\frac{(model informative priors-model uninformed priors)}{model uninformative priors}$). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the $\mathcal{N}(20, .4)$ and $\mathcal{N}(20, .1)$ priors. Copy Paste the following code to R:
+_To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. ($bias= 100*\frac{(model \; informative\; priors\;-\;model \; uninformative\; priors)}{model \;uninformative \;priors}$). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the $\mathcal{N}(20, .4)$ and $\mathcal{N}(20, .1)$ priors. Copy Paste the following code to R:_
 
 
 ```{r, message=FALSE, warning=FALSE, eval=F}

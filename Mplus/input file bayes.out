@@ -1,0 +1,277 @@
+Mplus VERSION 8.3
+MUTHEN & MUTHEN
+08/07/2019   9:27 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Bayesian analysis with default priors
+
+  DATA: FILE IS phd-delays_nonames.csv;
+
+  VARIABLE: NAMES ARE diff child sex Age Age2; ! All the variables in the dataset
+
+  USEVARIABLES ARE diff Age Age2; ! The variables we use in this analysis
+
+  ANALYSIS:
+  ESTIMATOR IS bayes; ! Specify that we want to use a Bayesian analysis
+  Bseed = 23082018; !specify a seed value for reproducing the results
+  CHAINS = 3; ! set the number of chains we want to use
+
+  MODEL:
+  [diff] (intercept);       ! specify that we want an intercept
+  diff ON Age (Beta_Age);   ! Regression coefficient 1.
+  diff ON Age2(Beta_Age2);  ! Regression coefficient 2
+  ! You need to name these regression coefficients to later set priors
+  diff (e);                 ! Error variance
+
+
+  OUTPUT: tech8; ! Specify the output we would like
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Bayesian analysis with default priors
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         333
+
+Number of dependent variables                                    1
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   DIFF
+
+Observed independent variables
+   AGE         AGE2
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               3
+  Random seed for the first chain                         23082018
+  Starting value information                           UNPERTURBED
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  phd-delays_nonames.csv
+Input data format  FREE
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     DIFF                  9.967       2.217     -31.000    0.30%       0.000      3.000      5.000
+             333.000     207.636       5.977      91.000    0.30%       7.000     16.000
+     AGE                  31.676       4.472      26.000    1.80%      28.000     29.000     30.000
+             333.000      46.868      25.162      80.000    0.90%      31.000     33.000
+     AGE2               1050.216       6.056     676.000    1.80%     784.000    841.000    900.000
+             333.000  429560.007      42.483    6400.000    0.90%     961.000   1089.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                               4
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                 -9.326            14.357
+
+          Posterior Predictive P-Value              0.389
+
+Information Criteria
+
+          Deviance (DIC)                         2711.333
+          Estimated Number of Parameters (pD)       5.475
+          Bayesian (BIC)                         2723.807
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DIFF       ON
+    AGE                2.647       0.622      0.000       1.348       3.874      *
+    AGE2              -0.026       0.007      0.000      -0.039      -0.013      *
+
+ Intercepts
+    DIFF             -46.578      12.898      0.000     -70.394     -21.095      *
+
+ Residual Variances
+    DIFF             198.117      16.978      0.000     171.316     232.769      *
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION
+
+
+           NU
+              DIFF          AGE           AGE2
+              ________      ________      ________
+                    0             0             0
+
+
+           LAMBDA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF               0             0             0
+ AGE                0             0             0
+ AGE2               0             0             0
+
+
+           THETA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF               0
+ AGE                0             0
+ AGE2               0             0             0
+
+
+           ALPHA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+                    1             0             0
+
+
+           BETA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF               0             2             3
+ AGE                0             0             0
+ AGE2               0             0             0
+
+
+           PSI
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF               4
+ AGE                0             0
+ AGE2               0             0             0
+
+
+     STARTING VALUES
+
+
+           NU
+              DIFF          AGE           AGE2
+              ________      ________      ________
+                0.000         0.000         0.000
+
+
+           LAMBDA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF           1.000         0.000         0.000
+ AGE            0.000         1.000         0.000
+ AGE2           0.000         0.000         1.000
+
+
+           THETA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF           0.000
+ AGE            0.000         0.000
+ AGE2           0.000         0.000         0.000
+
+
+           ALPHA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+                9.967         0.000         0.000
+
+
+           BETA
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF           0.000         0.000         0.000
+ AGE            0.000         0.000         0.000
+ AGE2           0.000         0.000         0.000
+
+
+           PSI
+              DIFF          AGE           AGE2
+              ________      ________      ________
+ DIFF         103.818
+ AGE            0.000        23.434
+ AGE2           0.000         0.000    214780.000
+
+
+
+     PRIORS FOR ALL PARAMETERS            PRIOR MEAN      PRIOR VARIANCE     PRIOR STD. DEV.
+
+     Parameter 1~N(0.000,infinity)           0.0000            infinity            infinity
+     Parameter 2~N(0.000,infinity)           0.0000            infinity            infinity
+     Parameter 3~N(0.000,infinity)           0.0000            infinity            infinity
+     Parameter 4~IG(-1.000,0.000)          infinity            infinity            infinity
+
+
+TECHNICAL 8 OUTPUT
+
+
+   TECHNICAL 8 OUTPUT FOR BAYES ESTIMATION
+
+     CHAIN    BSEED
+     1        23082018
+     2        147894
+     3        830180
+
+                     POTENTIAL       PARAMETER WITH
+     ITERATION    SCALE REDUCTION      HIGHEST PSR
+     100              1.000               1
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    \\client\c$\users\laure\stack\github\tutorials\mplus\input file bayes.dgm
+
+     Beginning Time:  21:27:56
+        Ending Time:  21:28:10
+       Elapsed Time:  00:00:14
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2019 Muthen & Muthen

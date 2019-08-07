@@ -1,13 +1,13 @@
 ---
 title: "R regression Bayesian (using brms)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 25 July 2019'
+date: 'Last modified: 07 August 2019'
 output:
   html_document:
     keep_md: true
 ---
 
-This tutorial provides the reader with a basic tutorial how to perform a **Bayesian regression** in [Blavaan](https://faculty.missouri.edu/~merklee/blavaan/),  using Stan instead of  as the MCMC sampler. Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistics. 
+This tutorial provides the reader with a basic tutorial how to perform a **Bayesian regression** in [brms](https://cran.r-project.org/web/packages/brms/index.html),  using Stan instead of  as the MCMC sampler. Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistics. 
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
 
@@ -16,7 +16,7 @@ In this tutorial, we start by using the default prior settings of the software. 
 This tutorial expects:
 
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, and `brms`. This tutorial was made using Blavaan version 2.8.0 and Lavaan version 0.6.3 in R version 3.6.0
+- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.8.0 in R version 3.6.0
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -258,7 +258,7 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.67, 95% Credibility Interval [1.53,  3.83]. Also, $age^2$( seems to be a relevant predictor of PhD delays, with a posterior mean of  -0.0259, and a 95% credibility Interval of [-0.038, -0.014]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.67, 95% Credibility Interval [1.53,  3.83]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of  -0.0259, and a 95% credibility Interval of [-0.038, -0.014]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
@@ -507,8 +507,7 @@ posterior_summary(model5)
 
 #### _**Question**: Do we end up with similar conclusions, using different prior specifications?_
 
-To answer these questions, proceed as follows:
-We can calculate the relative bias to express this difference. ($bias= 100*\frac{(model informative priors-model uninformed priors)}{model uninformative priors}$). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the $\mathcal{N}(20, .4)$ and $\mathcal{N}(20, .1)$ priors. Copy Paste the following code to R:
+_To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. ($bias= 100*\frac{(model \; informative\; priors\;-\;model \; uninformative\; priors)}{model \;uninformative \;priors}$). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the $\mathcal{N}(20, .4)$ and $\mathcal{N}(20, .1)$ priors. Copy Paste the following code to R:_
 
 
 
@@ -625,8 +624,10 @@ _We made a new dataset with randomly chosen 60 of the 333 observations from the 
 
 
 ```r
-fit.bayes.infprior2_small <- blavaan(model.informative.priors2, data = smalldata, test = "none",  target = "stan", burnin = 1000, sample = 5000, seed = 123)
-summary(fit.bayes.infprior2_small, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
+model_small_data <-  brm(formula = diff ~  age + age2, 
+                                  data    = smalldata,
+                                  seed    = 123)
+summary(model_small_data, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 [/expand]
@@ -641,8 +642,6 @@ _Benjamin, D. J., Berger, J., Johannesson, M., Nosek, B. A., Wagenmakers, E.,...
 _Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. Altman, D. G. (2016)._ [Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations](https://link.springer.com/article/10.1007/s10654-016-0149-3)_._ _European Journal of Epidemiology 31 (4_). [_https://doi.org/10.1007/s10654-016-0149-3_](https://doi.org/10.1007/s10654-016-0149-3) 
 
 _Hoffman, M. D., & Gelman, A. (2014)_. The No-U-turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo. Journal of Machine Learning Research, 15(1), 1593-1623.
-
-_Rosseel, Y. (2012)._ [lavaan: An R Package for Structural Equation Modeling](https://www.jstatsoft.org/article/view/v048i02). _Journal of Statistical Software, 48(2), 1-36. _
 
 _van de Schoot R, Yerkes MA, Mouw JM, Sonneveld H (2013)_ [What Took Them So Long? Explaining PhD Delays among Doctoral Candidates](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)_._ _PLoS ONE 8(7): e68839._ [https://doi.org/10.1371/journal.pone.0068839](https://doi.org/10.1371/journal.pone.0068839)
 

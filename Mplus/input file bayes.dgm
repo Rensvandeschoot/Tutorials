@@ -1,0 +1,45 @@
+VERSION 1.1.0
+INPUT
+TITLE:
+ Bayesian analysis with default priors
+
+DATA:
+ FILE IS phd-delays_nonames.csv;
+VARIABLE:
+ NAMES ARE diff child sex Age Age2;
+USEVARIABLES ARE diff Age Age2;
+ANALYSIS:
+ESTIMATOR IS bayes;
+Bseed = 23082018;
+CHAINS = 3;
+OUTPUT:
+ tech8;
+MODEL:
+[diff] (intercept);
+diff ON Age (Beta_Age);
+diff ON Age2(Beta_Age2);
+diff (e);
+INPUT_END
+3
+0
+0
+0
+BAYES
+1
+GENERAL
+0
+1
+0
+2
+diff age age2
+2
+1 0 0
+0
+0
+1 1 age diff      2.647      0.622      1.348      3.874
+91 1 age diff beta_age
+1 1 age2 diff     -0.026      0.007     -0.039     -0.013
+91 1 age2 diff beta_age2
+4 1 diff    198.117     16.978    171.316    232.769
+94 1 diff e
+2 1 age age2    999.000    999.000    999.000    999.000
