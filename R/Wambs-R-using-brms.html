@@ -541,7 +541,10 @@ plot(years, delay, type =  &quot;l&quot;)</code></pre>
 <p>
  
 </p>
-<p>##<strong>Step 2: Run the model and check for convergence</strong></p>
+</div>
+</div>
+<div id="step-2-run-the-model-and-check-for-convergence" class="section level2">
+<h2><strong>Step 2: Run the model and check for convergence</strong></h2>
 <p>To run a multiple regression with brms, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model using <code>lm()</code>). The model is specified as follows:</p>
 <ol style="list-style-type: decimal">
 <li>A dependent variable we want to predict.</li>
@@ -555,7 +558,6 @@ plot(years, delay, type =  &quot;l&quot;)</code></pre>
 </ol>
 <p>There are many other options we can select, such as the number of chains how many iterations we want and how long of a warm-up phase we want, but we will just use the defaults for now.</p>
 <p>For more information on the basics of brms, see the <a href="https://cran.r-project.org/web/packages/brms/index.html">website and vignettes</a></p>
-</div>
 <div id="does-the-trace-plot-exhibit-convergence" class="section level3">
 <h3>2. Does the trace-plot exhibit convergence?</h3>
 <p>First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples.</p>
@@ -705,7 +707,7 @@ gelman.diag(modelposterior[, 1:4])</code></pre>
 <pre class="r"><code>round(100*((posterior_summary(model_doubleiter)[,&quot;Estimate&quot;] - posterior_summary(model)[,&quot;Estimate&quot;]) / posterior_summary(model)[,&quot;Estimate&quot;]), 4)</code></pre>
 <pre><code>## b_intercept       b_age      b_age2       sigma        lp__ 
 ##     -0.3279     -0.2810     -0.3135     -0.1298     -0.0033</code></pre>
-<p><em>The relative bias is small enough (&lt;5%) not worry about it.</em></p>
+<p><em>The relative bias is small enough (&lt;5%), do not worry about it.</em></p>
 <p>[/expand]</p>
 <p>
  
@@ -776,7 +778,7 @@ gelman.diag(modelposterior[, 1:4])</code></pre>
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div id="do-different-specification-of-the-variance-priors-influence-the-results" class="section level3">
 <h3>7. Do different specification of the variance priors influence the results?</h3>
-<p>So far we have used the -<span class="math inline">\(\in \sim IG(.5, .5)\)</span> prior, but we can also use the -<span class="math inline">\(\in \sim IG(.01, .01)\)</span> prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias.</p>
+<p>So far we have used the -<span class="math inline">\(\in \sim IG(.5, .5)\)</span> prior, but we can also use the -<span class="math inline">\(\in \sim IG(.01, .01)\)</span> prior and see if doing so makes a difference. To quantify this difference we again calculate a relative bias.</p>
 <p><em><strong>Question:</strong> Are the results robust for different specifications of the prior on the residual variance?</em></p>
 <table>
 <colgroup>

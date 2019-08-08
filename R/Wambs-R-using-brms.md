@@ -249,7 +249,7 @@ plot(years, delay, type =  "l")
 
   <p>&nbsp;</p>
 
-##**Step 2: Run the model and check for convergence**
+## **Step 2: Run the model and check for convergence**
 
 
 To run a multiple regression with brms, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model using  `lm()`). The model is specified as follows:
@@ -523,7 +523,7 @@ round(100*((posterior_summary(model_doubleiter)[,"Estimate"] - posterior_summary
 ##     -0.3279     -0.2810     -0.3135     -0.1298     -0.0033
 ```
 
-_The relative bias is small enough (<5%) not worry about it._ 
+_The relative bias is small enough (<5%), do not worry about it._ 
 
 [/expand]
 
@@ -654,7 +654,7 @@ summary(model)
 
 ### 7. Do different specification of the variance priors influence the results?
 
-So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias.
+So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. To quantify this difference we again calculate a relative bias.
 
 _**Question:** Are the results robust for different specifications of the prior on the residual variance?_
 

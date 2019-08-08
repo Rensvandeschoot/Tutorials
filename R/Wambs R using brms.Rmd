@@ -103,7 +103,6 @@ library(bayesplot) #  needed for plotting
 library(ggmcmc)
 library(mcmcplots) 
 library(tidybayes)
-
 ```
 
 You can find the data in the file <span style="color:red"> ` phd-delays.csv` </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into R using the following syntax:
@@ -224,7 +223,7 @@ plot(years, delay, type =  "l")
 
   <p>&nbsp;</p>
 
-##**Step 2: Run the model and check for convergence**
+## **Step 2: Run the model and check for convergence**
 
 
 To run a multiple regression with brms, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model using  `lm()`). The model is specified as follows:
@@ -386,7 +385,7 @@ To get the relative bias simply save the means of the regression coefficients an
 round(100*((posterior_summary(model_doubleiter)[,"Estimate"] - posterior_summary(model)[,"Estimate"]) / posterior_summary(model)[,"Estimate"]), 4)
 ```
 
-_The relative bias is small enough (<5%) not worry about it._ 
+_The relative bias is small enough (<5%), do not worry about it._ 
 
 [/expand]
 
@@ -473,7 +472,7 @@ summary(model)
 
 ### 7. Do different specification of the variance priors influence the results?
 
-So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias.
+So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. To quantify this difference we again calculate a relative bias.
 
 _**Question:** Are the results robust for different specifications of the prior on the residual variance?_
 
