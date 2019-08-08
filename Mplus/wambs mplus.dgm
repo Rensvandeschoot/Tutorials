@@ -1,0 +1,49 @@
+VERSION 1.1.0
+INPUT
+TITLE:
+ Bayesian analysis;
+
+DATA:
+ FILE IS phd-delays_nonames.csv;
+VARIABLE:
+ NAMES ARE diff child sex Age Age2;
+USEVARIABLES ARE diff Age Age2;
+ANALYSIS:
+ESTIMATOR IS bayes;
+Bseed = 23082018;
+CHAINS = 3;
+FBITERATIONS = 2000
+OUTPUT:
+  cinterval(hpd);
+  tech8;
+PLOT:
+    TYPE IS PLOT2;
+MODEL:
+[diff] (intercept);
+diff ON Age (Beta_Age);
+diff ON Age2(Beta_Age2);
+diff (e);
+INPUT_END
+3
+0
+0
+0
+BAYES
+1
+GENERAL
+0
+1
+0
+2
+diff age age2
+2
+1 0 0
+0
+0
+1 1 age diff      2.143      0.208      1.740      2.561
+91 1 age diff beta_age
+1 1 age2 diff     -0.021      0.003     -0.026     -0.015
+91 1 age2 diff beta_age2
+4 1 diff    196.606     15.468    168.534    227.870
+94 1 diff e
+2 1 age age2    999.000    999.000    999.000    999.000

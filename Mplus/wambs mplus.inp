@@ -1,0 +1,35 @@
+TITLE: Bayesian analysis;
+
+DATA: FILE IS phd-delays_nonames.csv;
+
+VARIABLE: NAMES ARE diff child sex Age Age2; ! All the variables in the dataset
+
+USEVARIABLES ARE diff Age Age2; ! The variables we use in this analysis
+
+ANALYSIS:
+ESTIMATOR IS bayes; ! Specify that we want to use a Bayesian analysis
+Bseed = 23082018; !specify a seed value for reproducing the results
+CHAINS = 3; ! set the number of chains we want to use
+FBITERATIONS = 2000 ! this is how we set the number of iterators
+
+MODEL: 
+[diff] (intercept);       ! specify that we want an intercept
+! this model would also work without this line, but this way it is possible to easily set a prior
+diff ON Age (Beta_Age);   ! Regression coefficient 1. 
+diff ON Age2(Beta_Age2);  ! Regression coefficient 2 
+! You need to name these regression coefficients to later set priors
+diff (e);                 ! Error variance
+
+MODEL PRIORS:
+  Beta_Age ~ N(.8, 5); ! These are the different priors
+  Beta_Age2 ~ N(0, 10);
+  intercept ~  N(-35, 20);
+  e ~ IG(0.5, 0.5);
+
+
+OUTPUT: 
+  cinterval(hpd); !to request CIs based on higher posterior density intervals
+  tech8; !to request additional information about priors and convergence
+  
+PLOT: 
+    TYPE IS PLOT2; !to request for plots
