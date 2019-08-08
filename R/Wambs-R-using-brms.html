@@ -365,7 +365,7 @@ summary {
 
 <h1 class="title toc-ignore">WAMBS R Tutorial (using brms)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 25 July 2019</h4>
+<h4 class="date">Last modified: 08 August 2019</h4>
 
 </div>
 
@@ -417,7 +417,7 @@ summary {
 </div>
 </div>
 <div id="example-data" class="section level2">
-<h2><strong>Example Data</strong></h2>
+<h2>Example Data</h2>
 <p>The data we be use for this exercise is based on a study about predicting PhD-delays (<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839">Van de Schoot, Yerkes, Mouw and Sonneveld 2013</a>). The data can be downloaded <a href="https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv">here</a>. Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.</p>
 <p>For the current exercise we are interested in the question whether age (M = 30.7, SD = 4.48, min-max = 26-69) of the Ph.D. recipients is related to a delay in their project.</p>
 <p>The relation between completion time and age is expected to be non-linear. This might be due to that at a certain point in your life (i.e., mid thirties), family life takes up more of your time than when you are in your twenties or when you are older.</p>
@@ -463,7 +463,6 @@ colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&
 </p>
 <div id="question-have-all-your-data-been-loaded-in-correctly-that-is-do-all-data-points-substantively-make-sense-if-you-are-unsure-go-back-to-the-.csv-file-to-inspect-the-raw-data." class="section level5">
 <h5><em><strong>Question:</strong> Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data.</em></h5>
-<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <pre class="r"><code>describe(dataPHD)</code></pre>
 <pre><code>##       vars   n    mean     sd median trimmed    mad min  max range  skew
