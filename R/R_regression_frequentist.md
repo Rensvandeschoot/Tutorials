@@ -1,7 +1,7 @@
 ---
 title: 'Linear regression in R (Frequentist)'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
+date: 'Last modified: 16 August 2019'
 output:
   html_document:
     keep_md: true
@@ -48,14 +48,16 @@ $H_1:$ _$Age^2$ is related to a delay in the PhD projects._
 
 Install the following packages in R:
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 library(psych) #to get some extended summary statistics
 library(tidyverse) # needed for data manipulation and plotting
 ```
 
 
 You can find the data in the file <span style="color:red"> ` phd-delays.csv` </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into R using the following syntax:
-```{r, results='hide', message=FALSE, warning=FALSE}
+
+```r
 #read in data
 dataPHD <- read.csv2(file="phd-delays.csv")
 colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
@@ -63,7 +65,8 @@ colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 
 
 Alternatively, you can directly download them from GitHub into your R work space using the following command:
-```{r, eval=FALSE}
+
+```r
 dataPHD <- read.csv2(file="https://raw.githubusercontent.com/LaurentSmeets/Tutorials/master/Blavaan/phd-delays.csv")
 colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 ```
@@ -79,8 +82,24 @@ Once you loaded in your data, it is advisable to check whether your data import 
 [expand title= \"Answer\" trigclass= \"noarrow my_button\" targclass=\"my_content\" tag=\"div\""]
 
 
-```{r}
+
+```r
 describe(dataPHD)
+```
+
+```
+##       vars   n    mean     sd median trimmed    mad min  max range  skew
+## diff     1 333    9.97  14.43      5    6.91   7.41 -31   91   122  2.21
+## child    2 333    0.18   0.38      0    0.10   0.00   0    1     1  1.66
+## sex      3 333    0.52   0.50      1    0.52   0.00   0    1     1 -0.08
+## age      4 333   31.68   6.86     30   30.39   2.97  26   80    54  4.45
+## age2     5 333 1050.22 656.39    900  928.29 171.98 676 6400  5724  6.03
+##       kurtosis    se
+## diff      5.92  0.79
+## child     0.75  0.02
+## sex      -2.00  0.03
+## age      24.99  0.38
+## age2     42.21 35.97
 ```
 
 _The descriptive statistics make sense:_
@@ -99,7 +118,8 @@ _$Age^2$: Mean (1050.22), SE (35.97)_
 
 Before we continue with analyzing the data we can also plot the expected relationship.
 
-```{r}
+
+```r
 dataPHD %>%
   ggplot(aes(x = age,
              y = diff)) +
@@ -120,6 +140,8 @@ dataPHD %>%
        color    = "Type of relationship" ) +
   theme(legend.position = "bottom")
 ```
+
+![](R_regression_frequentist_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
 ## Regression Analysis
@@ -147,12 +169,36 @@ Now, preform a multiple linear regression and answer the following questions:
 [expand title=\"Answer\" trigclass=\"noarrow my_button\" targclass=\"my_content\" tag=\"button\"]
 
 
-```{r}
+
+```r
 regression <- lm(diff ~ age + age2, data = dataPHD)
 ```
 
-```{r}
+
+```r
 summary(regression)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff ~ age + age2, data = dataPHD)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -44.412  -7.475  -4.073   1.794  72.027 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -47.087894  12.340701  -3.816 0.000162 ***
+## age           2.657189   0.586131   4.533 8.13e-06 ***
+## age2         -0.025817   0.006122  -4.217 3.20e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 14.01 on 330 degrees of freedom
+## Multiple R-squared:  0.06258,	Adjusted R-squared:  0.0569 
+## F-statistic: 11.02 on 2 and 330 DF,  p-value: 2.338e-05
 ```
 
   <p>&nbsp;</p>
@@ -210,8 +256,16 @@ Of course, we should never base our decisions on single criterions only. Luckily
 
 [expand title=Answer]
 
-```{r}
+
+```r
 confint(regression, level = 0.95)
+```
+
+```
+##                    2.5 %       97.5 %
+## (Intercept) -71.36425763 -22.81153094
+## age           1.50416457   3.81021414
+## age2         -0.03786079  -0.01377316
 ```
 
 _$Age$: 95% CI [1.504, 3.810]_
@@ -236,20 +290,49 @@ We can also run the analysis again, but now with standardized coefficients. Ther
 1. By standardizing (scaling) the variables in the in the regression formula using the `scale()` function.
 
 
-```{r}
+
+```r
 regressionscaled1 <- lm(scale(diff) ~ scale(age) + scale(age2), data = dataPHD)
 summary(regressionscaled1)
 ```
 
+```
+## 
+## Call:
+## lm(formula = scale(diff) ~ scale(age) + scale(age2), data = dataPHD)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.0775 -0.5180 -0.2822  0.1243  4.9911 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  1.034e-15  5.322e-02   0.000        1    
+## scale(age)   1.262e+00  2.785e-01   4.533 8.13e-06 ***
+## scale(age2) -1.174e+00  2.785e-01  -4.217 3.20e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9711 on 330 degrees of freedom
+## Multiple R-squared:  0.06258,	Adjusted R-squared:  0.0569 
+## F-statistic: 11.02 on 2 and 330 DF,  p-value: 2.338e-05
+```
+
 
 2. Using the `lm.beta()` function from the QuantPsyc package
-```{r, message=FALSE, warning=FALSE}
+
+```r
 library("QuantPsyc")
 regressionscaled2 <- lm.beta(regression)
 regressionscaled2
 ```
 
-_The standardized coefficients, age (1.262) and age$^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher. This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)_
+```
+##       age      age2 
+##  1.262435 -1.174266
+```
+
+_The standardized coefficients, age (1.262) and age$^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher._
 
 [/expand]
 
