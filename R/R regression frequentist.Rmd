@@ -35,9 +35,13 @@ So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and
 
 <pre><code>[expand title=\"Answer\" trigclass=\\"noarrow my_button\\" targclass="my_content" tag= &quot; button &quot;]</code></pre>
 
-$H_0:$ _$Age^2$ is not related to a delay in the PhD projects._
+$H_0:$ _$age$ is not related to a delay in the PhD projects._
 
-$H_1:$ _$Age^2$ is related to a delay in the PhD projects._ 
+$H_1:$ _$age$ is related to a delay in the PhD projects._ 
+
+$H_0:$ _$age^2$ is not related to a delay in the PhD projects._
+
+$H_1:$ _$age^2$is related to a delay in the PhD projects._ 
 
 [/expand]
 
