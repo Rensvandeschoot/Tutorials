@@ -41,9 +41,13 @@ So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and
 
 <pre><code>[expand title=\"Answer\" trigclass=\\"noarrow my_button\\" targclass="my_content" tag= &quot; button &quot;]</code></pre>
 
-$H_0:$ _$Age^2$ is not related to a delay in the PhD projects._
+$H_0:$ _$age$ is not related to a delay in the PhD projects._
 
-$H_1:$ _$Age^2$ is related to a delay in the PhD projects._ 
+$H_1:$ _$age$ is related to a delay in the PhD projects._ 
+
+$H_0:$ _$age^2$ is not related to a delay in the PhD projects._
+
+$H_1:$ _$age^2$is related to a delay in the PhD projects._ 
 
 [/expand]
 
@@ -92,7 +96,7 @@ describe(dataPHD)
 
 _The descriptive statistics make sense:_
 
-_diff: Mean (9.97), SE (0.791)_
+_diff: Mean (9.97), SE (0.79)_
 
 _$Age$: Mean (31.68), SE (0.38)_
 
