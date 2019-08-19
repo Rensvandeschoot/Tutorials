@@ -205,7 +205,7 @@ _Assuming that the null hypothesis is true in the population, the probability of
 
   <p>&nbsp;</p>
 
-Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 ([Benjamin et al. 2017](https://osf.io/preprints/psyarxiv/mky9j), but see also a critique by[Trafimow, ., Van de Schoot, et al., 2018](https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/)). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.
+Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 ([Benjamin et al. 2017](https://osf.io/preprints/psyarxiv/mky9j), but see also a critique by[Trafimow, ..., Van de Schoot, et al., 2018](https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/)). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.
 
 
   <p>&nbsp;</p>
@@ -266,7 +266,7 @@ standardizedsolution(fit)
 ```
 
 
-_The standardized coefficients, $age$ (1.262) and $age^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of $age$ is somewhat higher._
+_The standardized coefficients, $age$ (1.262) and $age^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of $age$ is somewhat higher.This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)_
 
 [/expand]
 
