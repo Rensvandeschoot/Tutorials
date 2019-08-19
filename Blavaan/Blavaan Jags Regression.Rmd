@@ -303,8 +303,6 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 | Posterior mean | `r as.numeric(summ1[2,2])`|           |            |            |             |
 | Posterior sd   | `r as.numeric(summ1[2,3])`|           |            |            |             |
 
-To get the posterior variance instead of the sd, just take the square of the posterior standard deviation. So $0.52^2= 0.27$ 
-
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 

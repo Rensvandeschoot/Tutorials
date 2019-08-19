@@ -101,7 +101,7 @@ describe(dataPHD)
 
 _The descriptive statistics make sense:_
 
-_diff: Mean (9.97), SE (0.791)_
+_diff: Mean (9.97), SE (0.79)_
 
 _$Age$: Mean (31.68), SE (0.38)_
 
@@ -219,7 +219,7 @@ summ1 <- summary(fit.bayes)
 ```
 
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of `r as.numeric(summ1[1,2])`, 95% HPD (Credibility Interval) [`r as.numeric(summ1[1,4])` `r as.numeric(summ1[1,5])`]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of `r as.numeric(summ1[2,2])`, and a 95% credibility Interval of [`r as.numeric(summ1[2,4])` `r as.numeric(summ1[2,5])`]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of `r as.numeric(summ1[1,2])`, 95% HPD (Credibility Interval) [`r as.numeric(summ1[1,4])` `r as.numeric(summ1[1,5])`]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of `r as.numeric(summ1[2,2])`, and a 95% Credibility Interval of [`r as.numeric(summ1[2,4])` `r as.numeric(summ1[2,5])`]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
