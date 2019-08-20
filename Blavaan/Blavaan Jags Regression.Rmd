@@ -216,7 +216,7 @@ summ1 <- summary(fit.bayes)
 ```
 
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of `r as.numeric(summ1[1,2])`, 95% HPD (Credibility Interval) [`r as.numeric(summ1[1,4])` `r as.numeric(summ1[1,5])`]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of `r as.numeric(summ1[2,2])`, and a 95% credibility Interval of [`r as.numeric(summ1[2,4])` `r as.numeric(summ1[2,5])`]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of `r as.numeric(summ1[1,2])`, 95% HPD (Credibility Interval) [`r as.numeric(summ1[1,4])` `r as.numeric(summ1[1,5])`]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of `r as.numeric(summ1[2,2])`, and a 95% Credibility Interval of [`r as.numeric(summ1[2,4])` `r as.numeric(summ1[2,5])`]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
@@ -237,7 +237,7 @@ dpriors(target = "jags")
 ```
 
 
-_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Jags) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 10 (precision of .01). you can decide whether or not this is uninformative enough or not for your situation._
+_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Jags) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 10 (precision of .01). You can decide whether or not this is uninformative enough or not for your situation._
 
 
 [/expand]
@@ -302,8 +302,6 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 | ---            | ---                       | ---       | ---        | ---        | ---         |
 | Posterior mean | `r as.numeric(summ1[2,2])`|           |            |            |             |
 | Posterior sd   | `r as.numeric(summ1[2,3])`|           |            |            |             |
-
-To get the posterior variance instead of the sd, just take the square of the posterior standard deviation. So $0.52^2= 0.27$ 
 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
