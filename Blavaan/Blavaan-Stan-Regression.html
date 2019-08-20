@@ -365,7 +365,7 @@ summary {
 
 <h1 class="title toc-ignore">Bayesian Regression in Blavaan (using Stan)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 23 July 2019</h4>
+<h4 class="date">Last modified: 20 August 2019</h4>
 
 </div>
 
@@ -378,7 +378,7 @@ summary {
 <p>This tutorial expects:</p>
 <ul>
 <li>Installation of <a href="https://mc-stan.org/users/interfaces/rstan">STAN</a> and <a href="https://cran.r-project.org/bin/windows/Rtools">Rtools</a>. For more information please see <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started" class="uri">https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started</a></li>
-<li>Installation of R packages <code>rstan</code>, <code>lavaan</code> and <code>blavaan</code>. This tutorial was made using Blavaan version 0.3.4 and Lavaan version 0.6.3</li>
+<li>Installation of R packages <code>rstan</code>, <code>lavaan</code> and <code>blavaan</code>. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.1</li>
 <li>Basic knowledge of hypothesis testing</li>
 <li>Basic knowledge of correlation and regression</li>
 <li>Basic knowledge of <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">Bayesian</a> inference</li>
@@ -397,8 +397,10 @@ summary {
 <div id="question-write-down-the-null-and-alternative-hypotheses-that-represent-this-question.-which-hypothesis-do-you-deem-more-likely" class="section level5">
 <h5><em><strong>Question:</strong> Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?</em></h5>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<p><span class="math inline">\(H_0:\)</span> <em><span class="math inline">\(Age^2\)</span> is not related to a delay in the PhD projects.</em></p>
-<p><span class="math inline">\(H_1:\)</span> <em><span class="math inline">\(Age^2\)</span> is related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_0:\)</span> <em><span class="math inline">\(age\)</span> is not related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_1:\)</span> <em><span class="math inline">\(age\)</span> is related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_0:\)</span> <em><span class="math inline">\(age^2\)</span> is not related to a delay in the PhD projects.</em></p>
+<p><span class="math inline">\(H_1:\)</span> <em><span class="math inline">\(age^2\)</span>is related to a delay in the PhD projects.</em></p>
 <p>[/expand]</p>
 <p>
  
@@ -438,7 +440,7 @@ colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&
 ## age      24.99  0.38
 ## age2     42.21 35.97</code></pre>
 <p><em>The descriptive statistics make sense:</em></p>
-<p><em>diff: Mean (9.97), SE (0.791)</em></p>
+<p><em>diff: Mean (9.97), SE (0.79)</em></p>
 <p><em><span class="math inline">\(Age\)</span>: Mean (31.68), SE (0.38)</em></p>
 <p><em><span class="math inline">\(Age^2\)</span>: Mean (1050.22), SE (35.97)</em></p>
 <p>[/expand]</p>
@@ -446,6 +448,30 @@ colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&
  
 </p>
 </div>
+</div>
+<div id="plot" class="section level2">
+<h2>plot</h2>
+<p>Before we continue with analyzing the data we can also plot the expected relationship.</p>
+<pre class="r"><code>dataPHD %&gt;%
+  ggplot(aes(x = age,
+             y = diff)) +
+  geom_point(position = &quot;jitter&quot;,
+             alpha    = .6)+ #to add some random noise for plotting purposes
+  theme_minimal()+
+  geom_smooth(method = &quot;lm&quot;,  # to add  the linear relationship
+              aes(color = &quot;linear&quot;),
+              se = FALSE) +
+  geom_smooth(method = &quot;lm&quot;,
+              formula = y ~ x + I(x^2),# to add  the quadratic relationship
+              aes(color = &quot;quadratic&quot;),
+              se = FALSE) +
+  labs(title    = &quot;Delay vs. age&quot;,
+       subtitle = &quot;There seems to be some quadratic relationship&quot;,
+       x        = &quot;Age&quot;,
+       y        = &quot;Delay&quot;,
+       color    = &quot;Type of relationship&quot; ) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="regression---default-priors" class="section level2">
 <h2>Regression - Default Priors</h2>
@@ -480,7 +506,7 @@ model.regression &lt;- &#39;#the regression model
 <p>Now we will have a look at the summary by using <code>summary(fit.bayes)</code>.</p>
 <p>[expand title=“Show Output” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <pre class="r"><code>summary(fit.bayes)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 1000 samples after 500 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 1000 samples after 500 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -495,24 +521,24 @@ model.regression &lt;- &#39;#the regression model
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.348    0.576      1.101      3.513    1.018
-##     age2               -0.023    0.006     -0.034      -0.01    1.018
-##     Prior         
-##                   
-##       normal(0,10)
-##       normal(0,10)
+##     age                 1.324    0.386      0.571       2.04    1.003
+##     age2               -0.012    0.004      -0.02     -0.004    1.002
+##     Prior       
+##                 
+##     normal(0,10)
+##     normal(0,10)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.534   12.123    -65.323    -14.923    1.018
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -18.841    8.075    -33.905     -3.125    1.003
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.338   14.895      171.1    228.342    0.999
-##     Prior         
-##        gamma(1,.5)</code></pre>
+##    .diff              196.426   14.962    168.411    226.505    1.001
+##     Prior       
+##  gamma(1,.5)[sd]</code></pre>
 <p>[/expand]</p>
 <p>
  
@@ -529,7 +555,7 @@ model.regression &lt;- &#39;#the regression model
 <div id="question-interpret-the-estimated-effect-its-interval-and-the-posterior-distribution." class="section level5">
 <h5><em><strong>Question:</strong> Interpret the estimated effect, its interval and the posterior distribution.</em></h5>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre><code>## blavaan (0.3-4) results of 1000 samples after 500 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 1000 samples after 500 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -544,25 +570,25 @@ model.regression &lt;- &#39;#the regression model
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.348    0.576      1.101      3.513    1.018
-##     age2               -0.023    0.006     -0.034      -0.01    1.018
-##     Prior         
-##                   
-##       normal(0,10)
-##       normal(0,10)
+##     age                 1.324    0.386      0.571       2.04    1.003
+##     age2               -0.012    0.004      -0.02     -0.004    1.002
+##     Prior       
+##                 
+##     normal(0,10)
+##     normal(0,10)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.534   12.123    -65.323    -14.923    1.018
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -18.841    8.075    -33.905     -3.125    1.003
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.338   14.895      171.1    228.342    0.999
-##     Prior         
-##        gamma(1,.5)</code></pre>
-<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.348, 95% HPD (Credibility Interval) [1.101 3.513]. Also, <span class="math inline">\(age^2\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean of -0.023, and a 95% credibility Interval of [-0.034 -0.01]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
+##    .diff              196.426   14.962    168.411    226.505    1.001
+##     Prior       
+##  gamma(1,.5)[sd]</code></pre>
+<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 1.324, 95% HPD (Credibility Interval) [0.571 2.04]. Also, <span class="math inline">\(age^2\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean of -0.012, and a 95% Credibility Interval of [-0.02 -0.004]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
 <p>[/expand]</p>
 <p>
  
@@ -573,14 +599,12 @@ model.regression &lt;- &#39;#the regression model
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <p>To check which default priors are being used by Blavaan, you can use the <code>dpriors()</code> command.</p>
 <pre class="r"><code>dpriors(target = &quot;stan&quot;)</code></pre>
-<pre><code>##                  nu               alpha              lambda 
-## &quot;normal(0,1000^.5)&quot;      &quot;normal(0,10)&quot;      &quot;normal(0,10)&quot; 
-##                beta              itheta                ipsi 
-##      &quot;normal(0,10)&quot;       &quot;gamma(1,.5)&quot;       &quot;gamma(1,.5)&quot; 
-##                 rho               ibpsi                 tau 
-##         &quot;beta(1,1)&quot;   &quot;wishart(3,iden)&quot;   &quot;normal(0,10^.5)&quot; 
-##               delta 
-##       &quot;gamma(1,.5)&quot;</code></pre>
+<pre><code>##                nu             alpha            lambda              beta 
+##    &quot;normal(0,32)&quot;    &quot;normal(0,10)&quot;    &quot;normal(0,10)&quot;    &quot;normal(0,10)&quot; 
+##             theta               psi               rho             ibpsi 
+## &quot;gamma(1,.5)[sd]&quot; &quot;gamma(1,.5)[sd]&quot;       &quot;beta(1,1)&quot; &quot;wishart(3,iden)&quot; 
+##               tau             delta 
+## &quot;normal(0,10^.5)&quot; &quot;gamma(1,.5)[sd]&quot;</code></pre>
 <p><em>The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Stan) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 10. you can decide whether or not this is uninformative enough or not for your situation.</em></p>
 <p>[/expand]</p>
 <p>
@@ -593,8 +617,8 @@ model.regression &lt;- &#39;#the regression model
 <p>In Blavaan, you can also manually specify your prior distributions. Be aware that usually, this has to be done BEFORE peeking at the data, otherwise you are double-dipping (!). In theory, you can specify your prior knowledge using any kind of distribution you like. However, if your prior distribution does not follow the same parametric form as your likelihood, calculating the model can be computationally intense. <em>Conjugate</em> priors avoid this issue, as they take on a functional form that is suitable for the model that you are constructing. For your normal linear regression model, conjugacy is reached if the priors for your regression parameters are specified using normal distributions (the residual variance receives an inverse gamma distribution, which is neglected here). In Blavaan, you are quite flexible in the specification of informative priors.</p>
 <p>Let&#39;s re-specify the regression model of the exercise above, using conjugate priors. We leave the priors for the intercept and the residual variance untouched for the moment. Regarding your regression parameters, you need to specify the hyperparameters of their normal distribution, which are the mean and the variance. The mean indicates which parameter value you deem most likely. The variance expresses how certain you are about that. We try 4 different prior specifications, for both the <span class="math inline">\(\beta_{age}\)</span> regression coefficient, and the <span class="math inline">\(\beta_{age^2}\)</span> coefficient.</p>
 <p>First, we use the following prior specifications:</p>
-<p><em><span class="math inline">\(Age\)</span> ~ N(3, 0.4)</em></p>
-<p><em><span class="math inline">\(Age^2\)</span> ~ N(0, 0.1)</em></p>
+<p><em><span class="math inline">\(Age\)</span> ~ <span class="math inline">\(\mathcal{N}(3, 0.4)\)</span></em></p>
+<p><em><span class="math inline">\(Age^2\)</span> ~ <span class="math inline">\(\mathcal{N}(0, 0.1)\)</span></em></p>
 <p>In Blavaan, the priors are set in the model formulation step. Be careful, Stan uses standard deviations instead of variance in the normal distribution. The standard deviations is the square root of the variance, so a variance of 0.1 corresponds to a standard deviation of 0.316 and a variance of 0.4 corresponds to a standard deviation of 0.632.</p>
 <p>The priors are presented in code as follows:</p>
 <pre class="r"><code>model.informative.priors1 &lt;- 
@@ -614,7 +638,7 @@ model.regression &lt;- &#39;#the regression model
                                bcontrol = list(cores = 4))
 # instead of relying on the default settings, we now specify the number of iterations and length of burnin period</code></pre>
 <pre class="r"><code>summary(fit.bayes.infprior1, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -629,28 +653,28 @@ model.regression &lt;- &#39;#the regression model
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.629    0.418      1.822      3.438    1.001
-##     age2               -0.026    0.004     -0.034     -0.017    1.001
-##     Prior         
-##                   
-##    normal(3,0.632)
-##    normal(0,0.316)
+##     age                 1.754    0.321      1.125      2.385    1.001
+##     age2               -0.017    0.004     -0.024      -0.01    1.001
+##     Prior       
+##                 
+##  normal(3,0.632)
+##  normal(0,0.316)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -46.392    8.833    -63.595    -29.169    1.001
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -27.633    6.736     -40.82    -14.393    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.038   15.119    169.018    227.493    1.000
-##     Prior         
-##        gamma(1,.5)
+##    .diff              194.870   14.826    168.312    226.196    1.000
+##     Prior       
+##  gamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.061</code></pre>
+##     diff                0.029</code></pre>
 <p>[/expand]</p>
 <div id="question-fill-in-the-results-in-the-table-below" class="section level4">
 <h4><em><strong>Question</strong> Fill in the results in the table below:</em></h4>
@@ -676,7 +700,7 @@ model.regression &lt;- &#39;#the regression model
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>2.348</td>
+<td>1.324</td>
 <td></td>
 <td></td>
 <td></td>
@@ -684,7 +708,7 @@ model.regression &lt;- &#39;#the regression model
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.576</td>
+<td>0.386</td>
 <td></td>
 <td></td>
 <td></td>
@@ -714,7 +738,7 @@ model.regression &lt;- &#39;#the regression model
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>-0.023</td>
+<td>-0.012</td>
 <td></td>
 <td></td>
 <td></td>
@@ -722,7 +746,7 @@ model.regression &lt;- &#39;#the regression model
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.006</td>
+<td>0.004</td>
 <td></td>
 <td></td>
 <td></td>
@@ -731,7 +755,7 @@ model.regression &lt;- &#39;#the regression model
 </tbody>
 </table>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -746,24 +770,24 @@ model.regression &lt;- &#39;#the regression model
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.629    0.418      1.822      3.438    1.001
-##     age2               -0.026    0.004     -0.034     -0.017    1.001
-##     Prior         
-##                   
-##    normal(3,0.632)
-##    normal(0,0.316)
+##     age                 1.754    0.321      1.125      2.385    1.001
+##     age2               -0.017    0.004     -0.024      -0.01    1.001
+##     Prior       
+##                 
+##  normal(3,0.632)
+##  normal(0,0.316)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -46.392    8.833    -63.595    -29.169    1.001
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -27.633    6.736     -40.82    -14.393    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.038   15.119    169.018    227.493    1.000
-##     Prior         
-##        gamma(1,.5)</code></pre>
+##    .diff              194.870   14.826    168.312    226.196    1.000
+##     Prior       
+##  gamma(1,.5)[sd]</code></pre>
 <table style="width:100%;">
 <colgroup>
 <col width="16%"></col>
@@ -786,16 +810,16 @@ model.regression &lt;- &#39;#the regression model
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>2.348</td>
-<td>2.629</td>
+<td>1.324</td>
+<td>1.754</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.576</td>
-<td>0.418</td>
+<td>0.386</td>
+<td>0.321</td>
 <td></td>
 <td></td>
 <td></td>
@@ -824,15 +848,15 @@ model.regression &lt;- &#39;#the regression model
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>-0.023</td>
-<td>-0.026</td>
+<td>-0.012</td>
+<td>-0.017</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.006</td>
+<td>0.004</td>
 <td>0.004</td>
 <td></td>
 <td></td>
@@ -874,7 +898,7 @@ model.regression &lt;- &#39;#the regression model
 fit.bayes.infprior3 &lt;- blavaan(model = model.informative.priors3, data = dataPHD,  test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 12345, bcontrol = list(cores = 4))
 fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = dataPHD,  test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 12345, bcontrol = list(cores = 4))</code></pre>
 <pre class="r"><code>summary(fit.bayes.infprior2, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -889,30 +913,30 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.366    0.531      1.314      3.393    1.001
-##     age2               -0.023    0.006     -0.034     -0.012    1.000
-##     Prior         
-##                   
-##     normal(3,31.6)
-##     normal(0,31.6)
+##     age                 1.324    0.368        0.6      2.044    1.001
+##     age2               -0.012    0.004      -0.02     -0.005    1.001
+##     Prior       
+##                 
+##   normal(3,31.6)
+##   normal(0,31.6)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.910   11.169    -62.662    -18.734    1.001
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -18.816    7.701    -33.935     -3.738    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.595   15.125    168.781    228.547    1.000
-##     Prior         
-##        gamma(1,.5)
+##    .diff              196.846   15.213    168.541    228.203    1.000
+##     Prior       
+##  gamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.050</code></pre>
+##     diff                0.018</code></pre>
 <pre class="r"><code>summary(fit.bayes.infprior3, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -927,30 +951,30 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                11.205    0.546     10.151     12.296    1.000
-##     age2               -0.114    0.006     -0.125     -0.102    1.000
-##     Prior         
-##                   
-##   normal(20,0.632)
-##   normal(20,0.316)
+##     age                 6.013    0.333       5.36       6.67    1.000
+##     age2               -0.062    0.004     -0.069     -0.054    1.000
+##     Prior        
+##                  
+##  normal(20,0.632)
+##  normal(20,0.316)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff             -225.512   11.514   -248.474   -203.333    1.000
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff             -114.932    6.921   -128.677    -101.37    1.000
+##     Prior        
+##      normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              322.738   29.861    268.527    384.741    1.000
-##     Prior         
-##        gamma(1,.5)
+##    .diff              213.843   16.985    182.822    249.422    1.000
+##     Prior        
+##   gamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.401</code></pre>
+##     diff                0.225</code></pre>
 <pre class="r"><code>summary(fit.bayes.infprior4, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -965,29 +989,29 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.369    0.555      1.267      3.463    1.000
-##     age2               -0.023    0.006     -0.034     -0.011    1.000
-##     Prior         
-##                   
-##    normal(20,31.6)
-##    normal(20,31.6)
+##     age                 1.335    0.372      0.606      2.045    1.001
+##     age2               -0.013    0.004      -0.02     -0.004    1.001
+##     Prior       
+##                 
+##  normal(20,31.6)
+##  normal(20,31.6)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.979   11.691    -63.996    -18.185    1.000
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -19.030    7.705    -33.821     -3.989    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.977   15.598    168.781    229.782    1.000
-##     Prior         
-##        gamma(1,.5)
+##    .diff              196.561   15.042    169.644    227.621    1.000
+##     Prior       
+##  gamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.050</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+##     diff                0.018</code></pre>
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -1002,25 +1026,25 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.366    0.531      1.314      3.393    1.001
-##     age2               -0.023    0.006     -0.034     -0.012    1.000
-##     Prior         
-##                   
-##     normal(3,31.6)
-##     normal(0,31.6)
+##     age                 1.324    0.368        0.6      2.044    1.001
+##     age2               -0.012    0.004      -0.02     -0.005    1.001
+##     Prior       
+##                 
+##   normal(3,31.6)
+##   normal(0,31.6)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.910   11.169    -62.662    -18.734    1.001
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -18.816    7.701    -33.935     -3.738    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.595   15.125    168.781    228.547    1.000
-##     Prior         
-##        gamma(1,.5)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+##    .diff              196.846   15.213    168.541    228.203    1.000
+##     Prior       
+##  gamma(1,.5)[sd]</code></pre>
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -1035,25 +1059,25 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                11.205    0.546     10.151     12.296    1.000
-##     age2               -0.114    0.006     -0.125     -0.102    1.000
-##     Prior         
-##                   
-##   normal(20,0.632)
-##   normal(20,0.316)
+##     age                 6.013    0.333       5.36       6.67    1.000
+##     age2               -0.062    0.004     -0.069     -0.054    1.000
+##     Prior        
+##                  
+##  normal(20,0.632)
+##  normal(20,0.316)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff             -225.512   11.514   -248.474   -203.333    1.000
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff             -114.932    6.921   -128.677    -101.37    1.000
+##     Prior        
+##      normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              322.738   29.861    268.527    384.741    1.000
-##     Prior         
-##        gamma(1,.5)</code></pre>
-<pre><code>## blavaan (0.3-4) results of 5000 samples after 1000 adapt/burnin iterations
+##    .diff              213.843   16.985    182.822    249.422    1.000
+##     Prior        
+##   gamma(1,.5)[sd]</code></pre>
+<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -1068,24 +1092,24 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.369    0.555      1.267      3.463    1.000
-##     age2               -0.023    0.006     -0.034     -0.011    1.000
-##     Prior         
-##                   
-##    normal(20,31.6)
-##    normal(20,31.6)
+##     age                 1.335    0.372      0.606      2.045    1.001
+##     age2               -0.013    0.004      -0.02     -0.004    1.001
+##     Prior       
+##                 
+##  normal(20,31.6)
+##  normal(20,31.6)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.979   11.691    -63.996    -18.185    1.000
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -19.030    7.705    -33.821     -3.989    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.977   15.598    168.781    229.782    1.000
-##     Prior         
-##        gamma(1,.5)</code></pre>
+##    .diff              196.561   15.042    169.644    227.621    1.000
+##     Prior       
+##  gamma(1,.5)[sd]</code></pre>
 <table style="width:100%;">
 <colgroup>
 <col width="16%"></col>
@@ -1108,19 +1132,19 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>2.348</td>
-<td>2.629</td>
-<td>2.366</td>
-<td>11.205</td>
-<td>2.369</td>
+<td>1.324</td>
+<td>1.754</td>
+<td>1.324</td>
+<td>6.013</td>
+<td>1.335</td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.576</td>
-<td>0.418</td>
-<td>0.531</td>
-<td>0.546</td>
-<td>0.555</td>
+<td>0.386</td>
+<td>0.321</td>
+<td>0.368</td>
+<td>0.333</td>
+<td>0.372</td>
 </tr>
 </tbody>
 </table>
@@ -1146,19 +1170,19 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>-0.023</td>
-<td>-0.026</td>
-<td>-0.023</td>
-<td>-0.114</td>
-<td>-0.023</td>
+<td>-0.012</td>
+<td>-0.017</td>
+<td>-0.012</td>
+<td>-0.062</td>
+<td>-0.013</td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.006</td>
 <td>0.004</td>
-<td>0.006</td>
-<td>0.006</td>
-<td>0.006</td>
+<td>0.004</td>
+<td>0.004</td>
+<td>0.004</td>
+<td>0.004</td>
 </tr>
 </tbody>
 </table>
@@ -1169,39 +1193,38 @@ fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = data
 </div>
 <div id="question-do-we-end-up-with-similar-conclusions-using-different-prior-specifications" class="section level4">
 <h4><em><strong>Question</strong>: Do we end up with similar conclusions, using different prior specifications?</em></h4>
-<p>To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. (<span class="math inline">\(bias= 100*\frac{(model informative priors-model uninformed priors)}{model uninformative priors}\)</span>). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the <span class="math inline">\(\mathcal{N}(20, .4)\)</span> and <span class="math inline">\(\mathcal{N}(20, .1)\)</span> priors. Copy Paste the following code to R:</p>
-<pre class="r"><code>#1) substract the MCMC chains
-mcmc.list &lt;- blavInspect(fit.bayes, what = &quot;mcmc&quot;)
-mcmc.list.informative &lt;- blavInspect(fit.bayes.infprior3, what = &quot;mcmc&quot;)
+<p>To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. (<span class="math inline">\(bias= 100*\frac{(model \; informative \; priors\; - \; model \; uninformed \;priors)}{model \; uninformative \; priors}\)</span>). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the <span class="math inline">\(\mathcal{N}(20, .4)\)</span> and <span class="math inline">\(\mathcal{N}(20, .1)\)</span> priors. Copy Paste the following code to R:</p>
+<pre class="r"><code>#1) ask for the posterior means
+posterior_mean &lt;- blavInspect(fit.bayes, what = &quot;postmean&quot;)
+posterior_mean_informative &lt;- blavInspect(fit.bayes.infprior3, what = &quot;postmean&quot;)
 
-#2) bind the different chains an calculate the mean (estimate) of the regression coefficients
-estimatesuninformative &lt;- colMeans(as.matrix(mcmc.list)[,c(&quot;beta[1,2,1]&quot;,&quot;beta[1,3,1]&quot;)])
-estimatesinformative   &lt;- colMeans(as.matrix(mcmc.list.informative)[,c(&quot;beta[1,2,1]&quot;,&quot;beta[1,3,1]&quot;)])
+#2) ask for the mean (estimate) of the regression coefficients
+estimatesuninformative &lt;- posterior_mean[1:2]
+estimatesinformative   &lt;- posterior_mean_informative[1:2]
 
 #3) calculate the bias
 round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)</code></pre>
-<pre><code>## beta[1,2,1] beta[1,3,1] 
-##      377.17      399.85</code></pre>
-<p>The <code>beta[1,2,1]</code> and <code>beta[1,3,1]</code> indices stand for the <span class="math inline">\(\beta_{age}\)</span> and <span class="math inline">\(\beta_{age^2}\)</span> respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan These are just the labels Stan gives to the parameters and Blavaan doesn’t really translate them back to the input names we gave them. There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first <span class="math inline">\(age\)</span> and then <span class="math inline">\(age^2\)</span>), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the <code>summary()</code> output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects.</p>
-<p>We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age <span class="math inline">\(\beta_{age}\)</span></p>
-<p>First we extract the MCMC chains of the 5 different models for only this one parameter (<span class="math inline">\(\beta_{age}\)</span>=beta[1,2,1]). Copy-past the following code to R:</p>
+<p>The <code>diff~age</code> and <code>diff~age2</code> indices stand for the <span class="math inline">\(\beta_{age}\)</span> and <span class="math inline">\(\beta_{age^2}\)</span> respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan These are just the labels Stan gives to the parameters and Blavaan doesn’t really translate them back to the input names we gave them.</p>
+<!-- There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects.  -->
+<p>We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age <span class="math inline">\(\beta_{age}\)</span>.</p>
+<p>First we extract the MCMC chains of the 5 different models for only this one parameter (<span class="math inline">\(\beta_{age}\)</span>=<code>bet_sign[1]</code>). Copy-paste the following code to R:</p>
 <p>[expand title=“Show Syntax” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>posterior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; =  as_tibble(as.matrix(blavInspect(fit.bayes, what=&quot;mcmc&quot;))[,&#39;beta[1,2,1]&#39;]),
-                                &quot;informative prior 1&quot; = as_tibble(as.matrix(blavInspect(fit.bayes.infprior1, what=&quot;mcmc&quot;))[,&#39;beta[1,2,1]&#39;]),
-                                &quot;informative prior 2&quot; = as_tibble(as.matrix(blavInspect(fit.bayes.infprior2, what=&quot;mcmc&quot;))[,&#39;beta[1,2,1]&#39;]),
-                                &quot;informative prior 3&quot; = as_tibble(as.matrix(blavInspect(fit.bayes.infprior3, what=&quot;mcmc&quot;))[,&#39;beta[1,2,1]&#39;]),
-                                &quot;informative prior 4&quot; = as_tibble(as.matrix(blavInspect(fit.bayes.infprior4, what=&quot;mcmc&quot;))[,&#39;beta[1,2,1]&#39;]),
-                                .id = &quot;id1&quot;)</code></pre>
-<pre><code>## Warning: Calling `as_tibble()` on a vector is discouraged, because the behavior is likely to change in the future. Use `tibble::enframe(name = NULL)` instead.
-## This warning is displayed once per session.</code></pre>
-<pre class="r"><code>prior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; =  as_tibble(rnorm(10000, mean=0, sd=sqrt(1/1e-2))),
-                            &quot;informative prior 1&quot; = as_tibble(rnorm(10000, mean=3, sd=sqrt(0.4))),
-                            &quot;informative prior 2&quot; = as_tibble(rnorm(10000, mean=3, sd=sqrt(1000))),
-                            &quot;informative prior 3&quot; = as_tibble(rnorm(10000, mean=20, sd=sqrt(0.4))),
-                            &quot;informative prior 4&quot; = as_tibble(rnorm(10000, mean=20, sd=sqrt(1000))),
+<pre class="r"><code>posterior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; = enframe(as.matrix(blavInspect(fit.bayes, what=&quot;mcmc&quot;))[,&#39;bet_sign[1]&#39;]),
+                                &quot;informative prior 1&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior1, what=&quot;mcmc&quot;))[,&#39;bet_sign[1]&#39;]),
+                                &quot;informative prior 2&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior2, what=&quot;mcmc&quot;))[,&#39;bet_sign[1]&#39;]),
+                                &quot;informative prior 3&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior3, what=&quot;mcmc&quot;))[,&#39;bet_sign[1]&#39;]),
+                                &quot;informative prior 4&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior4, what=&quot;mcmc&quot;))[,&#39;bet_sign[1]&#39;]),
+                                .id = &quot;id1&quot;)  
+
+prior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; = enframe(rnorm(10000, mean=0, sd=sqrt(1/1e-2))),
+                            &quot;informative prior 1&quot; = enframe(rnorm(10000, mean=3, sd=sqrt(0.4))),
+                            &quot;informative prior 2&quot; = enframe(rnorm(10000, mean=3, sd=sqrt(1000))),
+                            &quot;informative prior 3&quot; = enframe(rnorm(10000, mean=20, sd=sqrt(0.4))),
+                            &quot;informative prior 4&quot; = enframe(rnorm(10000, mean=20, sd=sqrt(1000))),
                           .id= &quot;id1&quot;)# here we sample a large number of values from the prior distributions to be able to plot them.
 
 priors.posterior &lt;- bind_rows(&quot;posterior&quot; = posterior1.2.3.4.5, &quot;prior&quot; = prior1.2.3.4.5,  .id = &quot;id2&quot;)</code></pre>
+<p><em>In older versions of Blavaan, please use <code>beta[1,2,1]</code> instead of <code>bet_sign[1]</code> to select the right posterior</em></p>
 <p>[/expand]</p>
 <p>Then, we can plot the different posteriors and priors by using the following code:</p>
 <p>[expand title=“Show Syntax” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
@@ -1212,29 +1235,29 @@ priors.posterior &lt;- bind_rows(&quot;posterior&quot; = posterior1.2.3.4.5, &qu
                      linetype = id2, 
                      alpha    = id2))+
   geom_density(size = 1)+
-  scale_x_continuous(limits = c(0, 23))+
+  scale_x_continuous(limits  = c(0, 23))+
   scale_colour_manual(name   = &#39;Posterior/Prior&#39;, values = c(&quot;black&quot;,&quot;red&quot;),    labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
   scale_linetype_manual(name = &#39;Posterior/Prior&#39;, values = c(&quot;solid&quot;,&quot;dotted&quot;), labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
-  scale_alpha_discrete(name  = &#39;Posterior/Prior&#39;,  range = c(.7,.3),            labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
+  scale_alpha_discrete(name  = &#39;Posterior/Prior&#39;, range  = c(.7,.3),            labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
   scale_fill_manual(name = &quot;Densities&quot;, values = c(&quot;Yellow&quot;,&quot;darkred&quot;,&quot;blue&quot;, &quot;green&quot;, &quot;pink&quot;))+
   labs(title    = expression(&quot;Influence of (Informative) Priors on&quot; ~ beta[Age]), 
        subtitle = &quot;5 different densities of priors and posteriors&quot;)</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --> [/expand]</p>
+<p><img src="data:image/png;base64,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" /><!-- --> [/expand]</p>
 <p>Now, with the information from the table, the bias estimates and the plot you can answer the two questions about the influence of the priors on the results.</p>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>#1) substract the MCMC chains
-mcmc.list &lt;- blavInspect(fit.bayes, what = &quot;mcmc&quot;)
-mcmc.list.informative &lt;- blavInspect(fit.bayes.infprior3, what = &quot;mcmc&quot;)
+<pre class="r"><code>#1) ask for the posterior means
+posterior_mean &lt;- blavInspect(fit.bayes, what = &quot;postmean&quot;)
+posterior_mean_informative &lt;- blavInspect(fit.bayes.infprior3, what = &quot;postmean&quot;)
 
-#2) bind the different chains an calculate the mean (estimate) of the regression coefficients
-estimatesuninformative &lt;- colMeans(as.matrix(mcmc.list)[,c(&quot;beta[1,2,1]&quot;,&quot;beta[1,3,1]&quot;)])
-estimatesinformative &lt;- colMeans(as.matrix(mcmc.list.informative)[,c(&quot;beta[1,2,1]&quot;,&quot;beta[1,3,1]&quot;)])
+#2) ask for the mean (estimate) of the regression coefficients
+estimatesuninformative &lt;- posterior_mean[1:2]
+estimatesinformative   &lt;- posterior_mean_informative[1:2]
 
 #3) calculate the bias
 round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)</code></pre>
-<pre><code>## beta[1,2,1] beta[1,3,1] 
-##      377.17      399.85</code></pre>
-<p><em>We see that the influence of this highly informative prior is around 377% and 400% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions.</em></p>
+<pre><code>##  diff~age diff~age2 
+##    354.14    397.20</code></pre>
+<p><em>We see that the influence of this highly informative prior is around 354% and 397% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions.</em></p>
 <p><em>The results change with different prior specifications, but are still comparable. Only using <span class="math inline">\(\mathcal{N}(20, .4)\)</span> for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code.</em></p>
 <pre class="r"><code>indices &lt;- sample.int(333, 60)
 smalldata &lt;- dataPHD[indices,]</code></pre>

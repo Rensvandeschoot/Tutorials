@@ -426,39 +426,41 @@ summ5 <- summary(fit.bayes.infprior4)
 #### _**Question**: Do we end up with similar conclusions, using different prior specifications?_
 
 To answer these questions, proceed as follows:
-We can calculate the relative bias to express this difference. ($bias= 100*\frac{(model informative priors-model uninformed priors)}{model uninformative priors}$). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the $\mathcal{N}(20, .4)$ and $\mathcal{N}(20, .1)$ priors. Copy Paste the following code to R:
+We can calculate the relative bias to express this difference. ($bias= 100*\frac{(model \; informative \; priors\; - \; model \; uninformed  \;priors)}{model \; uninformative \; priors}$). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the $\mathcal{N}(20, .4)$ and $\mathcal{N}(20, .1)$ priors. Copy Paste the following code to R:
 
 
 ```{r, message=FALSE, warning=FALSE, eval=F}
-#1) substract the MCMC chains
-mcmc.list <- blavInspect(fit.bayes, what = "mcmc")
-mcmc.list.informative <- blavInspect(fit.bayes.infprior3, what = "mcmc")
+#1) ask for the posterior means
+posterior_mean <- blavInspect(fit.bayes, what = "postmean")
+posterior_mean_informative <- blavInspect(fit.bayes.infprior3, what = "postmean")
 
-#2) bind the different chains an calculate the mean (estimate) of the regression coefficients
-estimatesuninformative <- colMeans(as.matrix(mcmc.list)[,c("beta[1,2,1]","beta[1,3,1]")])
-estimatesinformative   <- colMeans(as.matrix(mcmc.list.informative)[,c("beta[1,2,1]","beta[1,3,1]")])
+#2) ask for the mean (estimate) of the regression coefficients
+estimatesuninformative <- posterior_mean[1:2]
+estimatesinformative   <- posterior_mean_informative[1:2]
 
 #3) calculate the bias
 round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)
 ```
 
 
-The `beta[1,2,1]` and `beta[1,3,1]` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan These are just the labels Stan gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects. 
+The `diff~age ` and `diff~age2 ` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan These are just the labels Stan gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. 
+
+<!-- There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects.  -->
 
 We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
 
-First we extract the MCMC chains of the 5 different models for only this one parameter ($\beta_{age}$=beta[1,2,1]). Copy-past the following code to R: 
+First we extract the MCMC chains of the 5 different models for only this one parameter ($\beta_{age}$=`bet_sign[1]`). Copy-paste the following code to R: 
 
 [expand title="Show Syntax" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
 ```{r, eval=TRUE}
-posterior1.2.3.4.5 <- bind_rows("uninformative prior" = enframe(as.matrix(blavInspect(fit.bayes, what="mcmc"))[,'beta[1,2,1]']),
-                                "informative prior 1" = enframe(as.matrix(blavInspect(fit.bayes.infprior1, what="mcmc"))[,'beta[1,2,1]']),
-                                "informative prior 2" = enframe(as.matrix(blavInspect(fit.bayes.infprior2, what="mcmc"))[,'beta[1,2,1]']),
-                                "informative prior 3" = enframe(as.matrix(blavInspect(fit.bayes.infprior3, what="mcmc"))[,'beta[1,2,1]']),
-                                "informative prior 4" = enframe(as.matrix(blavInspect(fit.bayes.infprior4, what="mcmc"))[,'beta[1,2,1]']),
-                                .id = "id1")
+posterior1.2.3.4.5 <- bind_rows("uninformative prior" = enframe(as.matrix(blavInspect(fit.bayes, what="mcmc"))[,'bet_sign[1]']),
+                                "informative prior 1" = enframe(as.matrix(blavInspect(fit.bayes.infprior1, what="mcmc"))[,'bet_sign[1]']),
+                                "informative prior 2" = enframe(as.matrix(blavInspect(fit.bayes.infprior2, what="mcmc"))[,'bet_sign[1]']),
+                                "informative prior 3" = enframe(as.matrix(blavInspect(fit.bayes.infprior3, what="mcmc"))[,'bet_sign[1]']),
+                                "informative prior 4" = enframe(as.matrix(blavInspect(fit.bayes.infprior4, what="mcmc"))[,'bet_sign[1]']),
+                                .id = "id1")  
 
 prior1.2.3.4.5 <- bind_rows("uninformative prior" = enframe(rnorm(10000, mean=0, sd=sqrt(1/1e-2))),
                             "informative prior 1" = enframe(rnorm(10000, mean=3, sd=sqrt(0.4))),
@@ -469,6 +471,9 @@ prior1.2.3.4.5 <- bind_rows("uninformative prior" = enframe(rnorm(10000, mean=0,
 
 priors.posterior <- bind_rows("posterior" = posterior1.2.3.4.5, "prior" = prior1.2.3.4.5,  .id = "id2")
 ```
+
+*In older versions of Blavaan, please use `beta[1,2,1]` instead of `bet_sign[1]` to select the right posterior*
+
 [/expand]
 
 Then, we can plot the different posteriors and priors by using the following code:
@@ -499,13 +504,13 @@ Now, with the information from the table, the bias estimates and the plot you ca
 
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-#1) substract the MCMC chains
-mcmc.list <- blavInspect(fit.bayes, what = "mcmc")
-mcmc.list.informative <- blavInspect(fit.bayes.infprior3, what = "mcmc")
+#1) ask for the posterior means
+posterior_mean <- blavInspect(fit.bayes, what = "postmean")
+posterior_mean_informative <- blavInspect(fit.bayes.infprior3, what = "postmean")
 
-#2) bind the different chains an calculate the mean (estimate) of the regression coefficients
-estimatesuninformative <- colMeans(as.matrix(mcmc.list)[,c("beta[1,2,1]","beta[1,3,1]")])
-estimatesinformative   <- colMeans(as.matrix(mcmc.list.informative)[,c("beta[1,2,1]","beta[1,3,1]")])
+#2) ask for the mean (estimate) of the regression coefficients
+estimatesuninformative <- posterior_mean[1:2]
+estimatesinformative   <- posterior_mean_informative[1:2]
 
 #3) calculate the bias
 round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)
