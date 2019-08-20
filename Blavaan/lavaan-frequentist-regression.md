@@ -18,7 +18,7 @@ This tutorial provides the reader with a basic tutorial how to perform a regress
 ## Preparation
 This tutorial expects:
 
-- Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.3 in R version 3.6.0
+- Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.4 in R version 3.6.0
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of coding in R
@@ -205,7 +205,7 @@ summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 ```
-## lavaan 0.6-3 ended normally after 24 iterations
+## lavaan 0.6-4 ended normally after 24 iterations
 ## 
 ##   Optimization method                           NLMINB
 ##   Number of free parameters                          4
