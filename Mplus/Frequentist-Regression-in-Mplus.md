@@ -1,7 +1,7 @@
 ---
 title: "Regression in Mplus (Frequentist)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 07 August 2019'
+date: 'Last modified: 22 August 2019'
 output:
   html_document:
     keep_md: true
@@ -91,7 +91,7 @@ MODEL RESULTS
 
 _The descriptive statistics make sense:_
 
-_$diff$: Mean (9.97), SE (0.790)_
+_$diff$: Mean (9.97), SE (0.79)_
 
 _$Age$: Mean (31.68), SE (0.38)_
 
@@ -206,7 +206,7 @@ _Assuming that the null hypothesis is true in the population, the probability of
 
   <p>&nbsp;</p>
 
-Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 ([Benjamin et al. 2017](https://osf.io/preprints/psyarxiv/mky9j), but see also a critique by[Trafimow, ., Van de Schoot, et al., 2018](https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/)). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.
+Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 ([Benjamin et al. 2017](https://osf.io/preprints/psyarxiv/mky9j), but see also a critique by[Trafimow, ..., Van de Schoot, et al., 2018](https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/)). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.
 
 
   <p>&nbsp;</p>
@@ -311,7 +311,7 @@ STDYX Standardization
     DIFF               0.937      0.026     36.472      0.000
 ```
 
-_The standardized coefficients, age (1.262) and age$^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher._
+_The standardized coefficients, age (1.262) and age$^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher. This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)_
 
 
 
