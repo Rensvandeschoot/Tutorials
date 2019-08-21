@@ -211,7 +211,7 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, echo = F}
+```{r, include = F}
 summ1 <- summary(fit.bayes)
 ```
 
@@ -307,7 +307,7 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, echo = F}
+```{r, include = F}
 summ2 <- summary(fit.bayes.infprior1)
 ```
 
@@ -389,7 +389,7 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 summ3 <- summary(fit.bayes.infprior2)
 summ4 <- summary(fit.bayes.infprior3)
 summ5 <- summary(fit.bayes.infprior4)
@@ -504,7 +504,7 @@ estimatesinformative   <- colMeans(as.matrix(mcmc.list.informative)[,c("beta[1,2
 round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 bias <- round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative),0)
 ```
 

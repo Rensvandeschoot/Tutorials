@@ -1,7 +1,7 @@
 ---
 title: "Regression in lavaan (Frequentist)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 20 August 2019'
+date: 'Last modified: 21 August 2019'
 output:
   html_document:
     keep_md: true
@@ -18,7 +18,7 @@ This tutorial provides the reader with a basic tutorial how to perform a regress
 ## Preparation
 This tutorial expects:
 
-- Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.4 in R version 3.6.0
+- Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.4 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of coding in R

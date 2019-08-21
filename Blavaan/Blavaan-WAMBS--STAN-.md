@@ -1,7 +1,7 @@
 ---
 title: "WAMBS Blavaan Tutorial (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 30 July 2019'
+date: 'Last modified: 21 August 2019'
 output:
   html_document:
     keep_md: true
@@ -20,7 +20,7 @@ In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-
 This tutorial expects:
 
 - Installation of [Stan](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.4 and Lavaan version 0.6.3 in R version 3.6.0
+- Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -128,8 +128,6 @@ Once you loaded in your data, it is advisable to check whether your data import 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
-
 
 ```r
 describe(dataPHD)
@@ -187,7 +185,7 @@ Next, we need to specify actual values for the hyperparameters of the prior dist
 - intercept $\sim \mathcal{N}(-35, 20)$
 - $\beta_1 \sim \mathcal{N}(.8, 5)$
 - $\beta_2 \sim \mathcal{N}(0, 10)$
-- $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.
+- $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to perform well in simulation studies.
 
 It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the 'XX' with the values of the hyperparameters
 
@@ -236,7 +234,7 @@ plot(years, delay, type= "l")
 [/expand]
 
 
-We can also plot what the our expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
+We can also plot what the expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
 
 
 ```r
@@ -285,35 +283,17 @@ model.regression <- '#the regression model
 
 ### 2. Does the trace-plot exhibit convergence?
 
-First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples. In addition, Blavaan needs an adaptation period, which is by default a 1000 samples. We do not change this default.
+First we run the anlysis with only a short burnin period of a 100 samples and then take another 500 samples. In addition, Blavaan needs an adaptation period, which is by default a 1000 samples. We  do not change this for this example.
 
 
 
 ```r
 fit.bayesfewsample <- blavaan(model = model.regression,
                               data = dataPHD,  test = "none",  
-                              target = "stan", burnin = 250,
-                              sample = 500, seed = 12345, 
+                              target = "stan", burnin = 100,
+                              sample = 500, seed = 12345,
                               bcontrol = list(cores = 4))
-```
 
-```
-## DIAGNOSTIC(S) FROM PARSER:
-## Info (non-fatal):
-## Left-hand side of sampling statement (~) may contain a non-linear transform of a parameter or local variable.
-## If it does, you need to include a target += statement with the log absolute determinant of the Jacobian of the transform.
-## Left-hand-side of sampling statement:
-##     eta ~ sem_lv_lpdf(...)
-## 
-## Compiling stan model...DIAGNOSTIC(S) FROM PARSER:
-## Info (non-fatal):
-## Left-hand side of sampling statement (~) may contain a non-linear transform of a parameter or local variable.
-## If it does, you need to include a target += statement with the log absolute determinant of the Jacobian of the transform.
-## Left-hand-side of sampling statement:
-##     eta ~ sem_lv_lpdf(...)
-```
-
-```r
 posteriors_fewsamples <- blavInspect(fit.bayesfewsample, what="mcmc")
 
 # the test="none" input stops the calculations of some posterior checks, we do not need at this moment and speeds up the process. 
@@ -324,13 +304,17 @@ Now we can plot the trace plots.
 
 
 ```r
-plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace", trace.iters = 750)
+plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace", trace.iters = 600)
+```
+
+```
+## Warning: Ignoring unknown parameters: trace.iters
 ```
 
 ![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 
-It seems like the trace (caterpillar) plots are not neatly converged into one each other (we ideally want one fat caterpillar, like the one for _diff~~diff_/`psi[1,1,1]`). This  indicates we need more samples.
+It seems like the trace (caterpillar) plots are not neatly converged into one each other (we ideally want one fat caterpillar, like the one for _diff~~diff_ \\ `Psi_var[1]`). This  indicates we need more samples.
 
 We can check if the chains convergenced by having a look at the convergence diagnostics. Two of these diagnostics of interest include the Gelman and Rubin diagnostic and the Geweke diagnostic. 
 
@@ -348,15 +332,15 @@ gelman.diag(mcmc.list)
 ```
 ## Potential scale reduction factors:
 ## 
-##              Point est. Upper C.I.
-## beta[1,2,1]       14.10       36.4
-## beta[1,3,1]        6.64       16.1
-## psi[1,1,1]        12.76       31.2
-## alpha[1,1,1]      24.16      126.8
+##               Point est. Upper C.I.
+## bet_sign[1]         8.25      22.65
+## bet_sign[2]         5.16      10.04
+## Psi_var[1]          1.02       1.07
+## Alpha_free[1]       9.50      43.89
 ## 
 ## Multivariate psrf
 ## 
-## 19.2
+## 7.16
 ```
 
 ```r
@@ -402,11 +386,11 @@ gelman.diag(mcmc.list)
 ```
 ## Potential scale reduction factors:
 ## 
-##              Point est. Upper C.I.
-## beta[1,2,1]           1          1
-## beta[1,3,1]           1          1
-## psi[1,1,1]            1          1
-## alpha[1,1,1]          1          1
+##               Point est. Upper C.I.
+## bet_sign[1]            1          1
+## bet_sign[2]            1          1
+## Psi_var[1]             1          1
+## Alpha_free[1]          1          1
 ## 
 ## Multivariate psrf
 ## 
@@ -462,15 +446,14 @@ To get the relative bias simply save the means of the regression coefficients fo
 
 
 ```r
-estimates            <- colMeans(as.matrix(mcmc.list)[,c("beta[1,2,1]","beta[1,3,1]")])
-mcmc.list.doubleiter <- blavInspect(fit.bayesdouble, what = "mcmc")
-estimatesdoubleiter  <- colMeans(as.matrix(mcmc.list.doubleiter)[,c("beta[1,2,1]","beta[1,3,1]")])
+estimates            <- blavInspect(fit.bayes, what = "postmean")[1:2]
+estimatesdoubleiter  <- blavInspect(fit.bayesdouble, what = "postmean")[1:2]
 round(100*((estimatesdoubleiter - estimates)/estimates), 2)
 ```
 
 ```
-## beta[1,2,1] beta[1,3,1] 
-##       -0.41       -0.45
+##  diff~age diff~age2 
+##      0.10      0.15
 ```
 
 _The relative bias is small enough (<5%) not worry about it._ 
@@ -533,6 +516,10 @@ par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "stan_ac", col = 'blue')
 ```
 
+```
+## Warning: Duplicated aesthetics after name standardisation: colour
+```
+
 ![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 _**Question:** What can you conclude about these autocorrelation plots?_
@@ -548,13 +535,17 @@ _These results show that autocorrelation is quite stong after a few lags. This m
 
 
 ### 6.   Do the posterior distributions make substantive sense?
-We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to the our prior believes (priors). Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
+We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to our prior beliefs (priors). Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
 
 
 
 ```r
 par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "stan_dens",  col = 'blue')
+```
+
+```
+## Warning: Duplicated aesthetics after name standardisation: colour
 ```
 
 ![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
@@ -579,7 +570,7 @@ summary(fit.bayes)
 ```
 
 ```
-## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
+## blavaan (0.3-6) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -594,8 +585,8 @@ summary(fit.bayes)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.149    0.209      1.752      2.564    1.001
-##     age2               -0.021    0.003     -0.026     -0.015    1.001
+##     age                 2.143    0.205      1.748      2.543    1.001
+##     age2               -0.021    0.003     -0.026     -0.015    1.000
 ##     Prior        
 ##                  
 ##  normal(0.8,2.24)
@@ -603,13 +594,13 @@ summary(fit.bayes)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.359    4.197    -44.666    -28.301    1.001
+##    .diff              -36.224    4.119    -44.285    -28.169    1.001
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.635   15.345    169.003    228.876    1.000
+##    .diff              193.729   14.909    166.271    224.703    1.000
 ##     Prior        
 ##      gamma(.5,.5)
 ```
@@ -625,14 +616,12 @@ dpriors(target = "stan")
 ```
 
 ```
-##                  nu               alpha              lambda 
-## "normal(0,1000^.5)"      "normal(0,10)"      "normal(0,10)" 
-##                beta              itheta                ipsi 
-##      "normal(0,10)"       "gamma(1,.5)"       "gamma(1,.5)" 
-##                 rho               ibpsi                 tau 
-##         "beta(1,1)"   "wishart(3,iden)"   "normal(0,10^.5)" 
-##               delta 
-##       "gamma(1,.5)"
+##                nu             alpha            lambda              beta 
+##    "normal(0,32)"    "normal(0,10)"    "normal(0,10)"    "normal(0,10)" 
+##             theta               psi               rho             ibpsi 
+## "gamma(1,.5)[sd]" "gamma(1,.5)[sd]"       "beta(1,1)" "wishart(3,iden)" 
+##               tau             delta 
+## "normal(0,10^.5)" "gamma(1,.5)[sd]"
 ```
 
 We see that the observed variable precision parameter `itheta` has a default prior of gamma(1,.5). By default prior distributions are placed on precisions instead of variances in Blavaan, so that the letter i in itheta stands for _“inverse.”_ We change the hyperparameters in the regression model that was specified in step 2 using the `prior()` command. After rerunning the analysis we can then calculate a bias to see impact. So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias. 
@@ -676,7 +665,7 @@ summary(fit.bayes.difIG)
 ```
 
 ```
-## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
+## blavaan (0.3-6) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -691,8 +680,8 @@ summary(fit.bayes.difIG)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.141    0.210      1.723      2.545    1.000
-##     age2               -0.021    0.003     -0.026     -0.015    1.001
+##     age                 2.146    0.208      1.734      2.553    1.000
+##     age2               -0.021    0.003     -0.026     -0.015    1.000
 ##     Prior        
 ##                  
 ##  normal(0.8,2.24)
@@ -700,97 +689,26 @@ summary(fit.bayes.difIG)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.150    4.202    -44.183    -27.743    1.000
+##    .diff              -36.276    4.200    -44.435    -28.043    1.000
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.489   15.454    169.208    229.964    1.000
+##    .diff              197.371   15.404    169.671    229.421    1.000
 ##     Prior        
 ##    gamma(.01,.01)
 ```
 
 
-```
-## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.149    0.209      1.752      2.564    1.001
-##     age2               -0.021    0.003     -0.026     -0.015    1.001
-##     Prior        
-##                  
-##  normal(0.8,2.24)
-##    normal(0,3.16)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.359    4.197    -44.666    -28.301    1.001
-##     Prior        
-##  normal(-35,4.47)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.635   15.345    169.003    228.876    1.000
-##     Prior        
-##      gamma(.5,.5)
-```
-
-```
-## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.141    0.210      1.723      2.545    1.000
-##     age2               -0.021    0.003     -0.026     -0.015    1.001
-##     Prior        
-##                  
-##  normal(0.8,2.24)
-##  normal(0.8,2.24)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.150    4.202    -44.183    -27.743    1.000
-##     Prior        
-##  normal(-35,4.47)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.489   15.454    169.208    229.964    1.000
-##     Prior        
-##    gamma(.01,.01)
-```
 
 
 | Parameters        | Estimate with $\in \sim IG(.01, .01)$ | Estimate with $\in \sim IG(.5, .5)$ | Bias                                             |
 | ---               | ---                                   | ---                                 | ---                                              |
-| Intercept         | -36.15            |-36.359           |$100\cdot \frac{-36.15--36.359 }{-36.359} = -0.57\%$ |
-| Age               | 2.141            |2.149           |$100\cdot \frac{2.141-2.149 }{2.149} = -0.37\%$      |
+| Intercept         | -36.276            |-36.224           |$100\cdot \frac{-36.276--36.224 }{-36.224} = 0.14\%$ |
+| Age               | 2.146            |2.143           |$100\cdot \frac{2.146-2.143 }{2.143} = 0.14\%$      |
 | Age2              | -0.021            |-0.021           |$100\cdot \frac{-0.021--0.021 }{-0.021} = 0\%$                                                 |
-| Residual variance | 197.489            |196.635           |$100\cdot \frac{197.489--0.021 }{196.635} = 0.43\%$
+| Residual variance | 197.371            |193.729           |$100\cdot \frac{197.371--0.021 }{193.729} = 1.88\%$
 
 
 _Yes, the results are robust, because there is only a really small amount of relative bias for the residual variance._
@@ -844,7 +762,7 @@ summary(fit.bayes.defaultpriors)
 ```
 
 ```
-## blavaan (0.3-4) results of 4000 samples after 1000 adapt/burnin iterations
+## blavaan (0.3-6) results of 4000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -859,73 +777,38 @@ summary(fit.bayes.defaultpriors)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.370    0.539      1.302      3.404    1.000
-##     age2               -0.023    0.006     -0.034     -0.012    1.001
-##     Prior         
-##                   
-##       normal(0,10)
-##       normal(0,10)
+##     age                 1.316    0.373      0.561      2.041    1.001
+##     age2               -0.012    0.004      -0.02     -0.004    1.002
+##     Prior       
+##                 
+##     normal(0,10)
+##     normal(0,10)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.985   11.362    -62.639    -18.586    1.000
-##     Prior         
-##  normal(0,1000^.5)
+##    .diff              -18.638    7.785    -33.809     -2.821    1.001
+##     Prior       
+##     normal(0,10)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.838   15.745    168.827    230.466    1.001
-##     Prior         
-##        gamma(1,.5)
+##    .diff              196.964   15.420    169.441     229.35    1.001
+##     Prior       
+##  gamma(1,.5)[sd]
 ```
 
 
-```
-## blavaan (0.3-4) results of 4000 samples after 1000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.370    0.539      1.302      3.404    1.000
-##     age2               -0.023    0.006     -0.034     -0.012    1.001
-##     Prior         
-##                   
-##       normal(0,10)
-##       normal(0,10)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.985   11.362    -62.639    -18.586    1.000
-##     Prior         
-##  normal(0,1000^.5)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.838   15.745    168.827    230.466    1.001
-##     Prior         
-##        gamma(1,.5)
-```
 
 
 | Parameters | Estimates with default priors | Estimate with informative priors | Bias|
 | ---        | ---                           | ---                              | ---                                             |
-| Intercept         | -40.985            |-36.359           |$100\cdot \frac{-40.985--36.359 }{-36.359} = 12.72\%$ |
-| Age               | 2.37            |2.149           |$100\cdot \frac{2.37-2.149 }{2.149} = 10.28\%$      |
-| Age2              | -0.023            |-0.021           |$100\cdot \frac{-0.023--0.021 }{-0.021} = 9.52\%$                                                 |
-| Residual variance | 196.838            |196.635           |$100\cdot \frac{196.838--0.021 }{196.635} = 0.1\%$
+| Intercept         | -18.638            |-36.224           |$100\cdot \frac{-18.638--36.224 }{-36.224} = -48.55\%$ |
+| Age               | 1.316            |2.143           |$100\cdot \frac{1.316-2.143 }{2.143} = -38.59\%$      |
+| Age2              | -0.012            |-0.021           |$100\cdot \frac{-0.012--0.021 }{-0.021} = -42.86\%$                                                 |
+| Residual variance | 196.964            |193.729           |$100\cdot \frac{196.964--0.021 }{193.729} = 1.67\%$
 
 
-_The informative priors have quite some influence (up to 7%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
+_The informative priors have quite some influence (up to 50%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
 
 
 [/expand]
@@ -950,7 +833,7 @@ If you still have time left, you can adjust the hyperparameters of the priors up
 
 From the original paper:
 
-> "If informative or weakly-informative priors are used, then we suggest running a sensitivity analysis of these priors. When subjective priors are in place, then there might be a discrepancy between results using different subjective prior settings. A sensitivity analysis for priors would entail adjusting the entire prior distribution (i.e., using a completely different prior distribution than before) or adjusting hyperparameters upward and downward and re-estimating the model with these varied priors. Several different hyperparameter specifications can be made in a sensitivity analysis, and results obtained will point toward the impact of small fluctuations in hyperparameter values. [.] The purpose of this sensitivity analysis is to assess how much of an impact the location of the mean hyperparameter for the prior has on the posterior. [.] Upon receiving results from the sensitivity analysis, assess the impact that fluctuations in the hyperparameter values have on the substantive conclusions. Results may be stable across the sensitivity analysis, or they may be highly instable based on substantive conclusions. Whatever the finding, this information is important to report in the results and discussion sections of a paper. We should also reiterate here that original priors should not be modified, despite the results obtained."
+> "If informative or weakly-informative priors are used, then we suggest running a sensitivity analysis of these priors. When subjective priors are in place, then there might be a discrepancy between results using different subjective prior settings. A sensitivity analysis for priors would entail adjusting the entire prior distribution (i.e., using a completely different prior distribution than before) or adjusting hyperparameters upward and downward and re-estimating the model with these varied priors. Several different hyperparameter specifications can be made in a sensitivity analysis, and results obtained will point toward the impact of small fluctuations in hyperparameter values. [...] The purpose of this sensitivity analysis is to assess how much of an impact the location of the mean hyperparameter for the prior has on the posterior. [...] Upon receiving results from the sensitivity analysis, assess the impact that fluctuations in the hyperparameter values have on the substantive conclusions. Results may be stable across the sensitivity analysis, or they may be highly instable based on substantive conclusions. Whatever the finding, this information is important to report in the results and discussion sections of a paper. We should also reiterate here that original priors should not be modified, despite the results obtained."
 
 
 For more information on this topic, please also refer to this [paper](http://psycnet.apa.org/record/2017-52406-001). 
@@ -965,7 +848,7 @@ summary(fit.bayes)
 ```
 
 ```
-## blavaan (0.3-4) results of 5000 samples after 2000 adapt/burnin iterations
+## blavaan (0.3-6) results of 5000 samples after 2000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -980,8 +863,8 @@ summary(fit.bayes)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.149    0.209      1.752      2.564    1.001
-##     age2               -0.021    0.003     -0.026     -0.015    1.001
+##     age                 2.143    0.205      1.748      2.543    1.001
+##     age2               -0.021    0.003     -0.026     -0.015    1.000
 ##     Prior        
 ##                  
 ##  normal(0.8,2.24)
@@ -989,21 +872,21 @@ summary(fit.bayes)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.359    4.197    -44.666    -28.301    1.001
+##    .diff              -36.224    4.119    -44.285    -28.169    1.001
 ##     Prior        
 ##  normal(-35,4.47)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.635   15.345    169.003    228.876    1.000
+##    .diff              193.729   14.909    166.271    224.703    1.000
 ##     Prior        
 ##      gamma(.5,.5)
 ```
 
 In the current model we see that:
 
-*  The estimate for the intercept is  -36.359 [-44.666 ;  -28.301 ]
-*  The estimate for the effect of $age$  is  2.149 [1.752 ; 2.564 ]
+*  The estimate for the intercept is  -36.224 [-44.285 ;  -28.169 ]
+*  The estimate for the effect of $age$  is  2.143 [1.748 ; 2.543 ]
 *  The estimate for the effect of $age^2$  is -0.021 [-0.026 ; -0.015 ]
 
 

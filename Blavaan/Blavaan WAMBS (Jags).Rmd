@@ -489,7 +489,7 @@ fit.bayes.difIG <- blavaan(model = model.regression.difIG, data = dataPHD,
 summary(fit.bayes.difIG)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 summ1 <- summary(fit.bayes)
 summ2 <- summary(fit.bayes.difIG)
 as.numeric(summ1[,2])
@@ -551,7 +551,7 @@ fit.bayes.defaultpriors <- blavaan(model = model.regression.defaultprior, data =
 summary(fit.bayes.defaultpriors)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 summ3 <- summary(fit.bayes.defaultpriors)
 ```
 

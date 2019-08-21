@@ -1,7 +1,7 @@
 ---
 title: "WAMBS Blavaan Tutorial (using JAGS)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 20 August 2019'
+date: 'Last modified: 21 August 2019'
 output:
   html_document:
     keep_md: true
@@ -20,7 +20,7 @@ In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-
 This tutorial expects:
 
 - Any installed version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files)
-- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.0- Basic knowledge of hypothesis testing
+- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.1- Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
 - Basic knowledge of coding in R
@@ -699,82 +699,6 @@ summary(fit.bayes.difIG)
 ```
 
 
-```
-## blavaan (0.3-6) results of 50000 samples after 26000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.150    0.207      1.742      2.557    1.000
-##     age2               -0.021    0.003     -0.026     -0.015    1.000
-##     Prior       
-##                 
-##   dnorm(0.8,0.2)
-##     dnorm(0,0.1)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.343    4.166    -44.466    -28.086    1.001
-##     Prior       
-##  dnorm(-35,0.05)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.150   15.483    167.616    227.894    1.000
-##     Prior       
-##    dgamma(.5,.5)
-```
-
-```
-## blavaan (0.3-6) results of 50000 samples after 26000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.139    0.208      1.735      2.544    1.001
-##     age2               -0.021    0.003     -0.026     -0.015    1.001
-##     Prior       
-##                 
-##   dnorm(0.8,0.2)
-##     dnorm(0,0.1)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -36.140    4.161    -44.217    -28.012    1.001
-##     Prior       
-##  dnorm(-35,0.05)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              197.435   15.373    168.583    228.295    1.000
-##     Prior       
-##  dgamma(.01,.01)
-```
-
-```
-## [1]      2.150     -0.021    197.150    -36.343     46.868   4403.980
-## [7] 429560.007     31.676   1050.216
-```
 
 
 | Parameters        | Estimate with $\in \sim IG(.01, .01)$ | Estimate with $\in \sim IG(.5, .5)$ | Bias                                             |
@@ -871,41 +795,6 @@ summary(fit.bayes.defaultpriors)
 ```
 
 
-```
-## blavaan (0.3-6) results of 50000 samples after 26000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.339    0.559      1.267      3.415    1.056
-##     age2               -0.023    0.006     -0.034     -0.011    1.054
-##     Prior        
-##                  
-##     dnorm(0,1e-2)
-##     dnorm(0,1e-2)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.352   11.743    -62.753    -17.554    1.056
-##     Prior        
-##     dnorm(0,1e-3)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.141   15.035    165.203    223.585    1.000
-##     Prior        
-##  dgamma(1,.5)[sd]
-```
 
 
 | Parameters | Estimates with default priors | Estimate with informative priors | Bias|

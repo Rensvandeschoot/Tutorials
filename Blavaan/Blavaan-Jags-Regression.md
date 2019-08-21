@@ -1,7 +1,7 @@
 ---
 title: "Bayesian Regression in Blavaan (using Jags)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 20 August 2019'
+date: 'Last modified: 21 August 2019'
 output:
   html_document:
     keep_md: true
@@ -22,7 +22,7 @@ In this tutorial, we start by using the default prior settings of the software. 
 This tutorial expects:
 
 - Any installed version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files)
-- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.0
+- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -210,7 +210,7 @@ summary(fit.bayes)
 ```
 
 ```
-## blavaan (0.3-6) results of 37824 samples after 16000 adapt/burnin iterations
+## blavaan (0.3-6) results of 37482 samples after 16000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -225,8 +225,8 @@ summary(fit.bayes)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.357    0.589      1.259       3.58    1.016
-##     age2               -0.023    0.006     -0.035     -0.011    1.015
+##     age                 2.387    0.538      1.301      3.389    1.010
+##     age2               -0.023    0.006     -0.034     -0.011    1.009
 ##     Prior        
 ##                  
 ##     dnorm(0,1e-2)
@@ -234,13 +234,13 @@ summary(fit.bayes)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.721   12.420    -66.278    -17.513    1.016
+##    .diff              -41.358   11.298    -62.896    -19.001    1.009
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.111   14.894     166.22    224.331    1.000
+##    .diff              194.005   14.916    165.491    223.279    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ```
@@ -270,44 +270,9 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 
 
 
-```
-## blavaan (0.3-6) results of 37824 samples after 16000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.357    0.589      1.259       3.58    1.016
-##     age2               -0.023    0.006     -0.035     -0.011    1.015
-##     Prior        
-##                  
-##     dnorm(0,1e-2)
-##     dnorm(0,1e-2)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.721   12.420    -66.278    -17.513    1.016
-##     Prior        
-##     dnorm(0,1e-3)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.111   14.894     166.22    224.331    1.000
-##     Prior        
-##  dgamma(1,.5)[sd]
-```
 
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.357, 95% HPD (Credibility Interval) [1.259 3.58]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.023, and a 95% Credibility Interval of [-0.035 -0.011]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.387, 95% HPD (Credibility Interval) [1.301 3.389]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.023, and a 95% Credibility Interval of [-0.034 -0.011]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
@@ -393,7 +358,7 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 21091 samples after 16000 adapt/burnin iterations
+## blavaan (0.3-6) results of 33734 samples after 5000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -408,8 +373,8 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.648    0.416      1.782      3.451    1.013
-##     age2               -0.026    0.004     -0.034     -0.017    1.011
+##     age                 2.610    0.411      1.818      3.387    1.005
+##     age2               -0.025    0.004     -0.033     -0.017    1.004
 ##     Prior        
 ##                  
 ##      dnorm(3,2.5)
@@ -417,19 +382,19 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -46.821    8.804    -64.238    -28.912    1.012
+##    .diff              -46.022    8.723    -62.406    -29.163    1.005
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.766   14.987     165.07    223.467    1.000
+##    .diff              193.797   14.841    165.345    223.411    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.062
+##     diff                0.061
 ```
 
 
@@ -441,8 +406,8 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                    | ---        |---         | ---         |
-| Posterior mean |  2.357|                        |            |            |             | 
-| Posterior sd   |  0.589|                        |            |            |             |
+| Posterior mean |  2.387|                        |            |            |             | 
+| Posterior sd   |  0.538|                        |            |            |             |
 
 | $Age^2$        | Default prior             | $\mathcal{N}(0, .1)$   |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                       | ---       | ---        | ---        | ---         |
@@ -454,51 +419,16 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 
 
 
-```
-## blavaan (0.3-6) results of 21091 samples after 16000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.648    0.416      1.782      3.451    1.013
-##     age2               -0.026    0.004     -0.034     -0.017    1.011
-##     Prior        
-##                  
-##      dnorm(3,2.5)
-##       dnorm(0,10)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -46.821    8.804    -64.238    -28.912    1.012
-##     Prior        
-##     dnorm(0,1e-3)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.766   14.987     165.07    223.467    1.000
-##     Prior        
-##  dgamma(1,.5)[sd]
-```
 
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                      | ---        |---         | ---         |
-| Posterior mean |  2.357|2.648|            |            |             | 
-| Posterior sd   |  0.589|0.416|            |            |             |
+| Posterior mean |  2.387|2.61|            |            |             | 
+| Posterior sd   |  0.538|0.411|            |            |             |
 
 | $Age^2$        | Default prior              | $\mathcal{N}(0, .1)$      |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                        | ---                       | ---        | ---        | ---         |
-| Posterior mean | -0.023 | -0.026|            |            |             |
+| Posterior mean | -0.023 | -0.025|            |            |             |
 | Posterior sd   | 0.006 | 0.004|            |            |             |
 
 
@@ -572,7 +502,7 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 30751 samples after 16000 adapt/burnin iterations
+## blavaan (0.3-6) results of 41262 samples after 5000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -587,8 +517,8 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.404    0.506      1.414      3.362    1.012
-##     age2               -0.023    0.005     -0.034     -0.013    1.012
+##     age                 2.345    0.511      1.304      3.308    1.029
+##     age2               -0.023    0.005     -0.033     -0.012    1.028
 ##     Prior        
 ##                  
 ##    dnorm(3,0.001)
@@ -596,19 +526,19 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -41.726   10.673     -62.92    -21.936    1.011
+##    .diff              -40.498   10.760    -61.166    -18.896    1.029
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.910   14.939    165.078    222.903    1.000
+##    .diff              194.106   14.959    165.944    224.273    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.052
+##     diff                0.050
 ```
 
 ```r
@@ -616,7 +546,7 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 24026 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-6) results of 21169 samples after 5000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -631,8 +561,8 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                11.134    0.546     10.097     12.262    1.007
-##     age2               -0.113    0.006     -0.124     -0.101    1.007
+##     age                11.105    0.591      9.984      12.26    1.018
+##     age2               -0.112    0.006     -0.125     -0.101    1.016
 ##     Prior        
 ##                  
 ##     dnorm(20,2.5)
@@ -640,13 +570,13 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff             -224.058   11.508   -246.568   -200.859    1.007
+##    .diff             -223.417   12.443    -247.53   -199.384    1.017
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              314.873   28.901    260.368    372.607    1.002
+##    .diff              314.070   29.547    257.144    372.735    1.004
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
@@ -660,7 +590,7 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 75960 samples after 27000 adapt/burnin iterations
+## blavaan (0.3-6) results of 24714 samples after 49000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -675,8 +605,8 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
-##     age                 2.370    0.568      1.288      3.546    1.005
-##     age2               -0.023    0.006     -0.035     -0.011    1.005
+##     age                 2.312    0.547      1.125      3.282    1.022
+##     age2               -0.022    0.006     -0.033      -0.01    1.021
 ##     Prior        
 ##                  
 ##   dnorm(20,0.001)
@@ -684,140 +614,33 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.991   11.955    -65.384    -17.916    1.005
+##    .diff              -39.789   11.508    -60.407    -15.358    1.022
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.115   14.928    165.245    223.583    1.000
+##    .diff              194.214   15.076    165.241    223.815    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.051
+##     diff                0.049
 ```
 
 
-```
-## blavaan (0.3-6) results of 30751 samples after 16000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.404    0.506      1.414      3.362    1.012
-##     age2               -0.023    0.005     -0.034     -0.013    1.012
-##     Prior        
-##                  
-##    dnorm(3,0.001)
-##    dnorm(0,0.001)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -41.726   10.673     -62.92    -21.936    1.011
-##     Prior        
-##     dnorm(0,1e-3)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.910   14.939    165.078    222.903    1.000
-##     Prior        
-##  dgamma(1,.5)[sd]
-```
-
-```
-## blavaan (0.3-6) results of 24026 samples after 5000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                11.134    0.546     10.097     12.262    1.007
-##     age2               -0.113    0.006     -0.124     -0.101    1.007
-##     Prior        
-##                  
-##     dnorm(20,2.5)
-##      dnorm(20,10)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff             -224.058   11.508   -246.568   -200.859    1.007
-##     Prior        
-##     dnorm(0,1e-3)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              314.873   28.901    260.368    372.607    1.002
-##     Prior        
-##  dgamma(1,.5)[sd]
-```
-
-```
-## blavaan (0.3-6) results of 75960 samples after 27000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Parameter Estimates:
-## 
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.370    0.568      1.288      3.546    1.005
-##     age2               -0.023    0.006     -0.035     -0.011    1.005
-##     Prior        
-##                  
-##   dnorm(20,0.001)
-##   dnorm(20,0.001)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -40.991   11.955    -65.384    -17.916    1.005
-##     Prior        
-##     dnorm(0,1e-3)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.115   14.928    165.245    223.583    1.000
-##     Prior        
-##  dgamma(1,.5)[sd]
-```
 
 
   
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$      | $\mathcal{N}(3, 1000)$    |$\mathcal{N}(20, .4)$    |$\mathcal{N}(20, 1000)$   |
 | ---            | ---                        | ---                      | ---                       |---                       | ---                      |
-| Posterior mean |  2.357|2.648| 2.404|11.134|2.37| 
-| Posterior sd   |  0.589|0.416| 0.506|0.546|0.568|
+| Posterior mean |  2.387|2.61| 2.345|11.105|2.312| 
+| Posterior sd   |  0.538|0.411| 0.511|0.591|0.547|
 
 | $Age^2$        | Default prior              | $\mathcal{N}(0, .1)$      |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                        | ---                       | ---                        | ---                      | ---                      |
-| Posterior mean | -0.023 | -0.026|-0.023  |-0.113|-0.023|
+| Posterior mean | -0.023 | -0.025|-0.023  |-0.112|-0.022|
 | Posterior sd   | 0.006 | 0.004|0.005  |0.006|0.006|
 
 [/expand]
@@ -925,12 +748,12 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 
 ```
 ## beta[1,2,1] beta[1,3,1] 
-##      380.52      403.78
+##      364.20      385.66
 ```
 
 
 
-_We see that the influence of this highly informative prior is around 381% and 404% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
+_We see that the influence of this highly informative prior is around 364% and 386% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
 
 _The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
 
