@@ -1,7 +1,7 @@
 ---
 title: "R regression Bayesian (using brms)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 07 August 2019'
+date: 'Last modified: 21 August 2019'
 output:
   html_document:
     keep_md: true
@@ -16,7 +16,7 @@ In this tutorial, we start by using the default prior settings of the software. 
 This tutorial expects:
 
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.8.0 in R version 3.6.0
+- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.9.0 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -207,13 +207,13 @@ summary(model)
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept   -47.32     12.63   -71.69   -23.41       2123 1.00
-## age           2.67      0.60     1.53     3.83       2101 1.00
-## age2         -0.03      0.01    -0.04    -0.01       2124 1.00
+## Intercept   -47.31     12.66   -71.99   -23.49       2068 1.00
+## age           2.66      0.60     1.53     3.84       2030 1.00
+## age2         -0.03      0.01    -0.04    -0.01       2038 1.00
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma    14.04      0.55    13.01    15.15       2936 1.00
+## sigma    14.05      0.56    13.01    15.19       2914 1.00
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -226,11 +226,11 @@ posterior_summary(model)
 
 ```
 ##                  Estimate    Est.Error          Q2.5         Q97.5
-## b_Intercept -4.731730e+01 12.633748393 -7.168598e+01 -2.340958e+01
-## b_age        2.666543e+00  0.598253834  1.527225e+00  3.828354e+00
-## b_age2      -2.590971e-02  0.006241665 -3.825559e-02 -1.407914e-02
-## sigma        1.403947e+01  0.550379485  1.301356e+01  1.515460e+01
-## lp__        -1.356590e+03  1.416436968 -1.360019e+03 -1.354807e+03
+## b_Intercept -4.731198e+01 12.657267470 -7.199338e+01 -2.348821e+01
+## b_age        2.664366e+00  0.599458026  1.534526e+00  3.836621e+00
+## b_age2      -2.587054e-02  0.006261891 -3.825559e-02 -1.408062e-02
+## sigma        1.404553e+01  0.560142134  1.301342e+01  1.518882e+01
+## lp__        -1.356619e+03  1.431719503 -1.360214e+03 -1.354822e+03
 ```
 
 [/expand]
@@ -346,13 +346,13 @@ summary(model2)
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept   -50.29      9.44   -68.40   -30.80       1819 1.00
-## age           2.81      0.45     1.89     3.70       1732 1.00
-## age2         -0.03      0.00    -0.04    -0.02       1713 1.00
+## Intercept   -50.14      9.45   -68.37   -30.86       1733 1.00
+## age           2.80      0.45     1.90     3.70       1658 1.00
+## age2         -0.03      0.00    -0.04    -0.02       1698 1.00
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma    14.02      0.54    13.03    15.10       2470 1.00
+## sigma    14.02      0.54    13.03    15.09       2550 1.00
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -365,11 +365,11 @@ posterior_summary(model2)
 
 ```
 ##                  Estimate   Est.Error          Q2.5         Q97.5
-## b_Intercept -5.029331e+01 9.440502106 -6.840304e+01 -3.079783e+01
-## b_age        2.809959e+00 0.447072587  1.894513e+00  3.702127e+00
-## b_age2      -2.740488e-02 0.004737516 -3.701317e-02 -1.784044e-02
-## sigma        1.402096e+01 0.543837369  1.303052e+01  1.509738e+01
-## lp__        -1.356949e+03 1.446502696 -1.360734e+03 -1.355162e+03
+## b_Intercept -5.013647e+01 9.454018945 -6.837267e+01 -3.086225e+01
+## b_age        2.801673e+00 0.448175862  1.898214e+00  3.697464e+00
+## b_age2      -2.730237e-02 0.004752593 -3.684538e-02 -1.784013e-02
+## sigma        1.401859e+01 0.537796489  1.302873e+01  1.509395e+01
+## lp__        -1.356921e+03 1.425728330 -1.360569e+03 -1.355141e+03
 ```
 
 [/expand]
@@ -382,8 +382,8 @@ posterior_summary(model2)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                    | ---        |---         | ---         |
-| Posterior mean |  2.667|                        |            |            |             | 
-| Posterior sd   |  0.598|                        |            |            |             |
+| Posterior mean |  2.664|                        |            |            |             | 
+| Posterior sd   |  0.599|                        |            |            |             |
 
 | $Age^2$        | Default prior             | $\mathcal{N}(0, .1)$   |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                       | ---       | ---        | ---        | ---         |
@@ -401,8 +401,8 @@ posterior_summary(model2)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                    | ---        |---         | ---         |
-| Posterior mean |  2.667|2.81|            |            |             | 
-| Posterior sd   |  0.598|0.447            |            |             |
+| Posterior mean |  2.664|2.802|            |            |             | 
+| Posterior sd   |  0.599|0.448            |            |             |
 
 | $Age^2$        | Default prior             | $\mathcal{N}(0, .1)$   |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                       | ---       | ---        | ---        | ---         |
@@ -452,11 +452,11 @@ posterior_summary(model3)
 
 ```
 ##                  Estimate    Est.Error          Q2.5         Q97.5
-## b_Intercept -4.704762e+01 12.177665442 -7.106093e+01 -2.374580e+01
-## b_age        2.652842e+00  0.577960162  1.536977e+00  3.791272e+00
-## b_age2      -2.575308e-02  0.006027115 -3.766677e-02 -1.394329e-02
-## sigma        1.402604e+01  0.542576924  1.301490e+01  1.510763e+01
-## lp__        -1.365325e+03  1.418592987 -1.368940e+03 -1.363575e+03
+## b_Intercept -4.706608e+01 12.429187704   -71.1808151 -2.330294e+01
+## b_age        2.653895e+00  0.589350223     1.5157321  3.803406e+00
+## b_age2      -2.577423e-02  0.006138373    -0.0377718 -1.393926e-02
+## sigma        1.402546e+01  0.553730999    12.9905373  1.511654e+01
+## lp__        -1.365352e+03  1.449436172 -1369.0190205 -1.363574e+03
 ```
 
 ```r
@@ -465,11 +465,11 @@ posterior_summary(model4)
 
 ```
 ##                  Estimate    Est.Error          Q2.5         Q97.5
-## b_Intercept  -263.2102171 13.148578145  -289.3431545  -237.9148235
-## b_age          12.9643439  0.617928252    11.7820079    14.1744210
-## b_age2         -0.1309657  0.006512626    -0.1436218    -0.1184722
-## sigma          19.5126048  0.946549505    17.7332304    21.4353483
-## lp__        -3558.4687377  1.460993344 -3562.0761978 -3556.6694997
+## b_Intercept  -262.9455720 13.234422259  -289.4484994  -238.1084417
+## b_age          12.9512563  0.621010157    11.7771003    14.1744210
+## b_age2         -0.1308252  0.006523318    -0.1435894    -0.1184722
+## sigma          19.4938823  0.936356787    17.7521854    21.3993495
+## lp__        -3558.4549291  1.433473206 -3562.0006962 -3556.6814001
 ```
 
 ```r
@@ -492,8 +492,8 @@ posterior_summary(model5)
   
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                    | ---        |---         | ---         |
-| Posterior mean |  2.667|2.81  |2.653 |12.964|2.655| 
-| Posterior sd   |  0.598|0.447  |0.578|0.618|0.596| 
+| Posterior mean |  2.664|2.802  |2.654 |12.951|2.655| 
+| Posterior sd   |  0.599|0.448  |0.589|0.621|0.596| 
 
 | $Age^2$        | Default prior             | $\mathcal{N}(0, .1)$   |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                       | ---       | ---        | ---        | ---         |
@@ -604,12 +604,12 @@ round(100*((estimatesinformative - estimatesuninformative)/estimatesuninformativ
 
 ```
 ##  b_age b_age2 
-## 386.19 405.47
+## 386.09 405.69
 ```
 
 
 
-_We see that the influence of this highly informative prior is around 386% and 405% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
+_We see that the influence of this highly informative prior is around 386% and 406% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
 
 _The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
 
