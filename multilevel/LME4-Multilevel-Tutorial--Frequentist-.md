@@ -1,7 +1,7 @@
 ---
 title: 'LME4 Tutorial: Popularity Data'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 23 July 2019'
+date: 'Last modified: 22 August 2019'
 output:
   html_document:
     keep_md: true

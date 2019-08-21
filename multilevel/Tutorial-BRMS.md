@@ -1,7 +1,7 @@
 ---
 title: 'Building a Multilevel Model in BRMS Tutorial: Popularity Data'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 26 July 2019'
+date: 'Last modified: 22 August 2019'
 output:
   html_document:
     keep_md: true
@@ -9,7 +9,7 @@ output:
 
 
 ## Introduction
-This document shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this manual the software package [BRMS, version 2.8.0 ](https://cran.r-project.org/web/packages/brms/index.html) for R (Windows) was used. Results should be very similar to results obtained with other software packages, however due to convergence and rounding issues, you might notice minor differences. **This is part 1 of a 3 part [series](https://www.rensvandeschoot.com/tutorials/brms/) on how to do multilevel models in BRMS. In [part 2](https://www.rensvandeschoot.com/tutorials/brms-priors/) we will look at the influence of different priors and in [part 3](https://www.rensvandeschoot.com/brms-wambs/) we will go through the WAMBS checklist** 
+This document shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this manual the software package [BRMS, version 2.9.0 ](https://cran.r-project.org/web/packages/brms/index.html) for R (Windows) was used. Results should be very similar to results obtained with other software packages, however due to convergence and rounding issues, you might notice minor differences. **This is part 1 of a 3 part [series](https://www.rensvandeschoot.com/tutorials/brms/) on how to do multilevel models in BRMS. In [part 2](https://www.rensvandeschoot.com/tutorials/brms-priors/) we will look at the influence of different priors and in [part 3](https://www.rensvandeschoot.com/brms-wambs/) we will go through the WAMBS checklist** 
 
 
 ## Preparation
@@ -19,7 +19,7 @@ This tutorial expects:
 -  Basic knowledge of coding in R, specifically the [LME4 package](https://www.rensvandeschoot.com/tutorials/lme4/).
 -  Basic knowledge of Bayesian Statistics.
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.8.0 in R version 3.6.0
+- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.9.0 in R version 3.6.1
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
 
 
@@ -291,8 +291,31 @@ interceptonlymodeltest<-brm(popular ~ 1 + (1 | class),  data = popular2data, war
 ## Start sampling
 ```
 
+```
+## Warning: The largest R-hat is 1.19, indicating chains have not mixed.
+## Running the chains for more iterations may help. See
+## http://mc-stan.org/misc/warnings.html#r-hat
+```
+
+```
+## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## http://mc-stan.org/misc/warnings.html#bulk-ess
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## http://mc-stan.org/misc/warnings.html#tail-ess
+```
+
 ```r
 summary(interceptonlymodeltest)
+```
+
+```
+## Warning: The model has not converged (some Rhats are > 1.1). Do not analyse the results! 
+## We recommend running more iterations and/or setting stronger priors.
 ```
 
 ```
@@ -306,15 +329,15 @@ summary(interceptonlymodeltest)
 ## Group-Level Effects: 
 ## ~class (Number of levels: 100) 
 ##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sd(Intercept)     0.86      0.06     0.75     1.00         35 1.05
+## sd(Intercept)     0.85      0.07     0.72     0.97         28 1.10
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept     5.07      0.09     4.93     5.26         16 1.08
+## Intercept     5.07      0.10     4.90     5.29         13 1.20
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     1.11      0.02     1.07     1.15        125 1.01
+## sigma     1.11      0.02     1.07     1.14        208 1.00
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -382,7 +405,9 @@ hypothesis(interceptonlymodel, hyp, class = NULL)
 ##   Post.Prob Star
 ## 1        NA    *
 ## ---
-## '*': The expected value under the hypothesis lies outside the 95%-CI.
+## 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
+## '*': For one-sided hypotheses, the posterior probability exceeds 95%;
+## for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 ## Posterior probabilities of point hypotheses assume equal prior probabilities.
 ```
 
@@ -598,22 +623,22 @@ summary(model3)
 ## Group-Level Effects: 
 ## ~class (Number of levels: 100) 
 ##                       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sd(Intercept)             1.60      0.15     1.32     1.91        911 1.00
-## sd(sex)                   0.08      0.05     0.00     0.19        853 1.00
-## sd(extrav)                0.17      0.02     0.13     0.22        861 1.00
-## cor(Intercept,sex)       -0.19      0.41    -0.87     0.66       4096 1.00
-## cor(Intercept,extrav)    -0.93      0.03    -0.97    -0.87       1109 1.00
-## cor(sex,extrav)           0.04      0.43    -0.75     0.84        459 1.00
+## sd(Intercept)             1.61      0.15     1.34     1.94        874 1.00
+## sd(sex)                   0.08      0.05     0.00     0.19        808 1.00
+## sd(extrav)                0.17      0.02     0.13     0.22        827 1.00
+## cor(Intercept,sex)       -0.18      0.42    -0.88     0.68       4229 1.00
+## cor(Intercept,extrav)    -0.93      0.03    -0.97    -0.86        891 1.00
+## cor(sex,extrav)           0.03      0.43    -0.79     0.84        550 1.00
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept     2.08      0.18     1.72     2.42        704 1.00
-## sex           1.25      0.04     1.17     1.32       6138 1.00
-## extrav        0.44      0.02     0.40     0.49       1088 1.00
+## Intercept     2.09      0.18     1.72     2.44        576 1.00
+## sex           1.24      0.04     1.17     1.32       5761 1.00
+## extrav        0.44      0.02     0.40     0.49        951 1.00
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     0.74      0.01     0.72     0.77       4121 1.00
+## sigma     0.74      0.01     0.72     0.77       4408 1.00
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -655,20 +680,20 @@ summary(model4)
 ## Group-Level Effects: 
 ## ~class (Number of levels: 100) 
 ##                       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sd(Intercept)             1.13      0.14     0.86     1.41       1493 1.00
-## sd(extrav)                0.18      0.02     0.14     0.23       1089 1.00
-## cor(Intercept,extrav)    -0.87      0.04    -0.93    -0.78       1450 1.00
+## sd(Intercept)             1.12      0.14     0.85     1.41       1239 1.00
+## sd(extrav)                0.18      0.02     0.14     0.23        996 1.00
+## cor(Intercept,extrav)    -0.87      0.04    -0.93    -0.77       1347 1.00
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept     0.73      0.24     0.28     1.21       1194 1.00
-## sex           1.25      0.04     1.18     1.32       8009 1.00
-## extrav        0.45      0.02     0.40     0.50       2811 1.00
-## texp          0.09      0.01     0.07     0.12        767 1.01
+## Intercept     0.72      0.24     0.27     1.20       1046 1.00
+## sex           1.25      0.04     1.18     1.32       8790 1.00
+## extrav        0.45      0.02     0.40     0.50       2867 1.00
+## texp          0.09      0.01     0.07     0.12        637 1.00
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     0.74      0.01     0.72     0.77       6808 1.00
+## sigma     0.74      0.01     0.72     0.77       6588 1.00
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -678,10 +703,10 @@ summary(model4)
 
 We see that:
 
-*  The estimate for the intercept is 0.72 [0.28; 1.18]
-*  The estimate for the fixed effect of sex is 1.25 [1.18; 1.32]
-*  The estimate for the effect of teacher experience is 0.09 [0.07; 0.12]
-*  The estimate for the mean effect of extraversion is 0.45 [0.40; 0.50]
+*  The estimate for the intercept is $0.72 [0.28; 1.18]$
+*  The estimate for the fixed effect of sex is $1.25 [1.18; 1.32]$
+*  The estimate for the effect of teacher experience is $0.09 [0.07; 0.12]$
+*  The estimate for the mean effect of extraversion is $0.45 [0.40; 0.50]$
 *  The estimate for the random effect of the slope of extraversion is $.18^2=.032 [0.14^2;0.23^2]$ (some of these estimates might slightly different for you or than in the book, due to squaring after rounding)
 *  The estimate for the First level residual variance is $0.74^2=.55 [0.72^2;0.77^2]$
 *  The estimate for the residual variance on the second level is $1.13^2=1.28 [0.87^2;1.42^2]$
@@ -960,6 +985,6 @@ ggplot()+
 ---
 #### Brms Reference
 
-[B?rkner, P. C. (2017). brms: An R package for Bayesian multilevel models using Stan. Journal of Statistical Software, 80(1), 1-28.](https://www.jstatsoft.org/article/view/v080i01)
+[Burkner, P. C. (2017). brms: An R package for Bayesian multilevel models using Stan. Journal of Statistical Software, 80(1), 1-28.](https://www.jstatsoft.org/article/view/v080i01)
 
 ---
