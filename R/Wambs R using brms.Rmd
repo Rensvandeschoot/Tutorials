@@ -504,7 +504,7 @@ posterior_summary(model.difIG)
 ```
 
 
-```{r, echo = F}
+```{r, include = F}
 summ1 <- posterior_summary(model)
 summ2 <- posterior_summary(model.difIG)
 ```
@@ -561,7 +561,7 @@ posterior_summary(model.default)
 
 
 
-```{r, echo = F}
+```{r, include = F}
 summ3 <- posterior_summary(model.default)
 ```
 

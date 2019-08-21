@@ -1,7 +1,7 @@
 ---
 title: "WAMBS R Tutorial (using brms)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 08 August 2019'
+date: 'Last modified: 21 August 2019'
 output:
   html_document:
     keep_md: true
@@ -19,7 +19,7 @@ In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-
 This tutorial expects:
 
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.8.0 in R version 3.6.0
+- Installation of R packages `rstan`, and `brms`. This tutorial was made using brms version 2.9.0 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -189,7 +189,7 @@ Next, we need to specify actual values for the hyperparameters of the prior dist
 - intercept $\sim \mathcal{N}(-35, 20)$
 - $\beta_1 \sim \mathcal{N}(.8, 5)$
 - $\beta_2 \sim \mathcal{N}(0, 10)$
-- $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.
+- $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to perform well in simulation studies.
 
 It is a good idea to plot these distribution to see how they look. To do so, one easy way is to sample a lot of values from one of these distributions and make a density plot out of it, see the code below. Replace the 'XX' with the values of the hyperparameters.
 
@@ -216,7 +216,7 @@ plot(density(rnorm(n = 100000, mean = 0,   sd = sqrt(10))),  main = "effect Age^
 ![](Wambs-R-using-brms_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 [/expand]
 
-We can also plot what the our expected delay would be (like we did in the brms regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means of the priors and do not yet qualify the different levels of uncertainty. Replace the 'XX' in the following code with the prior means.
+We can also plot what the expected delay would be (like we did in the brms regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means of the priors and do not yet qualify the different levels of uncertainty. Replace the 'XX' in the following code with the prior means.
 
 
 ```r
@@ -263,7 +263,7 @@ To run a multiple regression with brms, you first specify the model, then fit th
     want an intercept.  
 5. We do set a seed to make the results exactly reproducible.
 6. To specify priors, using the `set_prior()` function. Be careful, Stan uses standard deviations instead of variance in the normal distribution. The standard deviations is the square root of the variance, so a variance of 5 corresponds to a standard deviation of 2.24 and a variance of 10 corresponds to a standard deviation of 3.16.
-7. to place a prior on the fixed intercept, one needs to include `0 + intercept`. See [here](https://rdrr.io/cran/brms/man/prior_samples.html) for an explanation.
+7. To place a prior on the fixed intercept, one needs to include `0 + intercept`. See [here](https://rdrr.io/cran/brms/man/prior_samples.html) for an explanation.
 
 
 There are many other options we can select, such as the number of chains how many iterations we want and how long of a warm-up phase we want, but we will just use the defaults for now.
@@ -336,10 +336,6 @@ We can check if the chains convergenced by having a look at the convergence diag
 
 * The Gelman-Rubin Diagnostic shows the PSRF values (using the  within and between chain variability). You should look at the Upper CI/Upper limit, which are all should be close to 1. If they aren't close to 1, you should use more iterations. Note: The Gelman and Rubin diagnostic is also automatically given in the summary of brms under the column Rhat 
 * The Geweke Diagnostic shows the z-scores for a test of equality of means between the first and last parts of each chain, which should be <1.96. A separate statistic is calculated for each variable in each chain. In this way it check whether a chain has stabalized. If this is not the case, you should increase the number of iterations. In the plots you should check how often values exceed the boundary lines of the z-scores. Scores above 1.96  or below -1.96 mean that the two portions of the chain significantly differ and full chain convergence was not obtained.
-
-
-To obtain the Gelman and Rubin diagnostic use:
-
 
 
 To obtain the Gelman and Rubin diagnostic use:
@@ -598,7 +594,7 @@ _These results show that autocorrelation is quite stong after a few lags. This m
 
 ### 6.   Do the posterior distributions make substantive sense?
 
-We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to the our prior believes (priors). Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
+We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to our prior believes (priors). Here we plot the  posteriors of the regression coefficients. If you want you can also plot the mean and the 95% Posterior HPD Intervals.
 
 
 
@@ -791,7 +787,7 @@ If you still have time left, you can adjust the hyperparameters of the priors up
 
 From the original paper:
 
-> "If informative or weakly-informative priors are used, then we suggest running a sensitivity analysis of these priors. When subjective priors are in place, then there might be a discrepancy between results using different subjective prior settings. A sensitivity analysis for priors would entail adjusting the entire prior distribution (i.e., using a completely different prior distribution than before) or adjusting hyperparameters upward and downward and re-estimating the model with these varied priors. Several different hyperparameter specifications can be made in a sensitivity analysis, and results obtained will point toward the impact of small fluctuations in hyperparameter values. [.] The purpose of this sensitivity analysis is to assess how much of an impact the location of the mean hyperparameter for the prior has on the posterior. [.] Upon receiving results from the sensitivity analysis, assess the impact that fluctuations in the hyperparameter values have on the substantive conclusions. Results may be stable across the sensitivity analysis, or they may be highly instable based on substantive conclusions. Whatever the finding, this information is important to report in the results and discussion sections of a paper. We should also reiterate here that original priors should not be modified, despite the results obtained."
+> "If informative or weakly-informative priors are used, then we suggest running a sensitivity analysis of these priors. When subjective priors are in place, then there might be a discrepancy between results using different subjective prior settings. A sensitivity analysis for priors would entail adjusting the entire prior distribution (i.e., using a completely different prior distribution than before) or adjusting hyperparameters upward and downward and re-estimating the model with these varied priors. Several different hyperparameter specifications can be made in a sensitivity analysis, and results obtained will point toward the impact of small fluctuations in hyperparameter values. [...] The purpose of this sensitivity analysis is to assess how much of an impact the location of the mean hyperparameter for the prior has on the posterior. [...] Upon receiving results from the sensitivity analysis, assess the impact that fluctuations in the hyperparameter values have on the substantive conclusions. Results may be stable across the sensitivity analysis, or they may be highly instable based on substantive conclusions. Whatever the finding, this information is important to report in the results and discussion sections of a paper. We should also reiterate here that original priors should not be modified, despite the results obtained."
 
 
 For more information on this topic, please also refer to this [paper](http://psycnet.apa.org/record/2017-52406-001). 
@@ -830,9 +826,9 @@ summary(model)
 
 In the current model we see that:
 
-*  The estimate for the intercept is  -36.4 [-44.66 ;  15.15 ]
-*  The estimate for the effect of $age$  is  2.15 [1.74 ; 2.56 ]
-*  The estimate for the effect of $age^2$  is -0.02 [-0.03 ; -0.02 ]
+*  The estimate for the intercept is  -36.4 [-44.66 ;  -28.06]
+*  The estimate for the effect of $age$  is  2.15 [1.74 ; 2.56]
+*  The estimate for the effect of $age^2$  is -0.02 [-0.03 ; -0.02]
 
 
 We can see that none of 95% Posterior HPD Intervals for these effects include zero, which means we are can be quite certain that all of the effects are different from 0.
