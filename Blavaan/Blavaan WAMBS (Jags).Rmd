@@ -124,7 +124,6 @@ Once you loaded in your data, it is advisable to check whether your data import 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```{r}
 describe(dataPHD)
@@ -208,15 +207,6 @@ delay <- -35 + .8*years + 0*years^2
 plot(years, delay, type =  "l")
 ```
 [/expand]
-
-
-We can also plot what the our expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
-
-```{r}
-years <- 20:80
-delay <- -35+.8*years+0*years^2
-plot(years, delay, type= "l")
-```
 
 
   <p>&nbsp;</p>

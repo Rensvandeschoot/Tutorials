@@ -207,18 +207,12 @@ plot(years, delay, type = "l")
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, eval=FALSE}
+```{r}
 years <- 20:80
 delay <- -35 + .8*years + 0*years^2
 plot(years, delay, type= "l")
 ```
 [/expand]
-
-```{r}
-years <- 20:80
-delay <- -35 + .8*years + 0*years^2
-plot(years, delay, type =  "l")
-```
 
 
   <p>&nbsp;</p>

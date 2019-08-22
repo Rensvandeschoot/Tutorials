@@ -220,7 +220,7 @@ prior_summary(model)
 
 We also see that a student-t distribution was chosen for the intercept.
 
-/expand]
+[/expand]
 
   <p>&nbsp;</p> 
 

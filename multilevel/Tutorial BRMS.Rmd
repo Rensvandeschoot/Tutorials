@@ -420,6 +420,13 @@ summary(model4)
 ```
 
 
+```{r, include = F}
+
+# FIX THIS
+model4 <- fixed(model4)
+```
+
+
 We see that:
 
 *  The estimate for the intercept is $0.72 [0.28; 1.18]$

@@ -27,6 +27,7 @@ This tutorial expects:
 [expand title="Check the WAMBS checklist here" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
+
 ## **WAMBS checklist** 
 
 ### *When to worry, and how to Avoid the Misuse of Bayesian Statistics*
@@ -49,6 +50,7 @@ This tutorial expects:
 8.   Is there a notable effect of the prior when compared with non-informative priors?
 9.   Are the results stable from a sensitivity analysis?
 10.   Is the Bayesian way of interpreting and reporting model results used?
+
 
 [/expand]
 
@@ -133,7 +135,7 @@ _$Age^2$: Mean (1050.22), SE (35.92)_
 
   <p>&nbsp;</p>
   
-  ##   **Step 1: Do you understand the priors?**
+##   **Step 1: Do you understand the priors?**
 
   <p>&nbsp;</p>
   
@@ -233,6 +235,8 @@ By default Mplus discards half of the iteration  as burnin period. After running
 
 First, run the model with only 100 iterations. Inspect the traceplots, what do you conclude?
 
+[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+
 
 
 ```r
@@ -279,6 +283,7 @@ PLOT:
 ![trace plot age](trace_plot_age_100.jpg)
 
 Clearly, two times 50 iterations is not enough for obtaining trusthworthy results and we need more iterations.
+
 [/expand]
 
 Let's specify a fixed number of iterations by adding `FBITERATIONS = 2000;` to the `ANALYSIS` part. Inspect the traceplots again.
@@ -307,7 +312,7 @@ First we run the anlysis with a urnin period of 1000 samples and then take anoth
 It seems like the trace (caterpillar) plots are  neatly converged into one each other (we ideally want one fat caterpillar). This  indicates we already have enough samples.
 
 
-We can double check check if the chains convergenced by having a look at the convergence diagnostics, the Gelman and Rubin diagnostic. To have a look at the Gelman-Rubin Diagnostic (PSRF) we can check this table under the `TECH8`outout of Mplus. The Gelman-Rubin Diagnostic shows the PSRF values (using the  within and between chain variability), which should be close to 1 for ALL iterations after burn-in. Is this the case?.
+We can double check check if the chains converged by having a look at the convergence diagnostics, the Gelman and Rubin diagnostic. To have a look at the Gelman-Rubin Diagnostic (PSRF) we can check this table under the `TECH8`outout of Mplus. The Gelman-Rubin Diagnostic shows the PSRF values (using the  within and between chain variability), which should be close to 1 for ALL iterations after burn-in. Is this the case?.
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
@@ -346,6 +351,7 @@ We can double check check if the chains convergenced by having a look at the con
 ```
 
 The PSRF for all iterations after burn-in is close to 1, so convergence seems to have been reached. 
+
 [/expand]
 
 
@@ -393,7 +399,7 @@ MODEL RESULTS
     DIFF             196.606    
 ```
 
-** Part of Model results for `FBITERATIONS = 4000` **
+**Part of Model results for `FBITERATIONS = 4000`**
 
 ```r
 MODEL RESULTS
@@ -476,7 +482,7 @@ _Autocorrelation is relatively small over lags (largest absolute values is below
 
 ### 6.   Do the posterior distributions make substantive sense?
 
-We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to our prior beliefs (priors). Here we plot the  posteriors of the regression coefficients. To plot the densities go to `Plot > View Plots >  Bayesian posterior parameter distributions > view > curve type: Kernel densirty > select the parameter you would like to see the density of > OK`
+We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to our prior beliefs (priors). Here we plot the  posteriors of the regression coefficients. To plot the densities go to `Plot > View Plots >  Bayesian posterior parameter distributions > view > curve type: Kernel densinty > select the parameter you would like to see the density of > OK`
   <p>&nbsp;</p>
   
 
@@ -567,7 +573,7 @@ MODEL PRIORS:
   e ~ IG(.01, .01);
 ```
 
-** Part of Model results for `e ~ IG(.01, .01)` **
+**Part of Model results for `e ~ IG(.01, .01)`**
 
 ```r
 MODEL RESULTS
@@ -615,6 +621,7 @@ MODEL RESULTS
 
 _Yes, the results are robust, because there is only a really small amount of relative bias for the residual variance._
 
+[/expand]
 
 ### 8.   Is there a notable effect of the prior when compared with non-informative priors?
 
@@ -687,7 +694,7 @@ _The informative priors have quite some influence (up to 30%) on the posterior r
   <p>&nbsp;</p>
   
   
-  ### 9.   Are the results stable from a sensitivity analysis?
+### 9.   Are the results stable from a sensitivity analysis?
 If you still have time left, you can adjust the hyperparameters of the priors upward and downward and re-estimating the model with these varied priors to check for robustness.
 
 From the original paper:

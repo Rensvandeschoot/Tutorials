@@ -203,26 +203,19 @@ plot(years, delay, type = "l")
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 years <- 20:80
 delay <- -35 + .8*years + 0*years^2
 plot(years, delay, type= "l")
 ```
+
 [/expand]
 
-
-We can also plot what the expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
-
-```{r}
-years <- 20:80
-delay <- -35 + .8*years + 0*years^2
-plot(years, delay, type =  "l")
-```
 
 
   <p>&nbsp;</p>
 
-##**Step 2: Run the model and check for convergence**
+## **Step 2: Run the model and check for convergence**
 
 Specify the regression model you want to analyze and run the regression with the `blavaan()` function. The priors for the intercept, the regression coefficients and the variance are specified in the regression model below.
 

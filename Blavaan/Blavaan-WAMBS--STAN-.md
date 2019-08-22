@@ -1,7 +1,7 @@
 ---
 title: "WAMBS Blavaan Tutorial (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 21 August 2019'
+date: 'Last modified: 22 August 2019'
 output:
   html_document:
     keep_md: true
@@ -231,24 +231,16 @@ years <- 20:80
 delay <- -35 + .8*years + 0*years^2
 plot(years, delay, type= "l")
 ```
+
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 [/expand]
 
-
-We can also plot what the expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
-
-
-```r
-years <- 20:80
-delay <- -35 + .8*years + 0*years^2
-plot(years, delay, type =  "l")
-```
-
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
   <p>&nbsp;</p>
 
-##**Step 2: Run the model and check for convergence**
+## **Step 2: Run the model and check for convergence**
 
 Specify the regression model you want to analyze and run the regression with the `blavaan()` function. The priors for the intercept, the regression coefficients and the variance are specified in the regression model below.
 
@@ -311,7 +303,7 @@ plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace", trace.iters = 600)
 ## Warning: Ignoring unknown parameters: trace.iters
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 
 It seems like the trace (caterpillar) plots are not neatly converged into one each other (we ideally want one fat caterpillar, like the one for _diff~~diff_ \\ `Psi_var[1]`). This  indicates we need more samples.
@@ -347,7 +339,7 @@ gelman.diag(mcmc.list)
 gelman.plot(mcmc.list)
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 To obtain the Geweke diagnostic use:
 
@@ -355,7 +347,7 @@ To obtain the Geweke diagnostic use:
 geweke.plot(mcmc.list)
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-15-1.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-15-2.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-15-3.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-14-1.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-14-2.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-14-3.png)<!-- -->
 
 These statistics confirm that the chains have not converged. Therefore, we run the same analysis with more samples.
 
@@ -374,7 +366,7 @@ Obtain the trace plots again.
 plot(fit.bayes, pars = 1:4, plot.type = "stan_trace")
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 Obtain the Gelman and Rubin diagnostic again.
 
@@ -401,7 +393,7 @@ gelman.diag(mcmc.list)
 gelman.plot(mcmc.list)
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 Obtain Geweke diagnostic again.
 
@@ -409,7 +401,7 @@ Obtain Geweke diagnostic again.
 geweke.plot(mcmc.list)
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-19-1.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-19-2.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-19-3.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-18-1.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-18-2.png)<!-- -->![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-18-3.png)<!-- -->
 
 Now we see that the Gelman and Rubin diagnostic (PRSF) is close to 1 for all parameters and the the Geweke diagnostic is not > 1.96.
 
@@ -482,7 +474,7 @@ plot(fit.bayes, pars = 1:4, plot.type = "stan_hist")
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 _The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you arenot satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
 
@@ -498,7 +490,7 @@ plot(fit.bayesfewsample, pars = 1:4, plot.type = "stan_hist")
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 [/expand]
 
@@ -520,7 +512,7 @@ plot(fit.bayes, pars = 1:4, plot.type = "stan_ac", col = 'blue')
 ## Warning: Duplicated aesthetics after name standardisation: colour
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 _**Question:** What can you conclude about these autocorrelation plots?_
 
@@ -548,7 +540,7 @@ plot(fit.bayes, pars = 1:4, plot.type = "stan_dens",  col = 'blue')
 ## Warning: Duplicated aesthetics after name standardisation: colour
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 
 _**Question:** What is your conclusion; do the posterior distributions make sense?_
@@ -904,7 +896,7 @@ delay <- -35 + 2.13*years - 0.02*years^2
 plot(years, delay, type= "l")
 ```
 
-![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-35-1.png)<!-- -->
+![](Blavaan-WAMBS--STAN-_files/figure-html/unnamed-chunk-34-1.png)<!-- -->
 
 [/expand] 
 

@@ -1,7 +1,7 @@
 ---
 title: "R regression Bayesian (using brms)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 21 August 2019'
+date: 'Last modified: 22 August 2019'
 output:
   html_document:
     keep_md: true
@@ -289,7 +289,7 @@ prior_summary(model)
 
 We also see that a student-t distribution was chosen for the intercept.
 
-/expand]
+[/expand]
 
   <p>&nbsp;</p> 
 
