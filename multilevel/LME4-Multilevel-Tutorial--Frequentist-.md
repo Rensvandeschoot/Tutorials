@@ -1,7 +1,7 @@
 ---
 title: 'LME4 Tutorial: Popularity Data'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 22 August 2019'
+date: 'Last modified: 24 August 2019'
 output:
   html_document:
     keep_md: true
@@ -11,13 +11,13 @@ output:
 
 
 ## Introduction
-This tutorial gives a basic introduction to a multilevel regression and shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this tutorial, the software packages [LME4](https://cran.r-project.org/web/packages/lme4/index.html) and [lmerTest](https://cran.r-project.org/web/packages/lmerTest/index.html) for R (Windows) were used. Results should be very similar to results obtained with other software packages, however due to convergence and rounding issues, you might notice minor differences. 
+This tutorial gives a basic introduction to a multilevel regression and shows how you can replicate the popularity data multilevel models from the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/), Chapter 2. In this tutorial, the software packages [LME4](https://cran.r-project.org/web/packages/lme4/index.html) and [lmerTest](https://cran.r-project.org/web/packages/lmerTest/index.html) for R (Windows) were used. Results should be very similar to results obtained with other software packages. However, due to convergence and rounding issues, you might notice minor differences. 
 &nbsp;
 
 ## Preparation
 This tutorial expects:
 
-*  Basic knowledge of multilevel analyses (first two chapters of the book are sufficient).
+*  Basic knowledge of multilevel analyses (the first two chapters of the book are sufficient).
 * Basic knowledge of coding in R.
 
 
@@ -26,7 +26,7 @@ This tutorial expects:
 
 ## Step 1: Setting up Packages
 
-If you have not yet installed all below mentioned packages, you can install them by the command `install.packages("NAMEOFPACKAGE")`.
+If you have not yet installed all below-mentioned packages, you can install them by the command `install.packages("NAMEOFPACKAGE")`.
 
 
 ```r
@@ -41,7 +41,7 @@ library(lmerTest)# to get p-value estimations that are not part of the standard 
 The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates).
 To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the read_sav() command.
 
-Alternatively, you can directly download them from GitHub into your R work space using the following command:
+Alternatively, you can directly download them from GitHub into your R workspace using the following command:
 
 ```{.r .fold-show}
 popular2data <- read_sav(file ="https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav?raw=true")
@@ -156,7 +156,7 @@ ggplot(data      = popular2data,
 
 ![](LME4-Multilevel-Tutorial--Frequentist-_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
-We clearly see that the relationship between extraversion and popularity is not the same in all classes, but on average there is a clear positive relationship. In this tutorial we will show the estimation of these different slopes (and how the explain these differences). Again, for more information please refer the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/).  
+We clearly see that the relationship between extraversion and popularity is not the same in all classes, but on average there is a clear positive relationship. In this tutorial, we will show the estimation of these different slopes (and how the explain these differences). Again, for more information please refer to the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/).  
 
 We can also colour code the most extreme regression lines.
 
@@ -243,8 +243,8 @@ If we look at the different inputs for the LMER function we:
 (comparable to the '=' of the regression equation).
 3.  a "1" in the formula which indicates the intercept.
 4.  since this is an intercept only model, we do not have any other independent variables here. 
-5.  between brackets we have the random effects/slopes. Again the value 1 is to indicate the intercept and the variables right of the vertical "|" bar are use to indicate grouping variables. In this case the class ID. So the dependent variable 'popular' is predicted by a intercept and a random error term for the intercept. 
-6.  Finally we specify which dataset we want to use after the `data =`  command
+5.  between brackets we have the random effects/slopes. Again the value 1 is to indicate the intercept and the variables right of the vertical "|" bar are used to indicate grouping variables. In this case the class ID. So the dependent variable 'popular' is predicted by an intercept and a random error term for the intercept. 
+6.  Finally, we specify which dataset we want to use after the `data =`  command
 
 For more information on the LMER function see the [Lme4 manual](https://cran.r-project.org/web/packages/lme4/lme4.pdf) 
 
@@ -282,7 +282,7 @@ If we look at the summary output we see under the Random Effects that the residu
 
 Under Fixed Effects the estimate of the intercept is reported, which is 5.078.
 
-We can also use the sjstats package to calculate the ICC from the lmer output. You of course will have to load this package first, using `library(sjstats)`
+We can also use the sjstats package to calculate the ICC from the lmer output. You, of course, will have to load this package first, using `library(sjstats)`
 
 
 ```r
@@ -368,7 +368,7 @@ summary(model1)
 ## extrav -0.705 -0.085
 ```
 
-As default the lmer function does only give test statistics and estimates, but no p-values. However, because we use the `lmerTest package` we do get P-values. The intercept is now 2.14, the regression coefficient for sex is 1.25, and the regression coefficient  for extraversion 0.44. In the last column of the Fixed effects table of the output we see the P-values, which indicate all regression coefficients are significantly different from 0. The results of this output are not given in the book.
+As default, the lmer function does only give test statistics and estimates, but no p-values. However, because we use the `lmerTest package` we do get P-values. The intercept is now 2.14, the regression coefficient for sex is 1.25, and the regression coefficient for extraversion 0.44. In the last column of the Fixed effects table of the output we see the P-values, which indicate all regression coefficients are significantly different from 0. The results of this output are not given in the book.
 
 ## First and Second Level Predictors
 
@@ -414,7 +414,7 @@ summary(model2)
 ## texp   -0.802 -0.036  0.139
 ```
 
-The results show  that both the level 1 and level 2 variables are significant. However, we have not added random slopes yet for any variables (as is done in table 2.1 in the book).
+The results show that both the level 1 and level 2 variables are significant. However, we have not added random slopes yet for any variables (as is done in table 2.1 in the book).
 
 We can now also calculate the explained variance at level 1 and at level 2 compared to the base model.
 
@@ -426,7 +426,7 @@ We can now also calculate the explained variance at level 1 and at level 2 compa
 
 
 ## First and Second Level Predictors with Random Slopes (1)
-Now we also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in LMER just add the variables for which we want to add random slopes to the random part of  the input. This means that `(1|class) `becomes `(1+sex+extrav |class)`.
+Now we also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in LMER just add the variables for which we want to add random slopes to the random part of the input. This means that `(1|class) `becomes `(1+sex+extrav |class)`.
 
 
 ```r
@@ -625,10 +625,10 @@ summary(model5)
 
 The interaction term is denoted by `extrav:texp` under `Fixed effects` and is estimated at -0.025.
 
-From these results we can now also calculate the explained slope variance of extraversion by using teacher experience as second level variable: (0.03455-0.005409)/0.03455 = .843 (These results are slight different then in the book and than in HLM, that is because different estimation and rounding methods are used). So 84.3%  of the variance of the regression coefficients of the extraversion slopes can be explained by the experience of the teacher.
+From these results we can now also calculate the explained slope variance of extraversion by using teacher experience as second level variable: (0.03455-0.005409)/0.03455 = .843 (These results are slightly different than in the book and than in HLM, that is because different estimation and rounding methods are used). So 84.3%  of the variance of the regression coefficients of the extraversion slopes can be explained by the experience of the teacher.
 
 
-As explained in the book and shown in the results, both the intercept and the slope of the coefficient of extraversion on popularity is influenced by teacher experience. A male student (SEX = 0) with a extraversion score of 0 in a class with a teacher with 0 years of experience has an expected popularity of -1.2096 (these values are of course impossible,  centering is a good strategy to prevent these impossible results). A similar (male) student will improve its popularity with 0.8036 points for every point more extraversion. When teacher experiences increases, the intercept also increases with 0.226 for every year of experience. So the same male student with no extraversion in a class with a teacher with 15 years of experience has an expected popularity score of -1.2096 + (15 x .226) = 2.1804. The teacher experience also lessens the effect of extraversion on popularity. For a teacher with 15 years of experience the regression coefficient of extraversion on popularity is only 0.8036 - (15 x .0247) = 0.4331 (compared to 0.8036 in a class with a teacher with 0 years of experience).
+As explained in the book and shown in the results, both the intercept and the slope of the coefficient of extraversion on popularity is influenced by teacher experience. A male student (SEX = 0) with an extraversion score of 0 in a class with a teacher with 0 years of experience has an expected popularity of -1.2096 (these values are of course impossible, centring is a good strategy to prevent these impossible results). A similar (male) student will improve its popularity with 0.8036 points for every point more extraversion. When teacher experience increases, the intercept also increases with 0.226 for every year of experience. So the same male student with no extraversion in a class with a teacher with 15 years of experience has an expected popularity score of -1.2096 + (15 x .226) = 2.1804. The teacher experience also lessens the effect of extraversion on popularity. For a teacher with 15 years of experience the regression coefficient of extraversion on popularity is only 0.8036 - (15 x .0247) = 0.4331 (compared to 0.8036 in a class with a teacher with 0 years of experience).
 
 In a plot we can also clearly see that years of teacher experience has influence on both the intercept and the regression coefficient of extraversion on popularity. 
 
@@ -655,10 +655,10 @@ ggplot(data = popular2data,
 &nbsp;
 
 ## Residual Checks
-To end this tutorial we will check whether the residuals of the model are normally distributed (at both levels). In addition to residuals being normally distributed, a multilevel model assume that variance of the residuals is equal across groups (classes) for the different random effects. Statistical tests of normality and equality of variance across groups do exists, but this tutorial is limited to visual inspections.
+To end this tutorial we will check whether the residuals of the model are normally distributed (at both levels). In addition to residuals being normally distributed, a multilevel model assumes that variance of the residuals is equal across groups (classes) for the different random effects. Statistical tests of normality and equality of variance across groups do exist, but this tutorial is limited to visual inspections.
 
 #### 1  
-First, we can check for homoscedasticity by comparing residuals to the fitted items. In our example we see a nice fat circle and no cone shaped figure.
+First, we can check for homoscedasticity by comparing residuals to the fitted items. In our example we see a nice fat circle and no cone-shaped figure.
 
 
 ```r

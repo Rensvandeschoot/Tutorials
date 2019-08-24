@@ -1,7 +1,7 @@
 ---
 title: 'Building a Multilevel Model in BRMS Tutorial: Popularity Data'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 22 August 2019'
+date: 'Last modified: 24 August 2019'
 output:
   html_document:
     keep_md: true
@@ -292,7 +292,7 @@ interceptonlymodeltest<-brm(popular ~ 1 + (1 | class),  data = popular2data, war
 ```
 
 ```
-## Warning: The largest R-hat is 1.19, indicating chains have not mixed.
+## Warning: The largest R-hat is 1.07, indicating chains have not mixed.
 ## Running the chains for more iterations may help. See
 ## http://mc-stan.org/misc/warnings.html#r-hat
 ```
@@ -314,11 +314,6 @@ summary(interceptonlymodeltest)
 ```
 
 ```
-## Warning: The model has not converged (some Rhats are > 1.1). Do not analyse the results! 
-## We recommend running more iterations and/or setting stronger priors.
-```
-
-```
 ##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: popular ~ 1 + (1 | class) 
@@ -329,15 +324,15 @@ summary(interceptonlymodeltest)
 ## Group-Level Effects: 
 ## ~class (Number of levels: 100) 
 ##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sd(Intercept)     0.85      0.07     0.72     0.97         28 1.10
+## sd(Intercept)     0.83      0.07     0.71     0.99         46 1.00
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept     5.07      0.10     4.90     5.29         13 1.20
+## Intercept     5.07      0.09     4.88     5.22         21 1.03
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     1.11      0.02     1.07     1.14        208 1.00
+## sigma     1.11      0.02     1.07     1.15        169 1.01
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -701,15 +696,19 @@ summary(model4)
 ```
 
 
+
+
 We see that:
 
-*  The estimate for the intercept is $0.72 [0.28; 1.18]$
-*  The estimate for the fixed effect of sex is $1.25 [1.18; 1.32]$
-*  The estimate for the effect of teacher experience is $0.09 [0.07; 0.12]$
-*  The estimate for the mean effect of extraversion is $0.45 [0.40; 0.50]$
-*  The estimate for the random effect of the slope of extraversion is $.18^2=.032 [0.14^2;0.23^2]$ (some of these estimates might slightly different for you or than in the book, due to squaring after rounding)
-*  The estimate for the First level residual variance is $0.74^2=.55 [0.72^2;0.77^2]$
-*  The estimate for the residual variance on the second level is $1.13^2=1.28 [0.87^2;1.42^2]$
+*  The estimate for the intercept is $0.72 \; [0.27; 1.2]$
+*  The estimate for the fixed effect of sex is $1.25 \; [1.18; 1.32]$
+*  The estimate for the effect of teacher experience is $0.09 \; [0.07; 0.12]$
+*  The estimate for the mean effect of extraversion is $0.45  \; [0.4; 0.5]$
+*  The estimate for the random effect of the slope of extraversion is $0.0324=0.03 \; [0.14^2;0.23^2]$ (some of these estimates might slightly different for you or than in the book, due to squaring after rounding)
+
+
+*  The estimate for the First level residual variance is $0.74^2 =0.55 \; [0.72^2;0.77^2]$
+*  The estimate for the residual variance on the second level is $1.12^2=1.26 \; [0.85^2;1.41^2]$
 
 
 &nbsp;
@@ -814,7 +813,7 @@ ggplot(data = popular2data,
        col      = "Years of\nTeacher\nExperience")
 ```
 
-![](Tutorial-BRMS_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
 
 If you want to plot this in a Bayesian way, you could run a simple model and show the different posteriors of the regression slope of extraversion in the 100 different classes.
 
@@ -886,7 +885,7 @@ ggplot()+
 ## (stat_density_ridges).
 ```
 
-![](Tutorial-BRMS_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
 
 A plot like this would not be possible in a frequentist analysis. From the width of the different posterior distributions we can see that for the classes with a teacher with less experience we are less sure about the deviation. This means that we are less sure about estimate of the deviation from the mean for teachers with relatively little experience and are more sure about the random coefficient for classes with a more experienced teacher. We can investigate whether such relation (linear and/or quadratic) actually exists by plottig the distance between the 0.025 and 0.975 CCI for different levels of teaching experience. If we do so, we see that there indeed is a quadratic (and linear) effect and we also see (again) that classes with a teacher with more experience have a postitive estimate of the second level error term.  
 
@@ -970,7 +969,7 @@ ggplot()+
            family   = theme_get()$text[["family"]], 
            size     = theme_get()$text[["size"]]/2, 
            fontface = "italic")+
-  viridis :: scale_color_viridis(discrete = F)+
+  viridis :: scale_color_viridis(discrete = F, direction = -1)+
   labs(y        = "95% CCI distance",
        title    = expression(paste("Mean CCI Distance of Posterior of (", u["2j"], ") for Different Years of Texp")),
        subtitle = "In brackets the actual CCIs and in colour the parameter estimate",
@@ -979,7 +978,7 @@ ggplot()+
   theme_tufte()
 ```
 
-![](Tutorial-BRMS_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
 
 
 ---
