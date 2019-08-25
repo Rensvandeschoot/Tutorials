@@ -458,10 +458,6 @@ ggplot(filter(modeltranformed, Parameter %in% c("b_intercept", "b_extrav","b_sex
   labs(title = "Posterior Density of Parameters With 95% CCI lines (1)")
 ```
 
-```
-## Warning: Removed 1 rows containing non-finite values (stat_density).
-```
-
 ![](WAMBS-multilevel_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 ```r

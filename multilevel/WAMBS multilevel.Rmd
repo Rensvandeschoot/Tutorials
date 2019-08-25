@@ -226,7 +226,6 @@ modeldoubleniterposterior <- as.mcmc(modeldoubleniter)
 modelposterior <- as.mcmc(model) # with the as.mcmc() command we can use all the CODA package convergence statistics and plotting options
 gelman.diag(modeldoubleniterposterior[, 1:5])
 gelman.plot(modeldoubleniterposterior[, 1:5])
-
 ```
 
 You should again have a look at the above-mentioned convergence statistics, but we can also compute the relative bias to inspect if doubling the number of iterations influences the posterior parameter estimates ($bias= 100*\frac{(model \; with \; double \; iteration \; - \; initial \; converged \; model )}{initial \; converged \; model}$). In order to preserve clarity we  just calculate the bias of the two regression coefficients.
@@ -274,7 +273,7 @@ These results show that autocorrelation is quite stong after a few lags. This me
 
 Looking at the posterior distributions we do not see any abnormalities. All posterior distributions are within reasonable bounds.
 
-```{r}
+```{r, warning= F}
 
 ggplot(filter(modeltranformed, Parameter %in% c("b_intercept", "b_extrav","b_sex"), 
               Iteration > 1000),
