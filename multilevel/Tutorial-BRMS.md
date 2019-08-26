@@ -1,7 +1,7 @@
 ---
 title: 'Building a Multilevel Model in BRMS Tutorial: Popularity Data'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 24 August 2019'
+date: 'Last modified: 26 August 2019'
 output:
   html_document:
     keep_md: true
@@ -27,7 +27,7 @@ This tutorial expects:
 &nbsp;
 
 ## Bayesian Method
-This tutorial will first build towards a full multilevel model with random slopes and cross level interaction using uninformative priors and then will show the influence of using different (informative) priors on the final model. Of course, it is always possible to already specify the informative priors for the earlier models. We make use of the BRMS package, because this package gives us the actual posterior samples (in contrast to for example the BLME package), lets us specify a wide range of priors, and using the familiar input structure of the LME4 package. See here for a tutorial on how to use that package. 
+This tutorial will first build towards a full multilevel model with random slopes and cross level interaction using uninformative priors and then will show the influence of using different (informative) priors on the final model. Of course, it is always possible to already specify the informative priors for the earlier models. We make use of the BRMS package, because this package gives us the actual posterior samples (in contrast to for example the BLME package), lets us specify a wide range of priors, and using the familiar input structure of the lme4 package. See [here](https://www.rensvandeschoot.com/tutorials/lme4/) for a tutorial on how to use that package. 
 
 The key difference between Bayesian statistical inference and frequentist statistical methods concerns the nature of the unknown parameters that you are trying to estimate. In the frequentist framework, a parameter of interest is assumed to be unknown, but fixed. That is, it is assumed that in the population there is only one true population parameter, for example, one true mean or one true regression coefficient. In the Bayesian view of subjective probability, all unknown parameters are treated as uncertain and therefore are be described by a probability distribution. Every parameter is unknown, and everything unknown receives a distribution. 
 
@@ -67,13 +67,13 @@ library(ggridges)
 
 ## Step 2: Downloading the data
 
-The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates). To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the read_sav() command.
+The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates). To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the `read_sav()` command.
 
 Alternatively, you can directly download them from GitHub into your R workspace using the following command:
 
 
 ```r
-popular2data <- read_sav(file ="https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav?raw=true")
+popular2data <- read_sav(file = "https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav?raw=true")
 ```
 
 There are some variables in the dataset that we do not use, so we can select the variables we will use and have a look at the first few observations.
@@ -267,20 +267,28 @@ Since the brms package (via STAN) makes use of a Hamiltonian Monte Carlo sampler
 We need to specify all these values for replicability purposes. In addition, if the two chains would not converge we can specify more iterations, different starting values and a longer warmup period. Thankfully brms will tell us if the sampler is likely to be non-converged. 
 
 The first model that we replicate is the intercept only model.
-If we look at the different inputs for the brm function we:
+If we look at the different inputs for the `brm()` function we:
 
 1.  have "popular", which indicates the dependent variable we want to predict.
 2.  a "~", that we use to indicate that we now give the other variables of interest.
 3.  a "1" in the formula the function indicates the intercept.
 4.  since this is an intercept only model, we do not have any other independent variables here. 
 5.  between brackets we have the random effects/slopes. Again the value 1 is to indicate the intercept and the variables right of the vertical "|" bar is used to indicate grouping variables. In this case the class ID. So the dependent variable 'popular' is predicted by an intercept and a random error term for the intercept. 
-6.  Finally, we specify which dataset we want to use after the "data=" command
+6.  Finally, we specify which dataset we want to use after the `data=` command.
+
+
 For more information on the BRMS function which is based on the LMER function of the LME4 package see: https://cran.r-project.org/web/packages/lme4/lme4.pdf
 
 
 
 ```r
-interceptonlymodeltest<-brm(popular ~ 1 + (1 | class),  data = popular2data, warmup = 100, iter = 200, chains = 2, inits= "random", cores = 2)  #the cores function tells STAN to make use of 2 CPU cores simultaneously instead of just 1.
+interceptonlymodeltest <- brm(popular ~ 1 + (1 | class), 
+                              data   = popular2data, 
+                              warmup = 100, 
+                              iter   = 200, 
+                              chains = 2, 
+                              inits  = "random",
+                              cores  = 2)  #the cores function tells STAN to make use of 2 CPU cores simultaneously instead of just 1.
 ```
 
 ```
@@ -292,7 +300,7 @@ interceptonlymodeltest<-brm(popular ~ 1 + (1 | class),  data = popular2data, war
 ```
 
 ```
-## Warning: The largest R-hat is 1.11, indicating chains have not mixed.
+## Warning: The largest R-hat is 1.22, indicating chains have not mixed.
 ## Running the chains for more iterations may help. See
 ## http://mc-stan.org/misc/warnings.html#r-hat
 ```
@@ -329,15 +337,15 @@ summary(interceptonlymodeltest)
 ## Group-Level Effects: 
 ## ~class (Number of levels: 100) 
 ##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sd(Intercept)     0.82      0.06     0.70     0.95         35 1.11
+## sd(Intercept)     0.84      0.07     0.72     0.98         50 1.02
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept     5.05      0.08     4.91     5.22         16 1.10
+## Intercept     5.08      0.09     4.92     5.23          7 1.23
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     1.11      0.02     1.07     1.14         81 1.03
+## sigma     1.11      0.02     1.07     1.13        173 1.00
 ## 
 ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -388,7 +396,7 @@ summary(interceptonlymodel)
 ```
 
 
-Now we do not get any warnings and can check the results. We see that the intercept (mean) is 5.08 and that the credible interval ranges from 4.90 to 5.25. BRMS does not yet square the standard deviation of the intercept and the standard deviation of the first level, so if we want to calculate the Intraclass correlation (ICC) we need to do this ourselves. The posterior mean of the residual variance (our best guess for now) on the class level is  $0.85^2= .72$ and the residual variance on the first level (pupil level) is $1.11^2= 1.23$, which means that the ICC= $\frac{0.85^2}{(0.85^2+1.11^2)}=.37$
+Now we do not get any warnings and can check the results. We see that the intercept (mean) is 5.08 and that the credible interval ranges from 4.91 to 5.25. In the brms output, not the variance of the first and second level is given, but instead the standard deviation. So, if we want to calculate the Intraclass correlation (ICC) we need to do this ourselves. The posterior mean of the residual variance (our best guess for now) on the class level is  $0.85^2= .72$ and the residual variance on the first level (pupil level) is $1.11^2= 1.23$, which means that the ICC= $\frac{0.85^2}{(0.85^2+1.11^2)}=.37$
 
 Alternatively, we can also use of the following code to calculate the ICC. This function will also indicate if 0 is included in the 95% CCI of the ICC. In our example that is not the case which means a multilevel model is warranted. 
 
@@ -415,6 +423,7 @@ hypothesis(interceptonlymodel, hyp, class = NULL)
 
 
 ## First Level Predictors
+
 Now we can add first (student) level predictors. The first level predictors are sex and extraversion. For now, we just add them as fixed effects and not yet as random slopes. Furthermore, we do not yet specify any priors for the regression coefficients, which means that BRMS will pick priors that are non or very weakly informative, so that their influence on the results will be negligible.
 
 
@@ -486,7 +495,7 @@ ggplot(filter(model1tranformed, Parameter %in% c("b_Intercept", "b_extrav", "b_s
 
 ![](Tutorial-BRMS_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
-The intercept is now 2.14 (which represent the mean of the posterior distribution), the regression coefficient for sex is 1.25, and the regression coefficient for extraversion 0.44. In a Bayesian analysis we do not have p-values as we do have a frequentist analysis and corresponding hypothesis tests. To test whether all regression coefficients are different from zero, we can look at the Credible Intervals that are listed in the summary output or we can visually represent them in density plots. If we do so, we clearly see that zero is not included in any of the density plots, meaning that we can be reasonably certain the regression coefficients are different from zero.
+The intercept is now 2.14 (which represent the mean of the posterior distribution), the mean of the posterior for the regression coefficient for sex is 1.25, and the regression coefficient for extraversion 0.44. In a Bayesian analysis we do not have p-values as we do have a frequentist analysis and corresponding hypothesis tests. To test whether all regression coefficients are different from zero, we can look at the Credible Intervals that are listed in the summary output or we can visually represent them in density plots. If we do so, we clearly see that zero is not included in any of the density plots, meaning that we can be reasonably certain the regression coefficients are different from zero.
 
 
 
@@ -596,7 +605,7 @@ We can now also calculate the explained variance at level 1 and at level 2.
 &nbsp;
 
 ## First and Second Level Predictors with Random Slopes (1)
-We also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in BRMS just add the variables for which we want to add random slopes to the random part of the input. This means that "(1|class)" becomes "(1+sex+extrav |class)"
+We also want to include random slopes. In the third column of Table 2.1, both predictor variables from level 1 (sex and extraversion) have random slopes. To accomplish this in BRMS just add the variables for which we want to add random slopes to the random part of the input. This means that `(1|class)` becomes `(1 + sex + extrav | class)`
 
 
 ```r
@@ -645,7 +654,9 @@ summary(model3)
 ## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
-We can see that all the fixed regression slopes are still different from 0. However, no significance test for the Random Effects are given, but we do see that the error term (Variance) for the slope of the variable sex is estimated to be very small $0.06^2=0.0036$. This probably means that there is no slope variation of the sex variable between classes and therefore the random slope estimation can be dropped from the next analyses. Since a negative variance is not possible the posterior distribution of the random term is truncated at 0, in the summary output we do see though that 0 falls in the 95% CCI, and therefore we have no strong evidence it is different than 0.
+
+
+We can see that all the fixed regression slopes are still different from 0. However, no significance test for the Random Effects are given, but we do see that the error term (Variance) for the slope of the variable sex is estimated to be very small $0.08^2 = r round(mod["sd(sex)",1],2)^2`$. This probably means that there is no slope variation of the sex variable between classes and therefore the random slope estimation can be dropped from the next analyses. Since a negative variance is not possible the posterior distribution of the random term is truncated at 0, in the summary output we do see though that 0 falls in the 95% CCI, and therefore we have no strong evidence it is different than 0.
 
 &nbsp;
 
@@ -710,8 +721,6 @@ We see that:
 *  The estimate for the effect of teacher experience is $0.09 \; [0.07; 0.12]$
 *  The estimate for the mean effect of extraversion is $0.45  \; [0.4; 0.5]$
 *  The estimate for the random effect of the slope of extraversion is $0.0324=0.03 \; [0.14^2;0.23^2]$ (some of these estimates might slightly different for you or than in the book, due to squaring after rounding)
-
-
 *  The estimate for the First level residual variance is $0.74^2 =0.55 \; [0.72^2;0.77^2]$
 *  The estimate for the residual variance on the second level is $1.12^2=1.26 \; [0.85^2;1.41^2]$
 
@@ -721,7 +730,7 @@ We see that:
 
 ## First and Second Level Predictors with Random Slopes and Crosslevel Interaction
 
-As a final step we can add a cross-level interaction between teacher experience and extraversion (since this had a significant random effect, that we might be able to explain). In this next step to reproduce Model M2 from Table 2.3 of the book, we add the cross-level interaction between Extraversion and Teacher experience. This means we have to add texp as a predictor for the coefficient of extrav The cross level interaction term between extraversion and teacher experience can be created by the ':' sign or by multiplying the terms.
+As a final step we can add a cross-level interaction between teacher experience and extraversion (since this had a significant random effect, that we might be able to explain). In this next step to reproduce Model M2 from Table 2.3 of the book, we add the cross-level interaction between Extraversion and Teacher experience. This means we have to add texp as a predictor for the coefficient of extrav The cross level interaction term between extraversion and teacher experience can be created by the `:` sign or by multiplying the terms.
 
 If we put all of this in formula form we get: $Popularity_{ij}=\beta_{0j}+\beta_1*gender_{ij}+ \beta_{2j}*extraversion_{ij}+e_{ij}$. 
 
@@ -748,11 +757,6 @@ summary(model5)$fixed
 ```
 
 ```
-## Warning: There were 234 divergent transitions after warmup. Increasing adapt_delta above 0.97 may help.
-## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
-```
-
-```
 ##                Estimate   Est.Error    l-95% CI    u-95% CI Eff.Sample
 ## Intercept   -1.21316507 0.259965469 -1.72527083 -0.70658588   1885.434
 ## sex          1.23926184 0.036729302  1.16671462  1.30829842   4159.152
@@ -772,11 +776,6 @@ summary(model5)$random
 ```
 
 ```
-## Warning: There were 234 divergent transitions after warmup. Increasing adapt_delta above 0.97 may help.
-## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
-```
-
-```
 ## $class
 ##                          Estimate Est.Error     l-95% CI  u-95% CI
 ## sd(Intercept)          0.62215539 0.1034839  0.449022873 0.8544939
@@ -789,9 +788,11 @@ summary(model5)$random
 ```
 
 
+
 The interaction term is denoted by 'extrav:texp' under 'Fixed effects' and is estimated at -0.0247.
 
-As explained in the book and shown in the results, both the intercept and the slope of the coefficient of extraversion on popularity is influenced by teacher experience. A male student (SEX = 0) with a extraversion score of 0 in a class with a teacher with 0 years of experience has an expected popularity of -1.206 (these values are of course impossible,  centering is a good strategy to prevent these impossible results). A similar (male) student will improve its popularity with 0.803 points for every point more extraversion. When teacher experience increases, the intercept also increases with 0.226 for every year of experience. So the same male student with no extraversion in a class with a teacher with 15 years of experience has an expected popularity score of  -1.206 + (15 x .226) = 2.184. The teacher experience also lessens the effect of extraversion on popularity. For a teacher with 15 years of experience, the regression coefficient of extraversion on popularity is only 0.803-(15x0.0247)=0.433 (compared to 0.803 in a class with a teacher with 0 years of experience).
+As explained in the book and shown in the results, both the intercept and the slope of the coefficient of extraversion on popularity is influenced by teacher experience. A male student (SEX = 0) with a extraversion score of 0 in a class with a teacher with 0 years of experience has an expected popularity of -1.21317 (these values are of course impossible,  centering is a good strategy to prevent these impossible results). A similar (male) student will improve its popularity with 0.80393 points for every point more extraversion. When teacher experience increases, the intercept also increases with 0.22635 for every year of experience. So the same male student with no extraversion in a class with a teacher with 15 years of experience has an expected popularity score of  $-1.21317 + (15 \cdot 0.22635) = 2.182$. The teacher experience also lessens the effect of extraversion on popularity. For a teacher with 15 years of experience, the regression coefficient of extraversion on popularity is only $0.804- (15 \cdot  0.0247)=0.4334$ (compared to 0.804 in a class with a teacher with 0 years of experience).
+
 
 &nbsp;
 
@@ -818,7 +819,7 @@ ggplot(data = popular2data,
        col      = "Years of\nTeacher\nExperience")
 ```
 
-![](Tutorial-BRMS_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
 
 If you want to plot this in a Bayesian way, you could run a simple model and show the different posteriors of the regression slope of extraversion in the 100 different classes.
 
@@ -890,7 +891,7 @@ ggplot()+
 ## (stat_density_ridges).
 ```
 
-![](Tutorial-BRMS_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
 
 A plot like this would not be possible in a frequentist analysis. From the width of the different posterior distributions we can see that for the classes with a teacher with less experience we are less sure about the deviation. This means that we are less sure about the estimate of the deviation from the mean for teachers with relatively little experience and are more sure about the random coefficient for classes with a more experienced teacher. We can investigate whether such relation (linear and/or quadratic) actually exists by plotting the distance between the 0.025 and 0.975 CCI for different levels of teaching experience. If we do so, we see that there indeed is a quadratic (and linear) effect and we also see (again) that classes with a teacher with more experience have a positive estimate of the second level error term.  
 
@@ -983,7 +984,7 @@ ggplot()+
   theme_tufte()
 ```
 
-![](Tutorial-BRMS_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
+![](Tutorial-BRMS_files/figure-html/unnamed-chunk-32-1.png)<!-- -->
 
 
 ---
