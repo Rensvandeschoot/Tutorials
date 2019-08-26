@@ -17,8 +17,9 @@ This tutorial gives a basic introduction to a multilevel regression and shows ho
 ## Preparation
 This tutorial expects:
 
-*  Basic knowledge of multilevel analyses (the first two chapters of the book are sufficient).
+* Basic knowledge of multilevel analyses (the first two chapters of the book are sufficient).
 * Basic knowledge of coding in R.
+* Installation of R packages `lme4`, and `lmerTest`. This tutorial was made using brms version `r packageVersion("lme4")` in R version `r paste0(R.Version()[c("major","minor")], collapse = ".")`
 
 
 &nbsp;
@@ -38,7 +39,7 @@ library(lmerTest)# to get p-value estimations that are not part of the standard 
 
 
 The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates).
-To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the read_sav() command.
+To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the `read_sav()` command.
 
 Alternatively, you can directly download them from GitHub into your R workspace using the following command:
 ```{r class.source = 'fold-show'}
@@ -215,7 +216,7 @@ If we look at the different inputs for the LMER function we:
 5.  between brackets we have the random effects/slopes. Again the value 1 is to indicate the intercept and the variables right of the vertical "|" bar are used to indicate grouping variables. In this case the class ID. So the dependent variable 'popular' is predicted by an intercept and a random error term for the intercept. 
 6.  Finally, we specify which dataset we want to use after the `data =`  command
 
-For more information on the LMER function see the [Lme4 manual](https://cran.r-project.org/web/packages/lme4/lme4.pdf) 
+For more information on the `lmer()` function see the [Lme4 manual](https://cran.r-project.org/web/packages/lme4/lme4.pdf) 
 
 ```{r}
 summary(interceptonlymodel) #to get paramater estimates.
