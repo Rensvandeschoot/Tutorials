@@ -305,20 +305,20 @@ You can change these lines of code in the Mplus input:
 
 ```{r, eval=FALSE}
 MODEL PRIORS:
+  Beta_Age ~ N(3, 0.4);
+  Beta_Age2 ~ N(0, 0.1);
+```
+
+```{r, eval=FALSE}
+MODEL PRIORS:
   Beta_Age ~ N(3, 1000);
   Beta_Age2 ~ N(0, 1000);
 ```
 
 ```{r, eval=FALSE}
 MODEL PRIORS:
-  Beta_Age ~ N(20, .4);
-  Beta_Age2 ~ N(0, .1);
-```
-
-```{r, eval=FALSE}
-MODEL PRIORS:
-  Beta_Age ~ N(20, 1000);
-  Beta_Age2 ~ N(0, 1000);
+  Beta_Age ~ N(20, 0.4);
+  Beta_Age2 ~ N(20, 0.1);
 ```
 
 
