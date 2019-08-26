@@ -1,14 +1,14 @@
 ---
 title: 'Linear regression in R (Frequentist)'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 21 August 2019'
+date: 'Last modified: 26 August 2019'
 output:
   html_document:
     keep_md: true
 ---
 
 ## Introduction
-This tutorial provides the reader with a basic tutorial how to perform a regression analysis in [R](https://cran.r-project.org/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/). 
+This tutorial provides the reader with a basic tutorial on how to perform a regression analysis in [R](https://cran.r-project.org/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/). 
 
   <p>&nbsp;</p>
 
