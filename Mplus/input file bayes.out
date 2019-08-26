@@ -1,6 +1,6 @@
-Mplus VERSION 8.3
+Mplus VERSION 8.1 DEMO
 MUTHEN & MUTHEN
-08/07/2019   9:27 PM
+08/26/2019   4:00 PM
 
 INPUT INSTRUCTIONS
 
@@ -251,18 +251,16 @@ TECHNICAL 8 OUTPUT
      100              1.000               1
 
 
-DIAGRAM INFORMATION
+     Beginning Time:  16:00:28
+        Ending Time:  16:00:28
+       Elapsed Time:  00:00:00
 
-  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
-  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
 
-  Diagram output
-    \\client\c$\users\laure\stack\github\tutorials\mplus\input file bayes.dgm
-
-     Beginning Time:  21:27:56
-        Ending Time:  21:28:10
-       Elapsed Time:  00:00:14
-
+Mplus VERSION 8.1 DEMO has the following limitations:
+  Maximum number of dependent variables: 6
+  Maximum number of independent variables: 2
+  Maximum number of between variables: 2
+  Maximum number of continuous latent variables in time series analysis: 2
 
 
 MUTHEN & MUTHEN
@@ -274,4 +272,4 @@ Fax: (310) 391-8971
 Web: www.StatModel.com
 Support: Support@StatModel.com
 
-Copyright (c) 1998-2019 Muthen & Muthen
+Copyright (c) 1998-2018 Muthen & Muthen
