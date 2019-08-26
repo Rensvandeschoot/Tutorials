@@ -1,14 +1,14 @@
 ---
 title: 'Linear regression in R (Frequentist)'
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 07 August 2019'
+date: 'Last modified: 26 August 2019'
 output:
   html_document:
     keep_md: true
 ---
 
 ## Introduction
-This tutorial provides the reader with a basic tutorial how to perform a regression analysis in [R](https://cran.r-project.org/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/). 
+This tutorial provides the reader with a basic tutorial on how to perform a regression analysis in [R](https://cran.r-project.org/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/). 
 
   <p>&nbsp;</p>
 
@@ -35,9 +35,13 @@ So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and
 
 <pre><code>[expand title=\"Answer\" trigclass=\\"noarrow my_button\\" targclass="my_content" tag= &quot; button &quot;]</code></pre>
 
-$H_0:$ _$Age^2$ is not related to a delay in the PhD projects._
+$H_0:$ _$age$ is not related to a delay in the PhD projects._
 
-$H_1:$ _$Age^2$ is related to a delay in the PhD projects._ 
+$H_1:$ _$age$ is related to a delay in the PhD projects._ 
+
+$H_0:$ _$age^2$ is not related to a delay in the PhD projects._
+
+$H_1:$ _$age^2$is related to a delay in the PhD projects._ 
 
 [/expand]
 
@@ -104,7 +108,7 @@ describe(dataPHD)
 
 _The descriptive statistics make sense:_
 
-_diff: Mean (9.97), SE (0.791)_
+_diff: Mean (9.97), SE (0.79)_
 
 _$Age$: Mean (31.68), SE (0.38)_
 
@@ -227,7 +231,7 @@ _Assuming that the null hypothesis is true in the population, the probability of
 
   <p>&nbsp;</p>
 
-Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 ([Benjamin et al. 2017](https://osf.io/preprints/psyarxiv/mky9j), but see also a critique by[Trafimow, ., Van de Schoot, et al., 2018](https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/)). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.
+Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 ([Benjamin et al. 2017](https://osf.io/preprints/psyarxiv/mky9j), but see also a critique by[Trafimow, ..., Van de Schoot, et al., 2018](https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/)). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.
 
 
   <p>&nbsp;</p>
@@ -332,7 +336,7 @@ regressionscaled2
 ##  1.262435 -1.174266
 ```
 
-_The standardized coefficients, age (1.262) and age$^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher._
+_The standardized coefficients, age (1.262) and age$^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher. This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)_
 
 [/expand]
 

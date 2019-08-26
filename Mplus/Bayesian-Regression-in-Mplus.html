@@ -270,7 +270,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -365,7 +364,7 @@ summary {
 
 <h1 class="title toc-ignore">Regression in Mplus (Bayesian)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 07 August 2019</h4>
+<h4 class="date">Last modified: 26 August 2019</h4>
 
 </div>
 
@@ -430,7 +429,7 @@ OUTPUT: sampstat;</code></pre>
     AGE               31.676      0.375     84.433      0.000
     AGE2            1050.217     35.916     29.241      0.000</code></pre>
 <p><em>The descriptive statistics make sense:</em></p>
-<p><em><span class="math inline">\(diff\)</span>: Mean (9.97), SE (0.790)</em></p>
+<p><em><span class="math inline">\(diff\)</span>: Mean (9.97), SE (0.79)</em></p>
 <p><em><span class="math inline">\(Age\)</span>: Mean (31.68), SE (0.38)</em></p>
 <p><em><span class="math inline">\(Age^2\)</span>: Mean (1050.22), SE (35.92)</em></p>
 <p>[/expand]</p>
@@ -492,7 +491,7 @@ OUTPUT: tech8; ! Specify the output we would like</code></pre>
 <div id="question-interpret-the-estimated-effect-its-interval-and-the-posterior-distribution." class="section level5">
 <h5><em><strong>Question:</strong> Interpret the estimated effect, its interval and the posterior distribution.</em></h5>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.647, 95% Credibility Interval [1.35, 3.87]. Also, <span class="math inline">\(age^2\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean of -0.026, and a 95% credibility Interval of [-0.04, -0.01]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
+<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.647, 95% Credibility Interval [1.35, 3.87]. Also, <span class="math inline">\(age^2\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean of -0.026, and a 95% Credibility Interval of [-0.04, -0.01]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
 <p>[/expand]</p>
 <p>
  
@@ -676,14 +675,14 @@ MODEL PRIORS:
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <p>You can change these lines of code in the Mplus input:</p>
 <pre class="r"><code>MODEL PRIORS:
+  Beta_Age ~ N(3, 0.4);
+  Beta_Age2 ~ N(0, 0.1);</code></pre>
+<pre class="r"><code>MODEL PRIORS:
   Beta_Age ~ N(3, 1000);
   Beta_Age2 ~ N(0, 1000);</code></pre>
 <pre class="r"><code>MODEL PRIORS:
-  Beta_Age ~ N(20, .4);
-  Beta_Age2 ~ N(0, .1);</code></pre>
-<pre class="r"><code>MODEL PRIORS:
-  Beta_Age ~ N(20, 1000);
-  Beta_Age2 ~ N(0, 1000);</code></pre>
+  Beta_Age ~ N(20, 0.4);
+  Beta_Age2 ~ N(20, 0.1);</code></pre>
 <table>
 <thead>
 <tr class="header">

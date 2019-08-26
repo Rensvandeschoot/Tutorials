@@ -10,7 +10,7 @@ output:
 
 ## Introduction
 
-**This is part 2 of a 3 part  [series](https://www.rensvandeschoot.com/tutorials/brms/) on how to do multilevel models in the Bayesian framework. In [part 1](https://www.rensvandeschoot.com/tutorials/brms-started/) we explained how to step by step build the multilevel model we will use here and in  [part 3](https://www.rensvandeschoot.com/brms-wambs/) we will look at the influence of different priors  ** 
+**This is part 2 of a 3 part  [series](https://www.rensvandeschoot.com/tutorials/brms/) on how to do multilevel models in the Bayesian framework. In [part 1](https://www.rensvandeschoot.com/tutorials/brms-started/) we explained how to step by step build the multilevel model we will use here and in  [part 3](https://www.rensvandeschoot.com/brms-wambs/) we will look at the influence of different priors.** 
 
 
 ## Preparation
@@ -27,21 +27,20 @@ This tutorial expects:
 ## priors
 As stated in the BRMS manual: *"Prior specifications are flexible and explicitly encourage users to apply prior distributions that actually reflect their beliefs."* 
 
-We will set 4 types of extra priors here (in a addition to the uninformative prior we have used thus far)
+We will set 4 types of extra priors here (in addition to the uninformative prior we have used thus far)
 1.  With an estimate far off the value we found in the data with uninformative priors with a wide variance
 2.  With an estimate close to the value we found in the data with uninformative priors with a small variance
 3.  With an estimate far off the value we found in the data with uninformative priors with a small variance (1).
 4.  With an estimate far off the value we found in the data with uninformative priors with a small variance (2).
 
-In this tutorial we will only focus on priors for the regression coefficients and not on the error and variance terms, since we are most likely to actually have information on the size and direction of a certain effect and less (but not completely) unlikely to have prior knowledge on the unexplained variances. You might have to play around a little bit with the controls of the brm function and specifically the adapt_delta and  max_treedepth. Thankfully BRMS will tell you when to do so. We can also did not set highly informative priors for all regression coefficients at once, because this leads to the blowing up of estimates convergence issues (potentially solvable by just running many more iterations)
+In this tutorial we will only focus on priors for the regression coefficients and not on the error and variance terms, since we are most likely to actually have information on the size and direction of a certain effect and less (but not completely) unlikely to have prior knowledge on the unexplained variances. You might have to play around a little bit with the controls of the `brm()` function and specifically the `adapt_delta` and `max_treedepth`. Thankfully BRMS will tell you when to do so. 
 
-
-## STEP 1: setting up packages
+## Step 1: Setting up packages
 n order to make the [brms package](https://cran.r-project.org/web/packages/brms/index.html) function it need to call on STAN and a C++ compiler. For more information and a tutorial on how to install these please have a look at: https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started and https://cran.r-project.org/bin/windows/Rtools/.
 
 > "Because brms is based on Stan, a C++ compiler is required. The program Rtools (available on https://cran.r-project.org/bin/windows/Rtools/) comes with a C++ compiler for Windows. On Mac, you should use Xcode. For further instructions on how to get the compilers running, see the prerequisites section at the RStan-Getting-Started page." ~ quoted from the  BRMS package document
 
-After you have install the aforementioned software you need to load some other R packages. If you have not yet installed all below mentioned packages, you can install them by the command install.packages("NAMEOFPACKAGE")
+After you have install the aforementioned software you need to load some other R packages. If you have not yet installed all below mentioned packages, you can install them by the command `install.packages("NAMEOFPACKAGE")`
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 library(brms) # for the analysis
@@ -54,12 +53,11 @@ library(lme4)
 ```
 
 
-&nbsp;
-# Step 2: Downloading the data
+## Step 2: Downloading the data
 
-The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates). To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the .sav file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the read_sav() command.
+The popularity dataset contains characteristics of pupils in different classes. The main goal of this tutorial is to find models and test hypotheses about the relation between these characteristics and the popularity of pupils (according to their classmates). To download the popularity data go to https://multilevel-analysis.sites.uu.nl/datasets/ and follow the links to https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav. We will use the `.sav` file which can be found in the SPSS folder. After downloading the data to your working directory you can open it with the `read_sav()` command.
 
-Alternatively, you can directly download them from GitHub into your R work space using the following command:
+Alternatively, you can directly download them from GitHub into your R workspace using the following command:
 
 ```{r}
 popular2data <- read_sav(file ="https://github.com/MultiLevelAnalysis/Datasets-third-edition-Multilevel-book/blob/master/chapter%202/popularity/SPSS/popular2.sav?raw=true")
@@ -74,10 +72,10 @@ head(popular2data) # we have a look at the first 6 observations
 
 
 ## The Effect of Priors
-With the get_prior() command we can see which priors we can specify for this model. 
+With the `get_prior()` command we can see which priors we can specify for this model. 
 
 ```{r}
-get_prior(popular ~1 + sex + extrav + texp + extrav:texp + (1 + extrav | class), data = popular2data)
+get_prior(popular ~ 0 + intercept + sex + extrav + texp + extrav:texp + (1 + extrav | class), data = popular2data)
 ```
 
 For the first model with priors we just set normal priors for all regression coefficients, in reality many, many more prior distributions are possible, see the [BRMS manual](https://cran.r-project.org/web/packages/brms/brms.pdf) for an overview.  To place a prior on the fixed intercept, one needs to include `0 + intercept`. See [here](https://rdrr.io/cran/brms/man/prior_samples.html) for an explanation.
@@ -100,14 +98,12 @@ model6 <- brm(popular ~ 0 + intercept + sex + extrav + texp + extrav:texp + (1 +
               sample_prior = TRUE) # to reach a usuable number effective samples in the posterior distribution of the interaction effect, we need many more iteration. This sampler will take quite some time and you might want to run it with a few less iterations.
 ```
 
-To see which priors were inserted, use the prior_summary() command
+To see which priors were inserted, use the `prior_summary()` command
 ```{r}
 prior_summary(model6)
 ```
 
-
-
-We can also check the STAN code that is being used to run this model by using the stancode() command, here we also see the priors being implemented. This might help you understand the model a bit more, but is not necessary
+We can also check the STAN code that is being used to run this model by using the `stancode()` command, here we also see the priors being implemented. This might help you understand the model a bit more, but is not necessary
 
 ```{r}
 stancode(model6)
@@ -180,7 +176,7 @@ summary(model9)
 ```
 
 
-Comparing the last three models we see that for the first two models the prior specification does not really have a large influence on the results. However, for the final model with the highly informative priors that are far from the observed data, the priors do influence the posterior results. Because of the fairly large dataset, the priors are unlikely to have a large influence unless they are highly informative. Because we asked to save the prior in the last model ("sample_prior = TRUE"), we can now plot the difference between the prior and the posterior distribution of different parameters. In all cases we see that the prior has a large influence on the posterior compared to the posterior estimates we arrived in earlier models.
+Comparing the last three models we see that for the first two models the prior specification does not really have a large influence on the results. However, for the final model with the highly informative priors that are far from the observed data, the priors do influence the posterior results. Because of the fairly large dataset, the priors are unlikely to have a large influence unless they are highly informative. Because we asked to save the prior in the last model (`"sample_prior = TRUE"`), we can now plot the difference between the prior and the posterior distribution of different parameters. In all cases, we see that the prior has a large influence on the posterior compared to the posterior estimates we arrived in earlier models.
 
 
 ```{r}
@@ -192,7 +188,7 @@ plot(hypothesis(model8, "intercept > 0"))
 ```
 
 
-```{r, fig.width=9, fig.height=6}
+```{r, fig.width=9, fig.height=6, warning=F, message=F}
 posterior1 <- posterior_samples(model6, pars = "b_extrav")[, c(1,3)]
 posterior2 <- posterior_samples(model8, pars = "b_extrav")[, c(1,3)]
 posterior3 <- posterior_samples(model9, pars = "b_extrav")[, c(1,3)]
@@ -240,7 +236,7 @@ ggplot(data    = posterior1.2.3,
   theme_tufte()
 ```
 
-In this plot we can clearly see how the informative priors pull the posteriors towards them, while the the uninformarive prior yields a posterior that is centered around what would be the frequentist (LME4) estimate. 
+In this plot we can clearly see how the informative priors pull the posteriors towards them, while the uninformarive prior yields a posterior that is centred around what would be the frequentist (LME4) estimate. 
 
 ---
 #### Brms Reference

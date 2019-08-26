@@ -127,8 +127,6 @@ Once you loaded in your data, it is advisable to check whether your data import 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
-[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
-
 ```{r}
 describe(dataPHD)
 ```
@@ -205,26 +203,19 @@ plot(years, delay, type = "l")
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 years <- 20:80
 delay <- -35 + .8*years + 0*years^2
 plot(years, delay, type= "l")
 ```
+
 [/expand]
 
-
-We can also plot what the expected delay would be (like we did in the Blavaan regression assignment) given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. These are just the means and do not yet qualify the different levels of uncertainty. Feel free to change some of the regression coefficients and see how this chances the curve.
-
-```{r}
-years <- 20:80
-delay <- -35 + .8*years + 0*years^2
-plot(years, delay, type =  "l")
-```
 
 
   <p>&nbsp;</p>
 
-##**Step 2: Run the model and check for convergence**
+## **Step 2: Run the model and check for convergence**
 
 Specify the regression model you want to analyze and run the regression with the `blavaan()` function. The priors for the intercept, the regression coefficients and the variance are specified in the regression model below.
 
@@ -258,14 +249,14 @@ model.regression <- '#the regression model
 
 ### 2. Does the trace-plot exhibit convergence?
 
-First we run the anlysis with only a short burnin period of 250 samples and then take another 500 samples. In addition, Blavaan needs an adaptation period, which is by default a 1000 samples. We do not change this default.
+First we run the anlysis with only a short burnin period of a 100 samples and then take another 500 samples. In addition, Blavaan needs an adaptation period, which is by default a 1000 samples. We  do not change this for this example.
 
 
 ```{r,  message=F, warning=F}
 fit.bayesfewsample <- blavaan(model = model.regression,
                               data = dataPHD,  test = "none",  
-                              target = "stan", burnin = 250,
-                              sample = 500, seed = 12345, 
+                              target = "stan", burnin = 100,
+                              sample = 500, seed = 12345,
                               bcontrol = list(cores = 4))
 
 posteriors_fewsamples <- blavInspect(fit.bayesfewsample, what="mcmc")
@@ -277,11 +268,11 @@ posteriors_fewsamples <- blavInspect(fit.bayesfewsample, what="mcmc")
 Now we can plot the trace plots.
 
 ```{r}
-plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace", trace.iters = 750)
+plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace", trace.iters = 600)
 ```
 
 
-It seems like the trace (caterpillar) plots are not neatly converged into one each other (we ideally want one fat caterpillar, like the one for _diff~~diff_/`psi[1,1,1]`). This  indicates we need more samples.
+It seems like the trace (caterpillar) plots are not neatly converged into one each other (we ideally want one fat caterpillar, like the one for _diff~~diff_ \\ `Psi_var[1]`). This  indicates we need more samples.
 
 We can check if the chains convergenced by having a look at the convergence diagnostics. Two of these diagnostics of interest include the Gelman and Rubin diagnostic and the Geweke diagnostic. 
 
@@ -361,9 +352,8 @@ _**Question:** calculate the relative bias. Are you satisfied with number of ite
 To get the relative bias simply save the means of the regression coefficients for the two different analyses and compute the bias. 
 
 ```{r, message=FALSE, warning=FALSE, eval= TRUE}
-estimates            <- colMeans(as.matrix(mcmc.list)[,c("beta[1,2,1]","beta[1,3,1]")])
-mcmc.list.doubleiter <- blavInspect(fit.bayesdouble, what = "mcmc")
-estimatesdoubleiter  <- colMeans(as.matrix(mcmc.list.doubleiter)[,c("beta[1,2,1]","beta[1,3,1]")])
+estimates            <- blavInspect(fit.bayes, what = "postmean")[1:2]
+estimatesdoubleiter  <- blavInspect(fit.bayesdouble, what = "postmean")[1:2]
 round(100*((estimatesdoubleiter - estimates)/estimates), 2)
 ```
 
@@ -498,7 +488,7 @@ fit.bayes.difIG <- blavaan(model = model.regression.difIG, data = dataPHD,
 summary(fit.bayes.difIG)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 summ1 <- summary(fit.bayes)
 summ2 <- summary(fit.bayes.difIG)
 ```
@@ -560,7 +550,7 @@ fit.bayes.defaultpriors <- blavaan(model = model.regression.defaultprior, data =
 summary(fit.bayes.defaultpriors)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 summ3 <- summary(fit.bayes.defaultpriors)
 ```
 
@@ -573,7 +563,7 @@ summ3 <- summary(fit.bayes.defaultpriors)
 | Residual variance | `r as.numeric(summ3[3,2])`            |`r as.numeric(summ1[3,2])`           |$100\cdot \frac{`r as.numeric(summ3[3,2])`-`r as.numeric(summ1[2,2])` }{`r as.numeric(summ1[3,2])`} = `r round(100*((as.numeric(summ3[3,2])-as.numeric(summ1[3,2]))/as.numeric(summ1[3,2])),2)`\%$
 
 
-_The informative priors have quite some influence (up to 7%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
+_The informative priors have quite some influence (up to 50%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
 
 
 [/expand]

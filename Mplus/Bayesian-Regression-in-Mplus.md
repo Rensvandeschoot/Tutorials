@@ -1,7 +1,7 @@
 ---
 title: "Regression in Mplus (Bayesian)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 07 August 2019'
+date: 'Last modified: 26 August 2019'
 output:
   html_document:
     keep_md: true
@@ -91,7 +91,7 @@ MODEL RESULTS
 
 _The descriptive statistics make sense:_
 
-_$diff$: Mean (9.97), SE (0.790)_
+_$diff$: Mean (9.97), SE (0.79)_
 
 _$Age$: Mean (31.68), SE (0.38)_
 
@@ -181,7 +181,7 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of  2.647, 95% Credibility Interval [1.35,  3.87]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.026, and a 95% credibility Interval of [-0.04, -0.01]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of  2.647, 95% Credibility Interval [1.35,  3.87]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.026, and a 95% Credibility Interval of [-0.04, -0.01]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 [/expand]
@@ -307,6 +307,13 @@ You can change these lines of code in the Mplus input:
 
 ```r
 MODEL PRIORS:
+  Beta_Age ~ N(3, 0.4);
+  Beta_Age2 ~ N(0, 0.1);
+```
+
+
+```r
+MODEL PRIORS:
   Beta_Age ~ N(3, 1000);
   Beta_Age2 ~ N(0, 1000);
 ```
@@ -314,15 +321,8 @@ MODEL PRIORS:
 
 ```r
 MODEL PRIORS:
-  Beta_Age ~ N(20, .4);
-  Beta_Age2 ~ N(0, .1);
-```
-
-
-```r
-MODEL PRIORS:
-  Beta_Age ~ N(20, 1000);
-  Beta_Age2 ~ N(0, 1000);
+  Beta_Age ~ N(20, 0.4);
+  Beta_Age2 ~ N(20, 0.1);
 ```
 
 

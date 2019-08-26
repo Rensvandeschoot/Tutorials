@@ -220,7 +220,7 @@ prior_summary(model)
 
 We also see that a student-t distribution was chosen for the intercept.
 
-/expand]
+[/expand]
 
   <p>&nbsp;</p> 
 
@@ -267,7 +267,7 @@ posterior_summary(model2)
 
 [/expand]
 
-```{r, echo = F}
+```{r, include = F}
 summ1 <- posterior_summary(model)
 ```
 
@@ -290,7 +290,7 @@ summ1 <- posterior_summary(model)
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
-```{r, echo = F}
+```{r, include = F}
 summ2 <- posterior_summary(model2)
 ```
 
@@ -349,7 +349,7 @@ posterior_summary(model5)
 
 
 
-```{r, echo = F}
+```{r, include = F}
 summ3 <- posterior_summary(model3)
 summ4 <- posterior_summary(model4)
 summ5 <- posterior_summary(model5)
@@ -462,7 +462,7 @@ estimatesinformative   <- posterior_summary(model4)[c("b_age", "b_age2") , "Esti
 round(100*((estimatesinformative - estimatesuninformative)/estimatesuninformative), 2)
 ```
 
-```{r, echo = F}
+```{r, include = F}
 bias <- round(100*((estimatesinformative - estimatesuninformative)/estimatesuninformative),0)
 ```
 

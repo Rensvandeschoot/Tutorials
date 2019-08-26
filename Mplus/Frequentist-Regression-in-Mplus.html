@@ -365,7 +365,7 @@ summary {
 
 <h1 class="title toc-ignore">Regression in Mplus (Frequentist)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 07 August 2019</h4>
+<h4 class="date">Last modified: 22 August 2019</h4>
 
 </div>
 
@@ -434,7 +434,7 @@ OUTPUT: sampstat;</code></pre>
     AGE               31.676      0.375     84.433      0.000
     AGE2            1050.217     35.916     29.241      0.000</code></pre>
 <p><em>The descriptive statistics make sense:</em></p>
-<p><em><span class="math inline">\(diff\)</span>: Mean (9.97), SE (0.790)</em></p>
+<p><em><span class="math inline">\(diff\)</span>: Mean (9.97), SE (0.79)</em></p>
 <p><em><span class="math inline">\(Age\)</span>: Mean (31.68), SE (0.38)</em></p>
 <p><em><span class="math inline">\(Age^2\)</span>: Mean (1050.22), SE (35.92)</em></p>
 <p>[/expand]</p>
@@ -495,7 +495,6 @@ OUTPUT: sampstat;</code></pre>
 <p>
  
 </p>
-<p><em>There is a significant effect of <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span>, with b=2.657, p &lt;.001 for <span class="math inline">\(age\)</span>, and b=-0.026, p&lt;.001 for <span class="math inline">\(age^2\)</span>.</em></p>
 <p>[/expand]</p>
 <p>
  
@@ -513,7 +512,7 @@ OUTPUT: sampstat;</code></pre>
 <p>
  
 </p>
-<p>Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 (<a href="https://osf.io/preprints/psyarxiv/mky9j">Benjamin et al. 2017</a>, but see also a critique by<a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Trafimow, ., Van de Schoot, et al., 2018</a>). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.</p>
+<p>Recently, a group of 72 notable statisticians proposed to shift the significance threshold to 0.005 (<a href="https://osf.io/preprints/psyarxiv/mky9j">Benjamin et al. 2017</a>, but see also a critique by<a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Trafimow, …, Van de Schoot, et al., 2018</a>). They argue that a p-value just below 0.05 does not provide sufficient evidence for statistical inference.</p>
 <p>
  
 </p>
@@ -542,6 +541,10 @@ OUTPUT: sampstat;</code></pre>
 
  Residual Variances
     DIFF           155.787     165.076     169.827     194.641     219.455     224.207     233.496</code></pre>
+</div>
+<div id="question-what-can-you-conclude-about-the-hypothesis-being-tested-using-the-correct-interpretation-of-the-confidence-interval" class="section level5">
+<h5><em><strong>Question:</strong> What can you conclude about the hypothesis being tested using the correct interpretation of the confidence interval?</em></h5>
+<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
 <p><em><span class="math inline">\(Age\)</span>: 95% CI [1.514, 3.801]</em></p>
 <p><em><span class="math inline">\(Age^2\)</span>: 95% CI [-0.038, -0.014]</em></p>
 <p><em>In both cases the 95% CI&#39;s don&#39;t contain 0, which means, the null hypotheses should be rejected. A 95% CI means, that, if infinitely samples were taken from the population, then 95% of the samples contain the true population value. But we do not know whether our current sample is part of this collection, so we only have an aggregated assurance that in the long run if our analysis would be repeated our sample CI contains the true population parameter.</em></p>
@@ -552,7 +555,7 @@ OUTPUT: sampstat;</code></pre>
 <h5><em><strong>Question:</strong> What can you say about the relevance of your results? Focus on the explained variance and the standardized regression coefficients.</em></h5>
 <p>To get the standardized results and an estimate of the explained variance (R<span class="math inline">\(^2\)</span>), you can add <code>CINTERVAL</code> to the <code>OUTPUT</code> statement in the input file, like</p>
 <pre class="r"><code>OUTPUT: sampstat CINTERVAL STDYX;</code></pre>
-<p>[expand title=Answer]</p>
+<p>[expand title=&quot;Answer&quot; trigclass=&quot;noarrow my_button&quot; targclass=&quot;my_content&quot; tag=&quot;button&quot;]</p>
 <pre class="r"><code>R-SQUARE
 
     Observed                                        Two-Tailed
@@ -574,7 +577,8 @@ OUTPUT: sampstat;</code></pre>
 
  Residual Variances
     DIFF               0.937      0.026     36.472      0.000</code></pre>
-<p><em>The standardized coefficients, age (1.262) and age<span class="math inline">\(^2\)</span> (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher.</em></p>
+<p><em>The standardized coefficients, age (1.262) and age<span class="math inline">\(^2\)</span> (-1.174), show that the effects of both regression coefficients are comparable, but the effect of age is somewhat higher. This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)</em></p>
+<p>[/expand]</p>
 <p>Only a combination of different measures assessing different aspects of your results can provide a comprehensive answer to your research question.</p>
 <p>
  

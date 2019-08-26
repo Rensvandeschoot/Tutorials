@@ -1,7 +1,7 @@
 ---
 title: "WAMBS in Mplus"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 08 August 2019'
+date: 'Last modified: 22 August 2019'
 output:
   html_document:
     keep_md: true
@@ -27,6 +27,7 @@ This tutorial expects:
 [expand title="Check the WAMBS checklist here" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
+
 ## **WAMBS checklist** 
 
 ### *When to worry, and how to Avoid the Misuse of Bayesian Statistics*
@@ -49,6 +50,7 @@ This tutorial expects:
 8.   Is there a notable effect of the prior when compared with non-informative priors?
 9.   Are the results stable from a sensitivity analysis?
 10.   Is the Bayesian way of interpreting and reporting model results used?
+
 
 [/expand]
 
@@ -133,7 +135,7 @@ _$Age^2$: Mean (1050.22), SE (35.92)_
 
   <p>&nbsp;</p>
   
-  ##   **Step 1: Do you understand the priors?**
+##   **Step 1: Do you understand the priors?**
 
   <p>&nbsp;</p>
   
@@ -158,7 +160,7 @@ Next, we need to specify actual values for the hyperparameters of the prior dist
 - intercept $\sim \mathcal{N}(-35, 20)$
 - $\beta_1 \sim \mathcal{N}(.8, 5)$
 - $\beta_2 \sim \mathcal{N}(0, 10)$
-- $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to preform well in simulation studies.
+- $\in \sim IG(.5, .5)$ This is an uninformative prior for the residual variance, which has been found to perform well in simulation studies.
 
 
 It is a good idea to plot these distribution to see how they loo and waht expected delay would be given these priors. With these priors the regression formula would be: $delay=-35+ .8*age + 0*age^2$. In the Blavaan version of the WAMBS checklist we explain how you can easily do that in R. 
@@ -233,6 +235,8 @@ By default Mplus discards half of the iteration  as burnin period. After running
 
 First, run the model with only 100 iterations. Inspect the traceplots, what do you conclude?
 
+[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+
 
 
 ```r
@@ -279,6 +283,7 @@ PLOT:
 ![trace plot age](trace_plot_age_100.jpg)
 
 Clearly, two times 50 iterations is not enough for obtaining trusthworthy results and we need more iterations.
+
 [/expand]
 
 Let's specify a fixed number of iterations by adding `FBITERATIONS = 2000;` to the `ANALYSIS` part. Inspect the traceplots again.
@@ -307,7 +312,7 @@ First we run the anlysis with a urnin period of 1000 samples and then take anoth
 It seems like the trace (caterpillar) plots are  neatly converged into one each other (we ideally want one fat caterpillar). This  indicates we already have enough samples.
 
 
-We can double check check if the chains convergenced by having a look at the convergence diagnostics, the Gelman and Rubin diagnostic. To have a look at the Gelman-Rubin Diagnostic (PSRF) we can check this table under the `TECH8`outout of Mplus. The Gelman-Rubin Diagnostic shows the PSRF values (using the  within and between chain variability), which should be close to 1 for ALL iterations after burn-in. Is this the case?.
+We can double check check if the chains converged by having a look at the convergence diagnostics, the Gelman and Rubin diagnostic. To have a look at the Gelman-Rubin Diagnostic (PSRF) we can check this table under the `TECH8`outout of Mplus. The Gelman-Rubin Diagnostic shows the PSRF values (using the  within and between chain variability), which should be close to 1 for ALL iterations after burn-in. Is this the case?.
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
@@ -346,6 +351,7 @@ We can double check check if the chains convergenced by having a look at the con
 ```
 
 The PSRF for all iterations after burn-in is close to 1, so convergence seems to have been reached. 
+
 [/expand]
 
 
@@ -393,7 +399,7 @@ MODEL RESULTS
     DIFF             196.606    
 ```
 
-** Part of Model results for `FBITERATIONS = 4000` **
+**Part of Model results for `FBITERATIONS = 4000`**
 
 ```r
 MODEL RESULTS
@@ -476,7 +482,7 @@ _Autocorrelation is relatively small over lags (largest absolute values is below
 
 ### 6.   Do the posterior distributions make substantive sense?
 
-We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to the our prior believes (priors). Here we plot the  posteriors of the regression coefficients. To plot the densities go to `Plot > View Plots >  Bayesian posterior parameter distributions > view > curve type: Kernel densirty > select the parameter you would like to see the density of > OK`
+We plot the posterior distributions and see if they are unimodel (one peak), if they are clearly centered around one value, if they give a realistic estimate and if they make substantive sense compared to our prior beliefs (priors). Here we plot the  posteriors of the regression coefficients. To plot the densities go to `Plot > View Plots >  Bayesian posterior parameter distributions > view > curve type: Kernel densinty > select the parameter you would like to see the density of > OK`
   <p>&nbsp;</p>
   
 
@@ -567,7 +573,7 @@ MODEL PRIORS:
   e ~ IG(.01, .01);
 ```
 
-** Part of Model results for `e ~ IG(.01, .01)` **
+**Part of Model results for `e ~ IG(.01, .01)`**
 
 ```r
 MODEL RESULTS
@@ -615,6 +621,7 @@ MODEL RESULTS
 
 _Yes, the results are robust, because there is only a really small amount of relative bias for the residual variance._
 
+[/expand]
 
 ### 8.   Is there a notable effect of the prior when compared with non-informative priors?
 
@@ -687,12 +694,12 @@ _The informative priors have quite some influence (up to 30%) on the posterior r
   <p>&nbsp;</p>
   
   
-  ### 9.   Are the results stable from a sensitivity analysis?
+### 9.   Are the results stable from a sensitivity analysis?
 If you still have time left, you can adjust the hyperparameters of the priors upward and downward and re-estimating the model with these varied priors to check for robustness.
 
 From the original paper:
 
-> "If informative or weakly-informative priors are used, then we suggest running a sensitivity analysis of these priors. When subjective priors are in place, then there might be a discrepancy between results using different subjective prior settings. A sensitivity analysis for priors would entail adjusting the entire prior distribution (i.e., using a completely different prior distribution than before) or adjusting hyperparameters upward and downward and re-estimating the model with these varied priors. Several different hyperparameter specifications can be made in a sensitivity analysis, and results obtained will point toward the impact of small fluctuations in hyperparameter values. [.] The purpose of this sensitivity analysis is to assess how much of an impact the location of the mean hyperparameter for the prior has on the posterior. [.] Upon receiving results from the sensitivity analysis, assess the impact that fluctuations in the hyperparameter values have on the substantive conclusions. Results may be stable across the sensitivity analysis, or they may be highly instable based on substantive conclusions. Whatever the finding, this information is important to report in the results and discussion sections of a paper. We should also reiterate here that original priors should not be modified, despite the results obtained."
+> "If informative or weakly-informative priors are used, then we suggest running a sensitivity analysis of these priors. When subjective priors are in place, then there might be a discrepancy between results using different subjective prior settings. A sensitivity analysis for priors would entail adjusting the entire prior distribution (i.e., using a completely different prior distribution than before) or adjusting hyperparameters upward and downward and re-estimating the model with these varied priors. Several different hyperparameter specifications can be made in a sensitivity analysis, and results obtained will point toward the impact of small fluctuations in hyperparameter values. [...] The purpose of this sensitivity analysis is to assess how much of an impact the location of the mean hyperparameter for the prior has on the posterior. [...] Upon receiving results from the sensitivity analysis, assess the impact that fluctuations in the hyperparameter values have on the substantive conclusions. Results may be stable across the sensitivity analysis, or they may be highly instable based on substantive conclusions. Whatever the finding, this information is important to report in the results and discussion sections of a paper. We should also reiterate here that original priors should not be modified, despite the results obtained."
 
 
 For more information on this topic, please also refer to this [paper](http://psycnet.apa.org/record/2017-52406-001). 
