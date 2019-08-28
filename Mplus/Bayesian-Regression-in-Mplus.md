@@ -1,7 +1,7 @@
 ---
 title: "Regression in Mplus (Bayesian)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 22 August 2019'
+date: 'Last modified: 26 August 2019'
 output:
   html_document:
     keep_md: true
@@ -307,6 +307,13 @@ You can change these lines of code in the Mplus input:
 
 ```r
 MODEL PRIORS:
+  Beta_Age ~ N(3, 0.4);
+  Beta_Age2 ~ N(0, 0.1);
+```
+
+
+```r
+MODEL PRIORS:
   Beta_Age ~ N(3, 1000);
   Beta_Age2 ~ N(0, 1000);
 ```
@@ -314,15 +321,8 @@ MODEL PRIORS:
 
 ```r
 MODEL PRIORS:
-  Beta_Age ~ N(20, .4);
-  Beta_Age2 ~ N(0, .1);
-```
-
-
-```r
-MODEL PRIORS:
-  Beta_Age ~ N(20, 1000);
-  Beta_Age2 ~ N(0, 1000);
+  Beta_Age ~ N(20, 0.4);
+  Beta_Age2 ~ N(20, 0.1);
 ```
 
 

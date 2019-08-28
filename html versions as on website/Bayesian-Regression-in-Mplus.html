@@ -270,7 +270,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -365,7 +364,7 @@ summary {
 
 <h1 class="title toc-ignore">Regression in Mplus (Bayesian)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 22 August 2019</h4>
+<h4 class="date">Last modified: 26 August 2019</h4>
 
 </div>
 
@@ -676,14 +675,14 @@ MODEL PRIORS:
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
 <p>You can change these lines of code in the Mplus input:</p>
 <pre class="r"><code>MODEL PRIORS:
+  Beta_Age ~ N(3, 0.4);
+  Beta_Age2 ~ N(0, 0.1);</code></pre>
+<pre class="r"><code>MODEL PRIORS:
   Beta_Age ~ N(3, 1000);
   Beta_Age2 ~ N(0, 1000);</code></pre>
 <pre class="r"><code>MODEL PRIORS:
-  Beta_Age ~ N(20, .4);
-  Beta_Age2 ~ N(0, .1);</code></pre>
-<pre class="r"><code>MODEL PRIORS:
-  Beta_Age ~ N(20, 1000);
-  Beta_Age2 ~ N(0, 1000);</code></pre>
+  Beta_Age ~ N(20, 0.4);
+  Beta_Age2 ~ N(20, 0.1);</code></pre>
 <table>
 <thead>
 <tr class="header">
