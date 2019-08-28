@@ -199,7 +199,7 @@ Then, we need to fit the model by using the following code: We specify `target =
 ```r
 fit.bayes <- blavaan(model = model.regression, data = dataPHD, test = "none", target = "stan",  seed = 1234,   bcontrol = list(cores = 4))
 # the test = "none" input stops the calculations of some posterior checks, we do not need at this moment and speeds up the process. 
-# we set a high number of samples, so that we can be sure, at least for this model, that the model converged.
+# we set a seed for reproducibility. 
 # we make optimal use of the number of cores of modern laptops we set the bcontrol = list(cores = 4)) command
 ```
 
