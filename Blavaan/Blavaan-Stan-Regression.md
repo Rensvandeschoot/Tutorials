@@ -1,7 +1,7 @@
 ---
 title: "Bayesian Regression in Blavaan (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 28 August 2019'
+date: 'Last modified: 29 August 2019'
 output:
   html_document:
     keep_md: true
@@ -23,7 +23,7 @@ In this tutorial, we start by using the default prior settings of the software. 
 This tutorial expects:
 
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.1
+- Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.5 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -223,9 +223,6 @@ summary(fit.bayes)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -333,9 +330,6 @@ summary(fit.bayes_uninf)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -428,9 +422,6 @@ summary(fit.bayes.infprior1, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ## 
 ##   Statistic                               
 ##   Value                                   
-## 
-## Parameter Estimates:
-## 
 ## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
@@ -574,9 +565,6 @@ summary(fit.bayes.infprior2, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -618,9 +606,6 @@ summary(fit.bayes.infprior3, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -661,9 +646,6 @@ summary(fit.bayes.infprior4, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ## 
 ##   Statistic                               
 ##   Value                                   
-## 
-## Parameter Estimates:
-## 
 ## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
