@@ -13,7 +13,7 @@
 <meta name="author" content="By Laurent Smeets and Rens van de Schoot" />
 
 
-<title>Bayesian Regression in Blavaan (using Stan)</title>
+<title>Regression in Mplus (Bayesian)</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -362,34 +362,32 @@ summary {
 
 
 
-<h1 class="title toc-ignore">Bayesian Regression in Blavaan (using Stan)</h1>
+<h1 class="title toc-ignore">Regression in Mplus (Bayesian)</h1>
 <h4 class="author">By <a href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/">Laurent Smeets</a> and <a href="https://www.rensvandeschoot.com/about-rens/">Rens van de Schoot</a></h4>
-<h4 class="date">Last modified: 29 August 2019</h4>
+<h4 class="date">Last modified: 26 August 2019</h4>
 
 </div>
 
 
-<p>This tutorial provides the reader with a basic tutorial how to perform a <strong>Bayesian regression</strong> in <a href="https://faculty.missouri.edu/~merklee/blavaan/">Blavaan</a>, using Stan instead of Jags as the MCMC sampler. You can find the Blavaan Jags tutorial <a href="https://www.rensvandeschoot.com/tutorials/bayesian-regression-blavaan/">here</a>. We will not delve into the the differences between Stan and Jags here (a technical explanation can be found <a href="http://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf">here</a> and a more accessible blog post <a href="https://statmodeling.stat.columbia.edu/2017/11/30/not-compare-speed-stan-something-else/">here</a>). For now it suffices to say that Stan is more efficient, especially for complex models. While using Blavaan the biggest difference is how you specify the priors. Instead of using a variance, as in Jags, Stan uses standard deviations.</p>
-<p>Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">Bayesian</a> statistics.</p>
+<p>This tutorial provides the reader with a basic tutorial how to perform a <strong>Bayesian regression</strong> in <a href="https://www.statmodel.com/">Mplus</a>. Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">Bayesian</a> statistics.</p>
 <p>In this tutorial, we start by using the default prior settings of the software. In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the <a href="https://www.rensvandeschoot.com/wambs-checklist/">WAMBS-checklist</a>, also available in other software.</p>
 <div id="preparation" class="section level2">
-<h2><strong>Preparation</strong></h2>
+<h2>Preparation</h2>
 <p>This tutorial expects:</p>
 <ul>
-<li>Installation of <a href="https://mc-stan.org/users/interfaces/rstan">STAN</a> and <a href="https://cran.r-project.org/bin/windows/Rtools">Rtools</a>. For more information please see <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started" class="uri">https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started</a></li>
-<li>Installation of R packages <code>rstan</code>, <code>lavaan</code> and <code>blavaan</code>. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.5 in R version 3.6.1</li>
+<li>Version 8 or higher of <a href="https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files">Mplus</a>.This tutorial was made using Mplus version 8_3.</li>
 <li>Basic knowledge of hypothesis testing</li>
 <li>Basic knowledge of correlation and regression</li>
 <li>Basic knowledge of <a href="https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/">Bayesian</a> inference</li>
-<li>Basic knowledge of coding in R</li>
+<li>Basic knowledge of coding in Mplus</li>
 </ul>
 </div>
 <div id="example-data" class="section level2">
 <h2>Example Data</h2>
-<p>The data we will be using for this exercise is based on a study about predicting PhD-delays (<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839">Van de Schoot, Yerkes, Mouw and Sonneveld 2013</a>).The data can be downloaded <a href="https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv">here</a>. Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.</p>
+<p>The data we will be using for this exercise is based on a study about predicting PhD-delays (<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839">Van de Schoot, Yerkes, Mouw and Sonneveld 2013</a>).The data can be downloaded <a href="https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays_nonames.csv">here</a>. Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.</p>
 <p>For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.</p>
 <p>The relation between completion time and age is expected to be non-linear. This might be due to that at a certain point in your life (i.e., mid thirties), family life takes up more of your time than when you are in your twenties or when you are older.</p>
-<p>So, in our model the <span class="math inline">\(gap\)</span> (<em>B3_difference_extra</em>) is the dependent variable and <span class="math inline">\(age\)</span> (<em>E22_Age</em>) and <span class="math inline">\(age^2\)</span>(<em>E22_Age_Squared </em>) are the predictors. The data can be found in the file <span style="color:red"> <code>phd-delays.csv</code> </span>.</p>
+So, in our model the <span class="math inline">\(gap\)</span> (<em>B3_difference_extra</em>) is the dependent variable and <span class="math inline">\(age\)</span> (<em>E22_Age</em>) and <span class="math inline">\(age^2\)</span>(<em>E22_Age_Squared </em>) are the predictors. The data can be found in the file <span style="color:red"> <code>phd-delays_nonames.csv</code> </span>. (In Mplus the first row CANNOT have the variable names, these have already been deleted for you)
 <p>
  
 </p>
@@ -408,294 +406,149 @@ summary {
 </div>
 <div id="preparation---importing-and-exploring-data" class="section level2">
 <h2>Preparation - Importing and Exploring Data</h2>
-<pre class="r"><code># if you dont have these packages installed yet, please use the install.packages(&quot;package_name&quot;) command.
-library(rstan) 
-library(blavaan)
-library(psych) #to get some extended summary statistics
-library(tidyverse) # needed for data manipulation and plotting</code></pre>
-<p>You can find the data in the file <span style="color:red"> <code>phd-delays.csv</code> </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into R using the following syntax:</p>
-<pre class="r"><code>#read in data
-dataPHD &lt;- read.csv2(file=&quot;phd-delays.csv&quot;)
-colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&quot;age&quot;,&quot;age2&quot;)</code></pre>
-<p>Alternatively, you can directly download them from GitHub into your R work space using the following command:</p>
-<pre class="r"><code>dataPHD &lt;- read.csv2(file=&quot;https://raw.githubusercontent.com/LaurentSmeets/Tutorials/master/Blavaan/phd-delays.csv&quot;)
-colnames(dataPHD) &lt;- c(&quot;diff&quot;, &quot;child&quot;, &quot;sex&quot;,&quot;age&quot;,&quot;age2&quot;)</code></pre>
-<p>GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see <a href="https://github.com/" class="uri">https://github.com/</a>)</p>
-<p>Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the <code>describe()</code> function.</p>
+<p>You can find the data in the file <span style="color:red"> <code>phd-delays_nonames.csv</code> </span>, which contains all variables that you need for this analysis. Although it is a .csv-file, you can directly load it into Mplus using the following syntax:</p>
+<pre class="r"><code>TITLE: Bayesian analysis summary
+DATA: FILE IS phd-delays_nonames.csv;
+VARIABLE: NAMES ARE diff child sex Age Age2;
+USEVARIABLES ARE diff Age Age2;
+OUTPUT: sampstat;</code></pre>
+<p>Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. You can do this by looking at the <code>sampstat</code> ouput.</p>
+<p>
+ 
+</p>
 <div id="question-have-all-your-data-been-loaded-in-correctly-that-is-do-all-data-points-substantively-make-sense-if-you-are-unsure-go-back-to-the-.csv-file-to-inspect-the-raw-data." class="section level5">
 <h5><em><strong>Question:</strong> Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data.</em></h5>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>describe(dataPHD)</code></pre>
-<pre><code>##       vars   n    mean     sd median trimmed    mad min  max range  skew
-## diff     1 333    9.97  14.43      5    6.91   7.41 -31   91   122  2.21
-## child    2 333    0.18   0.38      0    0.10   0.00   0    1     1  1.66
-## sex      3 333    0.52   0.50      1    0.52   0.00   0    1     1 -0.08
-## age      4 333   31.68   6.86     30   30.39   2.97  26   80    54  4.45
-## age2     5 333 1050.22 656.39    900  928.29 171.98 676 6400  5724  6.03
-##       kurtosis    se
-## diff      5.92  0.79
-## child     0.75  0.02
-## sex      -2.00  0.03
-## age      24.99  0.38
-## age2     42.21 35.97</code></pre>
+<pre class="r"><code>MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ Means
+    DIFF               9.967      0.790     12.622      0.000
+    AGE               31.676      0.375     84.433      0.000
+    AGE2            1050.217     35.916     29.241      0.000</code></pre>
 <p><em>The descriptive statistics make sense:</em></p>
-<p><em>diff: Mean (9.97), SE (0.79)</em></p>
+<p><em><span class="math inline">\(diff\)</span>: Mean (9.97), SE (0.79)</em></p>
 <p><em><span class="math inline">\(Age\)</span>: Mean (31.68), SE (0.38)</em></p>
-<p><em><span class="math inline">\(Age^2\)</span>: Mean (1050.22), SE (35.97)</em></p>
+<p><em><span class="math inline">\(Age^2\)</span>: Mean (1050.22), SE (35.92)</em></p>
 <p>[/expand]</p>
 <p>
  
 </p>
 </div>
-</div>
-<div id="plot" class="section level2">
-<h2>plot</h2>
-<p>Before we continue with analyzing the data we can also plot the expected relationship.</p>
-<pre class="r"><code>dataPHD %&gt;%
-  ggplot(aes(x = age,
-             y = diff)) +
-  geom_point(position = &quot;jitter&quot;,
-             alpha    = .6)+ #to add some random noise for plotting purposes
-  theme_minimal()+
-  geom_smooth(method = &quot;lm&quot;,  # to add  the linear relationship
-              aes(color = &quot;linear&quot;),
-              se = FALSE) +
-  geom_smooth(method = &quot;lm&quot;,
-              formula = y ~ x + I(x^2),# to add  the quadratic relationship
-              aes(color = &quot;quadratic&quot;),
-              se = FALSE) +
-  labs(title    = &quot;Delay vs. age&quot;,
-       subtitle = &quot;There seems to be some quadratic relationship&quot;,
-       x        = &quot;Age&quot;,
-       y        = &quot;Delay&quot;,
-       color    = &quot;Type of relationship&quot; ) +
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="regression---default-priors" class="section level2">
 <h2>Regression - Default Priors</h2>
-<p>In this exercise you will investigate the impact of Ph.D. students' <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span> on the delay in their project time, which serves as the outcome variable using a regression analysis (note that we ignore assumption checking!).</p>
-<p>As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g. <a href="http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract">Van de Schoot et al. 2017</a>). In this tutorial, we will first rely on the default prior settings, thereby behaving a ‘naive’ Bayesians (which might <a href="https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/">not</a> always be a good idea).</p>
-<p>To run a multiple regression with Blavaan, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model in Lavaan). The model is specified as follows:</p>
-<ol style="list-style-type: decimal">
-<li>A dependent variable we want to predict.</li>
-<li>A “~”, that we use to indicate that we now give the other variables of interest. (comparable to the ‘=’ of the regression equation).</li>
-<li>The different independent variables separated by the summation symbol ‘+’.</li>
-<li>Finally, we insert that the dependent variable has a variance and that we want an intercept.</li>
-</ol>
-<p>For more information on the basics of (b)lavaan, see their <a href="http://lavaan.ugent.be/tutorial/index.html">website</a></p>
-<p>
- 
-</p>
-<p>The following code is how to specify the regression model:</p>
-<pre class="r"><code># 1) specify the model
-model.regression &lt;- '#the regression model
-                    diff ~ age + age2
+<p>In this exercise you will investigate the impact of Ph.D. students&#39; <span class="math inline">\(age\)</span> and <span class="math inline">\(age^2\)</span> on the delay in their project time, which serves as the outcome variable using a regression analysis (note that we ignore assumption checking!).</p>
+<p>As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g. <a href="http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract">Van de Schoot et al. 2017</a>). In this tutorial, we will first rely on the default prior settings, thereby behaving a ‘naive’ Bayesians (which might <a href="https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/">not</a> always be a good idea).</p>
+<p>To run a multiple regression with Mplus, you first specify the model (after the <code>MODEL line</code> using the <code>ON command</code> for regression coefficients, and the <code>[]</code> command for the intercept). As default Mplus does not run a Bayesian analysis, so you would have to change the <code>ESTIMATOR</code> to <code>BAYES</code> under <code>ANALYSIS</code> in the input file and then look at the output under <code>MODEL RESULTS</code>.</p>
+<pre class="r"><code>TITLE: Bayesian analysis with default priors
 
-                    #show that dependent variable has variance
-                    diff ~~ diff
+DATA: FILE IS phd-delays_nonames.csv;
 
-                    #we want to have an intercept
-                    diff ~ 1'</code></pre>
-<p>Then, we need to fit the model by using the following code: We specify <code>target = &quot;stan&quot;</code> to tell Blavaan to use the Stan instead of the Jags compiler.</p>
-<pre class="r"><code>fit.bayes &lt;- blavaan(model = model.regression, data = dataPHD, test = &quot;none&quot;, target = &quot;stan&quot;,  seed = 1234,   bcontrol = list(cores = 4))
-# the test = &quot;none&quot; input stops the calculations of some posterior checks, we do not need at this moment and speeds up the process. 
-# we set a seed for reproducibility. 
-# we make optimal use of the number of cores of modern laptops we set the bcontrol = list(cores = 4)) command</code></pre>
-<p>Now we will have a look at the summary by using <code>summary(fit.bayes)</code>.</p>
-<p>[expand title=“Show Output” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>summary(fit.bayes)</code></pre>
-<pre><code>## blavaan (0.3-6) results of 1000 samples after 500 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 1.303    0.367      0.569      2.026    1.006
-##     age2               -0.012    0.004      -0.02     -0.004    1.005
-##     Prior       
-##                 
-##     normal(0,10)
-##     normal(0,10)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -18.383    7.617    -33.714      -3.29    1.005
-##     Prior       
-##     normal(0,10)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              196.232   14.716    168.882    225.863    1.001
-##     Prior       
-##  gamma(1,.5)[sd]</code></pre>
+VARIABLE: NAMES ARE diff child sex Age Age2; ! All the variables in the dataset
+
+USEVARIABLES ARE diff Age Age2; ! The variables we use in this analysis
+
+ANALYSIS:
+ESTIMATOR IS bayes; ! Specify that we want to use a Bayesian analysis
+Bseed = 23082018; !specify a seed value for reproducing the results
+CHAINS = 3; ! set the number of chains we want to use
+
+MODEL: 
+[diff] (intercept);       ! specify that we want an intercept
+! this model would also work without this line, but this way it is possible to easily set a prior
+diff ON Age (Beta_Age);   ! Regression coefficient 1. 
+diff ON Age2(Beta_Age2);  ! Regression coefficient 2 
+! You need to name these regression coefficients to later set priors
+diff (e);                 ! Error variance
+
+
+OUTPUT: tech8; ! Specify the output we would like</code></pre>
+<p>[expand title=“The Mplus table `MODEL RESULTS” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
+<pre class="r"><code>MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DIFF       ON
+    AGE                2.647       0.622      0.000       1.348       3.874      *
+    AGE2              -0.026       0.007      0.000      -0.039      -0.013      *
+
+ Intercepts
+    DIFF             -46.578      12.898      0.000     -70.394     -21.095      *
+
+ Residual Variances
+    DIFF             198.117      16.978      0.000     171.316     232.769      *</code></pre>
 <p>[/expand]</p>
-<p>
- 
-</p>
 <p>The results that stem from a Bayesian analysis are genuinely different from those that are provided by a frequentist model.</p>
 <p>[expand title=Read more on the Bayesian analysis]</p>
 <p>The key difference between Bayesian statistical inference and frequentist statistical methods concerns the nature of the unknown parameters that you are trying to estimate. In the frequentist framework, a parameter of interest is assumed to be unknown, but fixed. That is, it is assumed that in the population there is only one true population parameter, for example, one true mean or one true regression coefficient. In the Bayesian view of subjective probability, all unknown parameters are treated as uncertain and therefore are be described by a probability distribution. Every parameter is unknown, and everything unknown receives a distribution.</p>
 <p>This is why in frequentist inference, you are primarily provided with a point estimate of the unknown but fixed population parameter. This is the parameter value that, given the data, is most likely in the population. An accompanying confidence interval tries to give you further insight in the uncertainty that is attached to this estimate. It is important to realize that a confidence interval simply constitutes a simulation quantity. Over an infinite number of samples taken from the population, the procedure to construct a (95%) confidence interval will let it contain the true population value 95% of the time. This does not provide you with any information how probable it is that the population parameter lies within the confidence interval boundaries that you observe in your very specific and sole sample that you are analyzing.</p>
-<p>In Bayesian analyses, the key to your inference is the parameter of interest's posterior distribution. It fulfills every property of a probability distribution and quantifies how probable it is for the population parameter to lie in certain regions. On the one hand, you can characterize the posterior by its mode. This is the parameter value that, given the data and its prior probability, is most probable in the population. Alternatively, you can use the posterior's mean or median. Using the same distribution, you can construct a 95% credibility interval, the counterpart to the confidence interval in frequentist statistics. Other than the confidence interval, the Bayesian counterpart directly quantifies the probability that the population value lies within certain limits. There is a 95% probability that the parameter value of interest lies within the boundaries of the 95% credibility interval. Unlike the confidence interval, this is not merely a simulation quantity, but a concise and intuitive probability statement. For more on how to interpret Bayesian analysis, check <a href="http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract">Van de Schoot et al. 2014</a>.</p>
+<p>In Bayesian analyses, the key to your inference is the parameter of interest&#39;s posterior distribution. It fulfills every property of a probability distribution and quantifies how probable it is for the population parameter to lie in certain regions. On the one hand, you can characterize the posterior by its mode. This is the parameter value that, given the data and its prior probability, is most probable in the population. Alternatively, you can use the posterior&#39;s mean or median. Using the same distribution, you can construct a 95% credibility interval, the counterpart to the confidence interval in frequentist statistics. Other than the confidence interval, the Bayesian counterpart directly quantifies the probability that the population value lies within certain limits. There is a 95% probability that the parameter value of interest lies within the boundaries of the 95% credibility interval. Unlike the confidence interval, this is not merely a simulation quantity, but a concise and intuitive probability statement. For more on how to interpret Bayesian analysis, check <a href="http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract">Van de Schoot et al. 2014</a>.</p>
 <p>[/expand]</p>
-<p>
- 
-</p>
 <div id="question-interpret-the-estimated-effect-its-interval-and-the-posterior-distribution." class="section level5">
 <h5><em><strong>Question:</strong> Interpret the estimated effect, its interval and the posterior distribution.</em></h5>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 1.303, 95% HPD (Credibility Interval) [0.569 2.026]. Also, <span class="math inline">\(age^2\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean of -0.012, and a 95% Credibility Interval of [-0.02 -0.004]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
+<p><em><span class="math inline">\(Age\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.647, 95% Credibility Interval [1.35, 3.87]. Also, <span class="math inline">\(age^2\)</span> seems to be a relevant predictor of PhD delays, with a posterior mean of -0.026, and a 95% Credibility Interval of [-0.04, -0.01]. The 95% Credibility Interval shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect.</em></p>
 <p>[/expand]</p>
 <p>
  
 </p>
 </div>
-<div id="question-every-bayesian-model-uses-a-prior-distribution.-describe-the-shape-of-the-prior-distributions-of-the-regression-coefficients." class="section level5">
-<h5><em><strong>Question:</strong> Every Bayesian model uses a prior distribution. Describe the shape of the prior distributions of the regression coefficients.</em></h5>
+<div id="question-every-bayesian-model-uses-a-prior-distribution.-describe-the-shape-of-the-prior-distribution." class="section level5">
+<h5><em><strong>Question:</strong> Every Bayesian model uses a prior distribution. Describe the shape of the prior distribution.</em></h5>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<p>To check which default priors are being used by Blavaan, you can use the <code>dpriors()</code> command.</p>
-<pre class="r"><code>dpriors(target = &quot;stan&quot;)</code></pre>
-<pre><code>##                nu             alpha            lambda              beta 
-##    &quot;normal(0,32)&quot;    &quot;normal(0,10)&quot;    &quot;normal(0,10)&quot;    &quot;normal(0,10)&quot; 
-##             theta               psi               rho             ibpsi 
-## &quot;gamma(1,.5)[sd]&quot; &quot;gamma(1,.5)[sd]&quot;       &quot;beta(1,1)&quot; &quot;wishart(3,iden)&quot; 
-##               tau             delta 
-## &quot;normal(0,10^.5)&quot; &quot;gamma(1,.5)[sd]&quot;</code></pre>
-<p><em>As you might have noticed, the parameter estimates from Blavaan are substantively different from the frequentist approach. This is due to the fact that Blavaan (Stan) by default places quite informative priors on the model (<span class="math inline">\(\mathcal{N}(0, 10)\)</span> for the regression coefficients). This prior means that, using the properties of a normal distribution, you are approximately 95% sure that your regression coefficients (including the intercept) are between -20 and 20. Blavaan expects the data to be standardized, which this data is not. For standardized data, these priors can be considered uninformative, but for our data not. The lesson to take home from this is, that you can never fully trust default priors of any software The same model with actually uninformative (<span class="math inline">\(\mathcal{N}(0, 10000)\)</span>) priors would yield these results:</em></p>
-<pre class="r"><code>my_priors &lt;- dpriors(target = &quot;stan&quot;, beta = &quot;normal(0,10000)&quot;, alpha= &quot;normal(0,10000)&quot;)
+<p><em>To see what default priors Mplus uses we can have a look at the Appendix A of this <a href="https://www.statmodel.com/download/BayesAdvantages18.pdf">manual</a>. “The default prior for intercepts, regression slopes, and loading parameters is <span class="math inline">\(\beta \sim \mathcal{N}(0, \infty)\)</span>.” This means in practice that we have a normal prior with a super wide variance, and allow probability mass across the entire parameter space. The default priors can also be found in the TECH8 output of Mplus</em></p>
+<pre class="r"><code>     PRIORS FOR ALL PARAMETERS            PRIOR MEAN      PRIOR VARIANCE     PRIOR STD. DEV.
 
-fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &quot;none&quot;, target = &quot;stan&quot;,  seed = 1234,   bcontrol = list(cores = 4), dp = my_priors)</code></pre>
-<pre class="r"><code>summary(fit.bayes_uninf)</code></pre>
-<pre><code>## blavaan (0.3-6) results of 1000 samples after 500 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.661    0.602      1.516      3.911    1.005
-##     age2               -0.026    0.006     -0.039     -0.014    1.005
-##     Prior       
-##                 
-##  normal(0,10000)
-##  normal(0,10000)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -47.144   12.679    -73.665    -22.883    1.004
-##     Prior       
-##  normal(0,10000)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.304   15.301    167.047    225.294    0.999
-##     Prior       
-##  gamma(1,.5)[sd]</code></pre>
+     Parameter 1~N(0.000,infinity)           0.0000            infinity            infinity
+     Parameter 2~N(0.000,infinity)           0.0000            infinity            infinity
+     Parameter 3~N(0.000,infinity)           0.0000            infinity            infinity
+     Parameter 4~IG(-1.000,0.000)          infinity            infinity            infinity</code></pre>
 <p>[/expand]</p>
-<p>
- 
-</p>
 </div>
 </div>
 <div id="regression---user-specified-priors" class="section level2">
 <h2>Regression - User-specified Priors</h2>
-<p>In Blavaan, you can also manually specify your prior distributions. Be aware that usually, this has to be done BEFORE peeking at the data, otherwise you are double-dipping (!). In theory, you can specify your prior knowledge using any kind of distribution you like. However, if your prior distribution does not follow the same parametric form as your likelihood, calculating the model can be computationally intense. <em>Conjugate</em> priors avoid this issue, as they take on a functional form that is suitable for the model that you are constructing. For your normal linear regression model, conjugacy is reached if the priors for your regression parameters are specified using normal distributions (the residual variance receives an inverse gamma distribution, which is neglected here). In Blavaan, you are quite flexible in the specification of informative priors.</p>
-<p>Let's re-specify the regression model of the exercise above, using conjugate priors. We leave the priors for the intercept and the residual variance untouched for the moment. Regarding your regression parameters, you need to specify the hyperparameters of their normal distribution, which are the mean and the variance. The mean indicates which parameter value you deem most likely. The variance expresses how certain you are about that. We try 4 different prior specifications, for both the <span class="math inline">\(\beta_{age}\)</span> regression coefficient, and the <span class="math inline">\(\beta_{age^2}\)</span> coefficient.</p>
+<p>In Mplus, you can also manually specify your prior distributions. Be aware that usually, this has to be done BEFORE peeking at the data, otherwise you are double-dipping (!). In theory, you can specify your prior knowledge using any kind of distribution you like. However, if your prior distribution does not follow the same parametric form as your likelihood, calculating the model can be computationally intense. <em>Conjugate</em> priors avoid this issue, as they take on a functional form that is suitable for the model that you are constructing. For your normal linear regression model, conjugacy is reached if the priors for your regression parameters are specified using normal distributions (the residual variance receives an inverse gamma distribution, which is neglected here). In Mplus, you are quite flexible in the specification of informative priors.</p>
+<p>Let&#39;s re-specify the regression model of the exercise above, using conjugate priors. We leave the priors for the intercept and the residual variance untouched for the moment. Regarding your regression parameters, you need to specify the hyperparameters of their normal distribution, which are the mean and the variance. The mean indicates which parameter value you deem most likely. The variance expresses how certain you are about that. We try 4 different prior specifications (for now we only look at the priors for the regression coefficients and ignore the intercept and the error term), for both the <span class="math inline">\(\beta_{age}\)</span> regression coefficient, and the <span class="math inline">\(\beta_{age^2}\)</span> coefficient.</p>
 <p>First, we use the following prior specifications:</p>
-<p><em><span class="math inline">\(Age\)</span> ~ <span class="math inline">\(\mathcal{N}(3, 0.4)\)</span></em></p>
-<p><em><span class="math inline">\(Age^2\)</span> ~ <span class="math inline">\(\mathcal{N}(0, 0.1)\)</span></em></p>
-<p><em><span class="math inline">\(intercept\)</span> ~ <span class="math inline">\(\mathcal{N}(0, 10000)\)</span></em> (non-informative)</p>
-<p>In Blavaan, the priors are set in the model formulation step. Be careful, Stan uses standard deviations instead of variance in the normal distribution. The standard deviations is the square root of the variance, so a variance of 0.1 corresponds to a standard deviation of 0.316 and a variance of 0.4 corresponds to a standard deviation of 0.632.</p>
+<p><em><span class="math inline">\(Age\)</span> ~ N(3, 0.4)</em></p>
+<p><em><span class="math inline">\(Age^2\)</span> N(0, 0.1)</em></p>
+<p>In Mplus, the priors are set in the under the <code>MODEL PRIORS</code> command using the <code>~</code> sign and an <code>N</code> for a normal distribution</p>
 <p>The priors are presented in code as follows:</p>
-<pre class="r"><code>model.informative.priors1 &lt;- 
-                    '#the regression model with priors
-                    diff ~ prior(&quot;normal(3, 0.632)&quot;)*age + prior(&quot;normal(0, 0.316 )&quot;)*age2
+<pre class="r"><code>MODEL: 
+[diff] (intercept);       ! specify that we want an intercept
+diff ON Age (Beta_Age);   ! Regression coefficient 1
+diff ON Age2(Beta_Age2);  ! Regression coefficient 2 
+diff (e);                 ! Error variance
 
-                    #show that dependent variable has variance
-                    diff ~~ diff
 
-                    #we want to have an intercept (with normal prior)
-                    diff ~  prior(&quot;normal(0, 10000)&quot;)*1'</code></pre>
-<p>Now fit the model and request for summary statistics.</p>
-<p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>fit.bayes.infprior1 &lt;- blavaan(model  = model.informative.priors1, data = dataPHD,
-                               test   = &quot;none&quot;,  target = &quot;stan&quot;,
-                               burnin = 1000, sample = 5000, seed = 123,
-                               bcontrol = list(cores = 4))
-# instead of relying on the default settings, we now specify the number of iterations and length of burnin period</code></pre>
-<pre class="r"><code>summary(fit.bayes.infprior1, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.791    0.420      1.963      3.592    1.001
-##     age2               -0.027    0.004     -0.036     -0.018    1.001
-##     Prior       
-##                 
-##  normal(3,0.632)
-##  normal(0,0.316)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -49.884    8.869    -66.875    -32.229    1.001
-##     Prior       
-##  normal(0,10000)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.971   14.895     167.15    225.295    1.000
-##     Prior       
-##  gamma(1,.5)[sd]
-## 
-## R-Square:
-##                    Estimate  
-##     diff                0.068</code></pre>
-<p>[/expand]</p>
+MODEL PRIORS:
+  Beta_Age ~ N(3, .4);
+  Beta_Age2 ~ N(0, .1);</code></pre>
+<p>
+ 
+</p>
 <div id="question-fill-in-the-results-in-the-table-below" class="section level4">
 <h4><em><strong>Question</strong> Fill in the results in the table below:</em></h4>
-<table style="width:100%;">
-<colgroup>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-</colgroup>
+<table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(Age\)</span></th>
+<th>Age</th>
 <th>Default prior</th>
-<th><span class="math inline">\(\mathcal{N}(3, .4)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(3, 1000)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, .4)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+<th>N(3, 0.4)</th>
+<th>N(3, 1000)</th>
+<th>N(20, 0.4)</th>
+<th>N(20, 1000)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>1.303</td>
+<td>2.64</td>
 <td></td>
 <td></td>
 <td></td>
@@ -703,7 +556,7 @@ fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.367</td>
+<td>0.62</td>
 <td></td>
 <td></td>
 <td></td>
@@ -711,29 +564,21 @@ fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &
 </tr>
 </tbody>
 </table>
-<table style="width:100%;">
-<colgroup>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-</colgroup>
+<table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(Age^2\)</span></th>
+<th>Age squared</th>
 <th>Default prior</th>
-<th><span class="math inline">\(\mathcal{N}(0, .1)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(0, 1000)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, .1)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+<th>N(0, 0.1)</th>
+<th>N(0, 1000)</th>
+<th>N(20, 0.1)</th>
+<th>N(20, 1000)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>-0.012</td>
+<td>-0.026</td>
 <td></td>
 <td></td>
 <td></td>
@@ -741,7 +586,7 @@ fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.004</td>
+<td>0.007</td>
 <td></td>
 <td></td>
 <td></td>
@@ -750,67 +595,66 @@ fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &
 </tbody>
 </table>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<table style="width:100%;">
-<colgroup>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-</colgroup>
+<p>The results can again be found in the <code>MODEL RESULTS</code> table</p>
+<pre class="r"><code>MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DIFF       ON
+    AGE                2.794       0.460      0.000       1.863       3.697      *
+    AGE2              -0.027       0.005      0.000      -0.038      -0.017      *
+
+ Intercepts
+    DIFF             -50.109       9.537      0.000     -67.545     -30.948      *
+
+ Residual Variances
+    DIFF             198.178      16.947      0.000     171.160     232.840      *</code></pre>
+<table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(Age\)</span></th>
+<th>Age</th>
 <th>Default prior</th>
-<th><span class="math inline">\(\mathcal{N}(3, .4)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(3, 1000)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, .4)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+<th>N(3, 0.4)</th>
+<th>N(3, 1000)</th>
+<th>N(20, 0.4)</th>
+<th>N(20, 1000)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>1.303</td>
-<td>2.791</td>
+<td>2.64</td>
+<td>2.79</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.367</td>
-<td>0.42</td>
+<td>0.62</td>
+<td>0.46</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<table style="width:100%;">
-<colgroup>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-</colgroup>
+<table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(Age^2\)</span></th>
+<th>Age squared</th>
 <th>Default prior</th>
-<th><span class="math inline">\(\mathcal{N}(0, .1)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(0, 1000)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, .1)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+<th>N(0, 0.1)</th>
+<th>N(0, 1000)</th>
+<th>N(20, 0.1)</th>
+<th>N(20, 1000)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>-0.012</td>
+<td>-0.026</td>
 <td>-0.027</td>
 <td></td>
 <td></td>
@@ -818,8 +662,8 @@ fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.004</td>
-<td>0.004</td>
+<td>0.007</td>
+<td>0.005</td>
 <td></td>
 <td></td>
 <td></td>
@@ -827,298 +671,98 @@ fit.bayes_uninf &lt;- blavaan(model = model.regression, data = dataPHD, test = &
 </tbody>
 </table>
 <p>[/expand]</p>
-<p>Next, try to adapt the code, using the prior specifications of the other columns and then complete the table.</p>
+<p>Next, try to adapt the code, using the prior specifications of the other columns. Make the table complete after the different prior specifications were used.</p>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>model.informative.priors2 &lt;- 
-                    '#the regression model with priors
-                    diff ~ prior(&quot;normal(3, 31.6)&quot;)*age + prior(&quot;normal(0,  31.6)&quot;)*age2
-
-                    #show that dependent variable has variance
-                    diff ~~ diff
-
-                    #we want to have an intercept (with normal prior)
-                    diff ~ prior(&quot;normal(0, 10000)&quot;)*1'</code></pre>
-<pre class="r"><code>model.informative.priors3 &lt;- 
-                    '#the regression model with priors
-                    diff ~ prior(&quot;normal(20, 0.632)&quot;)*age + prior(&quot;normal(20, 0.316)&quot;)*age2
-
-                    #show that dependent variable has variance
-                    diff ~~ diff
-
-                    #we want to have an intercept (with normal prior)
-                    diff ~ prior(&quot;normal(0, 10000)&quot;)*1'</code></pre>
-<pre class="r"><code>model.informative.priors4 &lt;- 
-                    '#the regression model with priors
-                    diff ~ prior(&quot;normal(20, 31.6)&quot;)*age + prior(&quot;normal(20,  31.6)&quot;)*age2
-
-                    #show that dependent variable has variance
-                    diff ~~ diff
-
-                    #we want to have an intercept (with normal prior)
-                    diff ~ prior(&quot;normal(0, 10000)&quot;)*1'</code></pre>
-<pre class="r"><code>fit.bayes.infprior2 &lt;- blavaan(model = model.informative.priors2, data = dataPHD,  test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 12345, bcontrol = list(cores = 4))
-fit.bayes.infprior3 &lt;- blavaan(model = model.informative.priors3, data = dataPHD,  test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 12345, bcontrol = list(cores = 4))
-fit.bayes.infprior4 &lt;- blavaan(model = model.informative.priors4, data = dataPHD,  test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 12345, bcontrol = list(cores = 4))</code></pre>
-<pre class="r"><code>summary(fit.bayes.infprior2, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.664    0.586      1.507      3.816    1.001
-##     age2               -0.026    0.006     -0.038     -0.014    1.001
-##     Prior       
-##                 
-##   normal(3,31.6)
-##   normal(0,31.6)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -47.231   12.354    -71.444    -22.918    1.001
-##     Prior       
-##  normal(0,10000)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.934   15.095    166.871    226.205    1.001
-##     Prior       
-##  gamma(1,.5)[sd]
-## 
-## R-Square:
-##                    Estimate  
-##     diff                0.063</code></pre>
-<pre class="r"><code>summary(fit.bayes.infprior3, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                12.826    0.610      11.62     14.034    1.001
-##     age2               -0.130    0.006     -0.142     -0.117    1.001
-##     Prior        
-##                  
-##  normal(20,0.632)
-##  normal(20,0.316)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff             -260.252   12.937   -285.954   -234.898    1.001
-##     Prior        
-##   normal(0,10000)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              368.405   36.081    303.957    445.971    1.001
-##     Prior        
-##   gamma(1,.5)[sd]
-## 
-## R-Square:
-##                    Estimate  
-##     diff                0.435</code></pre>
-<pre class="r"><code>summary(fit.bayes.infprior4, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
-<pre><code>## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
-## 
-##   Number of observations                           333
-## 
-##   Number of missing patterns                         1
-## 
-##   Statistic                               
-##   Value                                   
-## 
-## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##   diff ~                                                             
-##     age                 2.653    0.580      1.519      3.779    1.001
-##     age2               -0.026    0.006     -0.038     -0.014    1.001
-##     Prior       
-##                 
-##  normal(20,31.6)
-##  normal(20,31.6)
-## 
-## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -47.004   12.205    -70.706    -23.033    1.001
-##     Prior       
-##  normal(0,10000)
-## 
-## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.701   14.774    166.904     224.64    1.000
-##     Prior       
-##  gamma(1,.5)[sd]
-## 
-## R-Square:
-##                    Estimate  
-##     diff                0.063</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-</colgroup>
+<p>You can change these lines of code in the Mplus input:</p>
+<pre class="r"><code>MODEL PRIORS:
+  Beta_Age ~ N(3, 0.4);
+  Beta_Age2 ~ N(0, 0.1);</code></pre>
+<pre class="r"><code>MODEL PRIORS:
+  Beta_Age ~ N(3, 1000);
+  Beta_Age2 ~ N(0, 1000);</code></pre>
+<pre class="r"><code>MODEL PRIORS:
+  Beta_Age ~ N(20, 0.4);
+  Beta_Age2 ~ N(20, 0.1);</code></pre>
+<table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(Age\)</span></th>
+<th>Age</th>
 <th>Default prior</th>
-<th><span class="math inline">\(\mathcal{N}(3, .4)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(3, 1000)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, .4)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+<th>N(3, 0.4)</th>
+<th>N(3, 1000)</th>
+<th>N(20, 0.4)</th>
+<th>N(20, 1000)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>1.303</td>
-<td>2.791</td>
-<td>2.664</td>
-<td>12.826</td>
-<td>2.653</td>
+<td>2.64</td>
+<td>2.79</td>
+<td>2.64</td>
+<td>13.78</td>
+<td>2.654</td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.367</td>
-<td>0.42</td>
-<td>0.586</td>
-<td>0.61</td>
-<td>0.58</td>
+<td>0.62</td>
+<td>0.46</td>
+<td>0.62</td>
+<td>0.73</td>
+<td>0.62</td>
 </tr>
 </tbody>
 </table>
-<table style="width:100%;">
-<colgroup>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-</colgroup>
+<table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(Age^2\)</span></th>
+<th>Age squared</th>
 <th>Default prior</th>
-<th><span class="math inline">\(\mathcal{N}(0, .1)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(0, 1000)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, .1)\)</span></th>
-<th><span class="math inline">\(\mathcal{N}(20, 1000)\)</span></th>
+<th>N(0, 0.1)</th>
+<th>N(0, 1000)</th>
+<th>N(20, 0.1)</th>
+<th>N(20, 1000)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Posterior mean</td>
-<td>-0.012</td>
+<td>-0.026</td>
 <td>-0.027</td>
 <td>-0.026</td>
-<td>-0.13</td>
+<td>-0.14</td>
 <td>-0.026</td>
 </tr>
 <tr class="even">
 <td>Posterior sd</td>
-<td>0.004</td>
-<td>0.004</td>
-<td>0.006</td>
-<td>0.006</td>
-<td>0.006</td>
+<td>0.007</td>
+<td>0.005</td>
+<td>0.007</td>
+<td>0.008</td>
+<td>0.007</td>
 </tr>
 </tbody>
 </table>
 <p>[/expand]</p>
+<p>
+ 
+</p>
 </div>
 <div id="question-compare-the-results-over-the-different-prior-specifications.-are-the-results-comparable-with-the-default-model" class="section level4">
 <h4><em><strong>Question</strong>: Compare the results over the different prior specifications. Are the results comparable with the default model?</em></h4>
 </div>
 <div id="question-do-we-end-up-with-similar-conclusions-using-different-prior-specifications" class="section level4">
 <h4><em><strong>Question</strong>: Do we end up with similar conclusions, using different prior specifications?</em></h4>
-<p>To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. (<span class="math inline">\(bias= 100*\frac{(model \; informative \; priors\; - \; model \; uninformed \;priors)}{model \; uninformative \; priors}\)</span>). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model with the model that uses the <span class="math inline">\(\mathcal{N}(20, .4)\)</span> and <span class="math inline">\(\mathcal{N}(20, .1)\)</span> priors. Copy Paste the following code to R:</p>
-<pre class="r"><code>#1) ask for the posterior means
-posterior_mean &lt;- blavInspect(fit.bayes, what = &quot;postmean&quot;)
-posterior_mean_informative &lt;- blavInspect(fit.bayes.infprior3, what = &quot;postmean&quot;)
-
-#2) ask for the mean (estimate) of the regression coefficients
-estimatesuninformative &lt;- posterior_mean[1:2]
-estimatesinformative   &lt;- posterior_mean_informative[1:2]
-
-#3) calculate the bias
-round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)</code></pre>
-<p>The <code>diff~age</code> and <code>diff~age2</code> indices stand for the <span class="math inline">\(\beta_{age}\)</span> and <span class="math inline">\(\beta_{age^2}\)</span> respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan These are just the labels Stan gives to the parameters and Blavaan doesn’t really translate them back to the input names we gave them.</p>
-<!-- There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects.  -->
-<p>We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age <span class="math inline">\(\beta_{age}\)</span>.</p>
-<p>First we extract the MCMC chains of the 5 different models for only this one parameter (<span class="math inline">\(\beta_{age}\)</span>=<code>bet_sign[1]</code>). Copy-paste the following code to R:</p>
-<p>[expand title=“Show Syntax” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>posterior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; = enframe(as.matrix(blavInspect(fit.bayes, what=&quot;mcmc&quot;))[,'bet_sign[1]']),
-                                &quot;informative prior 1&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior1, what=&quot;mcmc&quot;))[,'bet_sign[1]']),
-                                &quot;informative prior 2&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior2, what=&quot;mcmc&quot;))[,'bet_sign[1]']),
-                                &quot;informative prior 3&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior3, what=&quot;mcmc&quot;))[,'bet_sign[1]']),
-                                &quot;informative prior 4&quot; = enframe(as.matrix(blavInspect(fit.bayes.infprior4, what=&quot;mcmc&quot;))[,'bet_sign[1]']),
-                                .id = &quot;id1&quot;)  
-
-prior1.2.3.4.5 &lt;- bind_rows(&quot;uninformative prior&quot; = enframe(rnorm(10000, mean=0, sd=sqrt(1/1e-2))),
-                            &quot;informative prior 1&quot; = enframe(rnorm(10000, mean=3, sd=sqrt(0.4))),
-                            &quot;informative prior 2&quot; = enframe(rnorm(10000, mean=3, sd=sqrt(1000))),
-                            &quot;informative prior 3&quot; = enframe(rnorm(10000, mean=20, sd=sqrt(0.4))),
-                            &quot;informative prior 4&quot; = enframe(rnorm(10000, mean=20, sd=sqrt(1000))),
-                          .id= &quot;id1&quot;)# here we sample a large number of values from the prior distributions to be able to plot them.
-
-priors.posterior &lt;- bind_rows(&quot;posterior&quot; = posterior1.2.3.4.5, &quot;prior&quot; = prior1.2.3.4.5,  .id = &quot;id2&quot;)</code></pre>
-<p><em>In older versions of Blavaan, please use <code>beta[1,2,1]</code> instead of <code>bet_sign[1]</code> to select the right posterior</em></p>
-<p>[/expand]</p>
-<p>Then, we can plot the different posteriors and priors by using the following code:</p>
-<p>[expand title=“Show Syntax” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>ggplot(data    = priors.posterior, 
-       mapping = aes(x        = value,
-                     fill     = id1,
-                     colour   = id2,
-                     linetype = id2, 
-                     alpha    = id2))+
-  geom_density(size = 1)+
-  scale_x_continuous(limits  = c(0, 23))+
-  scale_colour_manual(name   = 'Posterior/Prior', values = c(&quot;black&quot;,&quot;red&quot;),    labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
-  scale_linetype_manual(name = 'Posterior/Prior', values = c(&quot;solid&quot;,&quot;dotted&quot;), labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
-  scale_alpha_discrete(name  = 'Posterior/Prior', range  = c(.7,.3),            labels = c(&quot;posterior&quot;, &quot;prior&quot;))+
-  scale_fill_manual(name = &quot;Densities&quot;, values = c(&quot;Yellow&quot;,&quot;darkred&quot;,&quot;blue&quot;, &quot;green&quot;, &quot;pink&quot;))+
-  labs(title    = expression(&quot;Influence of (Informative) Priors on&quot; ~ beta[Age]), 
-       subtitle = &quot;5 different densities of priors and posteriors&quot;)</code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIAAAAKgCAMAAADUCvZkAAACnVBMVEUAAAAAADoAAGYAAP8AOjoAOmYAOpAATQAAZpAAZrYAswAA/wAdswAkugArb58ucqIxfq4yyA8yyBUzMzMzyQQzyQY0swA0ygU0ygc0yhA0yhc1TX06AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kJA6kLY6kNtGRvlG+UZMTP9NOj1NTQBNTU1NTW5NTY5NbqtNcD1NjshgyT1hcD1lnYVlzj9lzkJlzz9mAABmADpmAGZmOgBmOjpmOmZmOpBmZjpmZmZmkJBmkNtmtrZmtttmtv9mvD1ouj1qOj1rh6xrpIxtiq5uTU1uTW5uTY5ubqtuq8huq+RvwT9vwURvwj9wxkhxxkBxx0FycJVyv6h8TTZ8ybKCtz2LAACOTU2OTW6OTY6ObquOyP+QOgCQOjqQOmaQZgCQZjqQZmaQkDqQkGaQkLaQtpCQttuQv3KQ27aQ29uQ2/+UqJqYrJ+ayXykpPGk8aSrbk2rbm6rbo6rjk2ryKur5P+sShWyTQCysv+yv42y/7Kzh46zvI60wXW2ZgC2Zjq2kDq2tpC2ttu225C227a229u22/+2/9u2//+4cD24xnq4xpS+vo6/4rDCvI7CwpPCwpXCw5DCw5XIjk3I///JcD3KmKDKqKDMwqDQqKDQw6DRwqDRxKHRxKPSv6DUvaDUwaHUwaPUwaTUwaXUwqLavaDbkDrbkGbbtmbbtpDb25Db27bb29vb/7bb/9vb///drLDgr43kq27k///nOj3ntrrowLjr6+vx3uHx8aTy8vL1usP14rD5zdX5+Ub7ydL7+zH/AAD/Oj3/mKD/tmb/wMv/yI7/09r/25D/27b/29v/5Kv/7O///wD//zX//0z//7L//7b//8j//9v//+T///8neGZSAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2djb9lV3nX94ww4Y6BYrgTUrhJbdraiwwXEpDWSaJtVW5rMAVDpbUUA2ZiFeTFwQ6pdkzSlKsVSwepNMqE9AVogeZK1WYgKQSpNDkz1+Smg8Cdyflb3Gutvc/ZL2vtt/U8a6/n7N/3w8w+r7+z5slZX9bLOWcncwAAGIlk7AYAAKYLBAQAGA0ICAAwGhAQAGA0ICAAwGhAQACA0YCAAACjAQEBAEYDAgIAjEZ/AV05eeR88fq/T5IX3Va+aRhp0FoWc3DLKcvLrHV9kf2/fbbWzJydzcXF3UTzwvfnN7ieAwDgwVtAe2kXfhFFx1VBa9nl1BKWl1mzPc3G7mG3gPavP7V4WJKxnd3gJaD925LkB+EvAPpAIKBtmpHD3sID8726QAr3tqME5GRnrfKwLyUU456DEz98/jmMoADoxTABpX9+/fuSQ3837c7pAOLwb5qbzqs7Vfd+Lh0MfP/H9EOzh6XdfCN5oR575HdmqKsv/FgWdDZ7hTXry5xdPDh9xG5y+Nc3Nr+0kd67t2GGHl/6vkQ9+MrJ9MGb6vnGMAcn1oqvuhwC5Z7aOXzWBP6G/jeUX+RjV/55mvqmWnuL/zaFkuZ879BieAUAaGeogPK5i01A+xvqvrQvLh+mp1DqpuWdhr38akFA+xvb1pc5u7cMfsFGcuR/bPxAesOh922Y6Vk2o9peCkgH6cFT4VWNIxUlAanAx9S/ofIij50szdL2LP+2Zdhe09ALAFBlsIDWzqc9fm05BVsK6MpJNWD44w11KX9YetupdK6zWbgzC0vepNShOn65L1tfJn9wemlTu+xNaWh6cX9D3Xb4Y+q2teUakGmT9kvhVXdySyymYLqlm4vXrLzID503qeX2Ftq2DNvtvEwFAJgPF5DqbnpuUxfQ/obeaNpV/T5/WHbbvHBndtU4IdXTUkA7Jqn2MssHmzv09YMT6aOzBaP/9ev/YiMpCGi+m+YWXt686m4+/MoXofV4Jpde/UVe8Hd+Y/GPr96r22bC0nHgCwpTSwBAO4PXgPL5Vl1Ae4t+XZRSZpflnfpqdvteUUD5s2ovs3ywuUNrxShAOctMs0oCUo9Qzyy96uKFMgFlq1XncwGVX0TP/pIfzMxSvbcynytssQEA2lkdAR2cSH7gX/7HPzlRFJD6S824HAJartg0CGj+x7dVlqfcAjKDt4NboCEAOkEmILO0YuY75c/VFKZl88Kd2dX6FKxBQMv5T11AJrm0BqSmWx88sVZ51TYBlV9E8z9/MXtO9d6qgMxS9E8sP+wIAGiAUECJ3gHXC87vn8+fO6nWgAoL06fm+yfUM/M7szDLIvSOQ0DFFWCbgNbOq03ybOknf8hPJHpLrfCqyzUgm4CqL7KX/HA6kvoP2XOq99YEpIZd93zwx9Q46ETywr+llqASbI0B4IBOQHqa88Lb1hbTrM156WHF/Xh1p2GxrV3cBVNXLS9T3AOvCyjfF1cCyrbhtTB09y++anUXLP9HZX9XXiSLzQdDtXsXAjqUiuqP1Uhr/8bzO9v609xqZpkesDcGgAM6Ac3/+0byg4/pDqm+lfCCN81LnfRLG9nH+fI7M/azD/YVBFT4HFBZQIsHWxeh9UcE36/0cnBbsvaYmUDl++TLV61/DmheElDlReb6g4g/dL7a3voI6D/dZl5hNzXP2vzg1nQaeM8ptR6kLgIALMT4bfhlr+aAaadqYTM9ZDp8Nh0HaQGdKH7sEgBQIkYB8X6jYYfHbgsBKfPMd7bzERBGPwC4iVJAxd/MoIbrozq7+SrRrv76x1phDWgPX1EFwE6cAmL8JA2X23Yyy1z5Z/oLsLeoydeL7tG7YJiBAeAgTgGtCPs3YP4FQBMQEBNqLRpDHwCagYAAAKMBAQEARgMCAgCMBgQEABgNCAgAMBoQEABgNCAgAMBoQEAAgNGAgAAAowEBAQBGAwICAIwGBAQAGI0BAtLn3yr8xM3e4bPqR3Z2k0Ondtu+f/lc4cx9DecxVnnpQ9t+u8f2cr1/76ftdMrPVU42iHN/AUDGAAFVf1/L9OCDE9v6TyOlztvc8zv089aX60SLgOAbAPgYIKDqSR5MD1YdtbWz0gqIxg0QEACjMUBAxd8UVL/39141BXtfOi97wUaiTwumzyO6f8N7EnVmMHNF37+tJm+bxefNy/dn07vt7Pqm6vzZI/J7NOq2NX2LduH+9e/Vc0L9kh/NnqNOR6ibUHyivry5fLm8GYWQ/MnZC5omF/9NjS8AAOhDfwEdnPirizMVH5zYTP/oNaB8BKRPabGbnWF0eUWdrcusFRWfZ71/f2N7mbd4RHaPerY50+HaYnCyv2GS9EtmzyleXzxRz9nUy2QvlzejGFIKN00p/5uaXgAA0Iv+AtJn48p+bFRPX3ZLAtozZ2je1l2ydCV7UPF5tfuz3zBd5i0eUfh1U33b3lJni2dnx8X9+nrhiX9xfl5/4G4uoMqTl02p/TOcLwAA6MXAbfhs/VefCiLtgQUB7WbnINV2KF0pCCh/XvX++U42/Vnk5Y/I71HoVfBCmj4qP2Qp5fsLTzRnSD10Kn9g3oxiSP7kQlNq/4yGFwAA9IBeQNkemRFQ8YpNQJX7dXJSHFHtLrfcFmdZ7yegwhMPThw6tbijTUDLptT+Gc4XAAD0or+AzHzEnDenMBlaTMEOFaxQulKdgqV/Ve/XV4xK8ilY8ZM+mfb0bbUp2A1nF36o3L98ohLH3nIElDejGJI/udCU2j/D+QIAgF4MOTf89uKzQOrE7LVF6PSuvJOXrqR/5f00f171ft3xTZh6qF7vNY/I7zEtcCxCZyml+4tPVOLY3yg2Z825CJ0/T7Wj2kznCwAAejFgCqZOd55PjBbb8AsB5eejMV2yeMUsrKwVn1e736zR5A/dz3a89YCjcI71fBd8MQV77/J6/pzF/cUn7qQXP7icq9W24deW4Yvn7WQfLSg20/kCAIA+rMJ3wUiGHxjDABAeCIgyBADQCwiIMgQA0ItVEBAAQCgQEABgNCAgAMBoNAro0lvOmeMdW1t3B2kOAGBKNAnoma3XaQFdfteZ+aWfPhOmQQCA6dAgoE+99lfMCOiZ16trGAIBAIjpNAWbm1HQfP6yFO4WAQAmQ0cBPX/vnfmNT3amx0P7wxmO7MDhyKYOZ5UGJd0EdPmuhX8goGlmi2241GwIqLgLVlgAClTBMcORHTgc2dThrNKgpIuASv6BgKaZLbbhUrMhICOg9M/jW4pcQoEqOGY4sgOHI5s6PIA6aOj/SehAFRwzHNmBw5FNHc6gCh4gIGSPH45s6nAGVfAAASF7/HBkU4czqIIHCAjZ44cjmzqcQRU8QEDIHj8c2dThDKrgAQJC9vjhyKYOZ1AFDxAQsscPRzZ1OIMqeICAkD1+OLKpwxlUwQMEhOzxw5FNHc6gCh4gIGSPH45s6nAGVfAAASF7/HBkU4czqIIHCAjZ44cjmzqcQRU8QEDIHj8c2dThDKrgAQJC9vjhyKYOZ1AFDxAQsscPRzZ1OIMqeICAkD1+OLKpwxlUwQMEhOzxw5FNHc6gCh4gIGSPH45s6nAGVfAAASF7/HBkU4czqIIHCAjZ44cjmzqcQRU8xCSgJOlT4Z7hfUB24HBkU4czqIKHuASU8IX3AdmBw5FNHc6gCh4gIGSPH45s6nAGVfAQkYCS5Js9DCT1fSU1W2zDpWZDQA7YKggBxZwttuFSsyEgB2wVhIBizhbbcKnZEJADrgqm/oGA4s0W23Cp2RCQA64KQkBRZ4ttuNRsCMgBVwUhoKizxTZcajYE5ICrghBQ1NliGy41GwJywFVBJaAeBpL6vpKaLbbhUrMhIAdcFYSAos4W23Cp2RCQA64KQkBRZ4ttuNRsCMgBVwUhoKizxTZcajYE5ICpgto/EFC02WIbLjUbAnLAVEEIKO5ssQ2Xmg0BOWCqIAQUd7bYhkvNhoAcMFXQCKi7gaS+r6Rmi2241GwIyAFTBSGguLPFNlxqNgTkgKmCEFDc2WIbLjUbAnLAVEEIKO5ssQ2Xmg0BOeCpYOYfCCjWbLENl5oNATngqSAEFHm22IZLzYaAHPBUEAKKPFtsw6VmQ0AOeCoIAUWeLbbhUrMhIAc8FYSAIs8W23Cp2RCQA54KQkCRZ4ttuNRsCMgBTwUhoMizxTZcajYE5ICnghBQ5NliGy41GwJywFNBCCjybLENl5oNATngqSAEFHm22IZLzYaAHPBUMBdQZwNJfV9JzRbbcKnZEJADngpCQJFni2241GwIyAFPBSGgyLPFNlxqNgTkgKeCEFDk2WIbLjUbAnLAU0EIKPJssQ2Xmg0BOeCpIAQUebbYhkvNhoAc8FQQAoo8W2zDpWZDQA54KggBRZ4ttuFSsyEgBzwVhIAizxbbcKnZEJADngpCQJFni2241GwIyAFPBSGgyLPFNlxqNgQUlCR51pDE0iIAADsYASF7/HBkU4czqIIHCAjZ44cjmzqcQRU8QEDIHj8c2dThDKrgIToBdTWQ1PeV1GyxDZeaDQE54KkgBBR5ttiGS82GgBzwVBACijxbbMOlZkNADngqCAFFni224VKzISAHLBVc+gcCijNbbMOlZkNADlgqCAHFni224VKzISAHLBWEgGLPFttwqdkQkAOWCkJAsWeLbbjUbAjIAUsFIaDYs8U2XGo2BOSApYIQUOzZYhsuNRsCcsBSQQgo9myxDZeaDQE5YKkgBBR7ttiGS82GgBywVBACij1bbMOlZkNADlgqCAHFni224VKzISAHLBWEgGLPFttwqdkQkAOWCkJAsWeLbbjUbAjIAUsFIaDYs8U2XGo2BOSApYIQUOzZYhsuNRsCcsBSQQgo9myxDZeaDQE5YKkgBBR7ttiGS82GgBywVBACij1bbMOlZkNADlgqCAHFni224VKzISAHLBWEgGLPFttwqdkQkAOOChb8AwHFmS224VKzISAHHBWEgKLPFttwqdkQkAOOCkJA0WeLbbjUbAjIAUcFIaDos8U2XGo2BOSAo4IQUPTZYhsuNRsCcsBRQQgo+myxDZeaDQE54KggBBR9ttiGS82GgBxwVBACij5bbMOlZkNADjgqCAFFny224VKzISAHHBWEgKLPFttwqdkQkAOOCkJA0WeLbbjUbAjIAUcFIaDos8U2XGo2BOSAo4IQUPTZYhsuNRsCcsBRQQgo+myxDZeaDQE54KggBBR9ttiGS82GgBxwVLAooI4Gkvq+kpottuFSsyEgBxwVhICizxbbcKnZEJADjgpCQNFni2241GwIyAFHBSGg6LPFNlxqNgTkgKGCJf9AQFFmi2241GwIyAFDBSGg+LPFNlxqNgTkgKGCEFD82WIbLjUbAnLAUEEIKP5ssQ2Xmg0BOWCoIAQUf7bYhkvNhoAcMFQQAoo/W2zDpWZDQA4YKggBxZ8ttuFSsyEgBwwVhIDizxbbcKnZEJADhgr6CqjTE3og9T0bb39AduBwBlXwsAoCSjp+gb4zUt+z8fYHZAcOZ1AFDxBQczY5UrPFNlxqNgTkgKGCfgJKkj8nNpDU92y8/QHZgcMZVMGDfAElEFCIbLENl5oNATlgqKCngP78z4kNJPU9G29/QHbgcAZV8BChgLoZCAIKmy224VKzISAHDBWEgOLPFttwqdkQkAOGCkJA8WeLbbjUbAjIAUMFIaD4s8U2XGo2BHT5rq2bntCXLt2x9bpz+c0MFYSA4s8W23Cp2ZMX0PP33j1//PXq0uW70kuZizgEVPFPPwFp/0BA7NliGy41e/ICuvzuc/NLb1EDn0tvfWJ++V1nstvpKwgBCcgW23Cp2ZMX0FI7y0svS2FoQ/JsiaTPwlSSfCel11MAAJHg7rjP3JRrR0/BXnsmu51e4RgBCcgW23Cp2RgBLSdel+7Y+oe/fCa7nb6CBAKiNZDU92y8/QHZgcP5zUFElzWg/JqBvoI+Asr8AwFxZ4ttuNTsyQvo+XvvzHfB0nGQuaSgryAEJCBbbMOlZk9eQNnngNQg6JmtrcUuPAQ0zWyxDZeaDQE5oK8gBCQgW2zDpWZDQA7oK+ghoNw/EBB3ttiGS82GgBzQVxACEpAttuFSsyEgB/QVpBAQqYGkvmfj7Q/IDhzOoAoeICBnNg9Ss8U2XGo2BOSAvoJVAXUyEAQUNltsw6VmQ0AO6Cs4XEBL/0BAzNliGy41GwJyQF9BCEhAttiGS82GgBzQVxACEpAttuFSsyEgB/QVhIAEZIttuNRsCMgBeQVr/uksoIJ/SA0k9T0bb39AduBwBlXwAAE5srmQmi224VKzISAH5BWEgCRki2241GwIyAF5BSEgCdliGy41GwJyQF5BCEhCttiGS82GgByQVxACkpAttuFSsyEgB+QVhIAkZIttuNRsCMgBeQUhIAnZYhsuNRsCckBeQSIBERpI6ns23v6A7MDhDKrgAQJyZHMhNVtsw6VmQ0AOyCsIAUnIFttwqdkQkAPyCkJAErLFNlxqNgTkgLyCgwVU9g8EFHF/QHbgcAZV8BClgLoYCAIKmy224VKzISAH5BWEgCRki2241GwIyAF5BSEgCdliGy41GwJyQF5BKgHRGUjqezbe/oDswOEMquABArJnsyE1W2zDpWZDQA7IKwgBScgW23Cp2RwCunIyURw6Vb/ruY+Vr+9fX33Q/o2PlZ9ef8gAICB7NhtSs8U2XGo2j4A21WH38NnqPR1ksrvpfvpwICB7NhtSs8U2XGo2o4AOTmxX7+kgoJ1t99OHAwHZs9mQmi224VKzmQWkZmNr6eX9jXRSta3+3tS3paOb/Rvekxz+aGqk7DH6+tmDW88un25/yMQEVPUPBBRvf0B24PBGAe0cTl2yNld/9Mhnf2N7X8skVcnukfP7G2t6SLR4jLo+31srPN3+EAioe9tasvmQmi224VKzGReh07HKnhqvpH/t32DGLUpA+jY1vNnY1jcsHqOuz3c3C0+3PwQC6t62lmw+pGaLbbjUbMYRUMrekfPGOjvZTCy9uKv1kmyaUVFql+wx+vqVe04Vnm59yCAgIGs2H1KzxTZcanYgAakxTzqm0QJSt80ddjn4sfMQUDkcAgqZLbbhUrOZBaQ+zLOXrRuraZeagmUf8FnYJXuMvr63NrcJqPiQQUBA1mw+pGaLbbjUbF4B5avH2kGpPszGWDqeSZWS26W0UL2zbRNQ6SGDgICs2XxIzRbbcKnZvAJabMPvZR9t3knW9G3p5dwuiz12dfGeUzYBFR8yDAjIms2H1GyxDZeaje+COSCvIAQkIVtsw6VmQ0AOyCtoEVAHA81r/oGA4u0PyA4czqAKHlZJQGQGkvqejbc/IDtwOIMqeICAbNk0MSuVLbbhUrMhIAfUFbT5BwKKLltsw6VmQ0AOqCsIAYnIFttwqdkQkAPqCkJAIrLFNlxqNgTkgLqCEJCIbLENl5oNATmgriAEJCJbbMOlZnMIKLHyDU+HeAEB2bJpYlYqW2zDpWZDQA6oKwgBicgW23Cp2TwC+kYNCIhOQFQGkvqejbc/IDtwuKO3Q0B1ICAR2WIbLjUbAnJAXUEISES22IZLzYaAHFBXcKCAbP6BgISGI5s63NHbIaA6EJCIbLENl5odiYDy02bYrlEAAVmQ+p6Ntz8gO3C4o7f7CogeCMiC1PdsvP0B2YHDHb29UUAHt75H/zqrPk2G/rHWw2f1ZXPD/vffdvijqY6W1yjUBAFZkPqejbc/IDtwuKO3NwvoxJHz6kfqdzbVWXsObj07313TI6D0BnVpYzu/tqdOn0pzgngIyILU92y8/QHZgcMdvb1FQNvqx+eVeQ5uOZX+T92YKkddSm9U8lHXzN1UUzMIyILU92y8/QHZgcMdvb1ZQLfo0+8otaiTYOxv6FNk3KBmYOpsGZmAsrtXRkBW/wwVEJGBpL5n4+0PyA4c7ujtrQJajoDULWqqZcY8c7McHcMIiJgkedZC0tquJPmOhfbnATBZ2qZga/qUzWaRR10yAspXfYyACtdImtT7GcQKxwhIRrbYhkvNHmME9OPFXbAdtQs2v3JS74KZyZj+k+2CQUAQUMhssQ2Xmj3SGlBoICALUt+z8fYHZAcOd/R2CKjGQAHZ/QMByQxHNnW4o7fju2A1ICAZ2WIbLjWbR0D4RcQqEJCMbLENl5oNATkgriAEJCNbbMOlZnMIaF6fgSn8FOIHBGRB6ns23v6A7MDhDKrgAQKyIPU9G29/QHbgcHvfnaWoIU/l6OkQLyAgC1Lfs/H2B2QHDrf3XQioDgQkI1tsw6VmYw3IAXEFaQVEYyCp79l4+wOyA4c7Oi8EVAMCkpEttuFSs3mmYHX7pLd5OsQLCMiC1PdsvP0B2YHD7X0XAqph9w8EFF222IZLzYaAHNBWEAISki224VKzRxUQ97kwlkQqoFYDQUCBs8U2XGo2FqEd0FYQAhKSLbbhUrPDCyg7LQ/P6XdcQEADGz61bLENl5o9goDMaXl4Tr/jAgIa2PCpZYttuNTsMQS0nZ/vgv7H511AQAMbPrVssQ2Xmh1+EbpwWh760++4gIAGNnxq2WIbLjV7HAFhBAQBxZkttuFSs0cQkDktD8/pd1xAQAMbPrVssQ2Xmj3GCOjH+U6/4wICGtjwqWWLbbjU7BEWoad4VgxqAZEYSOp7Nt7+gOzA4Y7OCwFVgYCEZIttuNRsfBLaAW0FISAh2WIbLjWbRUD2n0T0U4gfENDAhk8tW2zDpWZDQA5oKzhQQEnyHQgoaLbYhkvNxhTMAW0FISAh2WIbLjWbRUDxMbKAXP6BgGLLFttwqdkQkAPSCkJAUrLFNlxqNgTkgLSCfgKyLURDQALDkU0dzqAKHgQLKEnMVlgCAQXIFttwqdkQkAPSCnoIKCkAAbFnL8NpTv5oz2ZAajYE5IC0gsMFlEBAQbMX4brgTNkcSM2GgByQVtApoBYDqU5w9Kj6+9+lFA0EATGHQ0BhsiEgB6QV9BDQ0aPHjmUGgoD4s/PwJHnVq15FbSCpRYGAvBEsoGOKmoEgINbwJBNQwpDNg9RsCMgBaQUHCihZCMgYCAJiz14I6FWvoh8CSS0KBOSNXAEdO2Y1EATEGp4JiNhAUosCAXkjVkBHjxUNBAFxZ0NAgbMhIAekFaQQ0DEIKEC2Cc/9Q2wgqUWBgLxZBQEdK34UCALiDIeAgmVDQA5IKwgBScmuCojUQFKLAgF5sxICOgYBsWfr8IJ/ICDmbAjIAWkFBwvo6HUQUNBsCChwNgTkgLKCbv/0E1DBQBAQY3hRQJQGkloUCMibFRLQbAYBMYdDQOGyISAHlBWkFNAMAoKAVigbAnJAWcGBAlLfRK0J6Omnn4aAmMMhoHDZEJADygoOF9AxCChsNgQUOBsCckBZQUoBZQaCgBjDIaBw2RCQA8oKUgvoaQiINbwkIEIDCS3KDALyZkUElM3BZjMIiDMcAiowm83uP80V/iQE5IKygoMFdKwsoGuvzUZAsxkExBde9g8EdPr+04wGmp6ADk4cOtX+DMoKDhOQ/h6GS0AUQyCR/YE5GwKqcToV0GzGFj89Ac3nO0ly5HzLMygrSC6gp5+GgPjCKwKiM5DMohgBsRloigJSo6Ak2Wx8BmUFGwTUYKC6gI6t56vQEBBjOARU5LQSEOMQaJoCMgo6fNb9DMoK0gloHQKCgMJmGwHxrQJNU0C7SbKWTsUaJmKUFWQQ0NMQEFs4BFQEAqKgJKArJ5NkW13YaxgCUVZwkIDMbwFdV/YPBMScnYZX/UNnIIFFmc1yAXEZaHoCOjhR8s7lu7ZuekJfev7erdeeyW+mrCCRgK69diEgkn14gf2BPRsCKlMQEJOBGASkRhiJnuM42b/+1Py5j+lDEMoCKg5/nr/37vnjr9d3fOru+TOZi2IXkDJQ9xYObvj0siGgEto/mYCY1qFZBLSp/27e6g4mH4VbQJfffW5+6S3nsktLKCtIIyDlH2UgCIgxGwIqc1qugPKO7mIkAe0mOWaEdumtT8wvv+uMvvRvsynYy1JIXz151kni+pC2+jGgMi9XpA3/tsL5POBJkry6ynSLff+S2WzsxnQlE9B8d81Mx9Khxv7179vQK7/76SE9muubSkLZI/J7eLCMgDLUpCsT0B13ax0ZKBVONAVbXy+sQr/G9TzKhk8v2zoCohoCySvK6cIIiGkRiG8ENN87cv7KyVRCu0fO72+k87Hdw2f1sGd/Yzs9qovpn8Ujsnvo5aNw/z9YcQSUX1JQVnCggI5BQMGzn5xb/AMBCRXQ4bN6oSUdcmizKOvcYDaglgJaPOKGhk8FerMQUPpK6iOIitoa0D+NW0DrEBB/NgRUwCxBCxbQkfPZisumGd+kf+2YtZelgPJH5PcwC6jG8/feWdgFi2oKVhaQWYNerEJDQEzhNgERGUhaUaoCYjEQo4B21tTcSl9cCEh/B0JPxXIBLffK9D3+srHRsIhoPgekBkHppdctNsIoK8ghIII9CWn9IUQ2BFRAuIDUYu9e9ssXBQGZCddyClb8bYyWjbPhlARkpmEtrqOsIIWAcv8sRkD+BpLWH0JkQ0BFTpcFxLIRz/s5IP1X6phcQHrFx9hHyUYvQptH5PdQKadMSUBqZHb47G7zhI+ygiQjoPX18iIQBMQTDgEtESugbFknu3zo1HIEtJcsru8ka/k2vBoFZffwUNmGV1tvTV8EmwsQkP8ikLj+ECDbtgkPAQkTUIRUBHRwYjN2AZmPATUJ6DXdmzi04dPLhoCKVATEsgg0PQGlM0S18LQT9xTMKaB1CIgxGwIqcBoCoqK0BrS/kaw1/haQgrKCEJCYbAhoSb4JVhAQg4EmKKBOUFaQQECLTTAICAIKlA0B0RGvgFwGaheQ95KgsP4QJBsCWrDwDwTkT3UKtvwqhgvKCkJAYrLt/iEykLCinK4LiGEfbHoC0l9/bYWyggMElPqnvAa0DgGFyIaAlkBAdLh/jsMFYQUb/eMW0M1XIGMAACAASURBVNUtAnrN/+7exmENn2A2BLRErIASK9+gEMlQyiMgCKhbwyeYDQEtOG0REMMi0PQE1PYRRANhBSkEtA4BBcmGgBZIFtD/qxGRgMq/B+SCsIIDBXSsVUCeBpLVH8JkQ0AZyz0wCIiAUbfh/QVU2AODgEYREImBJBUFAiJFmoDyTbBGAfmuCErqD6GyIaAMl4DIDTRFAe0myfZuuK9iEAvoqDEQBMQBBJRz2iog+m2wCQpo58ifmF/kaIKwgsMEdHVxDWh9vTYEgoA4gIByICBKaj/HsR3w5zh4BOS/DSaqPwTKhoByVlZAy9NfXDlpfrTMRfrIxnNl2O50PAECGtLwCWZDQBmn7QJaqTWgtjPxDDhTz55jc700BdtVUzD1m2RNEFbQX0DrEFCY7CR5tUNAFAaSVJTVFZAa19z4i0mifhj+0Cnz6/D733/b4d+8571Jsrmnf8pVfV1U/3D8R2/46I3n51fuObX4FfmDW9+jf9M1fcZHU0Etn6/u3Tn0vvYRkPn11+bBV1wCKq1BQ0AQEH92cRNsBQW0salOGqZGODvm0sa2/o7o/saauv/gllPZ/Gv/ht+8J7184/n0ceZX5A9OHDmfzp7UM8rPX6S3C6gLhBVkE5DnhFxQfwiVDQFlrLiAUkuYw8Gt6SDmFn3C1HSYo/8o+yjR3GoEdHY3Vc+mulE91nyVNH1YFlF4/uoKqOIfsn14Qf0hVDYElDEVAWXmqQloR31TInvIjY/pGVh2zgxz9/YyIn9+NwHl38OI+6sYyj+FEdA6BBQoGwLKca0BkW+DxTgC0qcMywV15Z733XjejH7mmYA8R0C72enom/wTs4AWHwTy/C6GpP4QKBsCypmIgPI1nLKA9P3Xn8oesqvWi83jlIBOrOXPKD+/s4Ay9cS8Db+YgUFAYbMbBERgIElFmYqAsl2syhRsN0leeNv2lZN6o0uf1FBvmWl93PLjehcsE9Dy+dEKqNk/EFBE2UnyKgjI4BIQ+SKQtE9CZ2vUPbFNwUJ9DqhFQDYDdRaQl4Ek9Ycw2RBQzmkIyAGBgMzngFp+FpGugv0FpL6KWhBQdRcMAuICAsoobYJBQP6MuQ1PLyCzDZYKyG9CLqc/hMqGgDKkCyjun2TtBF0FfQVU889SQH4GktMfQmVDQIayfyAgfyQLqL4GBAExAQFlnHYLiHobjEFA829Y8VOIH6slIKJtMDn9IVR2o4D8DSSnKLIFZB8BeSrED1ECSpK/3llAPgaS0x8CZavf4oCAFKsoIIyAhgqo5h8IiAcIKKdBQNSLQCwC+ic1ICAIKPpsCCjjNAREjGQB1XfBICAeICBDZRMMAvJHmIAW/nEIiGYbTEp/CJYNARlaBERrIAjIDl0FPQVk8Q8ExAMEpKn6BwLyR5KAijMwxxrQOgTEAQSU0Sgg4m0wCMgOXQV9BWTxz1JAPotAYvpDoGx9RgwIqOaf6giI1kDBBcR5Wh79Y/bWJjW9jhW6CkJAQrIhoIzVFlCTQPrdX0P/mP31tm/LjyigNv9YBHQ0/z1ECChkNgSU0SIg4WtAjKfl2VPnzdixDYFWWEDDDSSlP4TKhoAy2gREaqBRBMR3Wh7H7wXJFZBtEwwCYqFNQN4GklGU2ibYCgqI77Q8V05al5UECcgsAbUISO/DawF5TMhl9Idw2RCQZlICoj4tj+uHVldXQB4GktEfwmVDQJpJCYj4tDyFqZhgAR09ek1hDcjmHzMHg4BI0f6BgOpLQDUBkW6DjSsg2tPyOP2zmgLy3QYT0h9CZUNAGZMSEOlpeXb1734I3wWDgEbKhoAyVlxAnlCcFaMLZBWEgIRktwvI10BCitIqINJFIAjIDlkFISAh2RBQBgREjywBXbMUkH0TjOaDQEL6Q6hsCEhT3wQTKCD8JOsSbgFhF4wICEgDAXGwwgIabiAR/SFcNgSkWQEB4bQ8RfwEdJ3dPxAQPRCQoWabuoAot8GCjYA8FeLHKgto8CKQjP4QLLuDgDwNJKMoqyogjIC6GShJroGAxsiGgDR1/wgU0F+qMVkBtfsHAoojGwLSdBFQ5GtAEFABTwG9HAIKlQ0BaSAgDuQISC8BLQTk2gQrC2iggUT0h3DZENCT1j0wm4AIDQQBMb9y8mwbpQX6VECveMUrrr76Os21177cQZJ8+9uvec13FbPZaP+6FSJJXt3OyHsp/Mxm93di7HY2shIColI40wio8HscgzfiBfwfcsBsMwBqGQH5DYEEFAUjIB6kCsi5BgQBUQMBaSz+sQiIcBssuIA4T8uzl2Q/XV9rUtPrWKGqYAgBDVwEktAfwmVDQJrVF1CTQPrdb32C+en6WpP6Bc0hIE/kZUNAmtUXEONpeXIJCRNQyUAQ0EjZEJCmm4AIF4FGERDjaXkEjoAqArqmo4ASCIgSCOhJxxr0CgqI7bQ8+xuHrL9XJkxAy02wjgIaZKD4+0PA7Mw/bQLyMlD8RZmcgKhPyxPfiQl7Cqi6C+8U0HpRQMOm5PH3h4DZEJBicgIiPi2PIrJTM0NAMrIhII3NP6ssINrT8qhHrNQIqGENCAKiBQLSdBUQ3TbYyAIiPS2Pep7wNaBhAsIakDcQkGYCAvJE2lkxeguotAm2DgEFyoaAFFb/QEBFhAmoi3+GCiiBgMjI/QMBdRMQ3SKQNAENI24BFQwEAY2TDQEp7JtgAgWEn2TN8RLQtdc2C8jzk4jR94eA2RCQAgLiQoqAzBp0JwH5b4NF3x8CZkNAihUREE7LswQCkpENAWms/rELiMpAwUZAngrxQ46ArimuAa1DQIGyISBNdwGRbYNhCmaHqIKBBDRoESj+/hAse+EfCKjrCIjKQCwC+ss1ICAGAXlug8XfH4JldxeQj4HiLwoExAQE1LfhngjLhoAMPQQU9RoQBJTTTUALAw0X0AADxd8fgmVDQArHJhgE5I8sAS03wSCgMNkQkKKfgIgMBAHZIaogo4DWiwIaMiOPvT8EzIaAFBAQG0IEVJ6B9RHQEAPF3h/CZS/9M2kB9VsDkiogztPyqEzb75HJFNCx9TYBPe01BIq/P4TKhoAMdtGs7C4Y+Wl55uoXgaYkIL9tsOj7Q7DsPgLyMFD0RZmEgFhPy5NemKqA+hso+v4QLBsCMkxGQFyn5blyz7+a1BQMAqIBAjL0EZDkNSC20/Lsbq7SGtA6BBQoGwJSuDbBVllAtKflSUdKQgWUGagkILUJBgEFyYaAFFMUEO1peXb1t15tO2syBJT0E5DvPnzk/SFgNgSkmKKAaE/LMxe7DZ8L6JqlgLR/IKAg2RCQxuGflRYQ7Wl5VklA7WtAEBAVvQQ03ECxF6WfgIi2waR9EnoVz4phF9B6PwH1XwSKvT+Ey4aANBBQByAgCIg8EQLSQEBsQEB9G+6JrGwISNNPQESLQCwCwk+y5gwRUGEJqE1AT/vsw8feH4JlF/wzYQE5N8EgIH8ECqjTLhgERAEEpFgdAeG0PEsCCqj3nDzu/hAwGwJS9BcQiYE4BBQfYwmoq3/qAjL+aROQ1z583P0hYHZPAQ02UORFcWlGnIAwBVswXEDd1oAgIAogIE1fAdFsg0FAdmgqGFJAvReBIu8P4bIhIE3vERCJgVgE9H9rQEAQUKzZRf9AQBAQBwIFtA4BBcqGgAy9BRTvGhAElAEBCciGgBTuTTC3gCgMBAHZoalgLwFZvgzfLCDPj0JH3R8CZkNACgiIk5UVkM82WNT9IWB2bwENNVDURZmogHhP0rNsUlOyFZoKDhZQ5h8IKEA2BKRxWmalBdRRIB3ub0ScgLIlIAiIP7vkHwioh4Bk7oLlv0amT83De5IemQIqrkH3EhDWgAYBARkGjIAoDDSagBan5mE7SQ8ENLzhvgjKhoAMUxNQ6cwYLCfpGV9Anf2jBJQkRyGgEbIhIMMAAYlcA2oQEO1JekQJ6Jvq2yr1JaAWAfntw8fdH4JlQ0CKhk2w6QiI9iQ9kgWUb4JBQPzZEJBiOgLSZ704bBUQ+Ul6JiCgBLtgfpT9AwH1EhCBgcJvw+8myV+71S4g6pP0TEtAfQ0Uc38Ilw0BGdySWTUBUdL1HBnSBNR9DQgC8gQCMgwSEME2GARkh6SC/QR0dJiABm+DRd0fgmVDQAYIiBMRArrGW0D9DBR1fwiWDQEZVkpA+EVEA7uAvLbBou4PobIr/ukmoIEGiroogwREsAgEAdkhqSAEFH02BKRp2gQTJyCclidniIBKm2AQEHc2BKRZLQHFR4OALt+1ddMT+tIzW1uvO5ffTFLBEAIavg0WcX8Ilw0BaSAgXtwCev7eu+ePv15duvSWc9klBUUFe/jnm6VNMAgoWDYElDFQQN4GmrqALr/7nFaPYXmJooKDBbRYAoKAuLMhoIxhAvLfBpu6gC699Yn55Xedya6ZEdDLUkheNXm2M0nyCsPVV1933XUv74oS0HcLUDR7UiTJq4eQ9F9VjJz7hzGbjd1wEbjfLs/ctBTQpTteeya/nULh/UZAtk2w1hHQemkE1G8VOur/Qw6VPWwENGwIFHVRBk7BvIdAGAEVR0DLSxQV7COgB4uL0Eu/QEDM2RCQoWmZp3ENyHcRaOoCKq8BzT91d3aBooIQUPTZVf9MVUCDd8EgoE407YLdma38FCdjwQX0YEFAyz0wCIg7GwIyQEC8tH4OSO/Bb22NtgbkIaCk4J9eM/KI+0OwbAjIAAHxMs4noSGg6LOHCmiQgWIuSpNimgXkaSAIyA5FBQcKqLAEBAExZ0NAGYMF5LsNBgHZoahgCAGtlwTUaxEo5v4QKLvmHwgIAuJgFAH12gSDgMbIhoAymhQDAfkDAfVpOAFCsiGgjOECwhpQFyQJqLgG3UlAQ/fhI+4PobIhIEPjJhgE5M90BNTDQPH2h1DZdf90FtAQA8VbFAiIGUECKvmnt4D6zMjj7Q+hsiEgQ7N/ICB/BAno6qshoFDZEFCOh4A8V6EhIDsEFey1C/9rCwG9GAIKlQ0BZTQPcSAgbyYjIKwB9QECyoCAmBEgoIeMgcozMAiIM9viHwiot4A8F4EgIDsEFewloIcgoODZXgIaYKB4iwIBMTOGgPqtQS8E1H8XbOgnEePtD4GyISBDyyYYBOTPCgto+EehY+0PwbIhIIOvgLwMBAHZ8a9gzyWgTEBl/3QT0MBtsFj7Q7BsCMgAAbEjR0C914AgoKHY/DNJAbUsAbUKyGsfDAKy419BCCjybAgoBwLiJnoBPUQloB6LQNH2h0DZEFAOBMSNIAGVPocIATFmQ0A5ngLyWgSCgOz4V3CQgCoDoC4CGrwNFm1/CJQNAWW06QUC8iZuAekloExA/XfBIKCBQECGtk0wCMifKQmos4Ei7Q/Bsj0F1N9AkRYFAuIndgE9lAuo4p8BAuq+IhhpfwiWDQEZICB+xAiosgY9ZATU2UCR9odg2RBQRpteWgXksw0GAdnxr2BfAWkDQUDhsiGgDAiInZUW0NGBq9Cx9odA2Vb/QEAQEAdRC8isQQ8X0NBV6Fj7Q6BsbwH1NlCsRfEWkM8iEARkx7+CEFDc2RBQDgTETuQCeigXUHUTDALiy4aADK2bYBCQPxBQj4ZTICAbAjKQCGi4gSAgO/4VDCego8M+CRRnfwiWDQEZIKAAjCCg3ptgSkDVJaBuAnrxsI34OPtDqGy7f3oJqK+BIi1Kq1zaBeSxDQYB2fGuYO81aAgoaDYElAMB8RO3gB5aCOjFJALquAgUaX8IlA0BZbTaBQLyBwLq3nAS4s+GgDIoBIQ1oBYmJqBuBoqzP4TKhoAyIKAACBHQtVX/dBNQ7csYEFArDv/0E1BPA8VYlPY9MAiIgBUX0LA5WIz9IVg2BGSAgIIgQkCpgWgEhF2wdiAgAwQUhGkJqKOBYuwPwbIhoIwOcukgoOHbYBCQHd8K9v8cIgQUMhsCyoCAQjAxAWENqA2Xf3oKqJ+BoiwKBBQCCKhzw2mIPRsCyqER0PBFIAjIjm8FxxVQJwNF2R8CZUNAhi5r0BCQPxELaOmfTyZJTS0QEE82BGSAgMIAAXVuOA2xZ0NAmk7+6SagoQaCgOz4VjCsgKofhe60JhhffwiW7fTPxATUaQkIAvJHhIAeGiyg+hCoi4Fi7A+BsiGgjE5q6SKgwdtgEJAd3wpCQDFnQ0AZZAIabCAIyI5nBXv4h0VAXRaBIuwPobIhoAwIKAwxC+ghFgF1MFCE/SFUNgSUQScgrAE1sfICGjIEirA/hMomE1AvA8VXFMpdsIEGgoDseFZwyCbY8F0wCKgnEJABAgrEBAXUbqD4+kOwbAhI080/EJA/0QroQS4BdVgTjK4/hMuGgDIgoDBELKDlEtBvk46A2g0UYX8IlU0noD4GirAohAIauA0GAdnxrGBwAf2V/kOgCPtDoGy3fyCgwQIaaCAIyI5fBQdtgv0WqYDaF4Ei7A+BsiGgjG5mgYC8gYA6NpyKuLMhoAxSAQ1bBIKA7PhVcNAMDAIKlQ0BGWh3wSAgNwIE9MlP/pbFQN0FVDfQkIZTEXV2g3/6C6iHgaIrCrGABhkIAmJ5veTZTjz44H/LMQJ6+TBe/OLv/d4k+W6ZwP9mOSTJqwlJQr+5yJjN7qdl7H9QvMQ/AvrkJ3+beATUuiYY3f8hh8rGCCij48AGIyBvIhXQgw/+WmEN+rf+KwQUJBsCyqAVEHbB3EQroOIaNAQUJrvJPwME1N1A0RWFVkDDDAQB2fGq4LBNME8B9V6Fjq4/BMqGgHIgoFCsuoAGbYNF1x8CZUNAOcQCwhqQEyECqhsIAqLPhoAMHTfhISACoheQ3gSjFlCLgSLrD8GyISADvYCGGAgCsuNVwSECUv6BgAJkN/pniIA6GyiuonT2DwTkT5wCKuzCswioZVEwrv4QLBsCyoGAghG9gMwSEAQUIBsCyuislc4CGrINBgHZ8aogBBRxNgSUAQGFI1YBPUQlIPN9+H6LQJH1h0DZzf6BgCAgDqIUUPWLGL4C6rsKHVl/CJQNAeXQC2jIIhAEZMergv0FZAZAdQN5CqjRQJH1h0DZEJCh+yYYBORP7ALKNsG8BdRrCBRVfwiWzSCgrgaKqig8AupvIAjIjlcFOwmoOACCgIJlQ0AGCCgkkQso+xy0r4B67oNF1R+CZUNAGd2lAgF5E7mAFktAEBB3dot/hgmoo4HiKgqLgPrvg0FAdnwq2HUJqLoJbzFQZwHZ52AQUBUIKIdFQP0NBAHZ8alg7wEQm4AaF4Hi6g+BsiGgjB5SgYC8iVxAvw0BBcpu8w8E5Cmg3qtAEJAdnwp2FNBD5AKyGKhXw+mINZtJQN0MFFFReuyBQUAExCeg8h4YgYAcQ6BeDacj1mwIyAABhSVGAT0UQkBNU/KI+kOo7Fb/TERAvfwDAfkjR0AVA/UUUK+N+Hj6Q7BsNgF1MlBERemlFAjIm6ACGrAERCig7kOgiPpDqGwIyNDLKP0E1HcbDAKy41HBvgIq+We4gHovAsXTH0Jlt/sHAvIVUF8DQUB2PCoYl4DcBoqnP4TKZhRQFwNFU5R+/oGA/IlOQA8yCajPbwJF0x9CZXfwDwTkLaCeq0AQkB2PCvZcg84ENJsZAc1mRifm+PL1/DoE5J0NAWn6bYFBQBRELKBPzmZKQLPZ7I8U6fFnFdnx59SxICT3sf82WCT9IVw2BKSBgMITUkAdZ2CpWb6oSI9f+Nzn/mjB8eM/W+Dn8gsVMZWOmYe0gGazJPNOq4Ei6Q/hslkF1MFAkRSlp076C6iXgSAgO8Mr2CKg1BhPPfXpT386F9Af/MEXSgIqG+jnfrYbykM/+ZNvf3t6PP5/UtJj+rfWjxFQrqHCMZL+ECy7i38mIKDe/oGA/IlCQLPZN5966qlMQF9c8AUKASmUgN5+/LgWUI4S0ddT0uPXq8dvPWn1Uuk4+J3h93SWbGYBtRsojqIEEFCfdw8EZGd4BR0CMuYxfLogoC9UBVQyUB8BWQ2k+Lqdb9m9lB3NP2aokOLoa2UgIEV//0BA/owroKV57AIq+yekgNooienJHj6Koq+V6eSfVRdQ7wXoQQLqMwmDgOwMrmDNP2rWVRNQwwDIU0BvpxSQ20f63ypqh41dQK0GiqAoENA4jCSgWU09HWZgJQMNElBHA/UXUIuPCkKKoK9VgYAG+gcC8mcUAT31VKuA1BYYnYAcc7ALF5gEZBGRmqfFucPWzT9eAmozUAxFgYBGIbiA7OapDYA4BNTZQGQCsvjoW1+3DoxIgICGZw/xzxABdTcQBGSnRxHKV5WALMs+PQZARQNJFFCebRkYPVk8Dn7XDXlSR//4CajFQBMSUPf/xhCQnR5FKF1LmtRTGwF9gUNA9WVotyQ4BVSBzEcQ0ODsQf4ZNALq/F8VArLTowila45ln7KAvsgkIOcydAwCqjB4h3/QW7arfyAgCIiDUAL6+tePH2/zTwcBLQ00SEAdh0B0AsrneMvjtxy3l48FKh+FbPJRlAKazYyAmj5aPnfc3nTsSpeiDNsDGyagzqtAEJCdHkXIjqbntAuofQZGLyCrgdwCahNH8fjlL3/5woULX/5y+fjVL9tvz4+tsaqa6dE2PgoqICOW5uNLX/rStJ0vfak5flhhPf6q43b7cfkP7nNsYimg/FK34/3O+yGgjgQQ0IxDQO98Z/nY0UCLOdiFC+Vl6NLxW7au3yIO69HCV113FNBPT/80HE3LLlxIi7s4PjmfzZZfse3YMZMuIqkdS2JpPOZcddWHXdx3369mxw93P6b51aNbXG1lUOL4ecWs3/EXrLe3CqlX9xkGgyp4YBfQYvDQRUCFPbBHHzUCevRRY57sePz42xTvfOc7F0erkOrHgoC+8pW0C39FYTfHV/sYpd0mpeNXK9erx/SVHlB0OT788MOVo/LQhf+ij2nHu+8+13HRQa/qKhJ1fOUrl0dFr2NqoIpJ7rvvA4r77rvvl7LjBwYem3z1qx08pczx8wP4BdcdVSGVfdSj+wyFQRU8cAooX73oJqCLF42AHn00FdDnH3300c9/7nN/+Ifp8Q8V+TET0Nve9o/eVqQoJMfxp34m5Z3Hj//9r5T40z+tO6M0SmkRRtuxj1CKxyF8whyUj8wx/S9QPeoem/W+9HjVVUoQmWSaji/5npe88pWvfIli2PGqq66qmeMDGb/0AX+6esoiKiONd7yDTkBuH2Ue6uKQwfZ5EgLSlATk9M/Fiwv/qHlXaprUPxoloCoOAbXzU1pAP/MzCwNlY6A/tYgjW6cZJI42kXxisF7a6ZptfPSA8tHNt99++z9Oj7e3Hr/nJS+ZzbRQasduXHWVUx4UAuqabRHTGxXveMc73lj0UJfjL/R4fNlHeQ+BgHo/o3sRSmu5NQEtxHPxzzSfNgJSfN4moIsXMwNdMAK6YI5v6340AtLi+chHUkF8RGETxyce8BuJNBGDgJbcrATUjX9we+aj8tHiI5eW3AYKKSALbyygPNT5+OZOj6sJKR+MNX91GQKy07kGrgmYMc9CPH9W9c/Fi8Y/Fy9+LjfPZz7zmfTxn1GkAvoRRSqIvscfVaTHv/GRMgQduTtRZffwTyogBxYv2QdKkQooGwEN4c3dH1oSUiqgfAJo29iDgJrwFVDVPAv/XLyY2uezn03v/6wiN05+zDh+XPvkR/7mj/TkDW/QAvrRm2+GgDJuJhGQxUguIRkD6YWofpLwIBIBVcgmgB+2iSg7QEB2hgjouPKPVTwpFy9+7Wtfe+SRXDwLfu/3PmMjM9BgAdUN5N2R+xBRdi//9BCQ00uzm9XLzjIB5R5Kj6MKaLBEfASUv3guIouHICA73YuQrwFdSP1z/M+qI5+LWjxf+9rFTECf/Wwn/wwWUHEIVDHQxz/u1ZF7EVF2L//4C+j221PjLV89WwnXx098oOSjoALy8I+HgN5YaUV1q+7DT6pPdUFAFnoIyHweWPnHKZ6MpX9+//e5BVQ3EAQURkBlA5UbXvRRdiwLaaiYIhXQ8jMIZQ8tB0TVj1BCQIbuRcg+vZf7xyaehX8eWfjn95v9kxuov4AKQ6DaGMirI/cinux+/iERkMtAloZbhJQde3qpRUA+/vERkMNACxGphusVomE/HsWgCh44BWQ+z5f656JLPDX/tA+AvARUmIQ1GSgeSTBm91sBIhKQw0A9Gm71kkVICy81CshjAZpVQFnD9YAo+8zkDAIy9BBQOgJ64IHUP07z1PzTugLkI6DOBopGEozZff1DJKDbfQXkYOAMbkQB1ZaBLAJatNJ4qM85faTAugumPst3/Hizfez+aRbQ8YECWhjo5pvrCiLtD24iye7tHyoBWQ3EUJROQvLyh7eAWgxUG7rdBwEpegjoAeWfFgH97u/29E82BBokIGWgNxQMVFLQA4u16EgkwZjd3z+EAqorKFxRSkJKHTCbGRfkx6ACap6GQUB2+gqoVT+PlFefjX+aBKQNNExACwNpBVU+ETQpAfUWB5WAtIEqChqjKA8//KEPfSj10Ic+lB8tPnIdiQTUaKD64lV3/0BASkDqy1TNAnpEUxNQi3/0JGyggMrTMIVlGhaHJLiy9b+6vzfIBGRZiR5NQBVKPrIfSyJ6c09hQUA1xhPQI48U9FOefrX4RxtosICWS9G5hKYloJvHF1BtISh0Uerq6UcHUVWObj91F1CvE8tLoUFAl+/auumJyqV5TwG1+ae0897ZP9pA+ZfCBhnoDYVPJVaGQelEbHRJcGUPlQ+DgIqELcrDtrHPMP51Z2E1+Mm1Qv5L1a27iQno+Xvvnj/++vIlRfcifMK6BJ2PfB75nd+pfPTHyKeDfnIDDVVQyUDF1SC1LP3xj3/kP6dv0+qno9n6Q7DsvLsPdAapgCoGsi1McxXlQyMIqJmH7R+6/ET1Q04TE9Dld5+bX3rLudIlRfcizGZGEzjiiKPP0VyamIAuvfWJ+eV3nSldellK9+y0bokCRxxxpDh6dvYYcQvomZty7SwvKXpYuPtDwJ5YBQAABChJREFU+zP+ueymlS224VKzJ/9zHLYRkCJQBccMR3bgcGRThwdQBw2ca0Dx/udBdlzhyKYODyIPCpp2we5c7ILdOWgXLN7/PMiOKxzZ1OEB1EFD6+eA1NBn2OeAIv7Pg+y4wpFNHR7CHSSEODc8C1LfV1KzxTZcajYE5CBQBccMR3bgcGRThzOoggcICNnjhyObOpxBFTxAQMgePxzZ1OEMquABAkL2+OHIpg5nUAUPEBCyxw9HNnU4gyp4gICQPX44sqnDGVTBAwSE7PHDkU0dzqAKHiAgZI8fjmzqcAZV8AABIXv8cGRThzOoggcICNnjhyObOpxBFTxAQMgePxzZ1OEMquABAkL2+OHIpg5nUAUPEBCyxw9HNnU4gyp4gICQPX44sqnDGVTBAwSE7PHDkU0dzqAKHiAgZI8fjmzqcAZV8AABIXv8cGRThzOoggcICNnjhyObOpxBFTxAQMgePxzZ1OEMquChv4C60+MkqnEhteFS2y224VLbHREQkAWpDZfabrENl9ruiICALEhtuNR2i2241HZHBARkQWrDpbZbbMOltjsiOAUEAACNQEAAgNGAgAAAowEBAQBGAwICAIwGm4Au37V10xNc4Zw8vrW19bpzY7eiN5feck5m0XXDxRX90h1bW3fLLHhccAno+Xvvnj/+eqZwVj5199gtGMIzqv9KLLpuuLiiX37Xmfmlnz4jseCRwSWgy+8+Z/6/TRrP//KZsZswgE+99lfSYgssumm4uKI/o6zzqbsFFjw2uAR06a1P6P+bEEc6qNaDa2mofiCy6KrhIoueVlpkweOCS0DP3CT0P006sJb3f8hz049FFl2bU2DRn7/3TpkFjwuMgGxIW5KYCx8BaWQV/fJdd0p/l0cB1oBsyOoLmksy14CkCujSHaq1IgseF3y7YHfK3B9Qo+rn/42895TqByKLns8dRRXd+EdmweMCnwOq8vjW1mvPjN2I/oj/HJCooqvPLallc4kFjwt8EhoAMBoQEABgNCAgAMBoQEAAgNGAgAAAowEBAQBGAwKaPPvXnxq7CWCyQECTBwIC4wEBTR4ICIwHBDQ5rpzcTP/ePXx2fyNJkk0lIO0g9deVk0ly+OzYLQTTAQKaHrtHzisLHZzYNh5aCujKyTVzNwBhgICmh9JN+ucvzpvLBQHtqdGPFhMAQYCApoeag+lhzl46BTtUFNBuotkcu4VgMkBAE2TvyGOpgw5OHDpVGQFh9gUCAwFNkINb3nfD2VRDahBUGgGl18ZuG5gWENAU2UnWtHvm+xtaQAcnNtOJ2aFTV06mUoKFQDggoCmyl6h15p0kOfTBE9t6TXojSf7eLWYbHv4B4YCAAACjAQEBAEYDAgIAjAYEBAAYDQgIADAaEBAAYDQgIADAaEBAAIDRgIAAAKMBAQEARuP/A8d1vTZo8DlaAAAAAElFTkSuQmCC" /><!-- --> [/expand]</p>
-<p>Now, with the information from the table, the bias estimates and the plot you can answer the two questions about the influence of the priors on the results.</p>
+<p><em>To answer these questions, proceed as follows: We can calculate the relative bias to express this difference. (<span class="math inline">\(bias= 100*\frac{(model \; informative\; priors\;-\;model \; uninformative\; priors)}{model \;uninformative \;priors}\)</span>). In order to preserve clarity we will just calculate the bias of the two regression coefficients and only compare the default (uninformative) model to the model that uses the <span class="math inline">\(\mathcal{N}(20, .4)\)</span> and <span class="math inline">\(\mathcal{N}(20, .1)\)</span> priors</em></p>
 <p>[expand title=“Answer” trigclass=“noarrow my_button” targclass=“my_content” tag=“button”]</p>
-<pre class="r"><code>#1) ask for the posterior means
-posterior_mean &lt;- blavInspect(fit.bayes, what = &quot;postmean&quot;)
-posterior_mean_informative &lt;- blavInspect(fit.bayes.infprior3, what = &quot;postmean&quot;)
-
-#2) ask for the mean (estimate) of the regression coefficients
-estimatesuninformative &lt;- posterior_mean[1:2]
-estimatesinformative   &lt;- posterior_mean_informative[1:2]
-
-#3) calculate the bias
-round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 2)</code></pre>
-<pre><code>##  diff~age diff~age2 
-##    884.08    960.81</code></pre>
-<p><em>We see that the influence of this highly informative prior is around 884% and 961% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions.</em></p>
-<p><em>The results change with different prior specifications, but are still comparable. Only using <span class="math inline">\(\mathcal{N}(20, .4)\)</span> for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code.</em></p>
-<pre class="r"><code>indices &lt;- sample.int(333, 60)
-smalldata &lt;- dataPHD[indices,]</code></pre>
-<p><em>We made a new dataset with randomly chosen 60 of the 333 observations from the original dataset. You can repeat the analyses with the same code and only changing the name of the dataset to see the influence of priors on a smaller dataset. Run the model model.informative.priors2 with this new dataset</em></p>
-<pre class="r"><code>fit.bayes.infprior2_small &lt;- blavaan(model.informative.priors2, data = smalldata, test = &quot;none&quot;,  target = &quot;stan&quot;, burnin = 1000, sample = 5000, seed = 123)
-summary(fit.bayes.infprior2_small, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)</code></pre>
+<p>(<span class="math inline">\(100*\frac{(13.78 - 2.64 )}{2.64}=428\%\)</span>)</p>
+<p>(<span class="math inline">\(100*\frac{(-0.014--0.026 )}{-0.026}=-46.15\%\)</span>)</p>
+<p><em>We see that the influence of this highly informative prior is around 428% and 46.15% on the two regression coefficients respectively.</em></p>
+<p><em>The results change with different prior specifications, but are still comparable. Only using <span class="math inline">\(\mathcal{N}(20, .4)\)</span> for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger.</em></p>
 <p>[/expand]</p>
+<p>
+ 
+</p>
 <p>If you really want to use Bayes for your own data, we recommend to follow the <a href="https://www.rensvandeschoot.com/wambs-checklist/">WAMBS-checklist</a>, which you are guided through by this exercise.</p>
 <hr />
 </div>
@@ -1127,9 +771,8 @@ summary(fit.bayes.infprior2_small, fit.measures = TRUE, ci = TRUE, rsquare = TRU
 <p><em>Benjamin, D. J., Berger, J., Johannesson, M., Nosek, B. A., Wagenmakers, E.,… Johnson, V. (2017, July 22).</em> <a href="https://psyarxiv.com/mky9j">Redefine statistical significance</a><em>. Retrieved from psyarxiv.com/mky9j</em></p>
 <p><em>Greenland, S., Senn, S. J., Rothman, K. J., Carlin, J. B., Poole, C., Goodman, S. N. Altman, D. G. (2016).</em> <a href="https://link.springer.com/article/10.1007/s10654-016-0149-3">Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations</a><em>.</em> <em>European Journal of Epidemiology 31 (4</em>). <a href="https://doi.org/10.1007/s10654-016-0149-3"><em>https://doi.org/10.1007/s10654-016-0149-3</em></a></p>
 <p><em>Hoffman, M. D., &amp; Gelman, A. (2014)</em>. The No-U-turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo. Journal of Machine Learning Research, 15(1), 1593-1623.</p>
-<p><em>Rosseel, Y. (2012).</em> <a href="https://www.jstatsoft.org/article/view/v048i02">lavaan: An R Package for Structural Equation Modeling</a>. <em>Journal of Statistical Software, 48(2), 1-36. </em></p>
-<p><em>van de Schoot R, Yerkes MA, Mouw JM, Sonneveld H (2013)</em> <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839">What Took Them So Long? Explaining PhD Delays among Doctoral Candidates</a><em>.</em> <em>PLoS ONE 8(7): e68839.</em> <a href="https://doi.org/10.1371/journal.pone.0068839" class="uri">https://doi.org/10.1371/journal.pone.0068839</a></p>
-<p><em>Trafimow D, Amrhein V, Areshenkoff CN, Barrera-Causil C, Beh EJ, Bilgi? Y, Bono R, Bradley MT, Briggs WM, Cepeda-Freyre HA, Chaigneau SE, Ciocca DR, Carlos Correa J, Cousineau D, de Boer MR, Dhar SS, Dolgov I, G?mez-Benito J, Grendar M, Grice J, Guerrero-Gimenez ME, Guti?rrez A, Huedo-Medina TB, Jaffe K, Janyan A, Karimnezhad A, Korner-Nievergelt F, Kosugi K, Lachmair M, Ledesma R, Limongi R, Liuzza MT, Lombardo R, Marks M, Meinlschmidt G, Nalborczyk L, Nguyen HT, Ospina R, Perezgonzalez JD, Pfister R, Rahona JJ, Rodr?guez-Medina DA, Rom?o X, Ruiz-Fern?ndez S, Suarez I, Tegethoff M, Tejo M, ** van de Schoot R** , Vankov I, Velasco-Forero S, Wang T, Yamada Y, Zoppino FC, Marmolejo-Ramos F. (2017)</em> <a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Manipulating the alpha level cannot cure significance testing - comments on “Redefine statistical significance”</a> PeerJ reprints 5:e3411v1 <a href="https://doi.org/10.7287/peerj.preprints.3411v1" class="uri">https://doi.org/10.7287/peerj.preprints.3411v1</a></p>
+<p><em>van de Schoot R, Yerkes MA, Mouw JM, Sonneveld H (2013)</em> <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839">What Took Them So Long? Explaining PhD Delays among Doctoral Candidates</a><em>.</em> <em>PLoS ONE 8(7): e68839.</em> <a href="https://doi.org/10.1371/journal.pone.0068839">https://doi.org/10.1371/journal.pone.0068839</a></p>
+<p><em>Trafimow D, Amrhein V, Areshenkoff CN, Barrera-Causil C, Beh EJ, Bilgi? Y, Bono R, Bradley MT, Briggs WM, Cepeda-Freyre HA, Chaigneau SE, Ciocca DR, Carlos Correa J, Cousineau D, de Boer MR, Dhar SS, Dolgov I, G?mez-Benito J, Grendar M, Grice J, Guerrero-Gimenez ME, Guti?rrez A, Huedo-Medina TB, Jaffe K, Janyan A, Karimnezhad A, Korner-Nievergelt F, Kosugi K, Lachmair M, Ledesma R, Limongi R, Liuzza MT, Lombardo R, Marks M, Meinlschmidt G, Nalborczyk L, Nguyen HT, Ospina R, Perezgonzalez JD, Pfister R, Rahona JJ, Rodr?guez-Medina DA, Rom?o X, Ruiz-Fern?ndez S, Suarez I, Tegethoff M, Tejo M, ** van de Schoot R** , Vankov I, Velasco-Forero S, Wang T, Yamada Y, Zoppino FC, Marmolejo-Ramos F. (2017)</em> <a href="https://www.rensvandeschoot.com/manipulating-alpha-level-cannot-cure-significance-testing/">Manipulating the alpha level cannot cure significance testing - comments on “Redefine statistical significance”</a> PeerJ reprints 5:e3411v1 <a href="https://doi.org/10.7287/peerj.preprints.3411v1">https://doi.org/10.7287/peerj.preprints.3411v1</a></p>
 </div>
 </div>
 
