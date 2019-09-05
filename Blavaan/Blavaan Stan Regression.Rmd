@@ -20,6 +20,8 @@ Throughout this tutorial, the reader will be guided through importing data files
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
 
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
+
 ## **Preparation**
 
 This tutorial expects:
@@ -175,9 +177,9 @@ model.regression <- '#the regression model
 Then, we need to fit the model by using the following code: We specify `target = "stan"` to tell Blavaan to use the Stan instead of the Jags compiler. 
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
-fit.bayes <- blavaan(model = model.regression, data = dataPHD, test = "none", target = "stan",  seed = 123,   bcontrol = list(cores = 4))
+fit.bayes <- blavaan(model = model.regression, data = dataPHD, test = "none", target = "stan",  seed = 1234,   bcontrol = list(cores = 4))
 # the test = "none" input stops the calculations of some posterior checks, we do not need at this moment and speeds up the process. 
-# we set the seed to get a reproducible example
+# we set a seed for reproducibility. 
 # we make optimal use of the number of cores of modern laptops we set the bcontrol = list(cores = 4)) command
 ```
 
@@ -241,7 +243,22 @@ dpriors(target = "stan")
 ```
 
 
-_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Stan) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 10. you can decide whether or not this is uninformative enough or not for your situation._
+_As you might have noticed, the parameter estimates from Blavaan are substantively different from the frequentist approach. This is due to the fact that Blavaan (Stan) by default places quite informative priors on the model ($\mathcal{N}(0, 10)$ for the regression coefficients). This prior means that, using the properties of a normal distribution, you are approximately 95% sure that your regression coefficients (including the intercept) are between -20 and 20. Blavaan expects the data to be standardized, which this data is not. For standardized data, these priors can be considered uninformative, but for our data not. The lesson to take home from this is, that you can never fully trust default priors of any software The same model with actually uninformative ($\mathcal{N}(0, 10000)$) priors would yield these results:_
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+my_priors <- dpriors(target = "stan", beta = "normal(0,10000)", alpha= "normal(0,10000)")
+
+fit.bayes_uninf <- blavaan(model = model.regression, data = dataPHD, test = "none", target = "stan",  seed = 1234,   bcontrol = list(cores = 4), dp = my_priors)
+```
+
+
+```{r}
+summary(fit.bayes_uninf)
+```
+
+
+
+
 
 
 [/expand]
@@ -261,6 +278,8 @@ _$Age$ ~  $\mathcal{N}(3, 0.4)$_
 
 _$Age^2$ ~  $\mathcal{N}(0, 0.1)$_
 
+_$intercept$ ~  $\mathcal{N}(0, 10000)$_ (non-informative)
+
 In Blavaan, the priors are set in the model formulation step. Be careful, Stan uses standard deviations instead of variance in the normal distribution. The standard deviations is the square root of the variance, so a variance of 0.1 corresponds to a standard deviation of 0.316 and a variance of 0.4 corresponds to a standard deviation of 0.632.
 
 The priors are presented in code as follows:
@@ -275,7 +294,7 @@ model.informative.priors1 <-
                     diff ~~ diff
 
                     #we want to have an intercept (with normal prior)
-                    diff ~ 1'
+                    diff ~  prior("normal(0, 10000)")*1'
 ```
 
 Now fit the model and request for summary statistics. 
@@ -352,7 +371,7 @@ model.informative.priors2 <-
                     diff ~~ diff
 
                     #we want to have an intercept (with normal prior)
-                    diff ~ 1'
+                    diff ~ prior("normal(0, 10000)")*1'
 ```
 
 
@@ -366,7 +385,7 @@ model.informative.priors3 <-
                     diff ~~ diff
 
                     #we want to have an intercept (with normal prior)
-                    diff ~ 1'
+                    diff ~ prior("normal(0, 10000)")*1'
 ```
 
 
@@ -380,7 +399,7 @@ model.informative.priors4 <-
                     diff ~~ diff
 
                     #we want to have an intercept (with normal prior)
-                    diff ~ 1'
+                    diff ~ prior("normal(0, 10000)")*1'
 ```
 
 
