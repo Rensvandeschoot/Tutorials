@@ -1,7 +1,7 @@
 ---
 title: "WAMBS Blavaan Tutorial (using JAGS)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 22 August 2019'
+date: 'Last modified: 12 September 2019'
 output:
   html_document:
     keep_md: true
@@ -10,7 +10,9 @@ output:
 
 
 
-In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-Misuse-of-Bayesian-Statistics - checklist [(the WAMBS-checklist)](https://www.rensvandeschoot.com/wambs-checklist/)
+In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-Misuse-of-Bayesian-Statistics - checklist [(the WAMBS-checklist)](https://www.rensvandeschoot.com/wambs-checklist/).
+
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
 
   <p>&nbsp;</p>
 
@@ -20,7 +22,7 @@ In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-
 This tutorial expects:
 
 - Any installed version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files)
-- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.4 in R version 3.6.1- Basic knowledge of hypothesis testing
+- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.5 in R version 3.6.1- Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
 - Basic knowledge of coding in R
@@ -563,9 +565,6 @@ summary(fit.bayes)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -659,9 +658,6 @@ summary(fit.bayes.difIG)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -693,7 +689,7 @@ summary(fit.bayes.difIG)
 | Intercept         | -36.14            |-36.343           |$100\cdot \frac{-36.14--36.343 }{-36.343} = -0.56\%$ |
 | Age               | 2.139            |2.15           |$100\cdot \frac{2.139-2.15 }{2.15} = -0.51\%$      |
 | Age2              | -0.021            |-0.021           |$100\cdot \frac{-0.021--0.021 }{-0.021} = 0\%$                                                 |
-| Residual variance | 197.435            |197.15           |$100\cdot \frac{197.435--0.021 }{197.15} = 0.14\%$
+| Residual variance | 197.435            |197.15           |$100\cdot \frac{197.435-197.15 }{197.15} = 0.14\%$
 
 
 _Yes, the results are robust, because there is only a really small amount of relative bias for the residual variance._
@@ -755,9 +751,6 @@ summary(fit.bayes.defaultpriors)
 ##   Statistic                               
 ##   Value                                   
 ## 
-## Parameter Estimates:
-## 
-## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
 ##   diff ~                                                             
@@ -789,7 +782,7 @@ summary(fit.bayes.defaultpriors)
 | Intercept         | -40.352            |-36.343           |$100\cdot \frac{-40.352--36.343 }{-36.343} = 11.03\%$ |
 | Age               | 2.339            |2.15           |$100\cdot \frac{2.339-2.15 }{2.15} = 8.79\%$      |
 | Age2              | -0.023            |-0.021           |$100\cdot \frac{-0.023--0.021 }{-0.021} = 9.52\%$                                                 |
-| Residual variance | 194.141            |197.15           |$100\cdot \frac{194.141--0.021 }{197.15} = -1.53\%$
+| Residual variance | 194.141            |197.15           |$100\cdot \frac{194.141-197.15 }{197.15} = -1.53\%$
 
 
 _The informative priors have quite some influence (up to 5%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
@@ -840,9 +833,6 @@ summary(fit.bayes)
 ## 
 ##   Statistic                               
 ##   Value                                   
-## 
-## Parameter Estimates:
-## 
 ## 
 ## Regressions:
 ##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
