@@ -493,7 +493,7 @@ as.numeric(summ1[,2])
 | Intercept         | `r as.numeric(summ2[4,2])`            |`r as.numeric(summ1[4,2])`           |$100\cdot \frac{`r as.numeric(summ2[4,2])`-`r as.numeric(summ1[4,2])` }{`r as.numeric(summ1[4,2])`} = `r round(100*((as.numeric(summ2[4,2])-as.numeric(summ1[4,2]))/as.numeric(summ1[4,2])),2)`\%$ |
 | Age               | `r as.numeric(summ2[1,2])`            |`r as.numeric(summ1[1,2])`           |$100\cdot \frac{`r as.numeric(summ2[1,2])`-`r as.numeric(summ1[1,2])` }{`r as.numeric(summ1[1,2])`} = `r round(100*((as.numeric(summ2[1,2])-as.numeric(summ1[1,2]))/as.numeric(summ1[1,2])),2)`\%$      |
 | Age2              | `r as.numeric(summ2[2,2])`            |`r as.numeric(summ1[2,2])`           |$100\cdot \frac{`r as.numeric(summ2[2,2])`-`r as.numeric(summ1[2,2])` }{`r as.numeric(summ1[2,2])`} = `r round(100*((as.numeric(summ2[2,2])-as.numeric(summ1[2,2]))/as.numeric(summ1[2,2])),2)`\%$                                                 |
-| Residual variance | `r as.numeric(summ2[3,2])`            |`r as.numeric(summ1[3,2])`           |$100\cdot \frac{`r as.numeric(summ2[3,2])`-`r as.numeric(summ1[2,2])` }{`r as.numeric(summ1[3,2])`} = `r round(100*((as.numeric(summ2[3,2])-as.numeric(summ1[3,2]))/as.numeric(summ1[3,2])),2)`\%$
+| Residual variance | `r as.numeric(summ2[3,2])`            |`r as.numeric(summ1[3,2])`           |$100\cdot \frac{`r as.numeric(summ2[3,2])`-`r as.numeric(summ1[3,2])` }{`r as.numeric(summ1[3,2])`} = `r round(100*((as.numeric(summ2[3,2])-as.numeric(summ1[3,2]))/as.numeric(summ1[3,2])),2)`\%$
 
 
 _Yes, the results are robust, because there is only a really small amount of relative bias for the residual variance._
@@ -553,7 +553,7 @@ summ3 <- summary(fit.bayes.defaultpriors)
 | Intercept         | `r as.numeric(summ3[4,2])`            |`r as.numeric(summ1[4,2])`           |$100\cdot \frac{`r as.numeric(summ3[4,2])`-`r as.numeric(summ1[4,2])` }{`r as.numeric(summ1[4,2])`} = `r round(100*((as.numeric(summ3[4,2])-as.numeric(summ1[4,2]))/as.numeric(summ1[4,2])),2)`\%$ |
 | Age               | `r as.numeric(summ3[1,2])`            |`r as.numeric(summ1[1,2])`           |$100\cdot \frac{`r as.numeric(summ3[1,2])`-`r as.numeric(summ1[1,2])` }{`r as.numeric(summ1[1,2])`} = `r round(100*((as.numeric(summ3[1,2])-as.numeric(summ1[1,2]))/as.numeric(summ1[1,2])),2)`\%$      |
 | Age2              | `r as.numeric(summ3[2,2])`            |`r as.numeric(summ1[2,2])`           |$100\cdot \frac{`r as.numeric(summ3[2,2])`-`r as.numeric(summ1[2,2])` }{`r as.numeric(summ1[2,2])`} = `r round(100*((as.numeric(summ3[2,2])-as.numeric(summ1[2,2]))/as.numeric(summ1[2,2])),2)`\%$                                                 |
-| Residual variance | `r as.numeric(summ3[3,2])`            |`r as.numeric(summ1[3,2])`           |$100\cdot \frac{`r as.numeric(summ3[3,2])`-`r as.numeric(summ1[2,2])` }{`r as.numeric(summ1[3,2])`} = `r round(100*((as.numeric(summ3[3,2])-as.numeric(summ1[3,2]))/as.numeric(summ1[3,2])),2)`\%$
+| Residual variance | `r as.numeric(summ3[3,2])`            |`r as.numeric(summ1[3,2])`           |$100\cdot \frac{`r as.numeric(summ3[3,2])`-`r as.numeric(summ1[3,2])` }{`r as.numeric(summ1[3,2])`} = `r round(100*((as.numeric(summ3[3,2])-as.numeric(summ1[3,2]))/as.numeric(summ1[3,2])),2)`\%$
 
 
 _The informative priors have quite some influence (up to 5%) on the posterior results of the regression coefficients. This is not a bad thing, just important to keep in mind._ 
