@@ -1,6 +1,6 @@
 ---
 title: Intro to Bayesian (Multilevel) Generalised Linear Models (GLM) in R with brms
-author: '[Qixiang Fang]() and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
+author: '[Qixiang Fang](https://www.uu.nl/staff/QFang) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
 date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
 output:
   html_document:
@@ -11,22 +11,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-  <script language="javascript"> 
-    function toggle(num) {
-      var ele = document.getElementById("toggleText" + num);
-      var text = document.getElementById("displayText" + num);
-      if(ele.style.display == "block") {
-        ele.style.display = "none";
-        text.innerHTML = "show";
-      }
-      else {
-        ele.style.display = "block";
-        text.innerHTML = "hide";
-      }
-   } 
-  </script>
-
 
 This tutorial provides an introduction to Bayesian GLM (genearlised linear models) with non-informative priors using the `brms` package in R. If you have not followed the **Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4** tutorial, we highly recommend that you do so, because it offers more extensive information about GLM. If you are not familar with Bayesian inference, we also recommend that you read this tutorial [Building a Multilevel Model in BRMS Tutorial: Popularity Data](https://www.rensvandeschoot.com/tutorials/brms-started/) prior to using this tutorial.
 
@@ -58,8 +42,7 @@ This tutorial expects:
 ## **2. Introduction to Genearlised Linear Models (GLM)**
 If you are already familar with generalised linear models (GLM), you can proceed to the next section. Otherwise, click "Read More" to learn about GLM. 
 
-  <a id="displayText" href="javascript:toggle(1);">Read More</a>
-  <div id="toggleText1" style="display: none">
+[expand title="Read More" trigclass="noarrow my_button" targclass="my_content" tag="button"]
   
 Recall that in a linear regression model, the object is to model the expected value of a continuous variable, $Y$, as a linear function of the predictor, $\eta = X\beta$. The model structure is thus: $E(Y) = X\beta + e$, where $e$ refers to the residual error term. The linear regression model assumes that $Y$ is continous and comes from a normal distribution, that $e$ is normally distributed and that the relationship between the linear predictor $\eta$ and the expected outcome $E(Y)$ is strictly linear. However, these assumptions are easily violated in many real world data examples, such as those with binary or proportional outcome variables and those with non-linear relationships between the predictors and the outcome variable. In these scenarios where linear regression models are clearly inappropriate, generalised linear models (GLM) are needed.
 
@@ -75,7 +58,9 @@ Binary logistic regression assumes that $Y$ comes from a Bernoulli distribution,
 
 Binomial logistic regression, in contrast, assumes a binomial distribution underlying $Y$, where $Y$ is interpreted as the number of target events, can take on any non-negative integer value and is binomially distributed with regards to $n$ number of trials and $\pi$ probability of the target event. The link function is the same as that of binary logistic regression. 
 
-  </div>
+[/expand]
+
+  <p>&nbsp;</p>
   
 The next section details the exampler data (**Thai Educational Data**) in this tutorial, followed by the demonstration of the use of Bayesian binary, Bayesian binomial logistic regression and Bayesian multilevel binary logistic regression. For the frequentist versions of these models, see the **Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4** tutorial.
 
@@ -566,7 +551,7 @@ exp(fixef(Bayes_Model_Multi_Full)[4,-2]*sd(pull(ThaiEdu_Prop, MSESC), na.rm = T)
 We can see that the effects of `SEX`, `PPED`, and `MSESC` are very similar to the prevoius model results. 
 
 ## **References**
-Bürkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
+BÃ¼rkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
 
 
 Enders, C. K., & Tofighi, D. (2007). Centering predictor variables in cross-sectional multilevel models: A new look at an old issue. *Psychological Methods, 12*(2), 121-138. [doi:10.1037/1082-989X.12.2.121](https://doi.org/10.1037/1082-989X.12.2.121)
@@ -575,7 +560,7 @@ Enders, C. K., & Tofighi, D. (2007). Centering predictor variables in cross-sect
 Kay, M. (2019). tidybayes: Tidy Data and Geoms for Bayesian Models. [doi:10.5281/zenodo.1308151](https://doi.org/10.5281/zenodo.1308151), R package version 1.1.0, [http://mjskay.github.io/tidybayes/](http://mjskay.github.io/tidybayes/). 
 
 
-Lüdecke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
+LÃ¼decke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
 
 
 Raudenbush, S. W., & Bhumirat, C. (1992). The distribution of resources for primary education and its consequences for educational achievement in Thailand. *International Journal of Educational Research, 17*(2), 143-164. [doi:10.1016/0883-0355(92)90005-Q](https://doi.org/10.1016/0883-0355(92)90005-Q)

@@ -1,6 +1,6 @@
 ---
 title: Intro to Discrete-Time Survival Analysis in R
-author: '[Qixiang Fang]() and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
+author: '[Qixiang Fang](https://www.uu.nl/staff/QFang) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
 date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
 output:
   html_document:
@@ -11,23 +11,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-
-  <script language="javascript"> 
-    function toggle(num) {
-      var ele = document.getElementById("toggleText" + num);
-      var text = document.getElementById("displayText" + num);
-      if(ele.style.display == "block") {
-        ele.style.display = "none";
-        text.innerHTML = "show";
-      }
-      else {
-        ele.style.display = "block";
-        text.innerHTML = "hide";
-      }
-   } 
-  </script>
-
 
 This tutorial provides the reader with a hands-on introduction to discrete-time survival analysis in R. Specifically, the tutorial first introduces the basic idea underlying discrete-time survival analysis and links it to the framework of generalised linear models (GLM). Then, the tutorial demonstrates how to conduct discrete-time survival analysis with the `glm` function in R, with both time-fixed and time-varying predictors. Some popular model evaluation methods are also presented. Lastly, the tutorial briefly extends discrete-time survival analysis with multilevel modelling (using the `lme4` package) and Bayesian methods.
 
@@ -55,6 +38,7 @@ This tutorial expects:
 - Installation of R package [`effects`](https://cran.r-project.org/web/packages/effects/index.html) for plotting parameter effects;  
 - Installation of R package [`eha`](https://cran.r-project.org/web/packages/eha/index.html), which contains the data set we will use;  
 - Installation of R package [`discSurv`](https://cran.r-project.org/web/packages/discSurv/index.html), for discrete-time data manipulation and calculation of prediction error curves;  
+[`brms`](https://cran.r-project.org/web/packages/brms/index.html) for Bayesian discrete-time survival analysis (this tutorial uses version 2.9.0). Note that you do not need this package installed for the main codes of the tutorial to work. If interested, you can check out this [tutorial](https://www.rensvandeschoot.com/tutorials/brms-started) for detailed installation instruction;  
 - Basic knowledge of hypothesis testing and statistical inference;  
 - Basic knowledge of generalised linear models (GLM);  
 - Basic knowledge of coding in R;  
@@ -63,8 +47,7 @@ This tutorial expects:
 ## **2. Introduction to Discrete-Time Survival Analysis**
 If you are already familar with discrete-time survival analysis, you can proceed to the next section. Otherwise, click "Read More" to learn about it. 
 
-  <a id="displayText" href="javascript:toggle(1);">Read More</a>
-  <div id="toggleText1" style="display: none">
+[expand title="Read More" trigclass="noarrow my_button" targclass="my_content" tag="button"]
   
 #### 2.1. What Is Discrete-Time Survival Analysis?
 Survival analysis is a body of methods commonly used to analyse time-to-event data, such as the time until someone dies from a disease, gets promoted at work, or has intercourse for the first time. The focus is on the modelling of event transition (i.e. from no to yes) and the time it takes for the event to occur. In comparison to other statistical methods, survival analysis has two particular advantages. First, it models the effects of both time-varying and time-fixed predictors on the outcome. For instance, whether a person develops the common cold may be influenced by both that person's gender (which is in many cases a fixed variable that does not vary with time) and the weather conditions (which changes with time). Survival analysis can appropriately incorporate both time-fixed and time-varying factors into the same model, while most other modelling framework cannot. Second, survival analysis can take care of the right censoring issue in the data, with right censoring meaning that for some individuals the time when a transition (i.e. the target event) takes place is unknown, which poses missing data issues for other statistical approaches.
@@ -126,7 +109,9 @@ As we can see in this example, a person (indicated by column `id`) has multiple 
 
 One may wonder whether the analysis of the multiple records in a Person-Period data set yields appropriate parameter estimates, standard errors and goodness-of-fit statistics when the multiple records for each person in the data set do not appear to be independent from each other. This is not an issue in discrete time survival analysis because the hazard function describes the **conditional** probability of event occurrence, where the conditioning depends on the individual surviving until each specific time period $s$ and his or her values for the substantive predictors in each time period. Therefore, records in the person-period data need to only assume conditional independence. 
 
-  </div>
+[/expand]
+
+  <p>&nbsp;</p>
   
 The next section details the exampler data (**Scania Data**) in this tutorial, followed by a demonstration of Gompertz regression and a brief introduction to its multilevel and Bayesian extension. 
 
@@ -160,6 +145,7 @@ library(effects) #for plotting parameter effects
 library(jtools) #for transformaing model summaries
 library(eha) #for the data sets used in this tutorial
 library(discSurv) #discrete-time survival analysis tool kit
+library(brms) #Bayesian discrete-time survival analysis
 ```
 
 #### 4.2. Import Data
@@ -514,7 +500,6 @@ In regression modelling, we try to include all relevant predictors. However, mos
 In R, we can use the `lme4` package to specify multilevel discrete-time survival regression models. See below as an example of how to specify the basic frailty model. For a detailed introduction to multilevel models with `lme4`, check out the tutorial [Lme4 introduction (frequentist)](https://www.rensvandeschoot.com/tutorials/lme4).
 
 ```{r}
-library(lme4)
 Model_Multi <- glmer(formula = event ~ exit + sex + ses + immigrant + foodprices + (1|id),
                      family = binomial(cloglog),
                      data = Scania_PersonPeriod_Train,
@@ -535,9 +520,9 @@ This model does not delve deeper into multilevel extensions of discrete-time sur
 If you would like to work with the Bayesian framework for discrete-time survival analysis (multilevel or not), you can use the `brms` package in R. As discrete-time regression analysis uses the glm framework, if you know how to use the `brms` package to set up a Bayesian generalised linear model, you are good to go. For this, check out the relevant tutorials on [Online Stats Training](https://www.rensvandeschoot.com/tutorials/), such as **BRMS getting started** and **Intro to Bayesian (Multilevel) Generalised Linear Models (GLM) in R with brms**. We also recommend that you follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/) if you do use the Bayesian approach in your research.
 
 
-Below is an example of how to use the `brms` package to set up the previous Gompertz full model. Note that the estimates are almost the same as the model fitted by `glm`.
-```{r}
-library(brms)
+Below is an example of how to use the `brms` package to set up the previous Gompertz full model. The model estimates will be almost the same as the model fitted by `glm`. Kindly note that running a model with `brms` takes quite some time (~minutes). Feel free to run it by yourself. 
+
+```{r eval=FALSE}
 Bayes_Model <- brm(formula = event ~ exit + sex + ses + immigrant + foodprices,  
                    data = Scania_PersonPeriod_Train, 
                    family = bernoulli(link = "cloglog"),
@@ -556,6 +541,9 @@ Bates, D., Maechler, M., Bolker, B., & Walker, S. (2015). *Fitting Linear Mixed-
 
 
 Broström, G. (2018). eha: Event History Analysis. R package version 2.6.0. [https://CRAN.R-project.org/package=eha](https://CRAN.R-project.org/package=eha)
+
+
+Bürkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
 
 
 Fox, J. (2003). *Effect Displays in R for Generalised Linear Models. Journal of Statistical Software, 8*(15), 1-27. [http://www.jstatsoft.org/v08/i15/](http://www.jstatsoft.org/v08/i15/) 

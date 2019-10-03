@@ -1,6 +1,6 @@
 ---
 title: Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4
-author: '[Qixiang Fang]() and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
+author: '[Qixiang Fang](https://www.uu.nl/staff/QFang) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
 date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
 output:
   html_document:
@@ -11,22 +11,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-
-  <script language="javascript"> 
-    function toggle(num) {
-      var ele = document.getElementById("toggleText" + num);
-      var text = document.getElementById("displayText" + num);
-      if(ele.style.display == "block") {
-        ele.style.display = "none";
-        text.innerHTML = "show";
-      }
-      else {
-        ele.style.display = "block";
-        text.innerHTML = "hide";
-      }
-   } 
-  </script>
   
   
 This tutorial provides the reader with a basic introduction to genearlised linear models (GLM) using the frequentist approach. Specifically, this tutorial focuses on the use of logistic regression in both binary-outcome and count/porportion-outcome scenarios, and the respective approaches to model evaluation. The tutorial uses the **Thai Educational Data** example in Chapter 6 of the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). Furthermore, the tutorial briefly demonstrates the multilevel extension of GLM models with the `lme4` package in R. Lastly, more distributions and link functions in the GLM framework are discussed.
@@ -54,8 +38,7 @@ This tutorial expects:
 ## **2. Introduction to Genearlised Linear Models (GLM)**
 If you are already familar with generalised linear models (GLM), you can proceed to the next section. Otherwise, click "Read More" to learn about GLM. 
 
-  <a id="displayText" href="javascript:toggle(1);">Read More</a>
-  <div id="toggleText1" style="display: none">
+[expand title="Read More" trigclass="noarrow my_button" targclass="my_content" tag="button"]
   
 
 Recall that in a linear regression model, the object is to model the expected value of a continuous variable, $Y$, as a linear function of the predictor, $\eta = X\beta$. The model structure is thus: $E(Y) = X\beta + e$, where $e$ refers to the residual error term. The linear regression model assumes that $Y$ is continous and comes from a normal distribution, that $e$ is normally distributed and that the relationship between the linear predictor $\eta$ and the expected outcome $E(Y)$ is strictly linear. However, these assumptions are easily violated in many real world data examples, such as those with binary or proportional outcome variables and those with non-linear relationships between the predictors and the outcome variable. In these scenarios where linear regression models are clearly inappropriate, generalised linear models (GLM) are needed.
@@ -72,7 +55,9 @@ Binary logistic regression assumes that $Y$ comes from a Bernoulli distribution,
 Binomial logistic regression, in contrast, assumes a binomial distribution underlying $Y$, where $Y$ is interpreted as the number of target events, can take on any non-negative integer value and is binomially distributed with regards to $n$ number of trials and $\pi$ probability of the target event. The link function is the same as that of binary logistic regression. 
 
 
-  </div>
+[/expand]
+
+  <p>&nbsp;</p>
 
 The next section details the exampler data (**Thai Educational Data**) in this tutorial, followed by the demonstration of the use of both binary and binomial logistic regression. 
 
