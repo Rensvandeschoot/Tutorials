@@ -12,13 +12,21 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This tutorial provides an introduction to Bayesian GLM (genearlised linear models) with non-informative priors using the `brms` package in R. If you have not followed the **Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4** tutorial, we highly recommend that you do so, because it offers more extensive information about GLM. If you are not familar with Bayesian inference, we also recommend that you read this tutorial [Building a Multilevel Model in BRMS Tutorial: Popularity Data](https://www.rensvandeschoot.com/tutorials/brms-started/) prior to using this tutorial.
+
+This tutorial provides an introduction to Bayesian GLM (genearlised linear models) with non-informative priors using the `brms` package in R. If you have not followed the [Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4](https://www.rensvandeschoot.com/generalised-linear-models-with-glm-and-lme4/) tutorial, we highly recommend that you do so, because it offers more extensive information about GLM. If you are not familar with Bayesian inference, we also recommend that you read this tutorial [Building a Multilevel Model in BRMS Tutorial: Popularity Data](https://www.rensvandeschoot.com/tutorials/brms-started/) prior to using this tutorial.
 
 
 The current tutorial specifically focuses on the use of Bayesian logistic regression in both binary-outcome and count/porportion-outcome scenarios, and the respective approaches to model evaluation. The tutorial uses the **Thai Educational Data** example in Chapter 6 of the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). Furthermore, the tutorial briefly demonstrates the multilevel extension of Bayesian GLM models. 
 
 
-This tutorial follows this structure: 1. Preparation; 2. Introduction to GLM; 3. Thai Educational Data; 4. Data Preparation; 5. Bayesian Binary (Bernoulli) Logistic Regression; 6. Bayesian Binomial Logistic Regression; 7. Bayesian Multilevel Logistic Regression.
+This tutorial follows this structure:  
+1. Preparation;  
+2. Introduction to GLM;  
+3. Thai Educational Data;  
+4. Data Preparation;  
+5. Bayesian Binary (Bernoulli) Logistic Regression;  
+6. Bayesian Binomial Logistic Regression;  
+7. Bayesian Multilevel Logistic Regression.  
 
 
 Note that this tutorial is meant for beginners and therefore does not delve into technical details and complex models. For a detailed introduction into frequentist multilevel models, see this [LME4 Tutorial](https://www.rensvandeschoot.com/tutorials/lme4). For an extensive overview of GLM models, see [here](https://en.wikipedia.org/wiki/Generalized_linear_model). If you want to use the Bayesian approach for your own research, we recommend that you follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/). 
@@ -26,11 +34,11 @@ Note that this tutorial is meant for beginners and therefore does not delve into
 
 ## **1. Preparation**
 This tutorial expects:  
-- Installation of R packages [`brms`](https://cran.r-project.org/web/packages/brms/index.html) for Bayesian (multilevel) generalised linear models (this tutorial uses version 2.9.0);  
+- Installation of R packages [`brms`](https://cran.r-project.org/web/packages/brms/index.html) for Bayesian (multilevel) generalised linear models (this tutorial uses version 2.9.0). Because of some special dependencies, for `brms` to work, you still need to install a couple of other things. See [this tutorial](https://www.rensvandeschoot.com/tutorials/brms-started) on how to install `brms`. Note that currently `brms` only works with R 3.5.3 or an earlier version;  
 - Installation of R package [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html) for data manipulation and plotting with ggplot2;  
 - Installation of R package [`haven`](https://cran.r-project.org/web/packages/tidyverse/index.html) for reading sav format data;    
 - Installation of R package [`ROCR`](https://cran.r-project.org/web/packages/ROCR/index.html) for calculating area under the curve (AUC);   
-- Installation of R package [`sjstats`](https://cran.r-project.org/web/packages/sjstats/index.html) for calculating intra-class correlation (ICC);  
+- Installation of R package [`sjstats`](https://cran.r-project.org/web/packages/sjstats/index.html) for calculating intra-class correlation (ICC). Remember to install version 0.17.5 (using the command `install_version("sjstats", version = "0.17.5")` after loading the package `devtools`, because the latest version of `sjstats` does not support the ICC function anymore);  
 - Installation of R package [`modelr`](https://cran.r-project.org/web/packages/tidyverse/index.html) for data manipulation;  
 - Installation of R package [`tidybayes`](https://cran.r-project.org/web/packages/tidybayes/index.html) for extraction, manipulation, and visualisation of posterior draws from Bayesian models;  
 - Basic knowledge of hypothesis testing and statistical inference;  
@@ -199,7 +207,7 @@ Model_Binary <- glm(formula = REPEAT ~ SEX + PPED,
 summary(Model_Binary)
 ```
 
-From the model summary above, we can see that the Bayesian model estimates are almost identical to those of the frequentist model. The interpretation of these estimates are the same in both frequentist and Bayesian models. Nevertheless, note that the interpretation of the uncertainty intervals is not the same between the two models. In the frequentist model, the 95% uncertainty interval (confidence interval) refers to the scenario where, under repeated sampling, the resulting uncertainy interval would in 95% cases cover the true population value. In contrast, in the Bayesian model, the 95% uncertainty interval (called credibility interval), which is more interpretable, states that there is 95% chance that the true population value falls within this interval. When the 95% credibilit intervals do not contain zero, we conclude that the respective model parameters are likely meaningful.
+From the model summary above, we can see that the Bayesian model estimates are almost identical to those of the frequentist model. The interpretation of these estimates are the same in both frequentist and Bayesian models. Nevertheless, note that the interpretation of the uncertainty intervals is not the same between the two models. In the frequentist model, the idea behind using a 95% uncertainty interval (confidence interval) is that, under repeated sampling, 95% of the resulting uncertainy intervals would cover the true population value. That allows us to say that, for a given 95% confidence interval, we are 95% confident that this confidence interval contains the true population value. However, it does not allow us to say that there is a 95% chance that the confidence interval contains the true population value (i.e. frequentist uncertainty intervals are not probability statements). In contrast, in the Bayesian model, the 95% uncertainty interval (called credibility interval), which is more interpretable, states that there is 95% chance that the true population value falls within this interval. When the 95% credibility intervals do not contain zero, we conclude that the respective model parameters are likely meaningful.
 
 
 Let's visualise the point estimates and their associated uncertainty intervals, using the `stanplot` function.
@@ -209,7 +217,7 @@ stanplot(Bayes_Model_Binary,
          prob = 0.95)
 ```
 
-The plot above shows the densities of the parameter estimates. The dark blue line in each density represents the point estimate, while the light-blue area indicates the 95% credibility intervals. We can easily see that both `SEX` and `PPED` are meaningful predictors, as their credibility intervals do not contain zero and their densities have a very narrow shape. `SEX` positively predicts a pupil's probability of repeating a grade, while `PPED` negatively so. Specifically, in comparison to being a girl, being a boy is more likely to repeat a grade. Having previous schooling is less likely to result in repeating a grade.
+The plot above shows the densities of the parameter estimates. The dark blue line in each density represents the point estimate, while the light-blue area indicates the 95% credibility intervals. We can easily see that both `SEX` and `PPED` are meaningful predictors, as their credibility intervals do not contain zero and their densities have a very narrow shape. `SEX` positively predicts a pupil's probability of repeating a grade, while `PPED` negatively so. Specifically, in comparison to being a girl, being a boy is more likely to repeat a grade, assuming everything else stays constant. Having previous schooling is less likely to result in repeating a grade, assuming everything else stays constant.
 
 
 To interpret the value of the parameter estimates, we need to exponentiate the estimates. See below.
@@ -226,7 +234,7 @@ stanplot(Bayes_Model_Binary,
   geom_vline(xintercept = 1, color = "grey")
 ```
 
-Note that the interpretation of the parameter estimates is linked to the odds rather than probabilities. The definition of odds is: the ratio of the probability of an event occurring to the probability of the event not occurring. In this analysis, assuming everything else stays the same, being a boy increases the odds of repeating a grade by 54%, in comparison to being a girl; having preschool education lowers the odds of repeating a grade by (1 - 0.54)% = 46%, in comparison to not having preschool education, assuming everything else stays constant. The baseline odds (indicated by the intercept term) of repeating a grade, namely if you're a girl with no previous schooling, is about 17%. 
+Note that the interpretation of the parameter estimates is linked to the odds rather than probabilities. The definition of odds is: P(event occurring)/P(event not occurring). In this analysis, assuming everything else stays the same, being a boy increases the odds of repeating a grade by 54%, in comparison to being a girl; having preschool education lowers the odds of repeating a grade by (1 - 0.54)% = 46%, in comparison to not having preschool education, assuming everything else stays constant. The baseline odds (indicated by the intercept term) of repeating a grade, namely if you're a girl with no previous schooling, is about 17%. 
 
 #### 5.4. Visualisation of Parameter Effects
 We can plot the marginal effects (i.e. estimated probabilities of repeating a grade) of the variables in the model. Below, we show how different combinations of `SEX` and `PPED` result in different probability estimates. The advantage of this approach is that probabilities are more interpretable than odds. 
@@ -245,7 +253,7 @@ As we can see, being a male pupil with no preschool education has the highest pr
 
 
 #### 5.5. Model Evaluation
-In the **Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4** tutorial, we learn that we can use the likelihood ratio test and AIC to assess the goodness of fit of the model(s). However, these two approaches do not apply to Bayesian models. Instead, Bayesian models make use of so-called *Posterior Predictive P-values (PPPs)* to assess the fit of the model. In addition, many also use *Bayes factors* to quantify support from the data for the model. This tutorial does not delve into PPPs or Bayes factors because of the complexity of the topics. 
+In the [Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4](https://www.rensvandeschoot.com/generalised-linear-models-with-glm-and-lme4/) tutorial, we learn that we can use the likelihood ratio test and AIC to assess the goodness of fit of the model(s). However, these two approaches do not apply to Bayesian models. Instead, Bayesian models make use of so-called *Posterior Predictive P-values (PPPs)* to assess the fit of the model. In addition, many also use *Bayes factors* to quantify support from the data for the model. This tutorial does not delve into PPPs or Bayes factors because of the complexity of the topics. 
   
 The other two measures mentioned in **Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4** are *correct classification rate* and *area under the curve (AUC)*. They are model-agnostic, meaning they can be applied to both frequentist and Bayesian models. 
 
@@ -286,9 +294,9 @@ With an AUC score of close to 0.60, the model does not discriminate well.
 
 
 ## **6. Bayesian Binomial Logistic Regression (with Non-Informative Priors)**
-As explained in the **Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4** tutorial, logistic regression can also be used to model count or proportion data. Binary logistic regression assumes that the outcome variable comes from a bernoulli distribution (which is a special case of binomial distributions) where the number of trial $n$ is 1 and thus the outcome variable can only be 1 or 0. In contrast, binomial logistic regression assumes that the number of the target events follows a binomial distribution with $n$ trials and probability $q$. In this way, binomial logistic regression allows the outcome variable to take any non-negative integer value and thus is capable of handling count data. 
+As explained in the [Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4](https://www.rensvandeschoot.com/generalised-linear-models-with-glm-and-lme4/) tutorial, logistic regression can also be used to model count or proportion data. Binary logistic regression assumes that the outcome variable comes from a bernoulli distribution (which is a special case of binomial distributions) where the number of trial $n$ is 1 and thus the outcome variable can only be 1 or 0. In contrast, binomial logistic regression assumes that the number of the target events follows a binomial distribution with $n$ trials and probability $q$. In this way, binomial logistic regression allows the outcome variable to take any non-negative integer value and thus is capable of handling count data. 
 
-The Thai Educational Data records information about individual pupils that are clustered within schools. By aggregating the number of pupils who repeated a grade by school, we obtain a new data set where each row represents a school, with information about the proportion of pupils repeating a grade in that school. The `MSESC` (mean SES score) is also on the school level; therefore, it can be used to predict proportion or count of pupils who repeat a grade in a particular school. See below.
+The `Thai Educational Data records` information about individual pupils that are clustered within schools. By aggregating the number of pupils who repeated a grade by school, we obtain a new data set where each row represents a school, with information about the proportion of pupils repeating a grade in that school. The `MSESC` (mean SES score) is also on the school level; therefore, it can be used to predict proportion or count of pupils who repeat a grade in a particular school. See below.
 
 #### 6.1. Tranform Data
 ```{r}
@@ -314,7 +322,7 @@ ThaiEdu_Prop %>%
 We can see that the proportion of students who repeated a grade is (moderately) negatively related to the inverse-logit of `MSESC`. Note that we model the variable `MSESC` as its inverse-logit because in a binomial regression model, we assume a linear relationship between the inverse-logit of the linear predictor and the outcome (i.e. proportion of events), not linearity between the predictor itself and the outcome.
 
 #### 6.3. Fit a Binomial Logistic Regression Model
-To fit a Bayesian binomial logistic regression model, we also use the `brm` function like we did with the previous Bayesian binary logistic regression model. There are, however, two differences: First, to specify the outcome variable in the formula, we need to specify both the number of target events ("REPEAT") and the total number of trials ("TOTAL") wrappted in `trials()`, which are separated by "|". In addition, the `family` should be "binomial" instead of "bernoulli".
+To fit a Bayesian binomial logistic regression model, we also use the `brm` function like we did with the previous Bayesian binary logistic regression model. There are, however, two differences: First, to specify the outcome variable in the formula, we need to specify both the number of target events (`REPEAT`) and the total number of trials (`TOTAL`) wrapped in `trials()`, which are separated by `|`. In addition, the `family` should be "binomial" instead of "bernoulli".
 
 ```{r}
 Bayes_Model_Prop <- brm(REPEAT | trials(TOTAL) ~ MSESC,  
@@ -404,6 +412,8 @@ ThaiEdu_New %>%
   scale_x_continuous(breaks = c(0, 1)) +
   scale_y_continuous(breaks = c(0, 1))
 ```
+
+
 In the plot above, different colors represent different schools. We can see that the relationship between `SEX` and `REPEAT` appears to be quite different across schools.
 
 
@@ -419,6 +429,8 @@ ThaiEdu_New %>%
   scale_x_continuous(breaks = c(0, 1)) +
   scale_y_continuous(breaks = c(0, 1))
 ```
+
+
 The relationship between `PPED` and `REPEAT` also appears to be quite different across schools. However, we can also see that most of the relationships follow a downward trend, going from 0 (no previous schooling) to 1 (with previous schooling), indicating a negative relationship between `PPED` and `REPEAT`. 
 
 
@@ -551,7 +563,7 @@ exp(fixef(Bayes_Model_Multi_Full)[4,-2]*sd(pull(ThaiEdu_Prop, MSESC), na.rm = T)
 We can see that the effects of `SEX`, `PPED`, and `MSESC` are very similar to the prevoius model results. 
 
 ## **References**
-Bürkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
+B&uuml;rkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
 
 
 Enders, C. K., & Tofighi, D. (2007). Centering predictor variables in cross-sectional multilevel models: A new look at an old issue. *Psychological Methods, 12*(2), 121-138. [doi:10.1037/1082-989X.12.2.121](https://doi.org/10.1037/1082-989X.12.2.121)
@@ -560,7 +572,7 @@ Enders, C. K., & Tofighi, D. (2007). Centering predictor variables in cross-sect
 Kay, M. (2019). tidybayes: Tidy Data and Geoms for Bayesian Models. [doi:10.5281/zenodo.1308151](https://doi.org/10.5281/zenodo.1308151), R package version 1.1.0, [http://mjskay.github.io/tidybayes/](http://mjskay.github.io/tidybayes/). 
 
 
-Lüdecke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
+L&uuml;decke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
 
 
 Raudenbush, S. W., & Bhumirat, C. (1992). The distribution of resources for primary education and its consequences for educational achievement in Thailand. *International Journal of Educational Research, 17*(2), 143-164. [doi:10.1016/0883-0355(92)90005-Q](https://doi.org/10.1016/0883-0355(92)90005-Q)
