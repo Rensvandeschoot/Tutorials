@@ -16,19 +16,27 @@ knitr::opts_chunk$set(echo = TRUE)
 This tutorial provides the reader with a basic introduction to genearlised linear models (GLM) using the frequentist approach. Specifically, this tutorial focuses on the use of logistic regression in both binary-outcome and count/porportion-outcome scenarios, and the respective approaches to model evaluation. The tutorial uses the **Thai Educational Data** example in Chapter 6 of the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). Furthermore, the tutorial briefly demonstrates the multilevel extension of GLM models with the `lme4` package in R. Lastly, more distributions and link functions in the GLM framework are discussed.
 
 
-This tutorial follows this structure: 1. Preparation; 2. Introduction to GLM; 3. Thai Educational Data; 4. Data Preparation; 5. Binary (Bernoulli) Logistic Regression; 6. Binomial Logistic Regression; 7. Multilevel Logistic Regression; 8. Other Family and Link Functions. 
+This tutorial follows this structure:  
+1. Preparation;  
+2. Introduction to GLM;  
+3. Thai Educational Data;  
+4. Data Preparation;   
+5. Binary (Bernoulli) Logistic Regression;   
+6. Binomial Logistic Regression;   
+7. Multilevel Logistic Regression;   
+8. Other Family and Link Functions.  
 
 
-Note that this tutorial is meant for beginners and therefore does not delve into technical details and complex models. For a detailed introduction into frequentist multilevel models, see this [LME4 Tutorial](https://www.rensvandeschoot.com/tutorials/lme4). For an extensive overview of GLM models, see [here](https://en.wikipedia.org/wiki/Generalized_linear_model). The Bayesian version of this tutorial can also be found on [Online Stats Training](https://www.rensvandeschoot.com/tutorials/).
+Note that this tutorial is meant for beginners and therefore does not delve into technical details and complex models. For a detailed introduction into frequentist multilevel models, see this [LME4 Tutorial](https://www.rensvandeschoot.com/tutorials/lme4). For an extensive overview of GLM models, see [here](https://en.wikipedia.org/wiki/Generalized_linear_model). The Bayesian version of this tutorial can also be found [here](https://www.rensvandeschoot.com/generalised-linear-models-with-brms/).
 
-## **1. Preparation**
 This tutorial expects:  
 - Installation of R packages [`lme4`](https://cran.r-project.org/web/packages/lme4/index.html) for multilevel modelling (this tutorial uses version 1.1-18-1);  
 - Installation of R package [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html) for data manipulation and plotting with ggplot2;  
 - Installation of R package [`haven`](https://cran.r-project.org/web/packages/tidyverse/index.html) for reading sav format data;    
 - Installation of R package [`jtools`](https://cran.r-project.org/web/packages/jtools/index.html) for handling of model summaries;  
+- Installation of R package [`ggstance`](https://cran.r-project.org/web/packages/ggstance/index.html) for visualisation purposes;  
 - Installation of R package [`ROCR`](https://cran.r-project.org/web/packages/ROCR/index.html) for calculating area under the curve (AUC);   
-- Installation of R package [`sjstats`](https://cran.r-project.org/web/packages/sjstats/index.html) for calculating intra-class correlation (ICC);  
+- Installation of R package [`sjstats`](https://cran.r-project.org/web/packages/sjstats/index.html) for calculating intra-class correlation (ICC). Remember to install version 0.17.5 (using the command `install_version("sjstats", version = "0.17.5")` after loading the package `devtools`, because the latest version of `sjstats` does not support the ICC function anymore);  
 - Installation of R package [`effects`](https://cran.r-project.org/web/packages/effects/index.html) for plotting parameter effects;  
 - Basic knowledge of hypothesis testing and statistical inference;  
 - Basic knowledge of correlation and regression;  
@@ -41,7 +49,7 @@ If you are already familar with generalised linear models (GLM), you can proceed
 [expand title="Read More" trigclass="noarrow my_button" targclass="my_content" tag="button"]
   
 
-Recall that in a linear regression model, the object is to model the expected value of a continuous variable, $Y$, as a linear function of the predictor, $\eta = X\beta$. The model structure is thus: $E(Y) = X\beta + e$, where $e$ refers to the residual error term. The linear regression model assumes that $Y$ is continous and comes from a normal distribution, that $e$ is normally distributed and that the relationship between the linear predictor $\eta$ and the expected outcome $E(Y)$ is strictly linear. However, these assumptions are easily violated in many real world data examples, such as those with binary or proportional outcome variables and those with non-linear relationships between the predictors and the outcome variable. In these scenarios where linear regression models are clearly inappropriate, generalised linear models (GLM) are needed.
+Recall that in a linear regression model, the object is to model the expected value of a continuous variable, $Y$, as a linear function of the predictor, $\eta = X\beta$. The model structure is thus: $E(Y) = X\beta + e$, where $e$ refers to the residual error term. The linear regression model assumes that $Y$ is continuous and comes from a normal distribution, that $e$ is normally distributed and that the relationship between the linear predictor $\eta$ and the expected outcome $E(Y)$ is strictly linear. However, these assumptions are easily violated in many real world data examples, such as those with binary or proportional outcome variables and those with non-linear relationships between the predictors and the outcome variable. In these scenarios where linear regression models are clearly inappropriate, generalised linear models (GLM) are needed.
 
 
 The GLM is the genearlised version of linear regression that allows for deviations from the assumptions underlying linear regression. The GLM generalises linear regression by assuming the dependent variable $Y$ to be generated from any particular distribution in an exponential family (a large class of probability distributions that includes the normal, binomial, Poisson and gamma distributions, among others). In this way, the distribution of $Y$ does not necessarily have to be normal. In addition, the GLM allows the linear predictor $\eta$ to be connected to the expected value of the outcome variable, $E(Y)$, via a link function $g(.)$. The outcome variable, $Y$, therefore, depends on $\eta$ through $E(Y) = g^{-1}(\eta) = g^{-1}(X\beta)$. In this way, the model does not assume a linear relationship between $E(Y)$ and $\eta$; instead, the model assumes a linear relationship between $E(Y)$ and the transformed $g^{-1}(\eta)$. 
@@ -145,7 +153,7 @@ It seems that the number of pupils who repeated a grade differs quite a bit betw
 
 #### 5.2. Fit a Binary Logistic Regression Model
 
-`R` has the `base` package installed by default, which includes the `glm` function that runs GLM. The arguments for `glm` are similar to those for `lm`: `formula` and `data`. However, `glm` requires an additional argument: `family`, which specifies the assumed distribution of the outcome variable; within `family` we also need to specify the link function. The default of `family` is `gaussian(link = "identity")`, which leads to a linear model that is equivalent to a model specified by `lm`. In the case of binary logistic regression, 'glm' requires that we specify a binomial distribution with the logit link, namely `family = binomial(link = "logit")`. 
+`R` has the `base` package installed by default, which includes the `glm` function that runs GLM. The arguments for `glm` are similar to those for `lm`: `formula` and `data`. However, `glm` requires an additional argument: `family`, which specifies the assumed distribution of the outcome variable; within `family` we also need to specify the link function. The default of `family` is `gaussian(link = "identity")`, which leads to a linear model that is equivalent to a model specified by `lm`. In the case of binary logistic regression, `glm` requires that we specify a binomial distribution with the logit link, namely `family = binomial(link = "logit")`. 
 
 ```{r}
 Model_Binary <- glm(formula = REPEAT ~ SEX + PPED,
@@ -164,7 +172,7 @@ To interpret the value of the parameter estimates, we need to exponentiate the e
 summ(Model_Binary, exp = T) # set "exp = T" to show esponentiated estimates; if you need standardised estimaets, set "scale = T"
 ```
 
-Note that the interpretation of the parameter estimates is linked to the odds rather than probabilities. The definition of odds is: the ratio of the probability of an event occurring to the probability of the event not occurring. In this analysis, assuming everything else stays the same, being a boy increases the odds of repeating a grade by 54%, in comparison to being a girl; having preschool education lowers the odds of repeating a grade by (1 - 0.54)% = 46%, in comparison to not having preschool education, assuming everything else stays constant.
+Note that the interpretation of the parameter estimates is linked to the odds rather than probabilities. The definition of odds is: P(event occurring)/P(event not occurring). In this analysis, assuming everything else stays the same, being a boy increases the odds of repeating a grade by 54%, in comparison to being a girl; having preschool education lowers the odds of repeating a grade by (1 - 0.54)% = 46%, in comparison to not having preschool education, assuming everything else stays constant.
 
 #### 5.4. Visualisation of Parameter Effects
 To make the interpretation of the parameter effects even easier, we can use the `allEffects` function from the `effects` package to visualise the parameter effects. See below.
@@ -275,7 +283,7 @@ ThaiEdu_Prop %>%
 We can see that the proportion of students who repeated a grade is negatively related to the inverse-logit of `MSESC`. Note that we model the variable `MSESC` as its inverse-logit because in a binomial regression model, we assume a linear relationship between the inverse-logit of the linear predictor and the outcome (i.e. proportion of events), not linearity between the predictor itself and the outcome.
 
 #### 6.3. Fit a Binomial Logistic Regression Model
-To fit a binomial logistic regression model, we also use the `glm` function. The only difference is in the specification of the outcome variable in the formula. We need to specify both the number of target events ("REPEAT") and the number of non-events ("TOTAL-REPEAT") and wrap them in `cbind()`.
+To fit a binomial logistic regression model, we also use the `glm` function. The only difference is in the specification of the outcome variable in the formula. We need to specify both the number of target events (`REPEAT`) and the number of non-events (`TOTAL-REPEAT`) and wrap them in `cbind()`.
 
 ```{r}
 Model_Prop <- glm(formula = cbind(REPEAT, TOTAL-REPEAT) ~ MSESC,
@@ -302,7 +310,9 @@ We can visualise the effect of `MSESC`.
 ```{r}
 plot(allEffects(Model_Prop))
 ```
-The plot above shows the expected influence of `MSESC` on the probability of a pupil repeating a grade. Holding everything else constant, as `MSESC` increases, the probability of a pupil repeating a grade lowers (from 0.19 to 0.10). The grey shaded areas indicate the 95% confidence intervals of the predicted values at each value of `MSESC`.
+
+
+The plot above shows the expected influence of `MSESC` on the probability of a pupil repeating a grade. Holding everything else constant, as `MSESC` increases, the probability of a pupil repeating a grade lowers (from 0.19 to 0.10). The blue shaded areas indicate the 95% confidence intervals of the predicted values at each value of `MSESC`.
 
 
 ## **7. Multilevel Binary Logistic Regression**
@@ -375,7 +385,7 @@ head(ThaiEdu_Center)
 
 
 #### 7.2. Intercept Only Model
-To specify a multilevel model, we use the `glmer` function from the `lme4` package. Note that the random effect term should be included in parentheses. In addition, within the parentheses, the random slope term(s) and the cluster terms should be separated by "|". Note that we use an additional argument `control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))` in the `glmer` function to specify a higher number of maximum iterations than default (10000). This might be necessary because a multilevel model may require a large number of iterations to converge.  
+To specify a multilevel model, we use the `glmer` function from the `lme4` package. Note that the random effect term should be included in parentheses. In addition, within the parentheses, the random slope term(s) and the cluster terms should be separated by `|`. Note that we use an additional argument `control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))` in the `glmer` function to specify a higher number of maximum iterations than default (10000). This might be necessary because a multilevel model may require a large number of iterations to converge.  
 
   
 We start by specifying an intercept-only model, in order to assess the impact of the clustering structure of the data. 
@@ -486,7 +496,7 @@ Fox, J. (2003). *Effect Displays in R for Generalised Linear Models. Journal of 
 Long, JA. (2019). jtools: Analysis and Presentation of Social Scientific Data. R package version 2.0.1, [https://cran.r-project.org/package=jtools](https://cran.r-project.org/package=jtools)
 
 
-Lüdecke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
+L&uuml;decke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
 
 
 Raudenbush, S. W., & Bhumirat, C. (1992). The distribution of resources for primary education and its consequences for educational achievement in Thailand. *International Journal of Educational Research, 17*(2), 143-164. [doi:10.1016/0883-0355(92)90005-Q](https://doi.org/10.1016/0883-0355(92)90005-Q)

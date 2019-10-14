@@ -12,10 +12,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This tutorial provides the reader with a hands-on introduction to discrete-time survival analysis in R. Specifically, the tutorial first introduces the basic idea underlying discrete-time survival analysis and links it to the framework of generalised linear models (GLM). Then, the tutorial demonstrates how to conduct discrete-time survival analysis with the `glm` function in R, with both time-fixed and time-varying predictors. Some popular model evaluation methods are also presented. Lastly, the tutorial briefly extends discrete-time survival analysis with multilevel modelling (using the `lme4` package) and Bayesian methods.
+This tutorial provides the reader with a hands-on introduction to discrete-time survival analysis in R. Specifically, the tutorial first introduces the basic idea underlying discrete-time survival analysis and links it to the framework of generalised linear models (GLM). Then, the tutorial demonstrates how to conduct discrete-time survival analysis with the `glm` function in R, with both time-fixed and time-varying predictors. Some popular model evaluation methods are also presented. Lastly, the tutorial briefly extends discrete-time survival analysis with multilevel modelling (using the `lme4` package) and Bayesian methods (with the `brms` package).
 
 
-This tutorial follows this structure:   
+The tutorial follows this structure:   
 1. Preparation  
 2. Introduction to Discrete-Time Survival Analysis  
 3. Data "Scania": Old Age Mortality in Scania, Southern Sweden  
@@ -27,7 +27,7 @@ This tutorial follows this structure:
 9. Bayesian Discrete-Time Survival Analysis
 
 
-Note that this tutorial is meant for beginners and therefore does not delve into very technical details or complex models. For a detailed introduction into GLM or multilevel models in R, see [Online Stats Training](https://www.rensvandeschoot.com/tutorials/). For an extensive overview of GLM models, see [here](https://en.wikipedia.org/wiki/Generalized_linear_model). For more discrete-time survival analysis, check out [Modeling Discrete Time-to-Event Data](https://www.springer.com/gp/book/9783319281568) by Tutz & Schmid (2016). For more multilevel modelling, see [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). 
+Note that this tutorial is meant for beginners and therefore does not delve into very technical details or complex models. For a detailed introduction into GLM or multilevel models in R, see [this tutorial](https://www.rensvandeschoot.com/generalised-linear-models-with-glm-and-lme4/). For an extensive overview of GLM models, see [here](https://en.wikipedia.org/wiki/Generalized_linear_model). For more discrete-time survival analysis, check out [Modeling Discrete Time-to-Event Data](https://www.springer.com/gp/book/9783319281568) by Tutz & Schmid (2016). For more multilevel modelling, see [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). 
 
 ## **1. Preparation**
 This tutorial expects:  
@@ -35,10 +35,11 @@ This tutorial expects:
 - Installation of R package [`haven`](https://cran.r-project.org/web/packages/tidyverse/index.html) for reading sav format data;    
 - Installation of R packages [`lme4`](https://cran.r-project.org/web/packages/lme4/index.html) for multilevel modelling (this tutorial uses version 1.1-18-1);  
 - Installation of R package [`jtools`](https://cran.r-project.org/web/packages/jtools/index.html) for handling of model summaries;  
+- Installation of R package [`ggstance`](https://cran.r-project.org/web/packages/ggstance/index.html) for visualisation purposes;  
 - Installation of R package [`effects`](https://cran.r-project.org/web/packages/effects/index.html) for plotting parameter effects;  
 - Installation of R package [`eha`](https://cran.r-project.org/web/packages/eha/index.html), which contains the data set we will use;  
 - Installation of R package [`discSurv`](https://cran.r-project.org/web/packages/discSurv/index.html), for discrete-time data manipulation and calculation of prediction error curves;  
-[`brms`](https://cran.r-project.org/web/packages/brms/index.html) for Bayesian discrete-time survival analysis (this tutorial uses version 2.9.0). Note that you do not need this package installed for the main codes of the tutorial to work. If interested, you can check out this [tutorial](https://www.rensvandeschoot.com/tutorials/brms-started) for detailed installation instruction;  
+- Optional installation of R package [`brms`](https://cran.r-project.org/web/packages/brms/index.html) for Bayesian discrete-time survival analysis (this tutorial uses version 2.9.0). Note that you do not need this package installed for the main codes of the tutorial to work. If interested, you can check out this [tutorial](https://www.rensvandeschoot.com/tutorials/brms-started) for detailed installation instruction. Note that currently `brms` only works with R 3.5.3 or an earlier version;  
 - Basic knowledge of hypothesis testing and statistical inference;  
 - Basic knowledge of generalised linear models (GLM);  
 - Basic knowledge of coding in R;  
@@ -56,12 +57,13 @@ Survival analysis is a body of methods commonly used to analyse time-to-event da
 Many survival analysis techniques assume continuous measurement of time (e.g. Cox regression). However, in practice, data are often collected in discrete-time intervals, for instance, days, weeks and years, which violates the assumption of continous time in many standard survival analysis tools. Because of this reason, we need a special type of survival analysis for discrete-time data, namely **discrete-time survival analysis**. There are advantages to using discrete-time analysis, in comparison to its continuous-time counterpart. For example, discrete-time analysis has no problem with ties (i.e. multiple events occurring at the same time point) and it can be embedded into the generalised linear model (GLM) framework, as is shown next.
 
 
+
 #### 2.2. Hazard Function
-The fundamental quantity used to assess the risk of event occurrence in a discrete-time period is hazard. Denoted by $h_{is}$, discrete-time hazard is the \textit{conditional probability} that individual $i$ will experience the target event in time period $s$, given that he or she did not experience it prior to time period $s$. This translates into, for instance, the probability of person $i$ dying during time (e.g. day, month) $s$ given the individual did not die earlier. The hazard function can be formalised as follows:
+The fundamental quantity used to assess the risk of event occurrence in a discrete-time period is **hazard**. Denoted by $h_{is}$, discrete-time hazard is the **conditional probability** that individual $i$ will experience the target event in time period $s$, given that he or she did not experience it prior to time period $s$. This translates into, for instance, the probability of person $i$ dying during time $s$ (e.g. day, month), given the individual did not die earlier. The hazard function can be formalised as follows:
 
 $$h_{is} = P(T_{i} = s\;|\;T_{i} \geq s)$$
 
-where $T$ represent a discrete random variable whose values $T_i$ indicate the time period $s$ when individual $i$ experiences the target event. The hazard function, thus, represents the probability that the event will occur in the current time period, given that it must occur now, or sometime later. 
+where $T$ represent a discrete random variable whose values $T_i$ indicate the time period $s$ when individual $i$ experiences the target event. The hazard function, thus, represents the probability that the event will occur in the current time period $s$, given that it must occur now, or sometime later. 
 
 
 The value of discrete-time hazard in time period $s$ can be estimated as:
@@ -76,14 +78,14 @@ A general representation of the hazard function that connects the hazard $h_{is}
 
 $$\eta = g(h_{is}) = \gamma_{0s} + x_{is}\gamma$$
 
-where $g(.)$ is a link function. It links the hazard and the linear predictor $\eta = \gamma_{0s} + x_{is}\gamma$, which contains the effects of covariates for individual $i$ in time period $s$. The intercept $\gamma_{0s}$ is assumed to vary over time, whereas the parameter $\gamma$ is fixed. Since hazards are probabilities restricted to the interval [0, 1], natural candidates for the response function $g(.)$ are, for instance, the logit link and the Gompertz link (or complementary log-log). Both of them are frequent choices in discrete-time survival analysis. The corresponding hazard functions become
+where $g(.)$ is a link function. It links the hazard and the linear predictor $\eta = \gamma_{0s} + x_{is}\gamma$, which contains the effects of covariates for individual $i$ in time period $s$. The intercept $\gamma_{0s}$ is assumed to vary over time, whereas the parameter $\gamma$ is fixed. Since hazards are probabilities restricted to the interval [0, 1], natural candidates for the response function $g(.)$ are, for instance, the logit link and the Gompertz link (also called complementary log-log link). Both of them are frequent choices in discrete-time survival analysis. The corresponding hazard functions become
 
 $$
 logit: h_{is} = \exp(\eta)/(1+\exp(\eta)) \\
 Gompertz: h_{is} = 1 - \exp(-\exp(\eta))
 $$
 
-Both link functions are appropriate in most cases. In fact, when the underlying hazards are small, both link functions usually lead to very similar parameter estimates. However, there are two differences. First, the two models offer different interpretations of the estimated parameters. In the logistic model (i.e. using the logit link), the exponential term of a parameter estimate quantifies the difference in the value of the odds per unit difference in the predictor, while in the Gompertz model it is the value of the hazard (i.e. probability). Therefore, the Gompertz link results in a more intuitive model interpretation. Second, the Gompertz link assumes the underlying distribution of time to be continuous, but for practical reasons the measurement is discrete. Where it is safe to assume a continuous underlying distribution of time, we recommend using the Gompertz link and thus one would also benefit from more interpretable model estimates; otherwise, the logit link.
+Both link functions are appropriate in most cases. In fact, when the underlying hazards are small, both link functions usually lead to very similar parameter estimates. However, there are two differences. First, the two links result in different interpretations of the estimated parameters. In a logistic model (i.e. using the logit link), the exponential term of a parameter estimate quantifies the difference in the value of the odds per unit difference in the predictor, while in the Gompertz model it is the value of the hazard (i.e. which is a probability). Therefore, the Gompertz link results in a more intuitive model interpretation. Second, the Gompertz link assumes the underlying distribution of time to be continuous, but for practical reasons the measurement is discrete. Where it is safe to assume a continuous underlying distribution of time, we recommend using the Gompertz link and thus one would also benefit from more interpretable model estimates; otherwise, the logit link.
 
 
 
@@ -94,7 +96,11 @@ $$
 -l \propto \sum_{i=1}^n\sum_{s=1}^{t_{i}} y_{is}\log h_{is} + (1-y_{is})log(1- h_{is})
 $$
 
-where $y_{is} = 1$ if the target event occurs for individual $i$ during time period $s$, and $y_{is} = 0$ otherwise; $n$ refers to the total number of individuals; $t_i$ the observed censored time for individual $i$. This negative log-likelihood is equivalent to that of a binary response model (e.g. binary logistic regression). This analogue allows us to use software designed for binary response models for model estimation, with only two modifications. First, the distribution function is Gompertz (if not logit). Second, the number of binary observations in the discrete survival model depends on the observed censoring and lifetimes. Thus, the number of binary observations is $\sum_{i = 1}^{n}\sum_{s = 1}^{t_{i}}$. This requires the so-called **Person-Period data format**, where there is a separate row for each individual $i$ for each period $s$ when the person is observed. In each row a variable indicates whether an event occurs. The event occurs in the last observed period unless the observation has been censored. Below is an exemplar Person-Period data set, containing observations from three persons.
+where $y_{is} = 1$ if the target event occurs for individual $i$ during time period $s$, and $y_{is} = 0$ otherwise; $n$ refers to the total number of individuals; $t_i$ the observed censored time for individual $i$. This negative log-likelihood is equivalent to that of a binary response model (e.g. binary logistic regression). This analogue allows us to use software designed for binary response models for model estimation, with only two modifications. First, the distribution function is Gompertz (if not logit). Second, the number of binary observations in the discrete survival model depends on the observed censoring and lifetimes. Thus, the number of binary observations is $\sum_{i = 1}^{n}\sum_{s = 1}^{t_{i}}$. This requires the so-called **Person-Period data format**, where there is a separate row for each individual $i$ for each period $s$ when the person is observed. In each row a variable indicates whether an event occurs. The event occurs in the last observed period unless the observation has been censored. 
+
+
+Below is an exemplar Person-Period data set, containing observations from three persons.
+
 
 ```{r echo=FALSE}
 data.frame(id = c(1,1,1,2,3,3,3,3,3,3),
@@ -104,10 +110,13 @@ data.frame(id = c(1,1,1,2,3,3,3,3,3,3),
            employed = c("yes", "yes", "no", "no", "yes", "yes", "no", "yes", "yes", "yes"))
 ```
 
+
 As we can see in this example, a person (indicated by column `id`) has multiple rows for all the time points when the person is observed. A person is censored when he/she has experienced the target event (i.e. id = 1 and id = 2), or when the data collection ends systematically at time point 6 (i.e. id = 3). Both time-fixed variables (e.g. gender) and time-varying variables (e.g. employment status) can be easily integrated into such a data format.
 
 
 One may wonder whether the analysis of the multiple records in a Person-Period data set yields appropriate parameter estimates, standard errors and goodness-of-fit statistics when the multiple records for each person in the data set do not appear to be independent from each other. This is not an issue in discrete time survival analysis because the hazard function describes the **conditional** probability of event occurrence, where the conditioning depends on the individual surviving until each specific time period $s$ and his or her values for the substantive predictors in each time period. Therefore, records in the person-period data need to only assume conditional independence. 
+
+
 
 [/expand]
 
@@ -129,10 +138,10 @@ The data used in this tutorial is `Scania`, offered by The Scanian Economic Demo
 `immigrant`: a factor with levels "no" and "yes".  
 
 
-This data set comes with the R package `eha`. Note that in this data set, there is no time-varying predictor. Therefore, we will manually add a time-varying variable "foodprices" from the "logrye" data set that is also available in the `eha` package. "logrye" consists of yearly rye prices from 1801 to 1894 in Scania. Rye prices are used as an indicator for food prices. 
+This data set comes with the R package `eha`. Note that in this data set, there is no time-varying predictor. Therefore, we will manually add a time-varying variable "foodprices" from the `logrye` data set that is also available in the `eha` package. "logrye" consists of yearly rye prices from 1801 to 1894 in Scania. Rye prices are used as an indicator for food prices. 
 
 
-The main research question that this tutorial seeks to answer using the "Scania" data is: *What are the effects of gender, socio-economic status, immigrant status, and food prices on a person's conditional probability of dying during a given time interval?*
+The main research question that this tutorial seeks to answer using the "Scania" data is: **What are the effects of gender, socio-economic status, immigrant status, and food prices on a person's conditional probability of dying during a given time interval?**
 
 
 ## **4. Data Preparation**
@@ -145,7 +154,7 @@ library(effects) #for plotting parameter effects
 library(jtools) #for transformaing model summaries
 library(eha) #for the data sets used in this tutorial
 library(discSurv) #discrete-time survival analysis tool kit
-library(brms) #Bayesian discrete-time survival analysis
+#library(brms) #Bayesian discrete-time survival analysis
 ```
 
 #### 4.2. Import Data
@@ -171,7 +180,7 @@ head(Scania_Person)
 
 
 #### 4.4. Divide Data into Training (80%) and Test (20%) Sets
-Normally, we are not only interested in explaining a data set, but also curious about the generalisibility of the results to unseen cases. That is to say, we want to know if our model, trained on some data, performs well on some other data, which can be evaluated using some criteria (e.g. mean squared error; correct classification rate). For this reason, we divide our current data randomly into two parts: a training data set comprising 80% of the cases where we build a discrete-time survival model; a test data set comprising 20% of the cases where we evaluate the model that we train on the training data.
+Normally, we are not only interested in explaining a data set, but also curious about the generalisibility of the results to unseen cases. That is to say, we want to know if our model, trained on some data, performs well on some other data, which can be evaluated using some criteria (e.g. mean squared error; correct classification rate). For this reason, we divide our current data randomly into two parts: a training data set comprising 80% of the cases with which we build a discrete-time survival model; a test data set comprising 20% of the cases which we use to evaluate the model that we train on the training data set.
 
 ```{r}
 set.seed(123)
@@ -247,14 +256,14 @@ Gompertz_Model_Baseline <- glm(formula = event ~ exit,
 summary(Gompertz_Model_Baseline)
 ```
 
-From the model summary above, we can see a significant and positive relationship between `exit` and hazard. This baseline effect of time (i.e. `exit`) on hazards is the same for all individuals and changes only with regards to time (i.e. `exit`). For instance, at time point 30 (`exit` = 30) (which means that the person's age is about 80), the baseline hazard for all individuals is: 1-exp(-exp(-4.237533+0.075346*30)) = 0.13. This means that at age 80, the probability (hazard) of dying for an individual in that year (without factoring in any other information) is 0.13. 
+From the model summary above, we can see a significant and positive relationship between `exit` and hazard. This baseline effect of time (i.e. `exit`) on hazards is the same for all individuals and changes only with regards to time (i.e. `exit`). For instance, at time point 30 (`exit` = 30) (which means that the person's age is about 50 + 30 = 80), the baseline hazard for all individuals is: 1-exp(-exp(-4.237533+0.075346*30)) = 0.13. This means that at age 80, the conditional probability (hazard) of dying for an individual in that year (without factoring in any other information) is 0.13. 
 
 To ease the interpretaion, we can exponentiate the model estimates, using the `summ` function from the `jtools` package.
 ```{r}
-summ(Gompertz_Model_Baseline, exp = T)
+summ(Gompertz_Model_Baseline, exp = T) #exp = T means that we want exponentiated estimates
 ```
 
-An estimate of 1.08 means that, for one unit increase in `exit` (i.e. one additional observed year for a person), the probability (i.e. hazard) of the person dying, given that he/she survived the last time period, increases by 8%. 
+An estimate of 1.08 means that, for one unit increase in `exit` (i.e. one additional observed year for a person), the probability (i.e. hazard) of the person dying, given that he/she survived the last time period, increases by 1.08 - 1 = 8%. 
 
 #### 5.2. Fit a Full Gompertz Regression Model
 To answer the research question (i.e. What are the effects of gender, socio-economic status, immigrant status, and food prices on a person's conditional probability of dying during a given time interval?), we would want to fit a Gompertz regression model that includes all the variables of interest (i.e. `sex`, `ses`, `immigrant` and `foodprices`). Before we specify the model, it might be interesting to also visually examine the relationship between these variables and cloglog(hazard).   
@@ -354,7 +363,7 @@ Alternatively, we can use the `allEffects` function from the `effects` package t
 plot(allEffects(Gompertz_Model_Full))
 ```
 
-Note that in these plots, the y scales refer to the predicted hazards (probability of death). Such plots are helpful when the model uses a link (e.g. logit) that results in less interpretable model estimates, because probabilities (hazards) are more interpretable than, for example, odds. The probability scores for each variable are calculated by assuming that the other variables in the model are constant and take on their average values. Note that the confidence intervals for the estimates are also included to give us some idea of the uncertainties.
+Note that in these plots, the y scales refer to the predicted hazards (conditional probability of death). Such plots are helpful when the model uses a link (e.g. logit) that results in less interpretable model estimates, because probabilities (hazards) are more interpretable than, for example, odds. The probability scores for each variable are calculated by assuming that the other variables in the model are constant and take on their average values. Note that the confidence intervals for the estimates are also included to give us some idea of the uncertainties.
 
 
 Note that the notion of average `ses`, `sex` and `immigrant` may sound strange, given they are categorical variables (i.e. factors). If you are not comfortable with the idea of assuming an average factor, you can specify your intended factor level as the reference point, by using the `fixed.predictors = list(given.values = ...)` argument in the allEffects function. See below:
@@ -420,7 +429,7 @@ We have considered several methods for assessing the goodness-of-fit of a discre
 ##### 7.1. Predictive Deviance
 The formula for predictive deviance is as follows:
 
-$$PD = -2\sum_{i=1}^n\sum_{s=1}^{t_{i}} y_{is}\log (\hat{h}_{is}) + (1-y_{is})\log (1-\hat{h}_{is})$$
+$$PD = -2 * (\sum_{i=1}^n\sum_{s=1}^{t_{i}} y_{is}\log (\hat{h}_{is}) + (1-y_{is})\log (1-\hat{h}_{is}))$$
 
 The predictive deviance score for the full Gompertz model is computed via the following codes.
 ```{r}
@@ -505,6 +514,7 @@ Model_Multi <- glmer(formula = event ~ exit + sex + ses + immigrant + foodprices
                      data = Scania_PersonPeriod_Train,
                      control = glmerControl(optimizer = "bobyqa", 
                                             optCtrl = list(maxfun = 2e5)))
+#you can normally ignore the control argument. It is used here to increase the maximum iteration. 
 
 summary(Model_Multi)
 ```
@@ -513,7 +523,7 @@ Note that the basic frailty model has a negative log-likelihood of -3444.4 and a
 
 
 
-This model does not delve deeper into multilevel extensions of discrete-time survival regression. For this specific topic, please see Chapter 9 of [Modeling Discrete Time-to-Event Data](https://www.springer.com/gp/book/9783319281568) by Tutz & Schmid (2016). For more multilevel modelling in general, check out [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). For introduction to GLM or multilevel modelling in R, see the relevant tutorials on [Online Stats Training](https://www.rensvandeschoot.com/tutorials/). 
+This tutorial does not delve deeper into multilevel extensions of discrete-time survival regression. For this specific topic, please see Chapter 9 of [Modeling Discrete Time-to-Event Data](https://www.springer.com/gp/book/9783319281568) by Tutz & Schmid (2016). For more multilevel modelling in general, check out [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). For introduction to GLM or multilevel modelling in R, see the relevant tutorials on [Online Stats Training](https://www.rensvandeschoot.com/tutorials/). 
 
 
 ## **9. Bayesian Discrete-Time Survival Analysis**
@@ -540,19 +550,16 @@ Bayes_Model
 Bates, D., Maechler, M., Bolker, B., & Walker, S. (2015). *Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67*(1), 1-48. [doi:10.18637/jss.v067.i01](https://doi.org/10.18637/jss.v067.i01)
 
 
-Broström, G. (2018). eha: Event History Analysis. R package version 2.6.0. [https://CRAN.R-project.org/package=eha](https://CRAN.R-project.org/package=eha)
+Brostr&ouml;m, G. (2018). eha: Event History Analysis. R package version 2.6.0. [https://CRAN.R-project.org/package=eha](https://CRAN.R-project.org/package=eha)
 
 
-Bürkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
+B&uuml;rkner, P. (2017). *brms: An R Package for Bayesian Multilevel Models Using Stan. Journal of Statistical Software, 80*(1), 1-28. [doi:10.18637/jss.v080.i01](http://dx.doi.org/10.18637/jss.v080.i01)
 
 
 Fox, J. (2003). *Effect Displays in R for Generalised Linear Models. Journal of Statistical Software, 8*(15), 1-27. [http://www.jstatsoft.org/v08/i15/](http://www.jstatsoft.org/v08/i15/) 
 
 
-Long, JA. (2019). jtools: Analysis and Presentation of Social Scientific Data. R package version 2.0.1, [https://cran.r-project.org/package=jtools](https://cran.r-project.org/package=jtools)
-
-
-Lüdecke, D. (2019). sjstats: Statistical Functions for Regression Models (Version 0.17.5). [doi: 10.5281/zenodo.1284472](http://dx.doi.org/10.5281/zenodo.1284472)
+Long, JA. (2019). jtools: Analysis and Presentation of Social Scientific Data. R package version 2.0.1, [https://cran.r-project.org/package=jtools](https://cran.r-project.org/package=jtools) 
 
 
 Tutz, G., & Schmid, M. (2016). Modeling Discrete Time-to-Event Data (1st ed.). Springer New York. [https://doi.org/10.1007/978-3-319-28158-2](https://doi.org/10.1007/978-3-319-28158-2)
