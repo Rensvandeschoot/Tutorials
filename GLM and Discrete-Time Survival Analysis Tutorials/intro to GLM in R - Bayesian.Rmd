@@ -2,10 +2,6 @@
 title: Intro to Bayesian (Multilevel) Generalised Linear Models (GLM) in R with brms
 author: '[Qixiang Fang](https://www.uu.nl/staff/QFang) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)'
 date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
-output:
-  html_document:
-    df_print: paged
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
