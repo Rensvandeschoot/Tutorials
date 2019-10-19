@@ -28,7 +28,7 @@ This tutorial expects:
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
 - Basic knowledge of coding in R
   
-[expand title="Check the WAMBS checklist here" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+[expand title="WAMBS-checklist" trigclass="noarrow my_button" targclass="my_content" tag="button"]
  **WAMBS checklist** - *When to worry, and how to Avoid the Misuse of Bayesian Statistics*
 
 **To be checked before estimating the model**
@@ -500,8 +500,6 @@ To obtain information about autocorrelation the following syntax can be used:
 par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "acf")
 ```
-
-![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 [expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
