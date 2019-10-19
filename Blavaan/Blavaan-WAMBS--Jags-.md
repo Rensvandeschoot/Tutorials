@@ -12,9 +12,9 @@ output:
 
 In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-Misuse-of-Bayesian-Statistics - checklist [(the WAMBS-checklist)](https://www.rensvandeschoot.com/wambs-checklist/).
 
-We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
 
-  <p>&nbsp;</p>
+
 
 ## Preparation
 
@@ -22,17 +22,14 @@ We are continuously improving the tutorials so let me know if you discover mista
 This tutorial expects:
 
 - Any installed version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files)
-- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.7 and Lavaan version 0.6.5 in R version 3.6.1- Basic knowledge of hypothesis testing
+- Installation of R packages `rjags`, `lavaan` and `blavaan`. **This tutorial ony works in Blavaan version 0.3.7 and Lavaan version 0.6.5 and was made using R version 3.6.1** If you obtain any errors, first update your (B)lavaan version.
+- Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
 - Basic knowledge of coding in R
   
 [expand title="Check the WAMBS checklist here" trigclass="noarrow my_button" targclass="my_content" tag="button"]
-
-
-## **WAMBS checklist** 
-
-### *When to worry, and how to Avoid the Misuse of Bayesian Statistics*
+ **WAMBS checklist** - *When to worry, and how to Avoid the Misuse of Bayesian Statistics*
 
 **To be checked before estimating the model**
 
@@ -40,8 +37,8 @@ This tutorial expects:
 
 **To be checked after estimation but before inspecting model results**
 
-2.    Does the trace-plot exhibit convergence?
-3.  Does convergence remain after doubling the number of iterations?
+2.   Does the trace-plot exhibit convergence?
+3.   Does convergence remain after doubling the number of iterations?
 4.   Does the posterior distribution histogram have enough information?
 5.   Do the chains exhibit a strong degree of autocorrelation?
 6.   Do the posterior distributions make substantive sense?
@@ -55,8 +52,7 @@ This tutorial expects:
 
 [/expand]
 
-  <p>&nbsp;</p>
-
+  
 
 ## **Example Data**
 
@@ -69,7 +65,7 @@ The relation between completion time and age is expected to be non-linear. This 
 
 So, in our model the gap (*B3_difference_extra*) is the dependent variable and age (*E22_Age*) and age$^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>.
 
-  <p>&nbsp;</p>
+
 
 ##### _**Question:** Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?_
 
@@ -86,7 +82,7 @@ $H_1:$ _$age^2$ is related to a delay in the PhD projects._
 [/expand]
 
 
-  <p>&nbsp;</p>
+  
 
 ## Preparation - Importing and Exploring Data
 
@@ -121,7 +117,7 @@ GitHub is a platform that allows researchers and developers to share code, softw
 Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the  `describe()` function.
   
   
-  <p>&nbsp;</p>
+  
   
 ##### _**Question:** Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data._
 
@@ -158,11 +154,11 @@ _age2: Mean (1050.22), SE (35.97)_
 
 [/expand]
 
-  <p>&nbsp;</p>
+  
 
 ##   **Step 1: Do you understand the priors?**
 
-  <p>&nbsp;</p>
+  
   
 ### 1.Do you understand the priors?
 
@@ -236,7 +232,7 @@ plot(years, delay, type =  "l")
 [/expand]
 
 
-  <p>&nbsp;</p>
+  
 
 ## **Step 2: Run the model and check for convergence**
 
@@ -255,7 +251,7 @@ To run a multiple regression with Blavaan, you first specify the model, then fit
 
 For more information on the basics of (b)lavaan and how to specify other priors, see the [Lavaan website](http://lavaan.ugent.be/tutorial/index.html) and [Blavaan website](http://faculty.missouri.edu/~merklee/blavaan/prior.html).
 
-  <p>&nbsp;</p>
+  
 
 
 ```r
@@ -285,19 +281,16 @@ fit.bayesfewsample <- blavaan(model = model.regression, data = dataPHD,
 # the seed command is simply to guarantee the same exact result when running the sampler multiple times. You do not have to set this. When using Jags you need to set as many seeds as chains (3 by default).
 ```
 
-Now we can plot the trace plots.
+Now we can plot the trace plots by using `plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace")`.
 
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```r
-plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace", trace.iters = 750)
-```
-
-```
-## Warning: The following arguments were unrecognized and ignored: trace.iters
+plot(fit.bayesfewsample, pars = 1:4, plot.type = "trace")
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
-
+[/expand]
 
 It seems like the trace (caterpillar) plots are not neatly converged into one each other (we ideally want one fat caterpillar, like the one for _diff~~diff_/`psi[1,1,1]`). This  indicates we need more samples.
 
@@ -307,7 +300,9 @@ We can check if the chains convergenced by having a look at the convergence diag
 * The Geweke Diagnostic shows the z-scores for a test of equality of means between the first and last parts of each chain, which should be <1.96. A separate statistic is calculated for each variable in each chain. In this way it check whether a chain has stabalized. If this is not the case, you should increase the number of iterations. In the plots you should check how often values exceed the boundary lines of the z-scores. Scores above 1.96  or below -1.96 mean that the two portions of the chain significantly differ and full chain convergence was not obtained.
 
 
-To obtain the Gelman and Rubin diagnostic use:
+To obtain the Gelman and Rubin diagnostic we first create a list of mcmc values `mcmc.list <- blavInspect(fit.bayesfewsample, what = "mcmc")`  and than obtain the diagnostics use `gelman.diag(mcmc.list)`, and for the plots use `gelman.plot(mcmc.list)`. 
+
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```r
 mcmc.list <- blavInspect(fit.bayesfewsample, what = "mcmc")
@@ -334,7 +329,11 @@ gelman.plot(mcmc.list)
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
-To obtain the Geweke diagnostic use:
+[/expand]
+
+To obtain the Geweke diagnostic use `geweke.diag(mcmc.list)` and `geweke.plot(mcmc.list)`. 
+
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```r
 geweke.plot(mcmc.list)
@@ -342,7 +341,11 @@ geweke.plot(mcmc.list)
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-14-1.png)<!-- -->![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-14-2.png)<!-- -->![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-14-3.png)<!-- -->
 
-These statistics confirm that the chains have not converged. Therefore, we run the same analysis with more samples.
+[/expand]
+
+These statistics confirm that the chains have not converged. Therefore, we run the same analysis with more samples by increasing the number of iterations `burnin = 25000, sample = 50000`. Obtain the trace plots and convergence statistics again.
+
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 
 ```r
@@ -351,19 +354,14 @@ fit.bayes <- blavaan(model.regression, data = dataPHD,
                               target = "jags",  test = "none", seed = c(123,456,789))
 ```
 
-Obtain the trace plots again.
+
 
 ```r
-plot(fit.bayes, pars = 1:4, plot.type = "trace", trace.iters = 75000)
-```
-
-```
-## Warning: The following arguments were unrecognized and ignored: trace.iters
+plot(fit.bayes, pars = 1:4, plot.type = "trace")
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
-Obtain the Gelman and Rubin diagnostic again.
 
 ```r
 mcmc.list <- blavInspect(fit.bayes, what = "mcmc")
@@ -390,18 +388,18 @@ gelman.plot(mcmc.list)
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
-Obtain Geweke diagnostic again.
 
 ```r
 geweke.plot(mcmc.list)
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-18-1.png)<!-- -->![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-18-2.png)<!-- -->![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-18-3.png)<!-- -->
+[/expand]
 
 Now we see that the Gelman and Rubin diagnostic (PRSF) is close to 1 for all parameters and the the Geweke diagnostic is not >1.96.
 
 
-  <p>&nbsp;</p>
+  
 
 ### 3. Does convergence remain after doubling the number of iterations?
 
@@ -448,7 +446,7 @@ _The relative bias is small enough (<5%) not worry about it._
 [/expand]
 
 
-  <p>&nbsp;</p>
+  
 
 ### 4.   Does the posterior distribution histogram have enough information?
 
@@ -490,7 +488,7 @@ plot(fit.bayesfewsample, pars = 1:4, plot.type = "hist")
 [/expand]
 
 
-  <p>&nbsp;</p>
+  
   
 
 ### 5.   Do the chains exhibit a strong degree of autocorrelation?
@@ -504,6 +502,16 @@ plot(fit.bayes, pars = 1:4, plot.type = "acf")
 ```
 
 ![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
+
+```r
+par(mfrow = c(2,2))
+plot(fit.bayes, pars = 1:4, plot.type = "acf")
+```
+
+![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+[/expand]
 
 _**Question:** What can you conclude about these autocorrelation plots?_
 
@@ -530,8 +538,19 @@ plot(density(MCMCbinded[,'alpha[1,1,1]']), main = "Intercept")
 plot(density(MCMCbinded[,'psi[1,1,1]']),   main = "Variance")
 ```
 
-![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
+```r
+MCMCbinded <- as.matrix(mcmc.list)
+par(mfrow = c(2,2))
+plot(density(MCMCbinded[,'beta[1,2,1]']) , main = "Regression coefficient age")
+plot(density(MCMCbinded[,'beta[1,3,1]']),  main = "Regression coefficient age^2")
+plot(density(MCMCbinded[,'alpha[1,1,1]']), main = "Intercept")
+plot(density(MCMCbinded[,'psi[1,1,1]']),   main = "Variance")
+```
+
+![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+[/expand]
 
 _**Question:** What is your conclusion; do the posterior distributions make sense?_
 
@@ -545,7 +564,9 @@ _Yes, we see a clear negative intercept, which makes sense since a value of age 
 
 ## **step 3: Understanding the exact influence of the priors**
 
-First we  check the results of the analysis with the priors we used so far.
+First we  check the results of the analysis with the priors we used so far`summary(fit.bayes)`.
+
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```r
 summary(fit.bayes)
@@ -583,12 +604,13 @@ summary(fit.bayes)
 ##     Prior       
 ##    dgamma(.5,.5)
 ```
-
+[/expand]
 
 ### 7. Do different specification of the variance priors influence the results?
 
-To understand how the prior on the residual variance impacts the posterior results, we compare the previous model with a model where different hyperparameters for the (Inverse) Gamma distribution are specified. To see what the priors in Blavaan are we can use the `dpriors()` command.
+To understand how the prior on the residual variance impacts the posterior results, we compare the previous model with a model where different hyperparameters for the (Inverse) Gamma distribution are specified. To see what the priors in Blavaan are we can use the `dpriors(target = "jags")` command.
 
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```r
 dpriors(target = "jags")
@@ -604,6 +626,7 @@ dpriors(target = "jags")
 ##              delta 
 ## "dgamma(1,.5)[sd]"
 ```
+[/expand]
 
 We see that the observed variable precision parameter `itheta` has a default prior of dgamma(1,.5). By default prior distributions are placed on precisions instead of variances in Blavaan, so that the letter i in itheta stands for “inverse.” We change the hyperparameters in the regression model that was specified in step 2 using the `prior()` command. After rerunning the analysis we can then calculate a bias to see impact. So far we have used the -$\in \sim IG(.5, .5)$ prior, but we can also use the -$\in \sim IG(.01, .01)$ prior and see if doing so makes a difference. to quantify this difference we again calculate a relative bias. 
 
@@ -693,7 +716,7 @@ _Yes, the results are robust, because there is only a really small amount of rel
 
 [/expand]
 
-  <p>&nbsp;</p>
+
   
 
 ### 8.   Is there a notable effect of the prior when compared with non-informative priors?
@@ -786,7 +809,7 @@ _The informative priors have quite some influence (up to 5%) on the posterior re
 
 [/expand]
 
-  <p>&nbsp;</p>
+ 
 
 _**Question**: Which results do you use to draw conclusion on?_
 
@@ -799,7 +822,7 @@ _This really depends on where the priors come from. If for example your informat
 
 [/expand]
 
-  <p>&nbsp;</p>
+  
   
 ### 9.   Are the results stable from a sensitivity analysis?
 If you still have time left, you can adjust the hyperparameters of the priors upward and downward and re-estimating the model with these varied priors to check for robustness.
@@ -815,6 +838,7 @@ For more information on this topic, please also refer to this [paper](http://psy
 
 For a summary on how to interpret and report models, please refer to https://www.rensvandeschoot.com/bayesian-analyses-where-to-start-and-what-to-report/
 
+[expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 ```r
 summary(fit.bayes)
@@ -852,6 +876,8 @@ summary(fit.bayes)
 ##     Prior       
 ##    dgamma(.5,.5)
 ```
+[/expand]
+
 
 In the current model we see that:
 
@@ -874,12 +900,12 @@ delay <- -35 + 2.13*years -0.02*years^2
 plot(years, delay, type = "l")
 ```
 
-![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-34-1.png)<!-- -->
+![](Blavaan-WAMBS--Jags-_files/figure-html/unnamed-chunk-36-1.png)<!-- -->
 
 [/expand] 
 
 
-  <p>&nbsp;</p>
+ 
   
 ---
 
