@@ -306,7 +306,7 @@ posteriors_fit.bayes <- blavInspect(fit.bayes, what="mcmc")
 
 Obtain the trace plots again.
 ```{r}
-plot(fit.bayes, pars = 1:4, plot.type = "stan_trace")
+plot(fit.bayes, pars = 1:4, plot.type = "trace")
 ```
 
 Obtain the Gelman and Rubin diagnostic again.
@@ -368,7 +368,7 @@ _The relative bias is small enough (<5%) not worry about it._
 
 ### 4.   Does the posterior distribution histogram have enough information?
 
-By having a look at the posterior distribution histogram `plot(fit.bayes, pars=1:4, plot.type="stan_hist")`, we can check if it has enough information. 
+By having a look at the posterior distribution histogram `plot(fit.bayes, pars=1:4, plot.type="hist")`, we can check if it has enough information. 
 
 _**Question:** What can you conclude about distribution histograms?_
 
@@ -377,7 +377,7 @@ _**Question:** What can you conclude about distribution histograms?_
 
 ```{r, eval= TRUE}
 par(mfrow = c(2,2))
-plot(fit.bayes, pars = 1:4, plot.type = "stan_hist")
+plot(fit.bayes, pars = 1:4, plot.type = "hist")
 ```
 
 _The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you arenot satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
@@ -386,7 +386,7 @@ _The histograms look smooth and have no gaps or other abnormalities. Based on th
 If we compare this with histograms based on the first analysis (with very few iterations), this difference becomes clear:
 
 ```{r, eval= TRUE}
-plot(fit.bayesfewsample, pars = 1:4, plot.type = "stan_hist")
+plot(fit.bayesfewsample, pars = 1:4, plot.type = "hist")
 ```
 
 [/expand]
@@ -401,7 +401,7 @@ To obtain information about autocorrelation the following syntax can be used:
 
 ```{r, eval= TRUE}
 par(mfrow = c(2,2))
-plot(fit.bayes, pars = 1:4, plot.type = "stan_ac", col = 'blue')
+plot(fit.bayes, pars = 1:4, plot.type = "acf", col = 'blue')
 ```
 
 _**Question:** What can you conclude about these autocorrelation plots?_
@@ -422,7 +422,7 @@ We plot the posterior distributions and see if they are unimodel (one peak), if 
 
 ```{r, eval= TRUE}
 par(mfrow = c(2,2))
-plot(fit.bayes, pars = 1:4, plot.type = "stan_dens",  col = 'blue')
+plot(fit.bayes, pars = 1:4, plot.type = "dens",  col = 'blue')
 ```
 
 

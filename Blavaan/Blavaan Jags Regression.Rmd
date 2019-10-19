@@ -66,7 +66,8 @@ $H_1:$ _$age^2$ is related to a delay in the PhD projects._
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # if you dont have these packages installed yet, please use the install.packages("package_name") command.
-library(rjags) 
+library(rjags)
+library(runjags)
 library(blavaan)
 library(psych) #to get some extended summary statistics
 library(tidyverse) # needed for data manipulation and plotting
