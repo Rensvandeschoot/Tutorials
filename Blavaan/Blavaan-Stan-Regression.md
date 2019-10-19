@@ -1,7 +1,7 @@
 ---
 title: "Bayesian Regression in Blavaan (using Stan)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 29 August 2019'
+date: 'Last modified: 19 October 2019'
 output:
   html_document:
     keep_md: true
@@ -18,12 +18,14 @@ Throughout this tutorial, the reader will be guided through importing data files
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
 
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
+
 ## **Preparation**
 
 This tutorial expects:
 
 - Installation of [STAN](https://mc-stan.org/users/interfaces/rstan) and [Rtools](https://cran.r-project.org/bin/windows/Rtools). For more information please see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-- Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.6 and Lavaan version 0.6.5 in R version 3.6.1
+- Installation of R packages `rstan`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.7 and Lavaan version 0.6.5 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -214,7 +216,7 @@ summary(fit.bayes)
 ```
 
 ```
-## blavaan (0.3-6) results of 1000 samples after 500 adapt/burnin iterations
+## blavaan (0.3-7) results of 1000 samples after 500 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -321,7 +323,7 @@ summary(fit.bayes_uninf)
 ```
 
 ```
-## blavaan (0.3-6) results of 1000 samples after 500 adapt/burnin iterations
+## blavaan (0.3-7) results of 1000 samples after 500 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -414,7 +416,7 @@ summary(fit.bayes.infprior1, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
+## blavaan (0.3-7) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -556,7 +558,7 @@ summary(fit.bayes.infprior2, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
+## blavaan (0.3-7) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -597,7 +599,7 @@ summary(fit.bayes.infprior3, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
+## blavaan (0.3-7) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -638,7 +640,7 @@ summary(fit.bayes.infprior4, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 ```
-## blavaan (0.3-6) results of 5000 samples after 1000 adapt/burnin iterations
+## blavaan (0.3-7) results of 5000 samples after 1000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
