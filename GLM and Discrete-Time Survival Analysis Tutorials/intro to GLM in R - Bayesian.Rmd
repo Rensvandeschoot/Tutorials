@@ -8,6 +8,8 @@ date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**We are continuously improving the tutorials so let me (`Qixiang: q.fang@uu.nl`) know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow us on Twitter (`@RensvdSchoot` `@qixiangfang`).**
+
 
 This tutorial provides an introduction to Bayesian GLM (genearlised linear models) with non-informative priors using the `brms` package in R. If you have not followed the [Intro to Frequentist (Multilevel) Generalised Linear Models (GLM) in R with glm and lme4](https://www.rensvandeschoot.com/generalised-linear-models-with-glm-and-lme4/) tutorial, we highly recommend that you do so, because it offers more extensive information about GLM. If you are not familar with Bayesian inference, we also recommend that you read this tutorial [Building a Multilevel Model in BRMS Tutorial: Popularity Data](https://www.rensvandeschoot.com/tutorials/brms-started/) prior to using this tutorial.
 

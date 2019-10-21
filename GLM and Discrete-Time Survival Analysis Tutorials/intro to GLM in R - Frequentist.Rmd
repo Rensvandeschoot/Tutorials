@@ -7,7 +7,9 @@ date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-  
+
+**We are continuously improving the tutorials so let me (`Qixiang: q.fang@uu.nl`) know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow us on Twitter (`@RensvdSchoot` `@qixiangfang`).**
+
   
 This tutorial provides the reader with a basic introduction to genearlised linear models (GLM) using the frequentist approach. Specifically, this tutorial focuses on the use of logistic regression in both binary-outcome and count/porportion-outcome scenarios, and the respective approaches to model evaluation. The tutorial uses the **Thai Educational Data** example in Chapter 6 of the book [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). Furthermore, the tutorial briefly demonstrates the multilevel extension of GLM models with the `lme4` package in R. Lastly, more distributions and link functions in the GLM framework are discussed.
 
