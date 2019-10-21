@@ -8,6 +8,9 @@ date: 'Last modified: date: `r format(Sys.time(), "%d %B %Y")`'
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**We are continuously improving the tutorials so let me (`Qixiang: q.fang@uu.nl`) know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow us on Twitter (`@RensvdSchoot` `@qixiangfang`).**
+
+
 This tutorial provides the reader with a hands-on introduction to discrete-time survival analysis in R. Specifically, the tutorial first introduces the basic idea underlying discrete-time survival analysis and links it to the framework of generalised linear models (GLM). Then, the tutorial demonstrates how to conduct discrete-time survival analysis with the `glm` function in R, with both time-fixed and time-varying predictors. Some popular model evaluation methods are also presented. Lastly, the tutorial briefly extends discrete-time survival analysis with multilevel modelling (using the `lme4` package) and Bayesian methods (with the `brms` package).
 
 
@@ -24,6 +27,7 @@ The tutorial follows this structure:
 
 
 Note that this tutorial is meant for beginners and therefore does not delve into very technical details or complex models. For a detailed introduction into GLM or multilevel models in R, see [this tutorial](https://www.rensvandeschoot.com/generalised-linear-models-with-glm-and-lme4/). For an extensive overview of GLM models, see [here](https://en.wikipedia.org/wiki/Generalized_linear_model). For more discrete-time survival analysis, check out [Modeling Discrete Time-to-Event Data](https://www.springer.com/gp/book/9783319281568) by Tutz & Schmid (2016). For more multilevel modelling, see [Multilevel analysis: Techniques and applications](https://www.rensvandeschoot.com/multilevel-book/). 
+
 
 ## **1. Preparation**
 This tutorial expects:  
