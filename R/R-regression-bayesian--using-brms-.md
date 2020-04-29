@@ -58,7 +58,7 @@ $H_1:$ _$age^2$is related to a delay in the PhD projects._
 
 
 ```r
-# if you dont have these packages installed yet, please use the install.packages("package_name") command.
+# if you don't have these packages installed yet, please use the install.packages("package_name") command.
 library(rstan) 
 library(brms)
 library(psych) #to get some extended summary statistics
