@@ -27,7 +27,7 @@ Are you ready to enjoy it?
 
 ### 1. Let me introduce myself: I'm R
 
-#### (1) R
+#### R
 
 -	Free programming software for statistical computation and graphics
 -	Open source: everyone (even you!) can improve, develop, and contribute to R
@@ -37,7 +37,7 @@ Are you ready to enjoy it?
 
 -	R itself may look boring and tedious. However, we have a great helper called RStudio!
 
-#### (2) RStudio
+#### RStudio
 
 -	RStudio helps users to use and learn R easier
 -	If you are using RStudio, this means you are using R.
@@ -51,7 +51,7 @@ Are you ready to enjoy it?
 -	To work with R, you need to download both R and RStudio.
 -	Please note that R should be downloaded first. Next, download RStudio.
 
-#### (1) R Installation
+#### R Installation
 
 -	Let’s go to [this website](https://cran.r-project.org/mirrors.html)
 -	Go to a country close to you
@@ -61,7 +61,7 @@ Are you ready to enjoy it?
     -	If you use **Mac**, click Download R for (Mac) OS X: Find the header ‘Latest release’ -> Click R-3.6.3.pkg (or another version)
     -	If you use **Windows**, click Download R for Windows: Find ‘base’ under subdirectories -> Click ‘install R for the first time’ -> Click Download R 3.6.3 (or another version) for Windows
 
-#### (2) RStudio installation
+#### RStudio installation
 
 -	This time, let’s go to [this website](https://rstudio.com/products/rstudio/download)
 -	In this tutorial, we will download the most basic one. Thus, click DOWNLOAD under RStudio Desktop.
@@ -74,7 +74,7 @@ Are you ready to enjoy it?
 
 ### 3.	Eyes on the R: Screen structure
 
-#### (1) No ‘pane’, no gain!
+#### No ‘pane’, no gain!
 
 -	Note that the quote uses not ‘pain’ but ‘pane’. This implies that you will work with what is called ‘pane’ in RStudio without pain! When you finish the download and open the RStudio, the screen may look like this. What is your first impression of R?
 
@@ -105,7 +105,7 @@ Are you ready to enjoy it?
 -	Are you scared of those four panes? No worries! This structure is beneficial. You can observe and perform all the processes simultaneously.
 -	Think about the situation in SPSS. You always have multiple pop-ups such as data editor, syntax editor, viewer, etc. Consequently, you have to switch one another to proceed with your analyses. In R, you can do everything all together on one screen. Thus, four panes make the work efficient (indeed, no ‘pain’!).
 
-#### (2) What do the four panes do?
+#### What do the four panes do?
 
 -	Out of four panes, the two on the left side are the panes you will use a lot.
     -	Source pane: located at the top left side of the screen. It is also called as an editor because we can command everything in this pane. Therefore, we will type code in the source pane.
@@ -125,7 +125,7 @@ Are you ready to enjoy it?
 -	Statistical analysis cannot happen without the data. In R, you can load the data in various ways. Let’s see the easiest way.
 - To download the dataset (``popular_regr_1``) for this tutorial, click [here](https://github.com/Rensvandeschoot/Tutorials/raw/master/R/popular_regr_1.sav).
 
-#### (1) Mouse clicks
+#### Mouse clicks
 
 -	Click File -> Import Dataset -> Choose the type of dataset. In this tutorial, we will use the SPSS dataset. Thus, click ‘From SPSS’.
 -	Suddenly, you may encounter an Install Required Packages pop-up with a message that asks you whether you want to install the haven package now.
@@ -152,7 +152,7 @@ Are you ready to enjoy it?
 
 <br>
 
-#### (2) “Can I try this again with R code by typing them in the source pane?”
+#### “Can I try this again with R code by typing them in the source pane?”
 
 -	Good question. Of course! That is exactly what I am going to tell you.
 
@@ -185,7 +185,7 @@ View(popular_regr_1)
 -	As you saw, you can type some R codes in the source pane and run the codes by pressing Ctrl and Enter together to make R work. If you look at the R codes we used in loading the data, there are such things as ``read_sav()`` and ``View()``. These are called functions. Functions in R enable us to perform many tasks efficiently.
 -	When you use functions, you should type certain comments or inputs in the parentheses, which make the functions work. Those comments or inputs are called arguments. Let’s learn three new functions with their arguments. They are used in understanding the data.
 
-#### (1) head()
+#### head()
 
 -	The data consist of many rows. If you would like to inspect the first several rows, the ``head()`` function achieves your purpose.
 -	For the ``head()`` function, the number of arguments you will use is only one. What is it? It is ‘``popular_regr_1``’, which is the name of the dataset.
@@ -199,7 +199,7 @@ head(popular_regr_1)
 -	Let’s run the code by pressing Ctrl and Enter together. R shows you the first six rows of the dataset in the console pane.
 -	You may be curious about some NAs in the output. Those are the missing values. NA refers to ‘Not Available’.
 
-#### (2) str()
+#### str()
 
 -	It is of interest to know what the types of variables are in the dataset. For example, if you want to run the analysis of variance (ANOVA), the independent variable should be categorical, and we should check if it is the case.
 -	For this purpose, you need the ``str()`` function where str refers to the structure. In running this function, you need one argument, which is the name of the dataset.
@@ -212,7 +212,7 @@ str(popular_regr_1)
 -	According to the output in the console pane, the dataset consists of 1,491 observations and 6 variables. This means that our dataset has 1,491 rows and 6 columns.
 -	It is written that respnr: num 1 2 3 4 5 6 7 8 9 10 … It means that the respnr variable is a number (abbreviated as num), and 1 is the value in the first row, 2 is the value in the second row, 3 is the value in the third row, and so on.
 
-#### (3) summary()
+#### summary()
 
 -	How can we know about the mean, median, minimum, and maximum of the variables of interest? You can get the descriptive statistics of the variables with ``summary()`` function. Again, you only need one argument, which is the name of the dataset.
 
@@ -230,7 +230,7 @@ summary(popular_regr_1)
 -	It is always a good idea to look into your data visually. For example, you would like to know the relationship between two specific variables in your data, the distribution of values, and more.
 -	For these purposes, three functions can visually help us understand the data. After you run these functions, the output appears in the Plots tab at the lower right pane.
 
-#### (1) hist() function
+#### hist() function
 
 -	Are you curious about how the values of one variable are distributed? Drawing a histogram is one way of examining the distribution. This is possible with the ``hist()`` function with one argument that indicates the name of the variable in the dataset.
 -	But wait, how can we specify a certain variable in our data? For example, if you want to draw the histogram of the variable sd, you can do this with the below code.
@@ -242,7 +242,7 @@ hist(popular_regr_1$sd)
 
 -	There is a dollar (\$) sign after the name of the data. In R, the dollar sign does not mean anything monetary. Rather, it can be interpreted as the specific element of the data. In this example, the popular_regr_1$sd refers to the variable, sd, of the data, ``popular_regr_1``.
 
-#### (2) boxplot() function
+#### boxplot() function
 
 -	This time, you may be interested in how the data are dispersed from the median and whether the outliers exist. You can solve your curiosity with the boxplot. In R, the ``boxplot()`` function does this role. Let’s draw the boxplot of the variable, sd. Can you guess how to do this?
 
@@ -254,7 +254,7 @@ boxplot(popular_regr_1$sd)
 -	This code means that you want to draw the boxplot of the variable, sd, in the dataset, ``popular_regr_1``.
 -	In the boxplot, the dots above the upper whisker and below the lower whisker are outliers. Thus, we can say outliers exist in the variable, sd.
 
-#### (3) plot() function
+#### plot() function
 
 -	What if we are interested in visually investigating the relationship between two variables, sd and covert, in the data? The possible solution is to draw the scatterplot. Then, the ``plot()`` function is what you need. This time, we need two arguments that indicate the names of the two variables in the dataset.
 
@@ -432,7 +432,7 @@ library(haven)
 -	Before you go to class, you prepare for your books, pens, and laptop (in my case, snack as well!) in your bag. After you arrive in the classroom, you pull out those things from the bag. This is the same in R! When you want to analyze data, you have to prepare for your data in a special bag for R. This bag is called a working directory.
 -	“But wait, how can I bring my bag?” It’s easy. You do not need to go home. You only use your mouse.
 
-#### (1) Mouse clicks
+#### Mouse clicks
 
 -	Go to the bottom right pane -> Choose the Files tab -> Click ‘…’ at the right end -> Click the folder that contains your data -> Click Open -> Click More with the toothed wheel -> Click ‘Set as Working Directory’
 
@@ -442,7 +442,7 @@ library(haven)
 
 <br>
 
-#### (2) Check your current working directory!
+#### Check your current working directory!
 
 -	Please look at the console pane. Right after you’ve set the working directory, R tells you where it set the working directory!
 
@@ -470,7 +470,7 @@ getwd()
 -	The reason why I explained to you how to set and get the working directory before providing other packages and functions in loading the data is that the following functions will not work unless you set the working directory correctly.
 -	However, we now know how to prepare our special bag, called the working directory, that contains our data. It’s time to proceed to the examples of loading data using other packages and functions.
 
-#### (1) Some in-built functions
+#### Some in-built functions
 
 -	If your data are stored as .csv, .txt, or .dat files, there are two in-built functions to load the data. If the data are separated with commas, the file is in .csv. On the other hand, the data in .txt or .dat files are separated with tabs. In the former case, you can use ``read.csv()`` function. In the latter case, ``read.delim()`` is the option.
 
@@ -491,7 +491,7 @@ data <- read.delim(file = "FileName.Extension", header = TRUE)
 data <- read.csv(file = file.choose(), header = TRUE)
 ```
 
-#### (2) foreign package
+#### foreign package
 
 -	Many researchers work with SPSS data, which is stored as a .sav file. For this purpose, there is a special function called ``read.spss()`` in the foreign package. The ``read.spss()`` function that enables you to load the .sav file directly.
 
@@ -515,7 +515,7 @@ data <- read.spss(file = file.choose(), to.data.frame = TRUE)
 -	Congratulations! We are at the very last part of this tutorial. Now, you earned quite a lot of knowledge about R.
 -	However, are you unclear about which arguments are necessary to run the function? Are you nervous because you do not know which packages or functions to use in some situations? Are you worried about any potential problem you will face while doing R? No worries! Advisors are everywhere. This last part of the tutorial is reserved for teaching you how to search for everything for yourself. I promise this is very valuable for beginners in R.
 
-#### (1) Advisors inside of R: Use ?, ??, and the Help tab
+#### Advisors inside of R: Use ?, ??, and the Help tab
 
 -	The ? and ?? above are not errors! They are useful tools that can help you.
 -	If you hope to know which arguments are necessary to run some specific functions and want to see examples of a specific function, you can type ? (question mark) in front of the function name without any space between ? and the name of a function.
@@ -549,7 +549,7 @@ help(read_sav)
 
 -	The search result tells you the name of the package that contains the function you searched with ??.
 
-#### (2) Advisors outside of R: Stack Exchange, Stack Overflow, and Googling tips
+#### Advisors outside of R: Stack Exchange, Stack Overflow, and Googling tips
 
 -	Advisors exist even outside of R! The three main sources are such websites as Stack Exchange, Stack Overflow, and Google.
 -	[Stack Exchange](https://stackexchange.com/sites) is a collection or a network of websites for questions and answers for diverse topics. The topics include not only something statistical such as programming and mathematics but also contain others like software engineering, Linux, computer science, and more.
