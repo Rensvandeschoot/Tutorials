@@ -1,5 +1,5 @@
 # Tutorials
-Code behind the tutorials locted at my website: https://www.rensvandeschoot.com/tutorials/
+Code behind the tutorials located at my website: https://www.rensvandeschoot.com/tutorials/
 
 We are continuously improving the tutorials so let me know if you discover mistakes, missing files, or if you have additional resources 
 I can refer to, etc..
