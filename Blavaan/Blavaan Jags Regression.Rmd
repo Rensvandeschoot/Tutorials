@@ -516,7 +516,7 @@ _The results change with different prior specifications, but are still comparabl
 
 ```{r,eval=FALSE}
 indices   <- sample.int(333, 60)
-smalldata <- data[indices,]
+smalldata <- dataPHD[indices,]
 ```
 
 _We made a new dataset with randomly chosen 60 of the 333 observations from the original dataset. You can repeat the analyses with the same code and only changing the name of the dataset to see the influence of priors on a smaller dataset. Run the model model.informative.priors2 with this new dataset_ 
