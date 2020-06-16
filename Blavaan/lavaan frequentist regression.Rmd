@@ -29,7 +29,7 @@ This tutorial expects:
 
 ## Example Data
 
-The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.
 
@@ -41,7 +41,7 @@ So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and
 
 ##### _**Question:** Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?_
 
-<pre><code>[expand title=\"Answer\" trigclass=\\"noarrow my_button\\" targclass="my_content" tag= &quot; button &quot;]</code></pre>
+[expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 
 $H_0:$ _$age$ is not related to a delay in the PhD projects._
 
@@ -225,7 +225,7 @@ _Because the p-values for both regression coefficients were really small &lt;.00
 
 
 
-Of course, we should never base our decisions on single criterions only. Luckily, there are several additional measures that we can take into account. A very popular measure is the confidence interval. In the `summary()` function, these intervals can be demanded, 
+Of course, we should never base our decisions on single criterion only. Luckily, there are several additional measures that we can take into account. A very popular measure is the confidence interval. In the `summary()` function, these intervals can be demanded, 
 which has already been done in the previous step.
 
 
@@ -260,15 +260,14 @@ Additionally, to make statements about the actual relevance of your results, foc
 
 _R$^2$= 0.063 in the regression model. This means that 6.3% of the variance in the PhD delays, can be explained by $age$ and $age^2$._ 
 
-We can also run the analysis again, but now with standardized coefficients.Lavaan
-has the inbuilt-function `standardizedsolution()` to obtain standardized coefficients.
+We can also run the analysis again, but now with standardized coefficients. Lavaan has the inbuilt-function `standardizedsolution()` to obtain standardized coefficients.
 
 ```{r}
 standardizedsolution(fit)
 ```
 
 
-_The standardized coefficients, $age$ (1.262) and $age^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of $age$ is somewhat higher.This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)_
+_The standardized coefficients, $age$ (1.262) and $age^2$ (-1.174), show that the effects of both regression coefficients are comparable, but the effect of $age$ is somewhat higher. This means that the linear effect of age on PhD delay (age) is a bit larger than the quadratic effect of age on PhD delay (age2)_
 
 [/expand]
 
