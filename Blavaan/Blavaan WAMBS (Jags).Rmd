@@ -59,7 +59,7 @@ This tutorial expects:
 ## **Example Data**
 
 
-The data we be use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we use for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.96, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 30.7, SD = 4.48, min-max = 26-69) of the Ph.D. recipients is related to a delay in their project.
 
@@ -90,8 +90,9 @@ $H_1:$ _$age^2$ is related to a delay in the PhD projects._
 
 
 ```{r, results='hide', message=FALSE, warning=FALSE, cache=TRUE}
-# if you dont have these packages installed yet, please use the install.packages("package_name") command.
-library(rjags) 
+# if you don't have these packages installed yet, please use the install.packages("package_name") command.
+library(rjags)
+library(runjags)
 library(blavaan)
 library(psych) #to get some extended summary statistics
 library(tidyverse) # needed for data manipulation and plotting
@@ -113,7 +114,7 @@ colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 
 GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see https://github.com/)
 
-Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the  `describe()` function.
+Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. You can do this by using the  `describe()` function.
   
   
   
@@ -184,6 +185,7 @@ par(mfrow = c(2,2))
 plot(density(rnorm(n = 100000, mean = -35, sd = sqrt(20))), main = "prior intercept") # the rnorm function uses the standard devation instead of variance, that is why we use the sqrt
 plot(density(rnorm(n = 100000, mean = .8, sd = sqrt(5))),   main = "effect Age")
 plot(density(rnorm(n = 100000, mean = 0,  sd = sqrt(10))),  main = "effect Age^2")
+par(mfrow = c(1,1))
 ```
 [/expand]
 
@@ -267,7 +269,7 @@ It seems like the trace (caterpillar) plots are not neatly converged into one ea
 We can check if the chains convergenced by having a look at the convergence diagnostics. Two of these diagnostics of interest include the Gelman and Rubin diagnostic and the Geweke diagnostic. 
 
 * The Gelman-Rubin Diagnostic shows the PSRF values (using the  within and between chain variability). You should look at the Upper CI/Upper limit, which are all should be close to 1. If they aren't close to 1, you should use more iterations. Note: The Gelman and Rubin diagnostic is also automatically given in the summary of blavaan under the column PSRF. 
-* The Geweke Diagnostic shows the z-scores for a test of equality of means between the first and last parts of each chain, which should be <1.96. A separate statistic is calculated for each variable in each chain. In this way it check whether a chain has stabalized. If this is not the case, you should increase the number of iterations. In the plots you should check how often values exceed the boundary lines of the z-scores. Scores above 1.96  or below -1.96 mean that the two portions of the chain significantly differ and full chain convergence was not obtained.
+* The Geweke Diagnostic shows the z-scores for a test of equality of means between the first and last parts of each chain, which should be <1.96. A separate statistic is calculated for each variable in each chain. In this way it checks whether a chain has been stabalized. If this is not the case, you should increase the number of iterations. In the plots you should check how often values exceed the boundary lines of the z-scores. Scores above 1.96  or below -1.96 mean that the two portions of the chain significantly differ and full chain convergence was not obtained.
 
 
 To obtain the Gelman and Rubin diagnostic we first create a list of mcmc values `mcmc.list <- blavInspect(fit.bayesfewsample, what = "mcmc")`  and than obtain the diagnostics use `gelman.diag(mcmc.list)`, and for the plots use `gelman.plot(mcmc.list)`. 
@@ -336,10 +338,10 @@ You should again have a look at the above-mentioned convergence statistics, but 
 You should combine the relative bias in combination with substantive knowledge about the metric of the parameter of interest to determine when levels of relative deviation are negligible or problematic. For example, with a regression coefficient of 0.001, a 5% relative deviation level might not be substantively relevant. However, with an intercept parameter of 50, a 10% relative deviation level might be quite meaningful. The specific level of relative deviation should be interpreted in the substantive context of the model. Some examples of interpretations are:
 
 - if relative deviation is &lt; |5|%, then do not worry;
-- if relative deviation &gt; |5|%, then rerun with 4x nr of iterations.
+- if relative deviation &gt; |5|%, then rerun with 4 x number of iterations.
 
 
-_**Question:** calculate the relative bias. Are you satisfied with number of iterations, or do you want to re-run the model with even more iterations?_
+_**Question:** Calculate the relative bias. Are you satisfied with number of iterations, or do you want to re-run the model with even more iterations?_
 
 
 [expand title="Answer" trigclass="noarrow my_button" targclass="my_content" tag="button"]
@@ -372,10 +374,11 @@ _**Question:** What can you conclude about distribution histograms?_
 
 ```{r, cache=TRUE}
 par(mfrow=c(2,2))
-plot(fit.bayesdouble , pars = 1:4, plot.type = "hist")
+plot(fit.bayesdouble, pars = 1:4, plot.type = "hist")
+par(mfrow=c(1,1))
 ```
 
-_The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you arenot satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
+_The histograms look smooth and have no gaps or other abnormalities. Based on this, adding more iterations is not necessary. However, if you are not satisfied, you can improve the number of iterations again. Posterior distributions do not have to be symmetrical, but in this example they seem to be._ 
 
 
 If we compare this with histograms based on the first analysis (with very few iterations), this difference becomes clear:
@@ -397,12 +400,14 @@ To obtain information about autocorrelation the following syntax can be used:
 ```{r, eval=FALSE, cache=TRUE}
 par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "acf")
+par(mfrow = c(1,1))
 ```
 
 [expand title="Results" trigclass="noarrow my_button" targclass="my_content" tag="button"]
 ```{r, cache=TRUE}
 par(mfrow = c(2,2))
 plot(fit.bayes, pars = 1:4, plot.type = "acf")
+par(mfrow = c(1,1))
 ```
 [/expand]
 
