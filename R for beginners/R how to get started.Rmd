@@ -1,6 +1,6 @@
 ---
 title: "R: How to get started"
-author: "By [Ihnwhi Heo](https://www.linkedin.com/in/ihnwhi-heo/), [Duco Veen](https://www.ducoveen.com/), and [Rens van de Schoot](https://www.rensvandeschoot.com/)"
+author: "By [Ihnwhi Heo](https://ihnwhiheo.github.io/), [Duco Veen](https://www.ducoveen.com/), and [Rens van de Schoot](https://www.rensvandeschoot.com/)"
 date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
 output:
   html_document:
@@ -15,7 +15,7 @@ Next, we introduce basic functions for data exploration and data visualization. 
 
 The most notable feature is some tips provided in the last section. Based on our ample experience in statistical consultation for methodologists and statisticians who use R, we selected the best advice that will make you smart R users.
 
-Throughout this tutorial, we will use a dataset (``popular_regr_1``) from [van de Schoot, van der Velden, Boom, and Brugman (2010)](https://doi.org/10.1016/j.adolescence.2009.12.004). For more information on the sample, instruments, methodology, and research context, we refer the interested reader to the paper (see references).
+Throughout this tutorial, we will use a dataset (``popular_regr_1``) from [van de Schoot, van der Velden, Boom, and Brugman (2010)](https://doi.org/10.1016/j.adolescence.2009.12.004). For more information on the sample, instruments, methodology, and research context, we refer the interested readers to the paper (see references).
 
 Since we continuously improve the tutorials, let us know if you discover mistakes, or if you have additional resources we can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow Rens on [Twitter](https://twitter.com/RensvdSchoot).
 
@@ -185,7 +185,7 @@ View(popular_regr_1)
 -	As you saw, you can type some R codes in the source pane and run the codes by pressing Ctrl and Enter together to make R work. If you look at the R codes we used in loading the data, there are such things as ``read_sav()`` and ``View()``. These are called functions. Functions in R enable us to perform many tasks efficiently.
 -	When you use functions, you should type certain comments or inputs in the parentheses, which make the functions work. Those comments or inputs are called arguments. Let’s learn three new functions with their arguments. They are used in understanding the data.
 
-#### head()
+#### head() function
 
 -	The data consist of many rows. If you would like to inspect the first several rows, the ``head()`` function achieves your purpose.
 -	For the ``head()`` function, the number of arguments you will use is only one. What is it? It is ‘``popular_regr_1``’, which is the name of the dataset.
@@ -199,7 +199,7 @@ head(popular_regr_1)
 -	Let’s run the code by pressing Ctrl and Enter together. R shows you the first six rows of the dataset in the console pane.
 -	You may be curious about some NAs in the output. Those are the missing values. NA refers to ‘Not Available’.
 
-#### str()
+#### str() function
 
 -	It is of interest to know what the types of variables are in the dataset. For example, if you want to run the analysis of variance (ANOVA), the independent variable should be categorical, and we should check if it is the case.
 -	For this purpose, you need the ``str()`` function where str refers to the structure. In running this function, you need one argument, which is the name of the dataset.
@@ -212,7 +212,7 @@ str(popular_regr_1)
 -	According to the output in the console pane, the dataset consists of 1,491 observations and 6 variables. This means that our dataset has 1,491 rows and 6 columns.
 -	It is written that respnr: num 1 2 3 4 5 6 7 8 9 10 … It means that the respnr variable is a number (abbreviated as num), and 1 is the value in the first row, 2 is the value in the second row, 3 is the value in the third row, and so on.
 
-#### summary()
+#### summary() function
 
 -	How can we know about the mean, median, minimum, and maximum of the variables of interest? You can get the descriptive statistics of the variables with ``summary()`` function. Again, you only need one argument, which is the name of the dataset.
 
@@ -273,6 +273,7 @@ plot(popular_regr_1$sd, popular_regr_1$covert)
 ## IV. Analyze and inteRpret data
 
 -	One of the strengths of R is its flexibility in running statistical analyses and producing graphical outputs. We will touch the four statistical analyses that are widely used: correlation analysis, multiple linear regression, t-test, and one-way analysis of variance.
+- Note that we ignore assumption checking!
 
 ### 1. Correlation analysis
 
