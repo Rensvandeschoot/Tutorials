@@ -285,7 +285,8 @@ plot(popular_regr_1$sd, popular_regr_1$covert)
 cor.test(popular_regr_1$covert, popular_regr_1$overt)
 ```
 
--	Your output appears in the console pane. The correlation coefficient is 0.39 (The actual output is 0.3858935, but we rounded to the second digit after the decimal point). Because the p-value is lower than .05 (2.2e-16 equals $2.2*10^{-16}$, which is much lower than .05), the correlation coefficient between covert and overt is significantly different from 0.
+-	Your output appears in the console pane. The correlation coefficient is 0.39 (The actual output is 0.3858935, but we rounded to the second digit after the decimal point). Because the p-value is lower than .05 (2.2e-16 equals $2.2*10^(-16)$, which is much lower than .05), the correlation coefficient between covert and overt is significantly different from 0.
+- Here, the value of .05 refers to an alpha level. From now on, let’s use the alpha level of .05 since it is most commonly used! 
 
 <br>
 
@@ -312,10 +313,10 @@ summary(regression)
     -	The dollar sign (\$) can be omitted with the usage of the ‘data =’ argument. The ‘data =’ argument automatically maps the variable names in the function to the corresponding variable names in the dataset. In our example, since we used the argument ‘data = popular_regr_1’, three variables (sd, overt, and covert) are automatically referred to as the variables in the ``popular_regr_1`` dataset. How convenient and efficient!
 -	Now, it’s time to run the code and see the results in the console pane.
 -	First, let’s focus on the values under the header ‘Coefficients’. These values are unstandardized regression coefficients (written under the Estimate column), standard errors (written under the Std. Error column), test-statistic (written under the t value column), and the p-value (written under the Pr(>|t|) column). What we have to look at is the Estimate column and Pr(>|t|) column.
-    -	The unstandardized regression coefficient of overt is -0.29, and the p-value is lower than .05 (2.52e-10 equals $2.52*10^{-10}$). Here, the value of .05 is an alpha level, and let’s use the alpha level of .05 from now on since it is most commonly used! There are three asterisks at the right side of the p-value where the asterisk means the significance code. The three asterisks mean that the p-value is lower than 0.001. Therefore, the variable, overt, is a significant predictor with an alpha level of .05. If one unit of overt increases, the sd decreases 0.29 units.
-    -	How about the unstandardized regression coefficient of covert? Again, look at the value under the Estimate column. The value is -0.51. This value is significant given the p-value lower than .05 (2e-16 means $2*10^{-16}$). The three asterisks show that the p-value is lower than 0.001. Thus, the variable, covert, is also a significant predictor, again with an alpha level of .05 (for your recap!). If one unit of covert increases, the sd decreases 0.51 unit.
+    -	The unstandardized regression coefficient of overt is -0.29, and the p-value is lower than .05 (2.52e-10 equals $2.52*10^(-10)$). Again, the value of .05 is an alpha level. There are three asterisks at the right side of the p-value where the asterisk means the significance code. The three asterisks mean that the p-value is lower than 0.001. Therefore, the variable, overt, is a significant predictor with an alpha level of .05. If one unit of overt increases, the sd decreases 0.29 units.
+    -	How about the unstandardized regression coefficient of covert? Again, look at the value under the Estimate column. The value is -0.51. This value is significant given the p-value lower than .05 (2e-16 means $2*10^(-16)$). The three asterisks show that the p-value is lower than 0.001. Thus, the variable, covert, is also a significant predictor, again with an alpha level of .05 (for your recap!). If one unit of covert increases, the sd decreases 0.51 unit.
 -	Second, let’s see the Multiple R-squared. The multiple R-squared is the proportion of variance of the outcome variable explained by the multiple predictors. Thus, the multiple R-squared value of 0.28 means that these two predictors explain 28% of the variance of sd.
--	Finally, let’s look at the F-statistic. The F-statistic in the regression model tells you whether the model fits the data well. Can also you find the p-value of the F-statistic at the right end? Because the p-value is lower than .05 (2.2e-16 means $2.2*10^{-16}$), this regression model fits significantly better than the model that does not have any independent variables.
+-	Finally, let’s look at the F-statistic. The F-statistic in the regression model tells you whether the model fits the data well. Can also you find the p-value of the F-statistic at the right end? Because the p-value is lower than .05 (2.2e-16 means $2.2*10^(-16)$), this regression model fits significantly better than the model that does not have any independent variables.
 
 <br>
 
@@ -475,7 +476,7 @@ getwd()
 
 -	If your data are stored as .csv, .txt, or .dat files, there are two in-built functions to load the data. If the data are separated with commas, the file is in .csv. On the other hand, the data in .txt or .dat files are separated with tabs. In the former case, you can use ``read.csv()`` function. In the latter case, ``read.delim()`` is the option.
 
-```{r, error = TRUE, eval = FALSE}
+```{r, error = TRUE, eval = FALSE, echo = TRUE}
 # Read the data in .csv file
 data <- read.csv(file = "FileName.Extension", header = TRUE)
 
