@@ -341,14 +341,17 @@ t.test(popular_regr_1$covert, popular_regr_1$overt)
 
 ```{r}
 # Run the analysis of variance and assign the result to ‘anova’
-anova <- aov(covert ~ gender, data = popular_regr_1)
+anova <- aov(covert ~ factor(gender, exclude = c(99)), data = popular_regr_1)
 
 # Result of the analysis of variance
 summary(anova)
 ```
 
 -	Did you find that we assigned the result of ``aov()`` function to ‘anova’? Did you also catch that we omitted the dollar ($) sign when referring to the variable names thanks to the ‘data =’ argument?
--	The p-value of gender is .41, which is greater than .05. Therefore, we do not reject the null hypothesis of no group mean difference. In other words, we do not find a statistically significant difference in means across the two genders.
+- It is likely that you should be surprised at the usage of 'factor(gender, exclude = c(99))'. Let's see what it is!
+    - Do you remember that the independent variable in the ANOVA should be a factor, which is a categorical variable? Using 'factor' is to treat gender variable as a categorical variable.
+    - What is 'exclude = c(99)'? This is to filter the '99' category out from the analysis. Otherwise, R will treat 99 as an independent category, which is not the case.
+-	The p-value of gender is 2.02e-10 (2.02e-10 means $2.02 × 10^{-10}$), which is lower than .05. Therefore, we reject the null hypothesis of no group mean difference. In other words, we find a statistically significant difference in means across the two genders.
 
 <br>
 
