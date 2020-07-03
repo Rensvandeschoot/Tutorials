@@ -1,5 +1,5 @@
 ---
-title: "R: How to get started"
+title: "R for beginners"
 author: "By [Ihnwhi Heo](https://ihnwhiheo.github.io/), [Duco Veen](https://www.ducoveen.com/), and [Rens van de Schoot](https://www.rensvandeschoot.com/)"
 date: 'Last modified: `r Sys.setlocale("LC_TIME", "English"); format(Sys.time(), "%d %B %Y")`'
 output:
@@ -33,7 +33,7 @@ Are you ready to enjoy it?
 -	Open source: everyone (even you!) can improve, develop, and contribute to R
 -	The official manual by the R Core Team: [An introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf)
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/RGui.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/RGui.jpg)
 
 -	R itself may look boring and tedious. However, we have a great helper called RStudio!
 
@@ -80,7 +80,7 @@ Are you ready to enjoy it?
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/Initial download panes_notes.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/Initial download panes_notes.jpg)
 
 <br>
 
@@ -89,7 +89,7 @@ Are you ready to enjoy it?
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/An R script2_with sign.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/An R script2_with sign.jpg)
 
 <br>
 
@@ -98,7 +98,7 @@ Are you ready to enjoy it?
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/Four panes_notes.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/Four panes_notes.jpg)
 
 <br>
 
@@ -123,7 +123,7 @@ Are you ready to enjoy it?
 ### 1. Take out your ‘main material’: Loading data
 
 -	Statistical analysis cannot happen without the data. In R, you can load the data in various ways. Let’s see the easiest way.
-- To download the dataset (``popular_regr_1``) for this tutorial, click [here](https://github.com/Rensvandeschoot/Tutorials/raw/master/R/popular_regr_1.sav).
+- To download the dataset (``popular_regr_1``) for this tutorial, click [here](https://github.com/Rensvandeschoot/Tutorials/raw/master/R%20for%20beginners/popular_regr_1.sav).
 
 #### Mouse clicks
 
@@ -133,7 +133,7 @@ Are you ready to enjoy it?
 <br>
 
 <center>
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/First data import _ Haven.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/First data import _ Haven.jpg)
 </center>
 
 <br>
@@ -148,7 +148,7 @@ Are you ready to enjoy it?
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/Data_Loading.gif)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/Data_Loading.gif)
 
 <br>
 
@@ -414,7 +414,7 @@ median(examscore)
 <br>
 
 <center>
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/updating loaded packages.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/updating loaded packages.jpg)
 </center>
 
 <br>
@@ -443,7 +443,7 @@ library(haven)
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/Working_Directory_Setting.gif)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/Working_Directory_Setting.gif)
 
 <br>
 
@@ -540,7 +540,7 @@ help(read_sav)
 <br>
 
 <center>
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/read_sav search in the Help tab and indication.jpg){width=600px}
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/read_sav search in the Help tab and indication.jpg){width=600px}
 </center>
 
 <br>
@@ -563,7 +563,7 @@ help(read_sav)
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/Tutorials/Stack Overflow Example.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/Stack Overflow Example.jpg)
 
 <br>
 
