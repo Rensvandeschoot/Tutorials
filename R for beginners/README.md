@@ -1,10 +1,11 @@
 # R for beginners
 
-## Ihnwhi Heo, Duco Veen, and Rens van de Schoot
+### [Ihnwhi Heo](http://ihnwhiheo.github.io/), [Duco Veen](https://www.ducoveen.com/), and [Rens van de Schoot](https://www.rensvandeschoot.com/)
 
-This tutorial provides the basics of R for those who have started to use R. Our detailed instruction will start from the foundations including the installation of R and RStudio, the structure of R screen, and loading the data.
+### Department of Methodology and Statistics, Utrecht University, The Netherlands
 
-Next, we introduce basic functions for data exploration and data visualization. Also, we provide how to do statistical analyses such as correlation analysis, multiple linear regression, t-test, and one-way analysis of variance (ANOVA) with easy and intuitive explanation.
+This is a Github repository for the tutorial **[R for beginners](https://www.rensvandeschoot.com/tutorials/r-for-beginners/)**. The repository consists of an Rmd file, an md file, an HTML file, a dataset, and a PDF file of the paper referenced, including this README.md file.
 
-The most notable feature is some tips provided in the last section. Based on our ample experience in statistical consultation for methodologists and statisticians who use R, we selected the best advice that will make you smart R users.
+Since we continuously improve the tutorials, let us know if you discover mistakes, or if you have additional resources we can refer to. If you want to be the first to be informed about updates, follow Rens on [Twitter](https://twitter.com/RensvdSchoot).
+
 
