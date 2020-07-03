@@ -31,7 +31,7 @@ Are you ready to enjoy it?
 
 -	Free programming software for statistical computation and graphics
 -	Open source: everyone (even you!) can improve, develop, and contribute to R
--	The official manual by the R Core Team: [An introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf)
+-	The official manual (R Core Team, 2020): [An introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf)
 
 ![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/R for beginners/RGui.jpg)
 
@@ -577,6 +577,8 @@ help(read_sav)
 ---
 
 ### **References**
+
+R Core Team. (2020). R: A Language and Environment for Statistical Computing, Vienna, Austria. [https://www.R-project.org/](https://www.R-project.org/).
 
 van de Schoot, R., van der Velden, F., Boom, J., & Brugman, D. (2010). Can at-risk young adolescents be popular and anti-social? Sociometric status groups, anti-social behaviour, gender and ethnic background. _Journal of adolescence, 33_(5), 583-592. [https://doi.org/10.1016/j.adolescence.2009.12.004](https://doi.org/10.1016/j.adolescence.2009.12.004)
 
