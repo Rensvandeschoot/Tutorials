@@ -15,7 +15,7 @@ Next, we introduce basic functions for data exploration and data visualization. 
 
 The most notable feature is some tips provided in the last section. Based on our ample experience in statistical consultation for methodologists and statisticians who use R, we selected the best advice that will make you smart R users.
 
-Throughout this tutorial, we will use a dataset (``popular_regr_1``) from [van de Schoot, van der Velden, Boom, and Brugman (2010)](https://doi.org/10.1016/j.adolescence.2009.12.004). For more information on the sample, instruments, methodology, and research context, we refer the interested readers to the paper (see references).
+Throughout this tutorial, we will use a dataset (``popular_regr_1``) from [van de Schoot, van der Velden, Boom, and Brugman (2010)](https://github.com/Rensvandeschoot/Tutorials/raw/master/R%20for%20beginners/Can%20at-risk%20young%20adolescents%20be%20popular%20and%20anti-social.pdf). For more information on the sample, instruments, methodology, and research context, we refer the interested readers to the paper (see references).
 
 Since we continuously improve the tutorials, let us know if you discover mistakes, or if you have additional resources we can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow Rens on [Twitter](https://twitter.com/RensvdSchoot).
 
@@ -58,8 +58,8 @@ Are you ready to enjoy it?
 -	Choose and click any one of the website links listed
 -	Based on your operating system (Linux, Mac, Windows), click Download.
     -	If you use **Linux**, click Download R for Linux: Choose your Linux distribution (debian/, redhad/, suse/, ubuntu/) -> Open the terminal -> Run the installation command
-    -	If you use **Mac**, click Download R for (Mac) OS X: Find the header ‘Latest release’ -> Click R-3.6.3.pkg (or another version)
-    -	If you use **Windows**, click Download R for Windows: Find ‘base’ under subdirectories -> Click ‘install R for the first time’ -> Click Download R 3.6.3 (or another version) for Windows
+    -	If you use **Mac**, click Download R for (Mac) OS X: Find the header ‘Latest release’ -> Click R-4.0.2.pkg (or another version)
+    -	If you use **Windows**, click Download R for Windows: Find ‘base’ under subdirectories -> Click ‘install R for the first time’ -> Click Download R 4.0.2 (or another version) for Windows
 
 #### RStudio installation
 
