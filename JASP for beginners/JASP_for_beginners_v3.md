@@ -1,7 +1,9 @@
 ---
 title: "JASP for beginners"
-author: "By [Ihnwhi Heo](https://ihnwhiheo.github.io/), [Duco Veen](https://www.ducoveen.com/), and [Rens van de Schoot](https://www.rensvandeschoot.com/)"
-date: 'Last modified: 03 July 2020'
+author:
+    - "[Ihnwhi Heo](https://ihnwhiheo.github.io/), [Duco Veen](https://www.ducoveen.com/), and [Rens van de Schoot](https://www.rensvandeschoot.com/)"
+    - Department of Methodology and Statistics, Utrecht University
+date: 'Last modified: 15 July 2020'
 output:
   html_document:
     keep_md: true
@@ -33,7 +35,7 @@ Let’s get started!
 <center>
 ![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for beginners/JASP_SPSS.png){width=800px}
 
-(Image source: Jonas Kristoffer Lindeløv at Aalborg University)
+*(Image source: Jonas Kristoffer Lindeløv at Aalborg University)*
 </center>
 
 <br>
@@ -284,6 +286,7 @@ Let’s get started!
 -	At this point, readers might be curious about what exactly the **Bayesian statistics** is, what the differences are compared to frequentist statistics, and how it helps substantive research. For interested readers, we refer to two great easily-written papers with the links!
     - [A gentle introduction to Bayesian analysis: Applications to developmental research](https://github.com/Rensvandeschoot/Tutorials/raw/master/JASP%20for%20beginners/A%20Gentle%20Introduction%20to%20Bayesian%20Analysis_Applications%20to%20Developmental%20Research.pdf) (van de Schoot & Depaoli, 2014)
     - [Bayesian analyses: Where to start and what to report](https://github.com/Rensvandeschoot/Tutorials/raw/master/JASP%20for%20beginners/Bayesian%20Analyses_Where%20to%20Start%20and%20What%20to%20Report.pdf) (van de Schoot, Kaplan, Denissen, Asendorpf, Neyer, & van Aken, 2014)
+-	We assume that all the assumptions required for subsequent analyses are satisfied.
 
 <br>
 
@@ -408,14 +411,14 @@ Let’s get started!
 ## V. Epilogue
 
 -	Congratulations! You have finished all the basic but core practices to use the JASP. We hope you enjoyed this tutorial.
--	We are going to end this tutorial ends with two additional points. Take it easy and enjoy the ending!
+-	We are going to end this tutorial with two additional points. Take it easy and enjoy the ending!
 
 <br>
 
 ### 1. The greatest synergy between JASP and Bayesian statistics
 
 -	As mentioned at the beginning of ‘IV. Data analysis and interpretation’, we only focused on statistical analyses from the frequentist statistics perspective. One of the greatest strengths of JASP is its synergy with Bayesian statistics.
--	Therefore, we strongly recommend you to read our next tutorial JASP for Bayesian analysis with default priors! It completely focuses on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistical analysis, again in an easy and friendly tone. You will see how user-friendly to play with Bayesian statistics in JASP. See you soon!
+-	Therefore, we strongly recommend you to read our next tutorial [JASP for Bayesian analyses with default priors](https://www.rensvandeschoot.com/tutorials/jasp-for-bayesian-analyses-with-default-priors/)! It completely focuses on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistical analysis, again in an easy and friendly tone. You will see how user-friendly to play with Bayesian statistics in JASP. See you soon!
 
 <br>
 
@@ -438,7 +441,7 @@ Let’s get started!
 <center>
 ![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for beginners/JASP Star Wars Final.jpg)
 
-(Image source: JASP logo by the JASP Team, Background by Octavian A Tudose at pixabay.com, Skywalker by Jonathan Rey at freepngimg.com, Dark Vader by an anonymous at freepngimg.com)
+*(Image source: JASP logo by the JASP Team, Background by Octavian A Tudose at pixabay.com, Skywalker by Jonathan Rey at freepngimg.com, Dark Vader by an anonymous at freepngimg.com)*
 </center>
 
 <br>
