@@ -14,10 +14,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 This tutorial provides the reader with a basic tutorial how to perform a **Bayesian regression** in [Blavaan](https://faculty.missouri.edu/~merklee/blavaan/). Throughout this tutorial, the reader will be guided through importing data files, exploring summary statistics and regression analyses. Here, we will exclusively focus on [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) statistics. 
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
+
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
 
 ## Preparation
 
@@ -32,7 +33,7 @@ This tutorial expects:
 
 ## Example Data
 
-The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.
 
@@ -64,8 +65,9 @@ $H_1:$ _$age^2$ is related to a delay in the PhD projects._
 
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
-# if you dont have these packages installed yet, please use the install.packages("package_name") command.
-library(rjags) 
+# if you don't have these packages installed yet, please use the install.packages("package_name") command.
+library(rjags)
+library(runjags)
 library(blavaan)
 library(psych) #to get some extended summary statistics
 library(tidyverse) # needed for data manipulation and plotting
@@ -87,7 +89,7 @@ colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 
 GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see https://github.com/)
 
-Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the  `describe()` function.
+Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. You can do this by using the  `describe()` function.
 
 ##### _**Question:** Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data._
 
@@ -141,7 +143,7 @@ dataPHD %>%
 
 In this exercise you will investigate the impact of Ph.D. students&#39; $age$ and $age^2$ on the delay in their project time, which serves as the outcome variable using a regression analysis (note that we ignore assumption checking!).
 
-As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g.  [Van de Schoot et al. 2017](http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract)). In this tutorial, we will first rely on the default prior settings, thereby behaving a &#39;naive&#39; Bayesians (which might [not](https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/)always be a good idea).
+As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g.  [Van de Schoot et al. 2017](http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract)). In this tutorial, we will first rely on the default prior settings, thereby behaving a &#39;naive&#39; Bayesians (which might [not](https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/) always be a good idea).
 
 To run a multiple regression with Blavaan, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model in Lavaan). The model is specified as follows:
 
@@ -237,7 +239,7 @@ dpriors(target = "jags")
 ```
 
 
-_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Jags) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 10 (precision of .01). You can decide whether or not this is uninformative enough or not for your situation._
+_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Jags) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 100 (precision of .01). You can decide whether this is uninformative enough or not for your situation._
 
 
 [/expand]
@@ -435,9 +437,9 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 ```
 
 
-The `beta[1,2,1]` and `beta[1,3,1]` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in JAGS These are just the labels JAGS gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects. 
+The `beta[1,2,1]` and `beta[1,3,1]` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in JAGS. These are just the labels JAGS gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects. 
 
-We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
+We can also plot these differences by plotting both the posteriors and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
 
 First we extract the MCMC chains of the 5 different models for only this one parameter ($\beta_{age}$=beta[1,2,1]). Copy-past the following code to R: 
 
@@ -510,11 +512,11 @@ bias <- round(100*((estimatesinformative-estimatesuninformative)/estimatesuninfo
 
 _We see that the influence of this highly informative prior is around `r bias[1]`% and `r bias[2]`% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
 
-_The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
+_The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors is larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
 
 ```{r,eval=FALSE}
 indices   <- sample.int(333, 60)
-smalldata <- data[indices,]
+smalldata <- dataPHD[indices,]
 ```
 
 _We made a new dataset with randomly chosen 60 of the 333 observations from the original dataset. You can repeat the analyses with the same code and only changing the name of the dataset to see the influence of priors on a smaller dataset. Run the model model.informative.priors2 with this new dataset_ 

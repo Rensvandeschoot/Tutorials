@@ -20,6 +20,8 @@ Throughout this tutorial, the reader will be guided through importing data files
 
 In this tutorial, we start by using the default prior settings of the software.  In a second step, we will apply user-specified priors, and if you really want to use Bayes for your own data, we recommend to follow the [WAMBS-checklist](https://www.rensvandeschoot.com/wambs-checklist/), also available in other software.
 
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials).If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
+
 ## **Preparation**
 
 This tutorial expects:
@@ -34,7 +36,7 @@ This tutorial expects:
 
 ## Example Data
 
-The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.
 
@@ -66,7 +68,7 @@ $H_1:$ _$age^2$is related to a delay in the PhD projects._
 
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
-# if you dont have these packages installed yet, please use the install.packages("package_name") command.
+# if you don't have these packages installed yet, please use the install.packages("package_name") command.
 library(rstan) 
 library(blavaan)
 library(psych) #to get some extended summary statistics
@@ -89,7 +91,7 @@ colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 
 GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see https://github.com/)
 
-Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the  `describe()` function.
+Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. You can do this by using the  `describe()` function.
 
 ##### _**Question:** Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data._
 
@@ -460,11 +462,11 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 ```
 
 
-The `diff~age ` and `diff~age2 ` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan These are just the labels Stan gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. 
+The `diff~age ` and `diff~age2 ` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in Stan. These are just the labels Stan gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. 
 
 <!-- There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects.  -->
 
-We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
+We can also plot these differences by plotting both the posteriors and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
 
 First we extract the MCMC chains of the 5 different models for only this one parameter ($\beta_{age}$=`bet_sign[1]`). Copy-paste the following code to R: 
 
@@ -539,7 +541,7 @@ bias <- round(100*((estimatesinformative-estimatesuninformative)/estimatesuninfo
 
 _We see that the influence of this highly informative prior is around `r bias[1]`% and `r bias[2]`% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
 
-_The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
+_The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors is larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
 
 ```{r,eval=FALSE}
 indices <- sample.int(333, 60)

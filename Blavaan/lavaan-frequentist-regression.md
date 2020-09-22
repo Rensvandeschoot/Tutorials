@@ -1,7 +1,7 @@
 ---
 title: "Regression in lavaan (Frequentist)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 21 August 2019'
+date: 'Last modified: 19 October 2019'
 output:
   html_document:
     keep_md: true
@@ -12,13 +12,15 @@ output:
 ## Introduction
 This tutorial provides the reader with a basic tutorial how to perform a regression analysis in [lavaan](http://lavaan.ugent.be/). Throughout this tutorial, the reader will be guided through importing datafiles, exploring summary statistics and regression analyses. Here, we will exclusively focus on [frequentist statistics](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/).
 
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
+
 
   <p>&nbsp;</p>
 
 ## Preparation
 This tutorial expects:
 
-- Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.4 in R version 3.6.1
+- Installation of R package `lavaan`. This tutorial was made using  Lavaan version 0.6.5 in R version 3.6.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of coding in R
@@ -205,25 +207,26 @@ summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ```
 
 ```
-## lavaan 0.6-4 ended normally after 24 iterations
-## 
-##   Optimization method                           NLMINB
-##   Number of free parameters                          4
-## 
-##   Number of observations                           333
+## lavaan 0.6-5 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML
-##   Model Fit Test Statistic                       0.000
+##   Optimization method                           NLMINB
+##   Number of free parameters                          4
+##                                                       
+##   Number of observations                           333
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.000
 ##   Degrees of freedom                                 0
-##   Minimum Function Value               0.0000000000000
 ## 
-## Model test baseline model:
+## Model Test Baseline Model:
 ## 
-##   Minimum Function Test Statistic               21.521
+##   Test statistic                                21.521
 ##   Degrees of freedom                                 2
 ##   P-value                                        0.000
 ## 
-## User model versus baseline model:
+## User Model versus Baseline Model:
 ## 
 ##   Comparative Fit Index (CFI)                    1.000
 ##   Tucker-Lewis Index (TLI)                       1.000
@@ -232,8 +235,7 @@ summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ## 
 ##   Loglikelihood user model (H0)              -1350.154
 ##   Loglikelihood unrestricted model (H1)      -1350.154
-## 
-##   Number of free parameters                          4
+##                                                       
 ##   Akaike (AIC)                                2708.308
 ##   Bayesian (BIC)                              2723.541
 ##   Sample-size adjusted Bayesian (BIC)         2710.852
@@ -241,7 +243,8 @@ summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ## Root Mean Square Error of Approximation:
 ## 
 ##   RMSEA                                          0.000
-##   90 Percent Confidence Interval          0.000  0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.000
 ##   P-value RMSEA <= 0.05                             NA
 ## 
 ## Standardized Root Mean Square Residual:
@@ -252,7 +255,7 @@ summary(fit, fit.measures = TRUE, ci = TRUE, rsquare = TRUE)
 ## 
 ##   Information                                 Expected
 ##   Information saturated (h1) model          Structured
-##   Standard Errors                             Standard
+##   Standard errors                             Standard
 ## 
 ## Regressions:
 ##                    Estimate    Std.Err  z-value  P(>|z|) ci.lower  
