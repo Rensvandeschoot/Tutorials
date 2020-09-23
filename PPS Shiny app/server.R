@@ -429,22 +429,22 @@ server <- function(input, output, session) {
   output$Priors <- renderUI(
     withMathJax(
       HTML(paste0("Different software requires different specification of the hyperparameters. Look at the specification that is relevant for you.  <br><br>",
-                     "<b>Parametrized as N(mean, variance)</b><br>",
-                     "The hyperparameters of the priors you have selected correspond to:",
-                     "<ul><li>Intercept  (\\(\\beta_{intercept}\\))   ~ N(", input$p3,", ", input$p8, ")",
-                     "</li><li> regression coefficient age  (\\(\\beta_{age}\\))  ~ N(", input$p1,", ", input$p6,")",
-                     "</li><li> regression coefficient squared (\\(\\beta_{age^2}\\))  ~ N(", input$p2,", ", input$p7, ")","</li></ul>",
-                     "<b>Parametrized as N(mean, sd)</b><br>",
-                     "The hyperparameters of the priors you have selected correspond to:",
-                     "<ul><li>Intercept  (\\(\\beta_{intercept}\\))   ~ N(", input$p3,", ", signif(sqrt(input$p8),2), ")",
-                     "</li><li> regression coefficient age  (\\(\\beta_{age}\\))  ~ N(", input$p1,", ", signif(sqrt(input$p6),2),")",
-                     "</li><li> regression coefficient squared (\\(\\beta_{age^2}\\))  ~ N(", input$p2,", ", signif(sqrt(input$p7),2), ")","</li></ul>",
-                     "<b>Parametrized as N(mean, precision), precision is 1/variance.</b><br>",
-                     "The hyperparameters of the priors you have selected correspond to:",
-                     "<ul><li>Intercept  (\\(\\beta_{intercept}\\))   ~ N(", input$p3,", ", signif(1/input$p8,2), ")",
-                     "</li><li> regression coefficient age  (\\(\\beta_{age}\\))  ~ N(", input$p1,", ", signif(1/(input$p6),2),")",
-                     "</li><li> regression coefficient age squared(\\(\\beta_{age^2}\\))  ~ N(", input$p2,", ", signif(1/(input$p7),2), ")","</li></ul>")
-        )))
+                  "<b>Parametrized as N(mean, variance)</b><br>",
+                  "The hyperparameters of the priors you have selected correspond to:",
+                  "<ul><li>Intercept  (\\(\\beta_{intercept}\\))   ~ N(", input$p3,", ", input$p8, ")",
+                  "</li><li> regression coefficient age  (\\(\\beta_{age}\\))  ~ N(", input$p1,", ", input$p6,")",
+                  "</li><li> regression coefficient squared (\\(\\beta_{age^2}\\))  ~ N(", input$p2,", ", input$p7, ")","</li></ul>",
+                  "<b>Parametrized as N(mean, sd) (ex. Stan)</b><br>",
+                  "The hyperparameters of the priors you have selected correspond to:",
+                  "<ul><li>Intercept  (\\(\\beta_{intercept}\\))   ~ N(", input$p3,", ", signif(sqrt(input$p8),2), ")",
+                  "</li><li> regression coefficient age  (\\(\\beta_{age}\\))  ~ N(", input$p1,", ", signif(sqrt(input$p6),2),")",
+                  "</li><li> regression coefficient squared (\\(\\beta_{age^2}\\))  ~ N(", input$p2,", ", signif(sqrt(input$p7),2), ")","</li></ul>",
+                  "<b>Parametrized as N(mean, precision), precision is 1/variance (ex. JAGS)</b><br>",
+                  "The hyperparameters of the priors you have selected correspond to:",
+                  "<ul><li>Intercept  (\\(\\beta_{intercept}\\))   ~ N(", input$p3,", ", signif(1/input$p8,2), ")",
+                  "</li><li> regression coefficient age  (\\(\\beta_{age}\\))  ~ N(", input$p1,", ", signif(1/(input$p6),2),")",
+                  "</li><li> regression coefficient age squared(\\(\\beta_{age^2}\\))  ~ N(", input$p2,", ", signif(1/(input$p7),2), ")","</li></ul>")
+      )))
   
   
-  }
+}
