@@ -95,10 +95,10 @@ ui <- dashboardPage(
                                      you can expect an increase for delay with age, accelerating with growing age."), 
                              tags$li("If you specify both a negative linear effect and a negative quadratic effect, 
                                      you can expect a decrease for delay with age, accelerating with growing age."), 
-                             tags$li("you specify a positive linear and a smaller negative quadratic effect, you can expect an 
+                             tags$li("If you specify a positive linear and a smaller negative quadratic effect, you can expect an 
                                      initial increase of delay with age, until a certain age when delay starts to become smaller again."),
-                             tags$li("If you specify a negative linear and a smaller positive quadratic effect, you expect an initial 
-                                     decrease of delay with age, until a certain age when delay starts to become larger again. ")),
+                             tags$li("If you specify a negative linear and a smaller positive quadratic effect, you can expect an initial 
+                                     decrease of delay with age, until a certain age when delay starts to become larger again.")),
                            tags$h3("Question:"), 
                            tags$em("What is the complete regression formula?"), 
                            p(), 
