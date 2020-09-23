@@ -68,7 +68,7 @@ ui <- dashboardPage(
                              Range Age and Range Delay, in the left column to set your plausible parameter space. You can see that 
                              in the two plots in the right-hand column the parameter space is adjusted when you move the sliders."))),
               fluidRow(box(width=7,  title = "Set up Parameter Space", status = "primary", solidHeader = TRUE,
-                           p("Use the sliders to set up min and max of both age and delay (in months). Think about what you believe to be plausible values."),
+                           p("Use the sliders to set up min and max of both age (in years) and delay (in months). Think about what you believe to be plausible values."),
                            sliderInput(inputId="range1", label= "Range Age", min=0, max=120, value=c(1,119)),
                            sliderInput(inputId="range2", label= "Range Delay",min=-200, max=1000, value=c(-180, 900))),
                        
