@@ -55,9 +55,11 @@ server <- function(input, output, session) {
     showModal(modalDialog(
       title = "Answer",
       
-      "You can see this in the plot because an ever so small adjustment of the
-      variance (please note that the scales of variance sliders are different) for the quadratic effect 
-      leads to a large widening of the quadratic effect ribbon over time. Any difference from the mean of
+      "You can see this in the plot below. Note that the color of the variance of
+      the linear effect is coral and that of the quadratic effect is orange.
+      Let's focus on the widening of the variance of the quadratic effect. When you slightly increase
+      the standard deviation of the quadratic effect (please note that the scales of variance
+      sliders are different), it leads to a large widening of the quadratic effect ribbon over time. Any difference from the mean of
       the quadratic effect is multiplied by age squared, so for example, for a 50-year-old, it is multiplied by 2500."))
   })
   
