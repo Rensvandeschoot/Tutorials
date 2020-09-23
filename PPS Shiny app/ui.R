@@ -47,13 +47,12 @@ ui <- dashboardPage(
               p("This Shiny App is designed to help users define their priors in a linear regression
                 with two regression coefficients. Using the same example as in the software tutorials 
                 on this website, users are asked to specify their plausible parameter space and their 
-                expected prior means and uncertainty around these means. The Ph.D.-delay example has been used an
+                expected prior means and uncertainty around these means. The Ph.D. delay example has been used an
                 easy-to-go introduction to Bayesian inference. In this example the linear and quadratic effect of 
-                age on Ph.D.-delay are estimated. Users learn about the interaction between a linear and a quadratic
-                effect in the same model, about how to think about plausible parameter spaces, and about 
-                specification of normally distributed priors for regression coefficients."),
-              withMathJax(p("The data is based on data described in Van de Schoot, R., Yerkes, M.A., Mouw, J.M. & Sonneveld, H. (2013).", tags$a(href="https://www.rensvandeschoot.com/what-took-them-so-long-explaining-phd-delays-among-doctoral-candidates/", "What Took Them So Long? Explaining PhD Delays among Doctoral Candidates."),
-                "PLoS One, 8(7): e68839. "))),
+                age on Ph.D. delay are estimated. Users learn about specifying a linear and a quadratic effect in the same model with the interactive visual plots, about how to think about plausible parameter spaces, and about 
+                the specification of normally distributed priors for regression coefficients."),
+              withMathJax(p("The data is based on data described in Van de Schoot, R., Yerkes, M.A., Mouw, J.M. & Sonneveld, H. (2013).", tags$a(href="https://www.rensvandeschoot.com/what-took-them-so-long-explaining-phd-delays-among-doctoral-candidates/", "What Took Them So Long? Explaining PhD Delays among Doctoral Candidates."), "PLoS One, 8(7): e68839.")),
+              withMathJax(p("You can cite the Ph.D. delay dataset in APA style as follows:", "Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]. Zenodo.", tags$a(href="https://doi.org/10.5281/zenodo.3999424", "https://doi.org/10.5281/zenodo.3999424")))),
       
       
       
