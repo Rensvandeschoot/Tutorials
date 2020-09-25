@@ -1,7 +1,7 @@
 ---
 title: "Bayesian Regression in Blavaan (using Jags)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 22 September 2020'
+date: 'Last modified: 25 September 2020'
 output:
   html_document:
     keep_md: true
@@ -18,6 +18,14 @@ In this tutorial, we start by using the default prior settings of the software. 
 
 We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
 
+### How to cite this tutorial in APA style
+
+Smeets, Laurent & Van de Schoot, Rens. (2019). Bayesian Regression in Blavaan (using Jags). Zenodo. https://doi.org/10.5281/zenodo.4050170
+
+<br>
+
+
+
 ## Preparation
 
 This tutorial expects:
@@ -31,15 +39,18 @@ This tutorial expects:
 
 ## Example Data
 
-The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://zenodo.org/record/3999424/files/phd-delays.csv?download=1). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.
 
 The relation between completion time and age is expected to be non-linear. This might be due to that at a certain point in your life (i.e., mid thirties), family life takes up more of your time than when you are in your twenties or when you are older.
 
-So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and $age$ (*E22_Age*) and $age^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>.
+So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and $age$ (*E22_Age*) and $age^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>. This dataset and some more information on it can be found [here](https://zenodo.org/record/3999424)
 
-  <p>&nbsp;</p>
+
+## How to cite this data set
+
+Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]. Zenodo. https://doi.org/10.5281/zenodo.3999424
 
 
 ##### _**Question:** Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?_
@@ -216,7 +227,7 @@ summary(fit.bayes)
 ```
 
 ```
-## blavaan (0.3-10) results of 30512 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-10) results of 25827 samples after 16000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -228,8 +239,8 @@ summary(fit.bayes)
 ## Regressions:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.323    0.560       1.19      3.376    1.020
-##     age2               -0.022    0.006     -0.034     -0.011    1.019
+##     age                 2.359    0.536      1.258      3.306    1.031
+##     age2               -0.023    0.006     -0.033     -0.011    1.030
 ##     Prior        
 ##                  
 ##     dnorm(0,1e-2)
@@ -237,13 +248,13 @@ summary(fit.bayes)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              -40.028   11.775      -62.8    -16.924    1.020
+##    .diff              -40.773   11.271    -61.918    -18.752    1.031
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              194.229   15.028    166.334    224.688    1.000
+##    .diff              194.072   15.053     165.49    223.831    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ```
@@ -275,7 +286,7 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 
 
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.323, 95% HPD (Credibility Interval) [1.19 3.376]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.022, and a 95% Credibility Interval of [-0.034 -0.011]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.359, 95% HPD (Credibility Interval) [1.258 3.306]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.023, and a 95% Credibility Interval of [-0.033 -0.011]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
@@ -359,7 +370,7 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-10) results of 18738 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-10) results of 26668 samples after 5000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -371,8 +382,8 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.696    0.387      1.951      3.491    1.015
-##     age2               -0.026    0.004     -0.035     -0.018    1.014
+##     age                 2.665    0.417      1.843      3.463    1.004
+##     age2               -0.026    0.004     -0.035     -0.017    1.003
 ##     Prior        
 ##                  
 ##      dnorm(3,2.5)
@@ -380,19 +391,19 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              -47.793    8.196    -64.936     -32.35    1.015
+##    .diff              -47.154    8.809    -64.054    -29.876    1.004
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              193.846   14.816    164.781    222.715    1.000
+##    .diff              193.865   15.013    165.512     223.65    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.064
+##     diff                0.063
 ```
 
 
@@ -404,12 +415,12 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                    | ---        |---         | ---         |
-| Posterior mean |  2.323|                        |            |            |             | 
-| Posterior sd   |  0.56|                        |            |            |             |
+| Posterior mean |  2.359|                        |            |            |             | 
+| Posterior sd   |  0.536|                        |            |            |             |
 
 | $Age^2$        | Default prior             | $\mathcal{N}(0, .1)$   |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                       | ---       | ---        | ---        | ---         |
-| Posterior mean | -0.022|           |            |            |             |
+| Posterior mean | -0.023|           |            |            |             |
 | Posterior sd   | 0.006|           |            |            |             |
 
 
@@ -421,12 +432,12 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                      | ---        |---         | ---         |
-| Posterior mean |  2.323|2.696|            |            |             | 
-| Posterior sd   |  0.56|0.387|            |            |             |
+| Posterior mean |  2.359|2.665|            |            |             | 
+| Posterior sd   |  0.536|0.417|            |            |             |
 
 | $Age^2$        | Default prior              | $\mathcal{N}(0, .1)$      |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                        | ---                       | ---        | ---        | ---         |
-| Posterior mean | -0.022 | -0.026|            |            |             |
+| Posterior mean | -0.023 | -0.026|            |            |             |
 | Posterior sd   | 0.006 | 0.004|            |            |             |
 
 
@@ -500,7 +511,7 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-10) results of 18695 samples after 38000 adapt/burnin iterations
+## blavaan (0.3-10) results of 27728 samples after 16000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -512,8 +523,8 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.287    0.516      1.361      3.336    1.032
-##     age2               -0.022    0.005     -0.033     -0.012    1.038
+##     age                 2.337    0.582      1.158      3.454    1.038
+##     age2               -0.023    0.006     -0.034      -0.01    1.036
 ##     Prior        
 ##                  
 ##    dnorm(3,0.001)
@@ -521,19 +532,19 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              -39.253   10.881     -60.82    -19.339    1.039
+##    .diff              -40.324   12.236    -64.479    -16.102    1.037
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              194.093   14.939    165.657    223.294    1.000
+##    .diff              194.290   15.098    165.756    224.526    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.048
+##     diff                0.050
 ```
 
 ```r
@@ -541,7 +552,7 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-10) results of 20494 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-10) results of 51018 samples after 49000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -553,8 +564,8 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                11.092    0.587      9.975     12.238    1.012
-##     age2               -0.112    0.006     -0.125       -0.1    1.011
+##     age                11.068    0.547     10.025     12.178    1.001
+##     age2               -0.112    0.006     -0.124     -0.101    1.001
 ##     Prior        
 ##                  
 ##     dnorm(20,2.5)
@@ -562,13 +573,13 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff             -223.182   12.349   -247.849   -200.225    1.012
+##    .diff             -222.668   11.520    -244.59   -199.182    1.001
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              313.780   29.693    258.912    374.605    1.003
+##    .diff              313.023   28.526    256.413    367.779    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
@@ -582,7 +593,7 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-10) results of 21505 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-10) results of 35120 samples after 60000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -594,8 +605,8 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## Regressions:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.319    0.570       1.25      3.453    1.021
-##     age2               -0.022    0.006     -0.034     -0.011    1.020
+##     age                 2.331    0.561      1.185      3.448    1.027
+##     age2               -0.023    0.006     -0.034     -0.011    1.025
 ##     Prior        
 ##                  
 ##   dnorm(20,0.001)
@@ -603,19 +614,19 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ## 
 ## Intercepts:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              -39.919   11.979    -63.439    -17.256    1.020
+##    .diff              -40.198   11.803     -63.41    -15.878    1.026
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
 ##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
-##    .diff              194.239   15.009    165.814    224.436    1.000
+##    .diff              194.343   15.015    165.597    224.219    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.049
+##     diff                0.050
 ```
 
 
@@ -624,13 +635,13 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
   
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$      | $\mathcal{N}(3, 1000)$    |$\mathcal{N}(20, .4)$    |$\mathcal{N}(20, 1000)$   |
 | ---            | ---                        | ---                      | ---                       |---                       | ---                      |
-| Posterior mean |  2.323|2.696| 2.287|11.092|2.319| 
-| Posterior sd   |  0.56|0.387| 0.516|0.587|0.57|
+| Posterior mean |  2.359|2.665| 2.337|11.068|2.331| 
+| Posterior sd   |  0.536|0.417| 0.582|0.547|0.561|
 
 | $Age^2$        | Default prior              | $\mathcal{N}(0, .1)$      |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                        | ---                       | ---                        | ---                      | ---                      |
-| Posterior mean | -0.022 | -0.026|-0.022  |-0.112|-0.022|
-| Posterior sd   | 0.006 | 0.004|0.005  |0.006|0.006|
+| Posterior mean | -0.023 | -0.026|-0.023  |-0.112|-0.023|
+| Posterior sd   | 0.006 | 0.004|0.006  |0.006|0.006|
 
 [/expand]
 
@@ -737,12 +748,12 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 
 ```
 ## beta[1,2,1] beta[1,3,1] 
-##      376.72      399.81
+##      362.86      384.45
 ```
 
 
 
-_We see that the influence of this highly informative prior is around 377% and 400% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
+_We see that the influence of this highly informative prior is around 363% and 384% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
 
 _The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors is larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
 
