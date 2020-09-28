@@ -1,4 +1,5 @@
-# last editeed 18-01-2019 by Laurent Smeets
+# last edited 18-01-2019 by Laurent Smeets
+# last edited 28-09-2020 by Ihnwhi Heo
 
 library("shinydashboard")
 library("shiny") 
@@ -47,13 +48,12 @@ ui <- dashboardPage(
               p("This Shiny App is designed to help users define their priors in a linear regression
                 with two regression coefficients. Using the same example as in the software tutorials 
                 on this website, users are asked to specify their plausible parameter space and their 
-                expected prior means and uncertainty around these means. The Ph.D.-delay example has been used an
+                expected prior means and uncertainty around these means. The Ph.D. delay example has been used an
                 easy-to-go introduction to Bayesian inference. In this example the linear and quadratic effect of 
-                age on Ph.D.-delay are estimated. Users learn about the interaction between a linear and a quadratic
-                effect in the same model, about how to think about plausible parameter spaces, and about 
-                specification of normally distributed priors for regression coefficients."),
-              withMathJax(p("The data is based on data described in Van de Schoot, R., Yerkes, M.A., Mouw, J.M. & Sonneveld, H. (2013).", tags$a(href="https://www.rensvandeschoot.com/what-took-them-so-long-explaining-phd-delays-among-doctoral-candidates/", "What Took Them So Long? Explaining PhD Delays among Doctoral Candidates."),
-                "PLoS One, 8(7): e68839. "))),
+                age on Ph.D. delay are estimated. Users learn about specifying a linear and a quadratic effect in the same model with the interactive visual plots, about how to think about plausible parameter spaces, and about 
+                the specification of normally distributed priors for regression coefficients."),
+              withMathJax(p("The data is based on data described in Van de Schoot, R., Yerkes, M.A., Mouw, J.M. & Sonneveld, H. (2013).", tags$a(href="https://www.rensvandeschoot.com/what-took-them-so-long-explaining-phd-delays-among-doctoral-candidates/", "What Took Them So Long? Explaining PhD Delays among Doctoral Candidates."), "PLoS One, 8(7): e68839.")),
+              withMathJax(p("You can cite the Ph.D. delay dataset in APA style as follows:", "Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]. Zenodo.", tags$a(href="https://doi.org/10.5281/zenodo.3999424", "https://doi.org/10.5281/zenodo.3999424")))),
       
       
       
@@ -69,7 +69,7 @@ ui <- dashboardPage(
                              Range Age and Range Delay, in the left column to set your plausible parameter space. You can see that 
                              in the two plots in the right-hand column the parameter space is adjusted when you move the sliders."))),
               fluidRow(box(width=7,  title = "Set up Parameter Space", status = "primary", solidHeader = TRUE,
-                           p("Use the sliders to set up min and max of both age and delay (in months). Think about what you believe to be plausible values."),
+                           p("Use the sliders to set up min and max of both age (in years) and delay (in months). Think about what you believe to be plausible values."),
                            sliderInput(inputId="range1", label= "Range Age", min=0, max=120, value=c(1,119)),
                            sliderInput(inputId="range2", label= "Range Delay",min=-200, max=1000, value=c(-180, 900))),
                        
@@ -96,10 +96,10 @@ ui <- dashboardPage(
                                      you can expect an increase for delay with age, accelerating with growing age."), 
                              tags$li("If you specify both a negative linear effect and a negative quadratic effect, 
                                      you can expect a decrease for delay with age, accelerating with growing age."), 
-                             tags$li("you specify a positive linear and a smaller negative quadratic effect, you can expect an 
+                             tags$li("If you specify a positive linear and a smaller negative quadratic effect, you can expect an 
                                      initial increase of delay with age, until a certain age when delay starts to become smaller again."),
-                             tags$li("If you specify a negative linear and a smaller positive quadratic effect, you expect an initial 
-                                     decrease of delay with age, until a certain age when delay starts to become larger again. ")),
+                             tags$li("If you specify a negative linear and a smaller positive quadratic effect, you can expect an initial 
+                                     decrease of delay with age, until a certain age when delay starts to become larger again.")),
                            tags$h3("Question:"), 
                            tags$em("What is the complete regression formula?"), 
                            p(), 
