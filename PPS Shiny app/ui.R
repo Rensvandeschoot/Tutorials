@@ -38,10 +38,15 @@ ui <- dashboardPage(
 
     tabItems(
       
+      tabItems(
+      
       tabItem(tabName = "tab1",   # Application title and links
               tags$h2("Influence of Priors "),
               p("Version 0.3.2, created by", tags$a(href="https://www.rensvandeschoot.com/colleagues/laurent-smeets/", "Laurent Smeets"), "and", 
-                tags$a(href="https://www.rensvandeschoot.com/", "Rens van de Schoot")), 
+                tags$a(href="https://www.rensvandeschoot.com/", "Rens van de Schoot")),
+              withMathJax(p("How to cite this Shiny App in APA style",
+                            br(),
+                            "Smeets, L., & Van de Schoot, R. (2020, September 15). Code for the ShinyApp to Determine the Plausible Parameter Space for the PhD-delay Data (Version v1.0). Zenodo.", tags$a(href="https://doi.org/10.5281/zenodo.4030288", "https://doi.org/10.5281/zenodo.4030288"))),
               actionButton("disclaimer", label = "Show Disclaimer"),
               br(),  
               br(),      
