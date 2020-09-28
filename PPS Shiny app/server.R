@@ -1,4 +1,5 @@
 # last edited 07-02-2019 by Laurent Smeets
+# last edited 28-09-2020 by Ihnwhi Heo
 
 
 library("shinydashboard")
@@ -47,7 +48,7 @@ server <- function(input, output, session) {
     showModal(modalDialog(
       title = "Answer",
       p("This effect would look like a negative parabola (n-shaped)."),
-      tags$img(src="plot.png", align = "left",width=350)))
+      tags$img(src="NewPlot.png", align = "left",width=350)))
   })
   
   
