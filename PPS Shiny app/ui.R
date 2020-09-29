@@ -16,9 +16,9 @@ library("tidyverse")
 
 
 ui <- dashboardPage(
-
+  
   skin = "black",
-
+  
   dashboardHeader(title = "Plausible Parameter Space!", titleWidth = 350), 
   dashboardSidebar(width = 350,
                    sidebarMenu(
@@ -35,10 +35,8 @@ ui <- dashboardPage(
       tags$link(rel = "stylesheet", type = "text/css", href = "UU_theme_Laurent.css")
     ),
     
-
+    
     tabItems(
-      
-      tabItems(
       
       tabItem(tabName = "tab1",   # Application title and links
               tags$h2("Influence of Priors "),
@@ -83,12 +81,12 @@ ui <- dashboardPage(
                            plotOutput("distPlot_1"),
                            br(), 
                            tags$h4("If you are satisfied with your parameter space continue to step 2."))) 
-                           ),
+      ),
       
       
       tabItem(tabName = "tab3",   # Application title and links
               fluidRow(box(width=12, title = "Step 2: Set prior regression coefficients", status = "primary", solidHeader = TRUE,  
-                                      p("The next step is to think about what you believe to be the intercept, 
+                           p("The next step is to think about what you believe to be the intercept, 
                                         the linear effect and the quadratic effect. The data is not centred,
                                         which means that the intercept represents the PhD delay of a 0-year-old.
                                         The linear effect is the expected increase in delay over time by any number 
@@ -125,23 +123,23 @@ ui <- dashboardPage(
                              tags$li("You should always specify your priors before looking at your data."),
                              tags$li("In this example, we only specify a prior for the three regression coefficients 
                                      (Intercept + linear effect + quadratic effect) and not for the error terms."))
-                             )),
+              )),
               
               fluidRow(box(width=7,  title = "Prior Regression Coefficients", status = "primary", solidHeader = TRUE,
                            withMathJax(p("Use the sliders to set the values for the regression coefficients."),
-                           sliderInput(inputId="p3",  min=-250, max=250, step=.5,
-                                       label="\\(\\beta_{intercept}\\)", value=0),
-                           sliderInput(inputId="p1", min=-5, max=5, step=.1,
-                                       label="\\(\\beta_{age}\\)", value=0),
-                           sliderInput(inputId="p2",  min=-.1, max=.1, step=.005,
-                                       label="\\(\\beta_{age^2}\\)", value=0),
-                           checkboxInput("check_box_1", "Show total parameter space plot"))),
+                                       sliderInput(inputId="p3",  min=-250, max=250, step=.5,
+                                                   label="\\(\\beta_{intercept}\\)", value=0),
+                                       sliderInput(inputId="p1", min=-5, max=5, step=.1,
+                                                   label="\\(\\beta_{age}\\)", value=0),
+                                       sliderInput(inputId="p2",  min=-.1, max=.1, step=.005,
+                                                   label="\\(\\beta_{age^2}\\)", value=0),
+                                       checkboxInput("check_box_1", "Show total parameter space plot"))),
                        
                        box(width=5, title = "Plot", status = "primary", solidHeader = TRUE,
                            plotOutput("distPlot_2"),
                            br(), 
                            tags$h4("If you are satisfied with your prior means, please continue to step 3."))) 
-                           ),
+      ),
       
       
       

@@ -1,7 +1,6 @@
 # last edited 07-02-2019 by Laurent Smeets
 # last edited 28-09-2020 by Ihnwhi Heo
 
-
 library("shinydashboard")
 library("shiny") 
 library("gridExtra") 
@@ -142,8 +141,8 @@ server <- function(input, output, session) {
         geom_line(aes(x = age, y = delay_quadratic), colour = colourquadratic, size = 1.3, linetype = "dotted")+
         coord_cartesian(xlim = c(0,120), ylim = c(-200, 1000))+
         labs(title = "Parameter Space", 
-                 y = "Delay (in months)",
-                 x = "Age (in years)")+
+             y = "Delay (in months)",
+             x = "Age (in years)")+
         annotate(geom  = "rect",
                  xmin  = input$range1[1], 
                  xmax  = input$range1[2], 
@@ -154,8 +153,8 @@ server <- function(input, output, session) {
         theme_light()
       
       P_legend <- ggplot(data = filter(gather(data, key = "Parameter", value = "value", - age), Parameter %in% c("delay_intercept","delay_linear", "delay_quadratic" )))+
-                  geom_line(aes(x = age, y = value, col = Parameter))+
-                  scale_colour_manual(values = c(colourintercept, colourlinear, colourquadratic),
+        geom_line(aes(x = age, y = value, col = Parameter))+
+        scale_colour_manual(values = c(colourintercept, colourlinear, colourquadratic),
                             labels = c("intercept", "intercept + linear effect", "intercept + linear effect + quadratic effect "))+
         theme(legend.key.width = unit(3,"cm"))
       legend <- cowplot::get_legend(P_legend)
@@ -177,8 +176,8 @@ server <- function(input, output, session) {
         coord_cartesian(xlim = c(input$range1[1], input$range1[2]), 
                         ylim = c(input$range2[1], input$range2[2]))+
         labs(title = "Plausible Values", 
-                 y = "Delay (in months)", 
-                 x = "Age (in years)")+
+             y = "Delay (in months)", 
+             x = "Age (in years)")+
         annotate(geom  = "rect", 
                  xmin  = input$range1[1],
                  xmax  = input$range1[2], 
@@ -267,7 +266,7 @@ server <- function(input, output, session) {
     x2 <- input$range1[2]
     y1 <- input$range2[1]
     y2 <- input$range2[2]
-  
+    
     
     colourintercept  <- "blue"
     colourlinear     <- "coral2"
