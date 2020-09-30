@@ -1,9 +1,9 @@
 ---
-title: "JASP for Bayesian analyses with informative priors (using Jags)"
+title: "JASP for Bayesian analyses with informative priors (using JAGS)"
 author:
     - "[Ihnwhi Heo](https://ihnwhiheo.github.io/) and [Rens van de Schoot](https://www.rensvandeschoot.com/)"
     - Department of Methodology and Statistics, Utrecht University
-date: 'Last modified: 28 September 2020'
+date: 'Last modified: 30 September 2020'
 output:
   html_document:
     keep_md: true
@@ -11,7 +11,7 @@ output:
 
 Welcome!
 
-This tutorial illustrates how to perform Bayesian analyses in [JASP](https://jasp-stats.org/) (JASP Team, 2020) with informative priors using Jags. Among many analytic options, we focus on the regression analysis and explain the effects of different prior specifications on regression coefficients. We also present the Shiny App designed to help users to define the prior distributions using the example in this tutorial. After the tutorial, we expect readers can understand how to incorporate prior knowledge in conducting Bayesian regression analysis to answer substantive research questions.
+This tutorial illustrates how to perform Bayesian analyses in [JASP](https://jasp-stats.org/) (JASP Team, 2020) with informative priors using JAGS. Among many analytic options, we focus on the regression analysis and explain the effects of different prior specifications on regression coefficients. We also present the Shiny App designed to help users to define the prior distributions using the example in this tutorial. After the tutorial, we expect readers can understand how to incorporate prior knowledge in conducting Bayesian regression analysis to answer substantive research questions.
 
 For readers who need fundamentals of JASP, we recommend following [JASP for beginners](https://www.rensvandeschoot.com/tutorials/jasp-for-beginners/). If readers are unfamiliar with the idea of Bayesian statistics and how to perform it with default JASP settings, we suggest reading [JASP for Bayesian analyses with default priors](https://www.rensvandeschoot.com/tutorials/jasp-for-bayesian-analyses-with-default-priors/). For readers who want to comprehend the Bayesian regression deeper, we advise you to follow [Advanced Bayesian regression in JASP](https://www.rensvandeschoot.com/tutorials/advanced-bayesian-regression-in-jasp/).
 
@@ -23,7 +23,7 @@ Let’s get started!
 
 ### How to cite this tutorial in APA style
 
-Heo, I., & Van de Schoot, R. (2020, September 28). JASP for Bayesian analyses with informative priors (using Jags). Zenodo. https://doi.org/10.5281/zenodo.4032757
+Heo, I., & Van de Schoot, R. (2020, September 28). JASP for Bayesian analyses with informative priors (using JAGS). Zenodo. https://doi.org/10.5281/zenodo.4032757
 
 <br>
 
@@ -76,7 +76,7 @@ Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic1.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic1.jpg)
 
 <br>
 
@@ -94,7 +94,7 @@ Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic2.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic2.jpg)
 
 <br>
 
@@ -113,7 +113,7 @@ Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic3.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic3.jpg)
 
 <br>
 
@@ -122,7 +122,7 @@ Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic4.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic4.jpg)
 
 <br>
 
@@ -131,28 +131,28 @@ Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic5.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic5.jpg)
 
 <br>
 
 <br>
 
-### 3. Adding the Jags button
+### 3. Adding the JAGS button
 
--	To work with informative priors in JASP, we call our helper, [Jags](http://mcmc-jags.sourceforge.net/). We can invite Jags using the plus button.
+-	To work with informative priors in JASP, we call our helper, [JAGS](http://mcmc-jags.sourceforge.net/). We can invite JAGS using the plus button.
 - Click the plus button on the top right of the JASP screen -> Check JAGS
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic6_sign2.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic6_sign2.jpg)
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic7.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic7.jpg)
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic8.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic8.jpg)
 
 <br>
 
@@ -199,7 +199,7 @@ $Difference = b_{0} + beta_{Age} * X_{Age} + beta_{Age-squared} * X_{Age-squared
 
 -	Let’s first proceed with the analyses with the default priors. Why? The reason is to compare the prior specifications between default and informative priors, later.
 - Default prior settings can be taken into account, for instance, when researchers have no knowledge or cannot find relevant previous studies about the parameters of interest. This choice, however, should be taken with concerns (see Van De Schoot, Broere, Perryck, Zondervan-Zwijnenburg, & Van Loey, 2015 for caution in using default priors).
--	Jags does not provide the default prior settings. We, thus, have to think about the type of prior distributions and their hyperparameters for our regression model. Hyperparameters are the parameters for the prior distributions.
+-	JAGS does not provide the default prior settings. We, thus, have to think about the type of prior distributions and their hyperparameters for our regression model. Hyperparameters are the parameters for the prior distributions.
 
 <br>
 
@@ -207,16 +207,16 @@ $Difference = b_{0} + beta_{Age} * X_{Age} + beta_{Age-squared} * X_{Age-squared
 
 #### Regression coefficients
 
--	We follow the default prior specifications that the R package blavaan uses with the Jags target (Merkle, & Rosseel, 2018). You can find more information in the tutorial [Bayesian regression in blavaan (using Jags)](https://www.rensvandeschoot.com/tutorials/bayesian-regression-blavaan/).
+-	We follow the default prior specifications that the R package blavaan uses with the JAGS target (Merkle, & Rosseel, 2018). You can find more information in the tutorial [Bayesian regression in blavaan (using JAGS)](https://www.rensvandeschoot.com/tutorials/bayesian-regression-blavaan/).
 -	In blavaan, the normal prior $\mathcal{N}(\mu, \ 1/\sigma^{2})$, where $\mu$ is the mean and $\ 1/\sigma^{2}$ is the precision of the distribution, is used for the regression coefficient.
--	“Wait, what is the precision? Should it be the variance?” A great question! Jags uses the precision instead of the variance. The precision is the inverse of the variance. For example, the precision of 0.01 is equal to the variance of 100 (the inverse of 0.01 is 100).
+-	“Wait, what is the precision? Should it be the variance?” A great question! JAGS uses the precision instead of the variance. The precision is the inverse of the variance. For example, the precision of 0.01 is equal to the variance of 100 (the inverse of 0.01 is 100).
 -	Blavaan uses 0 and 1e-2 (1e-2 is equal to $1 × 10^{-2}$, which is 0.01) as the mean and the precision for the prior distribution for regression coefficients. Since the mean 0 and the precision 1e-2 are the parameters for the prior distribution, they are hyperparameters. In summary, we set $\mathcal{N}(0, 1/100)$ as our prior distributions for both regression coefficients.
 
 <br>
 
 #### Intercept
 
--	Although we leave intercept and residual variance untouched, we have to specify the prior distributions for the intercept and the residual variance to run Jags (otherwise, Jags does not work!).
+-	Although we leave intercept and residual variance untouched, we have to specify the prior distributions for the intercept and the residual variance to run JAGS (otherwise, JAGS does not work!).
 -	We again refer to the default priors that blavaan uses for the intercept: the normal prior distribution $\mathcal{N}(\mu_0, \ 1/\sigma^{2}_{0})$, where $\mu_0$ is the mean and $\ 1/\sigma^{2}_{0}$ is the precision of the distribution.
 -	Blavaan uses 0 and 1e-3 (1e-3 is equal to $1 × 10^{-3}$, which is 0.001) as hyperparameters for the mean and the precision, respectively. That is, we set $\mathcal{N}(0, 1/1000)$ as our prior distribution for the intercept.
 
@@ -224,31 +224,31 @@ $Difference = b_{0} + beta_{Age} * X_{Age} + beta_{Age-squared} * X_{Age-squared
 
 #### Residual variance
 
-- In a normal regression model, the inverse gamma distribution is used as a prior for the variance thanks to the conjugacy (Lynch, 2007). Keep in mind, however, that Jags uses precision instead of the variance. Therefore, we have to consider prior distributions for the precision.
+- In a normal regression model, the inverse gamma distribution is used as a prior for the variance thanks to the conjugacy (Lynch, 2007). Keep in mind, however, that JAGS uses precision instead of the variance. Therefore, we have to consider prior distributions for the precision.
 - To do that, we should use the gamma distribution as a prior for the precision. In other words, using a gamma distribution on the precision is the same as using an inverse gamma distribution on the variance (think about the inverse relationship!). Note that blavaan also places prior distributions on the precision instead of the variance for the residual variance.
 - The gamma distribution looks like $Gamma(\kappa_0,\theta_0)$, where $\kappa_0$ is the shape parameter and $\theta_0$ the rate parameter of the distribution.
 -	As hyperparameters, let’s use 0.5 for both shape and rate parameter. This setting is an uninformative prior for the precision, which has been found to perform well. In other words, we set $Gamma(.5, .5)$ as our prior distribution for the precision.
 
 <br>
 
-### 2. Running Jags
+### 2. Running JAGS
 
--	To run the model, we have to type the Jags code that species the model in JASP.
+-	To run the model, we have to type the JAGS code that species the model in JASP.
 -	If you click the JAGS button on the top bar, you encounter the control panel to feed the code under Enter JAGS model below.
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic9_sign2.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic9_sign2.jpg)
 
 <br>
 
-#### Jags grammar: A primer
+#### JAGS grammar: A primer
 
--	In writing the Jags code, we have to follow the Jags grammar. Although we list a couple of them, readers can find the extensive [Jags manual at the mcmc-jags project](https://sourceforge.net/projects/mcmc-jags/files/Manuals/). We also refer readers to [RJAGS: how to get started](https://www.rensvandeschoot.com/tutorials/rjags-how-to-get-started/) that illustrates how to run the Jags but in R.
--	The two main pillars that consist of Jags model specification are the likelihood and the prior.
+-	In writing the JAGS code, we have to follow the JAGS grammar. Although we list a couple of them, readers can find the extensive [JAGS manual at the mcmc-jags project](https://sourceforge.net/projects/mcmc-jags/files/Manuals/). We also refer readers to [RJAGS: how to get started](https://www.rensvandeschoot.com/tutorials/rjags-how-to-get-started/) that illustrates how to run the JAGS but in R.
+-	The two main pillars that consist of JAGS model specification are the likelihood and the prior.
     -	For the likelihood, we specify the model of interest: the regression model in our case.
     -	For the prior, we specify the type of distribution (e.g., normal distribution, gamma distribution) with its hyperparameters.
--	To that end, the Jags model that we use can be specified as:
+-	To that end, the JAGS model that we use can be specified as:
 
 
 ```r
@@ -267,7 +267,7 @@ model{
 }
 ```
 
--	Did you notice that there are two pillars in the Jags model specification, which are the likelihood and the prior? They are guided with the number sign (#).
+-	Did you notice that there are two pillars in the JAGS model specification, which are the likelihood and the prior? They are guided with the number sign (#).
 -	In the code, intercept, beta1, beta2, and tau are the parameters.
     - The regression coefficients for the age and the age-squared variable are beta1 and beta2, respectively.
     - Tau is the precision parameter, which is the inverse of the variance.
@@ -289,16 +289,16 @@ model{
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic10.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic10.jpg)
 
 <br>
 
 -	Hope we are looking at the same screen! Go again to the code that we have pasted (i.e., the Enter JAGS model below section). Press Ctrl and Enter on the keyboard together to apply the code. With this action, you are running the model that we specified!
--	Shortly, we can see a list of parameters under the Parameters in model in the control panel. This means that the posterior distributions for regression parameters are obtained by Jags.
+-	Shortly, we can see a list of parameters under the Parameters in model in the control panel. This means that the posterior distributions for regression parameters are obtained by JAGS.
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic11_sign.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic11_sign.jpg)
 
 <br>
 
@@ -306,7 +306,7 @@ model{
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic12_sign.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic12_sign.jpg)
 
 <br>
 
@@ -315,7 +315,7 @@ model{
 -	We can find a summary of regression coefficients in the MCMC Summary table. The table presents the posterior distribution of regression coefficients after considering the default priors for age and age-squared variable and the likelihood of the data.
     -	The posterior mean of the regression coefficient of age (beta1) is 2.356. We can interpret this value such that a one-year increase in age adds about 2.356 delays in Ph.D. projects on average. The 95% credible interval of age is [1.283, 3.420], which means that there is a 95% probability that the regression coefficient of age lies in the population with the corresponding credible interval. We also notice that a 95% credible interval does not include 0, which shows the evidence of the effect of age in predicting the Ph.D. delay.
     -	The posterior mean of the regression coefficient of age-squared (beta2) is -0.023. This can be interpreted such that one unit increase of the age-squared variable leads to a decrease of 0.023 unit in the Ph.D. delay on average. The 95% credible interval of [-0.034, -0.012] indicates that we are 95% sure that the regression coefficient of age-squared lies within the corresponding interval in the population. Did you notice that 0 is not included in the interval? Therefore, it is fairly sure that there is an effect of the age-squared variable in predicting the delay.
--	If you are curious about examining convergence diagnostics, please go to [WAMBS Checklist in JASP (using Jags)](https://www.rensvandeschoot.com/tutorials/wambs-checklist-in-jasp-using-jags/).
+-	If you are curious about examining convergence diagnostics, please go to [WAMBS Checklist in JASP (using JAGS)](https://www.rensvandeschoot.com/tutorials/wambs-checklist-in-jasp-using-jags/).
 
 <br>
 
@@ -357,7 +357,7 @@ model{
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic13.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic13.jpg)
 
 <br>
 
@@ -382,7 +382,7 @@ model{
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic14.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic14.jpg)
 
 <br>
 
@@ -407,7 +407,7 @@ model{
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic15.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic15.jpg)
 
 <br>
 
@@ -432,7 +432,7 @@ model{
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic16.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic16.jpg)
 
 <br>
 
@@ -509,7 +509,7 @@ $bias = 100*\frac{(model \; with \; specified \; priors\; - \; model \; with \; 
 
 <br>
 
-![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using Jags)/pic17.jpg)
+![](C:/Users/Ihn-Whi Heo/Desktop/Rens van de Schoot Lab/JASP for Bayesian analyses with informative priors (using JAGS)/pic17.jpg)
 
 <br>
 
@@ -519,7 +519,7 @@ $bias = 100*\frac{(model \; with \; specified \; priors\; - \; model \; with \; 
 
 -	Congratulations! We are standing at the endpoint. We hope you found this tutorial useful.
 -	If you are curious about a deeper side of Bayesian regression, we recommend following the tutorial [Advanced Bayesian regression in JASP](https://www.rensvandeschoot.com/tutorials/advanced-bayesian-regression-in-jasp/). It provides readers with an in-depth illustration of outputs and other options in conducting Bayesian regression analysis.
--	For readers who plan to implement Bayesian analyses for their own data, we suggest following the procedures explained in the tutorial [WAMBS Checklist in JASP (using Jags)](https://www.rensvandeschoot.com/tutorials/wambs-checklist-in-jasp-using-jags/). It guides you to sensibly apply Bayesian statistics in answering substantive research questions thoroughly.
+-	For readers who plan to implement Bayesian analyses for their own data, we suggest following the procedures explained in the tutorial [WAMBS Checklist in JASP (using JAGS)](https://www.rensvandeschoot.com/tutorials/wambs-checklist-in-jasp-using-jags/). It guides you to sensibly apply Bayesian statistics in answering substantive research questions thoroughly.
 
 ---
 
