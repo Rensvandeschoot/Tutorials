@@ -44,7 +44,7 @@ ui <- dashboardPage(
                 tags$a(href="https://www.rensvandeschoot.com/", "Rens van de Schoot")),
               withMathJax(p("How to cite this Shiny App in APA style",
                             br(),
-                            "Smeets, L., & Van de Schoot, R. (2020, September 15). Code for the ShinyApp to Determine the Plausible Parameter Space for the PhD-delay Data (Version v1.0). Zenodo.", tags$a(href="https://doi.org/10.5281/zenodo.4030288", "https://doi.org/10.5281/zenodo.4030288"))),
+                            "Smeets, L., & Van de Schoot, R. (2020, September 30). Code for the ShinyApp to Determine the Plausible Parameter Space for the PhD-delay Data (Version v1.1). Zenodo.", tags$a(href="https://doi.org/10.5281/zenodo.4059418", "https://doi.org/10.5281/zenodo.4059418"))),
               actionButton("disclaimer", label = "Show Disclaimer"),
               br(),  
               br(),      
