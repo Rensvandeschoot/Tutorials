@@ -5,7 +5,7 @@
 ### Department of Methodology and Statistics, Utrecht University
 
 ### How to cite this Shiny App in APA style 
-Smeets, L., & Van de Schoot, R. (2020, September 15). Code for the ShinyApp to Determine the Plausible Parameter Space for the PhD-delay Data (Version v1.0). Zenodo. https://doi.org/10.5281/zenodo.4030288
+Smeets, L., & Van de Schoot, R. (2020, September 30). Code for the ShinyApp to Determine the Plausible Parameter Space for the PhD-delay Data (Version v1.1). Zenodo. https://doi.org/10.5281/zenodo.4059418
 
 ### How to lunch the Shiny App
 Go to this link: https://www.rensvandeschoot.com/tutorials/pps-app/
