@@ -543,7 +543,7 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 ```
 
 ```{r, include = F}
-bias <- round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative),0)
+bias <- round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative), 0)
 ```
 
 _We see that the influence of this highly informative prior is around `r bias[1]`% and `r bias[2]`% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
