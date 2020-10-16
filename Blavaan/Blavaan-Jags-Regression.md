@@ -1,7 +1,7 @@
 ---
 title: "Bayesian Regression in Blavaan (using Jags)"
 author: "By [Laurent Smeets](https://www.rensvandeschoot.com/colleagues/laurent-smeets/) and [Rens van de Schoot](https://www.rensvandeschoot.com/about-rens/)"
-date: 'Last modified: 19 October 2019'
+date: 'Last modified: 25 September 2020'
 output:
   html_document:
     keep_md: true
@@ -18,12 +18,20 @@ In this tutorial, we start by using the default prior settings of the software. 
 
 We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
 
+### How to cite this tutorial in APA style
+
+Smeets, Laurent & Van de Schoot, Rens. (2019). Bayesian Regression in Blavaan (using Jags). Zenodo. https://doi.org/10.5281/zenodo.4050170
+
+<br>
+
+
+
 ## Preparation
 
 This tutorial expects:
 
 - Any installed version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/latest/download?source=files)
-- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.7 and Lavaan version 0.6.5 in R version 3.6.1
+- Installation of R packages `rjags`, `lavaan` and `blavaan`. This tutorial was made using Blavaan version 0.3.10 and Lavaan version 0.6.7 in R version 4.0.1
 - Basic knowledge of hypothesis testing
 - Basic knowledge of correlation and regression
 - Basic knowledge of [Bayesian](https://www.rensvandeschoot.com/a-gentle-introduction-to-bayesian-analysis-applications-to-developmental-research/) inference
@@ -31,15 +39,18 @@ This tutorial expects:
 
 ## Example Data
 
-The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)).The data can be downloaded [here](https://www.rensvandeschoot.com/wp-content/uploads/2018/10/phd-delays.csv). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
+The data we will be using for this exercise is based on a study about predicting PhD-delays ([Van de Schoot, Yerkes, Mouw and Sonneveld 2013](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0068839)). The data can be downloaded [here](https://zenodo.org/record/3999424/files/phd-delays.csv?download=1). Among many other questions, the researchers asked the Ph.D. recipients how long it took them to finish their Ph.D. thesis (n=333). It appeared that Ph.D. recipients took an average of 59.8 months (five years and four months) to complete their Ph.D. trajectory. The variable B3_difference_extra measures the difference between planned and actual project time in months (mean=9.97, minimum=-31, maximum=91, sd=14.43). For more information on the sample, instruments, methodology and research context we refer the interested reader to the paper.
 
 For the current exercise we are interested in the question whether age (M = 31.7, SD = 6.86) of the Ph.D. recipients is related to a delay in their project.
 
 The relation between completion time and age is expected to be non-linear. This might be due to that at a certain point in your life (i.e., mid thirties), family life takes up more of your time than when you are in your twenties or when you are older.
 
-So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and $age$ (*E22_Age*) and $age^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>.
+So, in our model the $gap$ (*B3_difference_extra*) is the dependent variable and $age$ (*E22_Age*) and $age^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>. This dataset and some more information on it can be found [here](https://zenodo.org/record/3999424)
 
-  <p>&nbsp;</p>
+
+## How to cite this data set
+
+Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]. Zenodo. https://doi.org/10.5281/zenodo.3999424
 
 
 ##### _**Question:** Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?_
@@ -64,7 +75,7 @@ $H_1:$ _$age^2$ is related to a delay in the PhD projects._
 
 
 ```r
-# if you dont have these packages installed yet, please use the install.packages("package_name") command.
+# if you don't have these packages installed yet, please use the install.packages("package_name") command.
 library(rjags)
 library(runjags)
 library(blavaan)
@@ -90,7 +101,7 @@ colnames(dataPHD) <- c("diff", "child", "sex","age","age2")
 
 GitHub is a platform that allows researchers and developers to share code, software and research and to collaborate on projects (see https://github.com/)
 
-Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. you can do this by using the  `describe()` function.
+Once you loaded in your data, it is advisable to check whether your data import worked well. Therefore, first have a look at the summary statistics of your data. You can do this by using the  `describe()` function.
 
 ##### _**Question:** Have all your data been loaded in correctly? That is, do all data points substantively make sense? If you are unsure, go back to the .csv-file to inspect the raw data._
 
@@ -156,6 +167,10 @@ dataPHD %>%
   theme(legend.position = "bottom")
 ```
 
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
 ![](Blavaan-Jags-Regression_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
@@ -163,7 +178,7 @@ dataPHD %>%
 
 In this exercise you will investigate the impact of Ph.D. students&#39; $age$ and $age^2$ on the delay in their project time, which serves as the outcome variable using a regression analysis (note that we ignore assumption checking!).
 
-As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g.  [Van de Schoot et al. 2017](http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract)). In this tutorial, we will first rely on the default prior settings, thereby behaving a &#39;naive&#39; Bayesians (which might [not](https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/)always be a good idea).
+As you know, Bayesian inference consists of combining a prior distribution with the likelihood obtained from the data. Specifying a prior distribution is one of the most crucial points in Bayesian inference and should be treated with your highest attention (for a quick refresher see e.g.  [Van de Schoot et al. 2017](http://onlinelibrary.wiley.com/doi/10.1111/cdev.12169/abstract)). In this tutorial, we will first rely on the default prior settings, thereby behaving a &#39;naive&#39; Bayesians (which might [not](https://www.rensvandeschoot.com/analyzing-small-data-sets-using-bayesian-estimation-the-case-of-posttraumatic-stress-symptoms-following-mechanical-ventilation-in-burn-survivors/) always be a good idea).
 
 To run a multiple regression with Blavaan, you first specify the model, then fit the model and finally acquire the summary (similar to the frequentist model in Lavaan). The model is specified as follows:
 
@@ -212,7 +227,7 @@ summary(fit.bayes)
 ```
 
 ```
-## blavaan (0.3-7) results of 37635 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-10) results of 25827 samples after 16000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -222,24 +237,24 @@ summary(fit.bayes)
 ##   Value                                   
 ## 
 ## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.317    0.568      1.194      3.417    1.001
-##     age2               -0.022    0.006     -0.033      -0.01    1.001
+##     age                 2.359    0.536      1.258      3.306    1.031
+##     age2               -0.023    0.006     -0.033     -0.011    1.030
 ##     Prior        
 ##                  
 ##     dnorm(0,1e-2)
 ##     dnorm(0,1e-2)
 ## 
 ## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -39.894   11.941    -63.092    -16.348    1.000
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              -40.773   11.271    -61.918    -18.752    1.031
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              194.071   14.921    165.049    223.167    1.000
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              194.072   15.053     165.49    223.831    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ```
@@ -271,7 +286,7 @@ In Bayesian analyses, the key to your inference is the parameter of interest&#39
 
 
 
-_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.317, 95% HPD (Credibility Interval) [1.194 3.417]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.022, and a 95% Credibility Interval of [-0.033 -0.01]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
+_$Age$ seems to be a relevant predictor of PhD delays, with a posterior mean regression coefficient of 2.359, 95% HPD (Credibility Interval) [1.258 3.306]. Also, $age^2$ seems to be a relevant predictor of PhD delays, with a posterior mean of -0.023, and a 95% Credibility Interval of [-0.033 -0.011]. The 95% HPD shows that there is a 95% probability that these regression coefficients in the population lie within the corresponding intervals, see also the posterior distributions in the figures below. Since 0 is not contained in the Credibility Interval we can be fairly sure there is an effect._
 
 
 
@@ -293,18 +308,16 @@ dpriors(target = "jags")
 ```
 
 ```
-##                 nu              alpha             lambda 
-##    "dnorm(0,1e-3)"    "dnorm(0,1e-2)"    "dnorm(0,1e-2)" 
-##               beta             itheta               ipsi 
-##    "dnorm(0,1e-2)" "dgamma(1,.5)[sd]" "dgamma(1,.5)[sd]" 
-##                rho              ibpsi                tau 
-##       "dbeta(1,1)"    "dwish(iden,3)"      "dnorm(0,.1)" 
-##              delta 
-## "dgamma(1,.5)[sd]"
+##                 nu              alpha             lambda               beta 
+##    "dnorm(0,1e-3)"    "dnorm(0,1e-2)"    "dnorm(0,1e-2)"    "dnorm(0,1e-2)" 
+##             itheta               ipsi                rho              ibpsi 
+## "dgamma(1,.5)[sd]" "dgamma(1,.5)[sd]"       "dbeta(1,1)"    "dwish(iden,3)" 
+##                tau              delta 
+##      "dnorm(0,.1)" "dgamma(1,.5)[sd]"
 ```
 
 
-_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Jags) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 10 (precision of .01). You can decide whether or not this is uninformative enough or not for your situation._
+_The priors used for the regression coefficients (beta) are flat and allow probability mass across the entire parameter space. Blavaan (Jags) makes use of a very wide normal distribution to come to this uninformative prior. By default the mean is 0, with a standard deviation of 100 (precision of .01). You can decide whether this is uninformative enough or not for your situation._
 
 
 [/expand]
@@ -357,7 +370,7 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-7) results of 19708 samples after 5000 adapt/burnin iterations
+## blavaan (0.3-10) results of 26668 samples after 5000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -367,30 +380,30 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ##   Value                                   
 ## 
 ## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.625    0.408      1.931       3.51    1.014
-##     age2               -0.026    0.004     -0.035     -0.018    1.012
+##     age                 2.665    0.417      1.843      3.463    1.004
+##     age2               -0.026    0.004     -0.035     -0.017    1.003
 ##     Prior        
 ##                  
 ##      dnorm(3,2.5)
 ##       dnorm(0,10)
 ## 
 ## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -46.342    8.629    -64.056    -30.654    1.014
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              -47.154    8.809    -64.054    -29.876    1.004
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.869   15.077    165.274    224.097    1.000
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              193.865   15.013    165.512     223.65    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.061
+##     diff                0.063
 ```
 
 
@@ -402,12 +415,12 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                    | ---        |---         | ---         |
-| Posterior mean |  2.317|                        |            |            |             | 
-| Posterior sd   |  0.568|                        |            |            |             |
+| Posterior mean |  2.359|                        |            |            |             | 
+| Posterior sd   |  0.536|                        |            |            |             |
 
 | $Age^2$        | Default prior             | $\mathcal{N}(0, .1)$   |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                       | ---       | ---        | ---        | ---         |
-| Posterior mean | -0.022|           |            |            |             |
+| Posterior mean | -0.023|           |            |            |             |
 | Posterior sd   | 0.006|           |            |            |             |
 
 
@@ -419,12 +432,12 @@ summary(fit.bayes.infprior1, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$| $\mathcal{N}(3, 1000)$|$\mathcal{N}(20, .4)$|$\mathcal{N}(20, 1000)$|
 | ---            | ---                        | ---                      | ---        |---         | ---         |
-| Posterior mean |  2.317|2.625|            |            |             | 
-| Posterior sd   |  0.568|0.408|            |            |             |
+| Posterior mean |  2.359|2.665|            |            |             | 
+| Posterior sd   |  0.536|0.417|            |            |             |
 
 | $Age^2$        | Default prior              | $\mathcal{N}(0, .1)$      |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                        | ---                       | ---        | ---        | ---         |
-| Posterior mean | -0.022 | -0.026|            |            |             |
+| Posterior mean | -0.023 | -0.026|            |            |             |
 | Posterior sd   | 0.006 | 0.004|            |            |             |
 
 
@@ -498,7 +511,7 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-7) results of 47372 samples after 16000 adapt/burnin iterations
+## blavaan (0.3-10) results of 27728 samples after 16000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -508,30 +521,30 @@ summary(fit.bayes.infprior2, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ##   Value                                   
 ## 
 ## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.422    0.502      1.449      3.387    1.003
-##     age2               -0.023    0.005     -0.034     -0.013    1.003
+##     age                 2.337    0.582      1.158      3.454    1.038
+##     age2               -0.023    0.006     -0.034      -0.01    1.036
 ##     Prior        
 ##                  
 ##    dnorm(3,0.001)
 ##    dnorm(0,0.001)
 ## 
 ## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -42.087   10.584    -62.496    -21.752    1.003
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              -40.324   12.236    -64.479    -16.102    1.037
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.931   14.886    165.214    222.674    1.000
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              194.290   15.098    165.756    224.526    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.053
+##     diff                0.050
 ```
 
 ```r
@@ -539,7 +552,7 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-7) results of 25112 samples after 16000 adapt/burnin iterations
+## blavaan (0.3-10) results of 51018 samples after 49000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -549,30 +562,30 @@ summary(fit.bayes.infprior3, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ##   Value                                   
 ## 
 ## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                11.143    0.536     10.107     12.178    1.007
-##     age2               -0.113    0.006     -0.124     -0.102    1.007
+##     age                11.068    0.547     10.025     12.178    1.001
+##     age2               -0.112    0.006     -0.124     -0.101    1.001
 ##     Prior        
 ##                  
 ##     dnorm(20,2.5)
 ##      dnorm(20,10)
 ## 
 ## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff             -224.227   11.292   -246.006   -202.469    1.007
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff             -222.668   11.520    -244.59   -199.182    1.001
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              314.836   28.403    262.218    372.207    1.002
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              313.023   28.526    256.413    367.779    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.405
+##     diff                0.403
 ```
 
 ```r
@@ -580,7 +593,7 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ```
 
 ```
-## blavaan (0.3-7) results of 28931 samples after 16000 adapt/burnin iterations
+## blavaan (0.3-10) results of 35120 samples after 60000 adapt/burnin iterations
 ## 
 ##   Number of observations                           333
 ## 
@@ -590,30 +603,30 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
 ##   Value                                   
 ## 
 ## Regressions:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
 ##   diff ~                                                             
-##     age                 2.457    0.576      1.377       3.55    1.018
-##     age2               -0.024    0.006     -0.036     -0.013    1.018
+##     age                 2.331    0.561      1.185      3.448    1.027
+##     age2               -0.023    0.006     -0.034     -0.011    1.025
 ##     Prior        
 ##                  
 ##   dnorm(20,0.001)
 ##   dnorm(20,0.001)
 ## 
 ## Intercepts:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              -42.834   12.106    -66.028    -20.293    1.018
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              -40.198   11.803     -63.41    -15.878    1.026
 ##     Prior        
 ##     dnorm(0,1e-3)
 ## 
 ## Variances:
-##                    Estimate    Post.SD  HPD.025    HPD.975       PSRF
-##    .diff              193.986   15.005    165.887    224.315    1.000
+##                    Estimate    Post.SD pi.lower   pi.upper       Rhat
+##    .diff              194.343   15.015    165.597    224.219    1.000
 ##     Prior        
 ##  dgamma(1,.5)[sd]
 ## 
 ## R-Square:
 ##                    Estimate  
-##     diff                0.055
+##     diff                0.050
 ```
 
 
@@ -622,13 +635,13 @@ summary(fit.bayes.infprior4, fit.measures=TRUE, ci = TRUE, rsquare=TRUE)
   
 | $Age$          | Default prior              |$\mathcal{N}(3, .4)$      | $\mathcal{N}(3, 1000)$    |$\mathcal{N}(20, .4)$    |$\mathcal{N}(20, 1000)$   |
 | ---            | ---                        | ---                      | ---                       |---                       | ---                      |
-| Posterior mean |  2.317|2.625| 2.422|11.143|2.457| 
-| Posterior sd   |  0.568|0.408| 0.502|0.536|0.576|
+| Posterior mean |  2.359|2.665| 2.337|11.068|2.331| 
+| Posterior sd   |  0.536|0.417| 0.582|0.547|0.561|
 
 | $Age^2$        | Default prior              | $\mathcal{N}(0, .1)$      |  $\mathcal{N}(0, 1000)$ |  $\mathcal{N}(20, .1)$|  $\mathcal{N}(20, 1000)$ |
 | ---            | ---                        | ---                       | ---                        | ---                      | ---                      |
-| Posterior mean | -0.022 | -0.026|-0.023  |-0.113|-0.024|
-| Posterior sd   | 0.006 | 0.004|0.005  |0.006|0.006|
+| Posterior mean | -0.023 | -0.026|-0.023  |-0.112|-0.023|
+| Posterior sd   | 0.006 | 0.004|0.006  |0.006|0.006|
 
 [/expand]
 
@@ -659,9 +672,9 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 ```
 
 
-The `beta[1,2,1]` and `beta[1,3,1]` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in JAGS These are just the labels JAGS gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects. 
+The `beta[1,2,1]` and `beta[1,3,1]` indices stand for the $\beta_{age}$ and $\beta_{age^2}$ respectively. These somewhat confusing indices are what Blavaan receives from the MCMC sampler in JAGS. These are just the labels JAGS gives to the parameters and Blavaan doesn't really translate them back to the input names we gave them. There is some order to it though. Beta[x,x,x] are regression coefficients (in the order we specified them in the model, so first $age$ and then $age^2$), alpha[x,x,x] are intercepts, psi[x,x,x] are variances, and def[x,x,x] are indirect effects (if you have those in your model). They are listed in the same order as they are in the `summary()` output. So first regression coefficients, then intercepts, then (co)variances, and then indirect effects. 
 
-We can also plot these differences by plotting both the posterior and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
+We can also plot these differences by plotting both the posteriors and priors for the five different models we ran. In this example we only plot the regression of coefficient of age $\beta_{age}$.
 
 First we extract the MCMC chains of the 5 different models for only this one parameter ($\beta_{age}$=beta[1,2,1]). Copy-past the following code to R: 
 
@@ -735,19 +748,19 @@ round(100*((estimatesinformative-estimatesuninformative)/estimatesuninformative)
 
 ```
 ## beta[1,2,1] beta[1,3,1] 
-##      374.55      397.31
+##      362.86      384.45
 ```
 
 
 
-_We see that the influence of this highly informative prior is around 375% and 397% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
+_We see that the influence of this highly informative prior is around 363% and 384% on the two regression coefficients respectively. This is a large difference and we thus certainly would not end up with similar conclusions._
 
-_The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age, results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors are larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
+_The results change with different prior specifications, but are still comparable. Only using $\mathcal{N}(20, .4)$ for age results in a really different coefficients, since this prior mean is far from the mean of the data, while its variance is quite certain. However, in general the other results are comparable. Because we use a big dataset the influence of the prior is relatively small. If one would use a smaller dataset the influence of the priors is larger. To check this you can use these lines to sample roughly 20% of all cases and redo the same analysis. The results will of course be different because we use many fewer cases (probably too few!). Use this code._
 
 
 ```r
 indices   <- sample.int(333, 60)
-smalldata <- data[indices,]
+smalldata <- dataPHD[indices,]
 ```
 
 _We made a new dataset with randomly chosen 60 of the 333 observations from the original dataset. You can repeat the analyses with the same code and only changing the name of the dataset to see the influence of priors on a smaller dataset. Run the model model.informative.priors2 with this new dataset_ 
