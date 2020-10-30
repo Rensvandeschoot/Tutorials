@@ -1,0 +1,17 @@
+base
+coda
+rjags
+runjags
+lavaan
+Rcpp
+blavaan
+psych
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats

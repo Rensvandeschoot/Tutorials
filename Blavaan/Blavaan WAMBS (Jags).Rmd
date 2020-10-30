@@ -14,9 +14,13 @@ set.seed(333)
 
 In this tutorial you follow the steps of the When-to-Worry-and-How-to-Avoid-the-Misuse-of-Bayesian-Statistics - checklist [(the WAMBS-checklist)](https://www.rensvandeschoot.com/wambs-checklist/).
 
-We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot).
+We are continuously improving the tutorials so let me know if you discover mistakes, or if you have additional resources I can refer to. The source code is available via [Github](https://github.com/Rensvandeschoot/Tutorials). If you want to be the first to be informed about updates, follow Rens on [Twitter](https://twitter.com/RensvdSchoot).
 
+### How to cite this tutorial in APA style
 
+Smeets, L. &, Van de Schoot, R. (2019). Tutorial: Bayesian Regression in Blavaan applying the WAMBS-checklist (using Jags). Zenodo.  10.5281/zenodo.4155875
+
+<br>
 
 ## Preparation
 
@@ -67,6 +71,10 @@ The relation between completion time and age is expected to be non-linear. This 
 
 So, in our model the gap (*B3_difference_extra*) is the dependent variable and age (*E22_Age*) and age$^2$(*E22_Age_Squared *) are the predictors. The data can be found in the file <span style="color:red"> ` phd-delays.csv` </span>.
 
+
+## How to cite this data set
+
+Van de Schoot, R. (2020). PhD-delay Dataset for Online Stats Training [Data set]. Zenodo. https://doi.org/10.5281/zenodo.3999424
 
 
 ##### _**Question:** Write down the null and alternative hypotheses that represent this question. Which hypothesis do you deem more likely?_
