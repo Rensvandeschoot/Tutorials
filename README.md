@@ -15,4 +15,4 @@ Citable versions of the tutorials are available at [Zenodo](https://zenodo.org/c
 
 # Contact
 
-If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot) or [LinkedIn](https://www.linkedin.com/in/rensvandeschoot).
+If you want to be the first to be informed about updates, follow me on [Twitter](https://twitter.com/RensvdSchoot) or [LinkedIn](https://www.linkedin.com/in/rensvandeschoot/).
